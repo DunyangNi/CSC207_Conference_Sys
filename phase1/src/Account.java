@@ -7,9 +7,9 @@ public class Account{
     private String password;
     private String lastName;
     private String firstName;
-    private HashMap<String, Account> friendsList;
-    private HashMap<String, Conversation> conversations;
-    private ArrayList<EventTalk> attendeeTalks;
+    private HashMap<String, Account> friendsList = new HashMap<>(); // added by Lucas
+    private HashMap<String, Conversation> conversations = new HashMap<>(); // added by Lucas
+    private ArrayList<EventTalk> attendeeTalks = new ArrayList<>(); // added by Lucas
 
     public Account(String username, String password, String firstName, String lastName) {
         this.username = username;
