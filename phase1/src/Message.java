@@ -194,28 +194,29 @@ public class Message {
     public static void setId(int id) {
         Message.id = id;
     }
-//------------------------------------------------------------
+/**
+    //------------------------------------------------------------
     // Test
     //------------------------------------------------------------
-//    public static void main(String[] args){
-//        Message m1 = new Message(new Account(), "I am fine");
-//        m1.addReceiver(new Account());
-//        m1.addReceiver(new Account());
-//        m1.addReceiver(new Account());
-//        m1.addReceiver(new Account());
-//
-//        System.out.println(m1.getNumReceiver()); // 4
-//        System.out.println(m1);
-//
-//        m1.setMsgToReply(new Message(new Account(),"How are you?"));
-//        System.out.println(m1);
-//
-//        Message m2 = new Message(new Account(), "I am fine");
-//        System.out.println(m1.equals(m2)); // false
-//
-//        m2.setMsgToReply(new Message(new Account(),"How are you?"));
-//        System.out.println(m1.equals(m2)); // true
-//    }
+    public static void main(String[] args){
+        Message m1 = new Message(new Account("angel","BB2","Steven","Chu"), new ArrayList<Account>(),"I am fine");
+        m1.addReceiver(new Account("a","b","c","d"));
+        m1.addReceiver(new Account("e","f","g","h"));
+        m1.addReceiver(new Account("i","j","k","l"));
+        m1.addReceiver(new Account("m","n","o","p"));
 
+        System.out.println(m1.getNumReceiver()); // 4
+        System.out.println(m1);
+
+        m1.setMsgToReply(new Message(new Account("a","b","c","d"),new ArrayList<Account>(),"How are you?"));
+        System.out.println(m1);
+
+        Message m2 = new Message(new Account("a","b","c","d"), new ArrayList<Account>(),"I am fine");
+        System.out.println(m1.equals(m2)); // false
+
+        m2.setMsgToReply(new Message(new Account("a","b","c","d"),new ArrayList<Account>(),"How are you?"));
+        System.out.println(m1.equals(m2)); // true
+   }
+**/
 }
 

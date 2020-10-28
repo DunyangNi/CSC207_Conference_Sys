@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -101,7 +102,7 @@ public class EventTalk extends Event{
         this.speaker = speaker;
     }
 
-/*
+
     //------------------------------------------------------------
     // test
     //------------------------------------------------------------
@@ -109,14 +110,14 @@ public class EventTalk extends Event{
         // Set a date
         Calendar ev_date = Calendar.getInstance();
         ev_date.set(2020, 03, 23, 10, 12);
-        Account organizer = new Account();
-        Account speaker = new Account();
+        Account organizer = new Account("a","b","c","d");
+        Account speaker = new Account("a","b","c", "d");
 
         // Create an event
         EventTalk event1 =
-                new EventTalk("topic1", ev_date,speaker,organizer);
+                new EventTalk("topic1", ev_date,"abc", speaker,organizer);
         System.out.println(event1);
-
+/*
         // Set a new date
         Calendar new_date = Calendar.getInstance();
         new_date.set(2020, Calendar.September, 11, 10, 12);
@@ -136,6 +137,8 @@ public class EventTalk extends Event{
 
         System.out.println(event1.equals((event2))); // true
         System.out.println(event1.equals((event3))); // false
+        */
+
     }
-     */
+
 }
