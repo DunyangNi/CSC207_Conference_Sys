@@ -7,42 +7,15 @@ import java.util.Calendar;
  * <pre>
  * Use Case CancelManager
  * Responsibilities:
- *      Stores a given EventTalk
  *      Can remove given Attendee to given EventTalk
+ *      Can check whether given Attendee is already in given EventTalk or not
  *
  * Collaborators:
  *      Attendee, EventTalk
- *
- * Representation Invariants:
- *      Given Attendee is currently signed in to given EventTalk
  * </pre>
  */
 public class CancelManager {
     public EventTalk talk;
-
-    //------------------------------------------------------------
-    // Constructors
-    //------------------------------------------------------------
-
-    /**
-     * Create a CancelManager with a given EventTalk.
-     *
-     * @param talk given EventTalk
-     */
-    public CancelManager(EventTalk talk) {
-        this.talk = talk;
-    }
-
-    //------------------------------------------------------------
-    // Getters
-    //------------------------------------------------------------
-
-    /**
-     * Gets EventTalk that CancelManager is managing.
-     *
-     * @return given EventTalk
-     */
-    public EventTalk getTalk() { return this.talk; }
 
     //------------------------------------------------------------
     // Methods
@@ -50,20 +23,30 @@ public class CancelManager {
 
     /**
      * Removes given Attendee from Talk.
-     *
+     * Does nothing if Attendee is not in Talk.
      * @param attendee given Attendee
      */
-    public void removeAttendee(Attendee attendee) {
-        // Get list of Attendees from EventTalk and list of EventTalks from Attendee
-        ArrayList<Account> eventAttendees = talk.getAttendees();
-        ArrayList<EventTalk> attendeeEvents = attendee.getAttendeeTalks();
-        // Modify each list
-        eventAttendees.remove(attendee);
-        attendeeEvents.remove(talk);
-        // Set new list of Attendees to EventTalk and new list of EventTalks to Attendee
-        attendee.setAttendeeTalks(attendeeEvents);
-        talk.setAttendees(eventAttendees);
+    public void removeAttendee(EventTalk talk, Attendee attendee) {
+        if (isSignedUp(talk, attendee)) {
+            // Get and copy list of Attendees from EventTalk and list of EventTalks from Attendee
+            ArrayList<Account> eventAttendees = new ArrayList<>(talk.getAttendees());
+            ArrayList<EventTalk> attendeeEvents = new ArrayList<>(attendee.getAttendeeTalks());
+            // Modify each list
+            eventAttendees.remove(attendee);
+            attendeeEvents.remove(talk);
+            // Set new list of Attendees to EventTalk and new list of EventTalks to Attendee
+            attendee.setAttendeeTalks(attendeeEvents);
+            talk.setAttendees(eventAttendees);
+        }
     }
+
+    /**
+     * Returns whether given EventTalk contains a given Attendee.
+     * @param talk given EventTalk
+     * @param attendee given Attendee
+     * @return whether talk contains Attendee or not
+     */
+    public boolean isSignedUp(EventTalk talk, Attendee attendee) { return talk.getAttendees().contains(attendee); }
 
     //------------------------------------------------------------
     // Test
@@ -79,13 +62,15 @@ public class CancelManager {
         EventTalk e1 = new EventTalk("topic1", evt_date, "auditorium", z1, s1);
 
         // Create a SignupManager and add Attendee
-        SignupManager m1 = new SignupManager(e1);
-        m1.addAttendee(a1);
+        SignupManager m1 = new SignupManager();
+        m1.addAttendee(e1, a1);
         System.out.println(e1);
 
         // Create a CancelManager and remove Attendee
-        CancelManager c1 = new CancelManager(e1);
-        c1.removeAttendee(a1);
+        CancelManager c1 = new CancelManager();
+        c1.removeAttendee(e1, a1);
+        System.out.println(e1);
+        c1.removeAttendee(e1, a1);
         System.out.println(e1);
     }
 }
