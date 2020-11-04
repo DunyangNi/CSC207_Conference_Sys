@@ -20,6 +20,11 @@ public class Account{
         this.lastName = lastName;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        return (o instanceof Account) && ((Account) o).getUsername().equals(this.getUsername());
+    }
+
     public String getUsername() {
         return username;
     }
