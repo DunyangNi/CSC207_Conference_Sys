@@ -1,4 +1,7 @@
 package entities;
+
+import entities.Account;
+import entities.Event;
 import org.junit.*;
 
 import java.text.SimpleDateFormat;
@@ -10,7 +13,7 @@ import static org.junit.Assert.*;
 public class TestEvent {
     static Calendar date1;
     static Calendar date2;
-    static Account  acct1;
+    static Account acct1;
     static Account  acct2;
     static SimpleDateFormat sdf;
 

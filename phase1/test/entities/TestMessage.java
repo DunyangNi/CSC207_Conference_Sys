@@ -1,5 +1,7 @@
 package entities;
 
+import entities.Account;
+import entities.Message;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -13,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 public class TestMessage {
     static Calendar date1;
     static Calendar date2;
-    static Account  acct1;
+    static Account acct1;
     static Account  acct2;
     static Account  acct3;
     static Account  acct4;

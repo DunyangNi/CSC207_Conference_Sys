@@ -1,5 +1,8 @@
 package entities;
 
+import entities.Account;
+import entities.Event;
+import entities.EventTalk;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
