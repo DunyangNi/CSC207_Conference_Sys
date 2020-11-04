@@ -23,7 +23,8 @@ public class Event {
     private String location;
     private Account organizer;
     private ArrayList<Account> attendees = new ArrayList<>();
-    private static int id = 0;
+    private static int sid = 0;
+    private int id;
 
     //------------------------------------------------------------
     // Constructors
@@ -39,7 +40,8 @@ public class Event {
         this.time = time;
         this.location = location;
         this.organizer = organizer;
-        id++;
+        sid++;
+        id = sid;
     }
 
     //------------------------------------------------------------
@@ -60,10 +62,52 @@ public class Event {
 
         String yyyy_mm_dd = yyyy + "-" + month + "-" + date;
         String hh_mm = hh + ":" + mm;
+        String uname = getOrganizer() == null ? "" : getOrganizer().getUsername();
+        String atd = "";
+        if (getAttendees().size() != 0){
+            for (Account atd1: getAttendees()){
+                atd += atd1.getUsername() + " ";
+            }
+            atd = atd.substring(0, atd.length()-1);
+        }
+        return id + ": (" + topic + ") "+
+                "(" + yyyy_mm_dd + " " + hh_mm +
+                ") organizer (" + uname + ") Attendees (" + atd + ")";
 
-        return "(" + topic + ") "+
-                "(" + yyyy_mm_dd + " " + hh_mm + ")";
+    }
 
+    /**
+     * Reset the ID counter for testing purpose.
+     */
+    static void resetSid(){
+        sid = 0;
+    }
+
+    /**
+     * Compares for equality.
+     *
+     * @param other other message to compare
+     * @return True if the same topic, time, location, and organizer are matched.
+     */
+    @Override
+    public boolean equals(Object other){
+        if (other != null && other instanceof Event){
+            Event o = (Event)other;
+            return
+                getTopic().equals(o.getTopic()) &&
+                getTime().getTimeInMillis() == o.getTime().getTimeInMillis() &&
+                getLocation().equals(o.getLocation()) &&
+                getOrganizer().getUsername().equals(o.getOrganizer().getUsername());
+        }
+        return false;
+    }
+
+    /**
+     * @return hash code
+     */
+    @Override
+    public int hashCode(){
+        return topic.hashCode() / 10 + getOrganizer().getUsername().hashCode() % 1000;
     }
 
     //------------------------------------------------------------
@@ -95,7 +139,7 @@ public class Event {
         return attendees;
     }
 
-    public static int getId() {
+    public int getId() {
         return id;
     }
 
@@ -126,8 +170,9 @@ public class Event {
         this.attendees = attendees;
     }
 
-    public static void setId(int id) {
-        Event.id = id;
+    public void setId(int id) {
+        this.id = id;
     }
+
 }
 

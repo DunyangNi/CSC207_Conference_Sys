@@ -65,30 +65,33 @@ public class EventTalk extends Event{
      */
     @Override
     public String toString() {
-        return "EventTalk ID: " + getId() + " " +
-                super.toString() + "\n"+
-                " > " +
-                "speaker=" + speaker +
-                ", attendees=" + this.getAttendees() +
-                ", organizer=" + this.getOrganizer();
+        String uname = getSpeaker() == null ? "" : getSpeaker().getUsername();
+        return super.toString() + " speaker (" + uname + ")";
     }
 
     /**
-     * Compares events for equality.
+     * Compares for equality.
      *
      * @param other other message to compare
-     * @return True if events are same. False otherwise.
+     * @return True if the same Event and speaker are matched.
      */
     @Override
     public boolean equals(Object other){
-        if (other instanceof EventTalk){
-            return getTopic().equals(((EventTalk) other).getTopic()) &&
-                    getTime().getTimeInMillis() ==
-                            ((EventTalk) other).getTime().getTimeInMillis();
+        if (other != null && other instanceof EventTalk){
+            EventTalk o = (EventTalk)other;
+            return super.equals(other) &&
+                    getSpeaker().getUsername().equals(o.getSpeaker().getUsername());
         }
         return false;
     }
 
+    /**
+     * @return hash code
+     */
+    @Override
+    public int hashCode(){
+        return super.hashCode() / 10 + getSpeaker().getUsername().hashCode() % 100;
+    }
     //------------------------------------------------------------
     // Getters and Setters
     //------------------------------------------------------------
@@ -103,44 +106,4 @@ public class EventTalk extends Event{
     public void setSpeaker(Account speaker) {
         this.speaker = speaker;
     }
-
-
-    //------------------------------------------------------------
-    // test
-    //------------------------------------------------------------
-    public static void main(String[] args){
-        // Set a date
-        Calendar ev_date = Calendar.getInstance();
-        ev_date.set(2020, 03, 23, 10, 12);
-        Account organizer = new Account("a","b","c","d");
-        Account speaker = new Account("a","b","c", "d");
-
-        // Create an event
-        EventTalk event1 =
-                new EventTalk("topic1", ev_date,"abc", speaker,organizer);
-        System.out.println(event1);
-/*
-        // Set a new date
-        Calendar new_date = Calendar.getInstance();
-        new_date.set(2020, Calendar.September, 11, 10, 12);
-        event1.setTime(new_date);
-
-        // Add attendees
-        Account attendee1 = new Account();
-        Account attendee2 = new Account();
-        event1.addAttendee(attendee1);
-        event1.addAttendee(attendee2);
-        System.out.println(event1);
-
-        EventTalk event2 =
-                new EventTalk("topic1", new_date,speaker,organizer);
-        EventTalk event3 =
-                new EventTalk("topic1", ev_date,speaker,organizer);
-
-        System.out.println(event1.equals((event2))); // true
-        System.out.println(event1.equals((event3))); // false
-        */
-
-    }
-
 }

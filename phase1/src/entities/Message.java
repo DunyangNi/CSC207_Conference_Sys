@@ -36,7 +36,8 @@ public class Message {
     private ArrayList<Account> receiver;
     private String content;
     private Message msgToReply;
-    private static int id = 0;
+    private static int sid = 0;
+    private int id;
 
     //------------------------------------------------------------
     // Constructors
@@ -51,7 +52,8 @@ public class Message {
         this.sender = sender;
         this.receiver = receiver;
         this.content = content;
-        id++;
+        sid++;
+        id = sid;
     }
 
     /**
@@ -97,19 +99,35 @@ public class Message {
     public String toString(){
 
         String inReplyTo;
+
+        String rec = "";
+        if (getReceiver().size() != 0){
+            for (Account atd1: getReceiver()){
+                rec += atd1.getUsername() + " ";
+            }
+            rec = rec.substring(0, rec.length()-1);
+        }
+
+
         if (msgToReply == null){
-            inReplyTo = " > in reply to (None)";
+            inReplyTo = "reply=None";
         }
         else{
-            inReplyTo = " > in reply to (";
+            inReplyTo = "replyContent=";
             inReplyTo += msgToReply.getContent();
-            inReplyTo += ") written by (" + msgToReply.getSender() + ")";
+            inReplyTo += ", userToReply=" + msgToReply.getSender().getUsername();
         }
-        return "[msg " + id + "] (" + sender +
-                ") sends a msg (" + content + ") to\n" +
-                " > " + receiver + "\n" + inReplyTo;
+        return  id + " name=" + sender.getUsername() +
+                " content=" + content + ", "+ "rec=" + rec + ", (" + inReplyTo +")";
     }
 
+    /**
+     * @return hash code
+     */
+    @Override
+    public int hashCode() {
+        return getSender().getUsername().hashCode() / 10 + getContent().hashCode() % 101;
+    }
     /**
      * Compares messages for equality.
      *
@@ -130,6 +148,13 @@ public class Message {
             }
         }
         return false;
+    }
+
+    /**
+     * Reset the ID counter for testing purpose.
+     */
+    static void resetSid(){
+        sid = 0;
     }
 
     //------------------------------------------------------------
@@ -192,33 +217,5 @@ public class Message {
     public void setReceiver(ArrayList<Account> receiver) {
         this.receiver = receiver;
     }
-
-    public static void setId(int id) {
-        Message.id = id;
-    }
-/**
-    //------------------------------------------------------------
-    // Test
-    //------------------------------------------------------------
-    public static void main(String[] args){
-        Message m1 = new Message(new Account("angel","BB2","Steven","Chu"), new ArrayList<Account>(),"I am fine");
-        m1.addReceiver(new Account("a","b","c","d"));
-        m1.addReceiver(new Account("e","f","g","h"));
-        m1.addReceiver(new Account("i","j","k","l"));
-        m1.addReceiver(new Account("m","n","o","p"));
-
-        System.out.println(m1.getNumReceiver()); // 4
-        System.out.println(m1);
-
-        m1.setMsgToReply(new Message(new Account("a","b","c","d"),new ArrayList<Account>(),"How are you?"));
-        System.out.println(m1);
-
-        Message m2 = new Message(new Account("a","b","c","d"), new ArrayList<Account>(),"I am fine");
-        System.out.println(m1.equals(m2)); // false
-
-        m2.setMsgToReply(new Message(new Account("a","b","c","d"),new ArrayList<Account>(),"How are you?"));
-        System.out.println(m1.equals(m2)); // true
-   }
-**/
 }
 
