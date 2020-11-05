@@ -1,7 +1,5 @@
 package entities;
 
-import java.util.ArrayList;
-
 /**
  * Message represents a message which can be exchanged between Accounts.
  *
@@ -33,7 +31,7 @@ import java.util.ArrayList;
  */
 public class Message {
     private Account sender;
-    private ArrayList<Account> receiver;
+    private Account receiver; // changed by Lucas
     private String content;
     private Message msgToReply;
     private static int sid = 0;
@@ -48,12 +46,9 @@ public class Message {
      * @param sender a message sender
      * @param content a message content
      */
-    public Message(Account sender, ArrayList<Account> receiver, String content) {
-        this.sender = sender;
-        this.receiver = receiver;
-        this.content = content;
-        sid++;
-        id = sid;
+    public Message(Account sender, Account receiver, String content) {
+        // call other constructor but with default value
+        new Message(sender, receiver, content, null);
     }
 
     /**
@@ -64,30 +59,12 @@ public class Message {
      * @param content a message content
      * @param msgToReply a message being replied to
      */
-    public Message(Account sender, ArrayList<Account> receiver, String content, Message msgToReply) {
+    public Message(Account sender, Account receiver, String content, Message msgToReply) {
         this.sender = sender;
         this.receiver = receiver;
         this.content = content;
         this.msgToReply = msgToReply;
         id++;
-    }
-
-    /**
-     * Adds a new receiver to the receiver list.
-     *
-     * @param newReceiver a new message receiver
-     */
-    public void addReceiver(Account newReceiver) {
-        receiver.add(newReceiver);
-    }
-
-    /**
-     * Gets the total number of the receivers in the list.
-     *
-     * @return total number of receivers
-     */
-    public int getNumReceiver(){
-        return receiver.size();
     }
 
     /**
@@ -97,17 +74,9 @@ public class Message {
      */
     @Override
     public String toString(){
-
         String inReplyTo;
-
-        String rec = "";
-        if (getReceiver().size() != 0){
-            for (Account atd1: getReceiver()){
-                rec += atd1.getUsername() + " ";
-            }
-            rec = rec.substring(0, rec.length()-1);
-        }
-
+        // get recipient's username
+        String rec = this.receiver.getUsername(); // changed by Lucas
 
         if (msgToReply == null){
             inReplyTo = "reply=None";
@@ -128,6 +97,7 @@ public class Message {
     public int hashCode() {
         return getSender().getUsername().hashCode() / 10 + getContent().hashCode() % 101;
     }
+
     /**
      * Compares messages for equality.
      *
@@ -137,7 +107,6 @@ public class Message {
     @Override
     public boolean equals(Object other){
         if (other instanceof Message){
-
             boolean isSameCont = content.equals(((Message) other).content);
             if (msgToReply == null){
                 return isSameCont && ((Message)other).msgToReply == null;
@@ -170,9 +139,9 @@ public class Message {
     /**
      * @return gets receiver.
      */
-    public ArrayList<Account> getReceiver() {
+    public Account getReceiver() {
         return receiver;
-    }
+    } // changed by Lucas
 
     /**
      * @return gets content.
@@ -214,8 +183,8 @@ public class Message {
         this.sender = sender;
     }
 
-    public void setReceiver(ArrayList<Account> receiver) {
+    public void setReceiver(Account receiver) {
         this.receiver = receiver;
-    }
+    } // changed by Lucas
 }
 

@@ -30,58 +30,27 @@ public class TestMessage {
     @Test(timeout = 50)
     public void test_Message() {
         Message.resetSid();
-        ArrayList<Account> rec = new ArrayList<>();
-        rec.add(acct1);
-        rec.add(acct2);
-        Message m1 = new Message(acct1, rec,  "content1") ;
+        Message m1 = new Message(acct1, acct2,  "content1") ;
         String exp1 = m1.toString();
-        String act1 = "1 name=Name1 content=content1, rec=Name1 Name2, (reply=None)";
+        String act1 = "1 name=Name1 content=content1, rec=Name2, (reply=None)";
         assertEquals(exp1, act1);
     }
 
     @Test(timeout = 50)
     public void test_Message2() {
         Message.resetSid();
-        ArrayList<Account> rec = new ArrayList<>();
-        rec.add(acct1);
-        rec.add(acct2);
-        Message reply = new Message(acct1, rec,  "content2") ;
-        Message m1 = new Message(acct1, rec,  "content1", reply) ;
+        Message reply = new Message(acct1, acct2,  "content2") ;
+        Message m1 = new Message(acct2, acct1,  "content1", reply) ;
         String exp1 = m1.toString();
-        String act1 = "1 name=Name1 content=content1, rec=Name1 Name2, (replyContent=content2, userToReply=Name1)";
-        assertEquals(exp1, act1);
-    }
-
-    @Test(timeout = 50)
-    public void test_addReceiver() {
-        Message.resetSid();
-        ArrayList<Account> rec = new ArrayList<>();
-        Message reply = new Message(acct1, rec,  "content2") ;
-        Message m1 = new Message(acct1, rec,  "content1", reply) ;
-        m1.addReceiver(acct1);
-        m1.addReceiver(acct2);
-        String exp1 = m1.toString();
-        String act1 = "1 name=Name1 content=content1, rec=Name1 Name2, (replyContent=content2, userToReply=Name1)";
-        assertEquals(exp1, act1);
-    }
-
-    @Test(timeout = 50)
-    public void test_getNumReceiver() {
-        ArrayList<Account> rec = new ArrayList<>();
-        Message m1 = new Message(acct1, rec,  "content1") ;
-        m1.addReceiver(acct1);
-        m1.addReceiver(acct2);
-        String exp1 = m1.getNumReceiver() + "";
-        String act1 = "2";
+        String act1 = "1 name=Name2 content=content1, rec=Name1, (replyContent=content2, userToReply=Name1)";
         assertEquals(exp1, act1);
     }
 
     @Test(timeout = 50)
     public void test_hashCode() {
-        ArrayList<Account> rec = new ArrayList<>();
-        Message m1 = new Message(acct1, rec,  "content1") ;
-        Message m2 = new Message(acct1, rec,  "content1") ;
-        Message m3 = new Message(acct1, rec,  "content2") ;
+        Message m1 = new Message(acct1, acct2,  "content1") ;
+        Message m2 = new Message(acct1, acct2,  "content1") ;
+        Message m3 = new Message(acct1, acct2,  "content2") ;
         String exp1 = "true";
         String exp2 = "false";
         String act1 = (m1.hashCode() == m2.hashCode()) + "";
@@ -92,10 +61,9 @@ public class TestMessage {
 
     @Test(timeout = 50)
     public void test_equals() {
-        ArrayList<Account> rec = new ArrayList<>();
-        Message m1 = new Message(acct1, rec,  "content1") ;
-        Message m2 = new Message(acct1, rec,  "content1") ;
-        Message m3 = new Message(acct1, rec,  "content2") ;
+        Message m1 = new Message(acct1, acct2,  "content1") ;
+        Message m2 = new Message(acct1, acct2,  "content1") ;
+        Message m3 = new Message(acct1, acct2,  "content2") ;
         String exp1 = "true";
         String exp2 = "false";
         String act1 = m1.equals(m2) + "";
@@ -106,9 +74,7 @@ public class TestMessage {
 
     @Test(timeout = 50)
     public void test_get_setSender() {
-        ArrayList<Account> rec = new ArrayList<>();
-        Message m1 = new Message(acct1, rec,  "content1") ;
-
+        Message m1 = new Message(acct1, acct2,  "content1") ;
         String exp1 = "true";
         String exp2 = "true";
         String act1 = m1.getSender().equals(acct1) + "";
@@ -120,14 +86,10 @@ public class TestMessage {
 
     @Test(timeout = 50)
     public void test_get_setReceiver() {
-        ArrayList<Account> rec = new ArrayList<>();
-        rec.add(acct1);
-        rec.add(acct2);
-
-        Message m1 = new Message(acct1, rec,  "content1") ;
+        Message m1 = new Message(acct1, acct2,  "content1") ;
         String exp1 = "true";
         String exp2 = "true";
-        String act1 = (m1.getReceiver() == rec )+ "";
+        String act1 = (m1.getReceiver() == acct2)+ "";
         m1.setReceiver(null);
         String act2 = (m1.getReceiver() == null) + "";
         assertEquals(exp1, act1);
