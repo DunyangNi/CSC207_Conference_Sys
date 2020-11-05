@@ -1,9 +1,10 @@
 package entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Account{
+public class Account implements Serializable {
 
     private String username;
     private String password;
@@ -80,4 +81,7 @@ public class Account{
     public void setAttendeeTalks(ArrayList<EventTalk> attendeeTalks) {
         this.attendeeTalks = attendeeTalks;
     }
+
+    public boolean isAttendee(){return false;}
+    public boolean isOrganizer(){return false;}
 }

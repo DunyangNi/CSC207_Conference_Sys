@@ -1,5 +1,6 @@
 package entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -22,7 +23,7 @@ import java.util.Calendar;
  * Accounts
  * </pre>
  */
-public class EventTalk extends Event{
+public class EventTalk extends Event implements Serializable {
     private Account speaker;
 
     //------------------------------------------------------------

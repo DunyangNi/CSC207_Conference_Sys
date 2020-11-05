@@ -1,5 +1,6 @@
 package use_cases;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import entities.EventTalk;
@@ -8,7 +9,7 @@ import entities.Account;
 import entities.Organizer;
 import entities.Speaker;
 
-public class EventManager {
+public class EventManager implements Serializable {
     private ArrayList<Event> eventlist;
     private ArrayList<EventTalk> talklist;
 

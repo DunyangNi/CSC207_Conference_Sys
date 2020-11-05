@@ -17,4 +17,6 @@ public class Organizer extends Account {
     public void setOrganizerEvents(ArrayList<Event> organizerEvents) {
         this.organizerEvents = organizerEvents;
     }
+    public boolean isAttendee(){return false;}
+    public boolean isOrganizer(){return true;}
 }

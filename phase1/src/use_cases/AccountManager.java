@@ -1,9 +1,10 @@
 package use_cases;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import entities.Account;
 
-public class AccountManager {
+public class AccountManager implements Serializable {
 
     /**
      * AUTHOR: ANDREW
@@ -54,6 +55,10 @@ public class AccountManager {
 
     public void ChangePassword(Account ChangePasswordAccount, String NewPassword){
         ChangePasswordAccount.setPassword(NewPassword);
+    }
+
+    public boolean contains(String username){
+        return AccountList.containsKey(username);
     }
 
 }
