@@ -76,13 +76,13 @@ public class OrganizerController {
     }
 
     public void messageAttendee(String message, String attendeeusername) {
-        ConversationManager.sendMessage(this.accountmanager.fetchOrganizer(this.username), this.accountmanager.fetchattendee(attendee), message);
+        ConversationManager.sendMessage(this.accountmanager.fetchOrganizer(this.username), this.accountmanager.fetchAttendee(attendeeusername), message);
     }
 
     public void runOrganizerInteraction() {
         Scanner sc = new Scanner(System.in);
-        boolean loop_on = true:
-        while loop_on {
+        boolean loop_on = true;
+        while(loop_on){
             System.out.println("What would you like to do?");
             System.out.println("1 = enter a room into the system");
             System.out.println("2 = create a new speaker account");
@@ -107,8 +107,8 @@ public class OrganizerController {
                     loop_on = false;
                 }
             }
-            elif(choice == 2) {
-                //TODO
+            else if(choice == 2) {
+                System.out.println("hi");
             }
         }
     }
