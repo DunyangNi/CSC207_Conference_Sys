@@ -1,9 +1,10 @@
 package use_cases;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import entities.Account;
 
-public class AccountManager {
+public class AccountManager implements Serializable {
 
     /**
      * AUTHOR: ANDREW

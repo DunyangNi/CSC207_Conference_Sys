@@ -1,9 +1,10 @@
 package entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Account{
+public class Account implements Serializable {
 
     private String username;
     private String password;

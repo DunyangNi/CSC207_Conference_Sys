@@ -1,5 +1,6 @@
 package entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 /**
@@ -17,7 +18,7 @@ import java.util.Calendar;
  * None
  *</pre>
  */
-public class Event {
+public class Event implements Serializable {
     private String topic;
     private Calendar time;
     private String location;
