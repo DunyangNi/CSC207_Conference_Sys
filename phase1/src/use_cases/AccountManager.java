@@ -56,4 +56,8 @@ public class AccountManager {
         ChangePasswordAccount.setPassword(NewPassword);
     }
 
+    public boolean contains(String username){
+        return AccountList.containsKey(username);
+    }
+
 }
