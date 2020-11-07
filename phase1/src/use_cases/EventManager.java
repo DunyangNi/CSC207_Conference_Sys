@@ -13,10 +13,20 @@ public class EventManager implements Serializable {
     private ArrayList<Event> eventlist;
     private ArrayList<EventTalk> talklist;
 
-    public EventManager(){
-        this.eventlist = new ArrayList<>();
-        this.talklist = new ArrayList<>();
+    private ArrayList<String> locationlist;
+
+    public EventManager(ArrayList<Event> eventlist, ArrayList<EventTalk> talklist, ArrayList<String> locations){
+        this.eventlist = eventlist;
+        this.talklist = talklist;
+        this.locationlist = locations;
     }
+
+    public void addLocation(String location) {
+        this.locationlist.add(location);
+    }
+
+
+
 
 
     /**
@@ -58,8 +68,14 @@ public class EventManager implements Serializable {
             if (event.getLocation().equals(location) && CheckTimeOverlap(time, event.getTime())){
                 return false;
             }
+            if(event.getTopic().equals(topic)) {
+                return false;
+            }
         }
         eventlist.add(new Event(topic, time, location, organizer));
+        if(!this.locationlist.contains(location)) {
+            locationlist.add(location);
+        }
         return true;
     }
 
@@ -69,18 +85,29 @@ public class EventManager implements Serializable {
      */
 
     public boolean AddNewEvent(String topic, Calendar time, String location, Account organizer, Account speaker){
-        for(Event event: eventlist)
+        for(Event event: eventlist) {
             if (event.getLocation().equals(location) && CheckTimeOverlap(time, event.getTime())) {
                 return false;
             }
-
-        for(EventTalk talk: talklist)
-            if (talk.getSpeaker().equals(speaker) && CheckTimeOverlap(time, talk.getTime())){
-                    return false;
+            if(event.getTopic().equals(topic)) {
+                return false;
             }
+        }
+
+        for(EventTalk talk: talklist) {
+            if (talk.getSpeaker().equals(speaker) && CheckTimeOverlap(time, talk.getTime())) {
+                return false;
+            }
+            if(talk.getTopic().equals(topic)) {
+                return false;
+            }
+        }
 
         eventlist.add(new EventTalk(topic, time, location, organizer, speaker));
         talklist.add(new EventTalk(topic, time, location, organizer, speaker));
+        if(!this.locationlist.contains(location)) {
+            locationlist.add(location);
+        }
         return true;
     }
 
@@ -93,6 +120,13 @@ public class EventManager implements Serializable {
      */
 
     public boolean ChangeTime(Event event_to_change, Calendar new_time){
+        Calendar curr_time = Calendar.getInstance();
+        if(curr_time.compareTo(event_to_change.getTime()) >= 0) {
+            return false;
+        }
+        if(curr_time.compareTo(new_time) >= 0) {
+            return false;
+        }
         for(Event event: eventlist) {
             String location1 = event.getLocation();
             String location2 = event_to_change.getLocation();
@@ -121,6 +155,9 @@ public class EventManager implements Serializable {
             }
         }
         event_to_change.setLocation(new_location);
+        if(!this.locationlist.contains(new_location)) {
+            locationlist.add(new_location);
+        }
         return true;
     }
 
@@ -145,4 +182,32 @@ public class EventManager implements Serializable {
         return true;
     }
 
+    public EventTalk fetchTalk(String topic) {
+        for(EventTalk talk: this.talklist) {
+            if(talk.getTopic().equals(topic)) {
+                return talk;
+            }
+        }
+        throw new RuntimeException();
+    }
+
+    public void cancelTalk(EventTalk talk) {
+        Calendar time = Calendar.getInstance();
+        if(time.compareTo(talk.getTime()) >= 0) {
+            return;
+        }
+
+        for(Event event: this.eventlist) {
+            if(event.getTopic().equals(talk.getTopic())) {
+                this.eventlist.remove(event);
+                break;
+            }
+        }
+        for(EventTalk Talk: this.talklist) {
+            if(Talk.getTopic().equals((talk.getTopic()))){
+                this.talklist.remove(Talk);
+                break;
+            }
+        }
+    }
 }

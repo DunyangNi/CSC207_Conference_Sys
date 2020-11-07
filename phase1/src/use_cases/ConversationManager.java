@@ -1,20 +1,21 @@
-package use_case;
+package use_cases;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Arrays;
+import java.util.HashMap;
 import entities.*;
 
 /**
- * ConversationManager manages a given Conversation.
+ * ConversationManager manages a given Conversation between a sender Account and a recipient Account.
  *
  * <pre>
  * Use Case ConversationManager
  * Responsibilities:
+ *      Can send a message from a sender Account to a recipient Account
  *      Can add a given Message to a given Conversation
- *      Can check whether Message sender and recipients match Conversation participants or not
- *      Can check whether Message to send is in reply to an existing Message in the Conversation or not
+ *      Can check whether Message recipient is in sender's friends list
  *
  * Collaborators:
- *      Conversation, Message
+ *      Conversation, Message, Account
  * </pre>
  */
 public class ConversationManager {
@@ -23,84 +24,58 @@ public class ConversationManager {
     //------------------------------------------------------------
 
     /**
-     * Adds given Message to given Conversation.
-     * Does nothing if Message sender and recipients
-     *  do not match Conversation participants
-     * Does nothing if Message is not the first in Conversation
-     *  and is not in reply to a previous message in Conversation
-     * @param conversation given Conversation
-     * @param message given Message
+     * Sends a message from a sender Account to a recipient Account
+     * @param sender given sender Account
+     * @param recipient given recipient Account
+     * @param message given String content for message
      */
-    public void sendMessage(Conversation conversation, Message message) {
-        if (validParticipants(conversation, message) && validReply(conversation, message)) {
-            // Get list of Messages from Conversation
-            ArrayList<Message> messages = conversation.getMessages();
-            // Add new message to Conversation
-            messages.add(message);
-            // Set new list of Messages to Conversation
-            conversation.setMessages(messages);
+    public static void sendMessage(Account sender, Account recipient, String message) {
+        if (validRecipient(sender, recipient)) {
+            HashMap<String, Conversation> senderConversations = sender.getConversations();
+            HashMap<String, Conversation> recipientConversations = recipient.getConversations();
+            Conversation givenConversation = senderConversations.get(recipient.getUsername());
+            Message newMessage = new Message(sender, recipient, message);
+            // if we don't assume a Conversation is automatically instantiated for all friends.
+            if (givenConversation == null) {
+                ArrayList<Account> participants = new ArrayList<>(Arrays.asList(sender, recipient));
+                givenConversation = new Conversation(participants, newMessage);
+                senderConversations.put(recipient.getUsername(), givenConversation);
+                recipientConversations.put(sender.getUsername(), givenConversation);
+            }
+            else {
+                addMessageToConversation(givenConversation, newMessage);
+            }
+            sender.setConversations(senderConversations);
+            recipient.setConversations(recipientConversations);
         }
     }
 
     /**
-     * Returns whether Message sender and recipients match Conversation participants or not
+     * Adds given Message to given Conversation, assigning msgToReply if needed.
      * @param conversation given Conversation
      * @param message given Message
-     * @return whether Message sender and recipients match Conversation participants or not
      */
-    public boolean validParticipants(Conversation conversation, Message message) {
-        ArrayList<Account> messageParticipants = new ArrayList<>(message.getReceiver());
-        messageParticipants.add(message.getSender());
-        return new HashSet<>(conversation.getMessengers()).equals(new HashSet<>(messageParticipants));
+    public static void addMessageToConversation(Conversation conversation, Message message) {
+        // Get list of Messages from Conversation
+        ArrayList<Message> existingMessages = conversation.getMessages();
+        // Assign message to reply to
+        if (existingMessages.size() != 0) {
+            Message msgToReply = existingMessages.get(existingMessages.size()-1);
+            message.setMsgToReply(msgToReply);
+        }
+        // Add new message to Conversation
+        existingMessages.add(message);
+        // Set new list of Messages to Conversation
+        conversation.setMessages(existingMessages);
     }
 
     /**
-     * Returns whether Message to send is in reply to an existing Message in the Conversation or not
-     * @param conversation given Conversation
-     * @param message given Message
-     * @return whether Message to send is in reply to an existing Message in the Conversation or not
+     * Returns whether two Accounts are in each other's friend list or not.
+     * @param a1 given Account 1
+     * @param a2 given Account 2
+     * @return whether a1 and a2 are in each other's friend list or not.
      */
-    public boolean validReply(Conversation conversation, Message message) {
-        Message msgToReply = message.getMsgToReply();
-        ArrayList<Message> messages = conversation.getMessages();
-        if (msgToReply != null) { for (Message m : messages) { if (m.equals(msgToReply)) { return true; } } }
-        else { return messages.size() == 0; }
-        return false;
-    }
-
-    //------------------------------------------------------------
-    // Test
-    //------------------------------------------------------------
-
-    public static void main(String[] args){
-        // Create two accounts
-        Account a1 = new Account("johndoe", "pass123", "John", "Doe");
-        Account a2 = new Account("janedoe", "pass456", "Jane", "Doe");
-        Account a3 = new Account("lucydoe", "pass987", "Lucy", "Doe");
-        ArrayList<Account> recipients1 = new ArrayList<>();
-        ArrayList<Account> recipients2 = new ArrayList<>();
-        ArrayList<Account> recipients3 = new ArrayList<>();
-        recipients1.add(a2);
-        recipients2.add(a1);
-        recipients3.add(a3);
-
-        // Create a message
-        Message m1 = new Message(a1, recipients1, "How are you?");
-        Message m2 = new Message(a2, recipients2, "I am fine.", m1);
-        Message m3 = new Message(a1, recipients3, "Hi, you good?");
-        Message m4 = new Message(a2, recipients2, "No, how are YOU?");
-        ArrayList<Account> messengers = new ArrayList<>();
-        messengers.add(a1);
-        messengers.add(a2);
-        Conversation c1 = new Conversation(messengers, m1);
-
-        // Create a ConversationManager and send a Message
-        ConversationManager v1 = new ConversationManager();
-        v1.sendMessage(c1, m2);
-        System.out.println(c1.getMessages());
-        v1.sendMessage(c1, m3);
-        System.out.println(c1.getMessages());
-        v1.sendMessage(c1, m4);
-        System.out.println(c1.getMessages());
+    public static boolean validRecipient(Account a1, Account a2) {
+        return (a1.getFriendsList().containsValue(a2) && a2.getFriendsList().containsValue(a1));
     }
 }
