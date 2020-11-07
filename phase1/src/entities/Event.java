@@ -20,8 +20,8 @@ import java.util.Calendar;
  */
 public class Event implements Serializable {
     private String topic;
-    private Calendar time;
     private String location;
+    private Calendar time;
     private Account organizer;
     private ArrayList<Account> attendees = new ArrayList<>();
     private static int sid = 0;

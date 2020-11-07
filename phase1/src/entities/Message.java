@@ -1,5 +1,9 @@
 package entities;
 
+import com.sun.xml.internal.bind.v2.TODO;
+
+import java.util.ArrayList;
+
 /**
  * Message represents a message which can be exchanged between Accounts.
  *
@@ -32,8 +36,10 @@ package entities;
 public class Message {
     private Account sender;
     private Account receiver; // changed by Lucas
+    private ArrayList<Account> receivers;
     private String content;
     private Message msgToReply;
+    // TODO: 11/07/20 Do we need both a static and non-static id?
     private static int sid = 0;
     private int id;
 
@@ -48,7 +54,16 @@ public class Message {
      */
     public Message(Account sender, Account receiver, String content) {
         // call other constructor but with default value
+        // TODO: 11/07/20 Is overload design better?
         new Message(sender, receiver, content, null);
+    }
+
+    // Overloaded constructor, accepts ArrayList<Account> for "receivers" parameter, enables group message functionality 
+    public Message(Account sender, ArrayList<Account> receivers, String content) {
+        this.sender = sender;
+        this.receivers = receivers;
+        this.content = content;
+        sid++;
     }
 
     /**
@@ -64,7 +79,7 @@ public class Message {
         this.receiver = receiver;
         this.content = content;
         this.msgToReply = msgToReply;
-        id++;
+        sid++;
     }
 
     /**
@@ -122,7 +137,7 @@ public class Message {
     /**
      * Reset the ID counter for testing purpose.
      */
-    static void resetSid(){
+    public static void resetSid(){
         sid = 0;
     }
 

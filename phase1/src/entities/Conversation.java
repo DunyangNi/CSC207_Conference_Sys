@@ -18,6 +18,10 @@ public class Conversation {
                 ((Conversation) obj).getMessages().equals(this.getMessages());
     }
 
+
+
+
+
     public ArrayList<Account> getMessengers() {
         return messengers;
     }
