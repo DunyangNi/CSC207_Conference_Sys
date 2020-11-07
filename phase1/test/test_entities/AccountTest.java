@@ -1,19 +1,15 @@
-package entities;
+package test_entities;
 
-import entities.*;
 import org.junit.*;
-
+import static org.junit.Assert.*;
+import entities.*;
 import java.util.ArrayList;
 import java.util.Calendar;
-
-import static org.junit.Assert.*;
 
 public class AccountTest {
 
     static Account acc1;
     static Account acc2;
-    static ArrayList<Account> accArr1 = new ArrayList<>();
-    static ArrayList<Account> accArr2 = new ArrayList<>();
     static ArrayList<Account> accArr12 = new ArrayList<>();
     static Message msg1;
     static Message msg2;
@@ -22,17 +18,14 @@ public class AccountTest {
     static EventTalk event1;
     static EventTalk event2;
 
-
     @Before
     public void setUp() {
         acc1 = new Account("acc1", "pass1", "fname1", "lname1");
         acc2 = new Account("acc2", "pass2", "fname2", "lname2");
-        accArr1.add(acc1);
-        accArr2.add(acc2);
         accArr12.add(acc1);
         accArr12.add(acc2);
-        msg1 = new Message(acc1, accArr2, "message1");
-        msg2 = new Message(acc1, accArr1, "message2");
+        msg1 = new Message(acc1, acc2, "message1");
+        msg2 = new Message(acc1, acc1, "message2");
         convo1 = new Conversation(accArr12, msg1);
         convo2 = new Conversation(accArr12, msg2);
         event1 = new EventTalk("CLEAN arch1", Calendar.getInstance(), "Toronto" , acc1, acc2);

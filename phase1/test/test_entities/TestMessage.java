@@ -1,4 +1,4 @@
-package entities;
+package test_entities;
 
 import entities.Account;
 import entities.Message;

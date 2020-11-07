@@ -11,6 +11,13 @@ public class Conversation {
         this.messages.add(initialMessage);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return (obj instanceof Conversation) &&
+                ((Conversation) obj).getMessengers().equals(this.getMessengers()) &&
+                ((Conversation) obj).getMessages().equals(this.getMessages());
+    }
+
     public ArrayList<Account> getMessengers() {
         return messengers;
     }
