@@ -34,7 +34,7 @@ public class TestMessage {
         Message.resetSid();
         Message m1 = new Message(acct1, acct2,  "content1") ;
         String exp1 = m1.toString();
-        String act1 = "1 name=Name1 content=content1, rec=Name2, (reply=None)";
+        String act1 = "[Message 1] (Name1) : content1 [ReplyTo] (None)";
         assertEquals(exp1, act1);
     }
 
@@ -44,7 +44,7 @@ public class TestMessage {
         Message reply = new Message(acct1, acct2,  "content2") ;
         Message m1 = new Message(acct2, acct1,  "content1", reply) ;
         String exp1 = m1.toString();
-        String act1 = "1 name=Name2 content=content1, rec=Name1, (replyContent=content2, userToReply=Name1)";
+        String act1 = "[Message 1] (Name2) : content1 [ReplyTo] (Name1) : content2";
         assertEquals(exp1, act1);
     }
 

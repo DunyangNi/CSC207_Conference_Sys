@@ -24,6 +24,21 @@ public class ConversationManager {
     //------------------------------------------------------------
 
     /**
+     * (NEW!) Returns the string representation of a Conversation between two given Accounts.
+     *  If no such conversation exists, returns the empty string.
+     * @param current given Account to search for Conversation
+     * @param recipient given recipient Account of a Conversation
+     * @return string representation of selected Conversation.
+     */
+    public static String getConversation(Account current, Account recipient) {
+        Conversation selectConversation = current.getConversations().get(recipient.getUsername());
+        if (selectConversation != null)
+            return selectConversation.toString();
+        else
+            return "";
+    }
+
+    /**
      * Sends a message from a sender Account to a recipient Account
      * @param sender given sender Account
      * @param recipient given recipient Account
@@ -70,12 +85,13 @@ public class ConversationManager {
     }
 
     /**
-     * Returns whether two Accounts are in each other's friend list or not.
+     * (TO BE REVISED!) Returns whether two Accounts are in each other's friend list or not.
      * @param a1 given Account 1
      * @param a2 given Account 2
      * @return whether a1 and a2 are in each other's friend list or not.
      */
     public static boolean validRecipient(Account a1, Account a2) {
-        return (a1.getFriendsList().containsValue(a2) && a2.getFriendsList().containsValue(a1));
+        // return (a1.getFriendsList().containsValue(a2) && a2.getFriendsList().containsValue(a1));
+        return true; // for a later fix/extension
     }
 }

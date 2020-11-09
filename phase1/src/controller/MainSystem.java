@@ -2,6 +2,7 @@ package controller;
 
 import entities.Account;
 import entities.Attendee;
+import entities.Organizer;
 import entities.Speaker;
 import gateway.DataManager;
 import use_cases.AccountManager;
@@ -20,39 +21,22 @@ public class MainSystem {
         System.out.println("Enter 'Y' to log in.");
         System.out.println("Enter 'N' to sign up.");
         String in = input.nextLine();
-        if(in == "N"){
+        while(!(in.equals("Y")||in.equals("N"))){
+            System.out.println("Invalid input");
+            in = input.nextLine();
+        }
+        if(in.equals("N")){
             return; //I need to return a controller
         }
-        else if(in == "Y"){
-            System.out.println("Please enter your user name:");
+        else{
+            System.out.println("Please enter your username:");
             String username = input.nextLine();
-            Account account = null;
             boolean user = false;
-            if(accountManager.containsAttendee(username)){user=true;account=accountManager.fetchAttendee(username);}
-            if(accountManager.containsOrganizer(username)){user=true;account=accountManager.fetchOrganizer(username);}
-            if(accountManager.containsSpeaker(username)){user=true;account=accountManager.fetchOrganizer(username);}
-            while (user){
+            user = loginHelper(username);
+            while (!user){
                 System.out.println("This username does not exist, please enter again.");
                 username = input.nextLine();
-                if(accountManager.containsAttendee(username)) {
-                    user=true;account=accountManager.fetchAttendee(username);
-                    password(account);
-                    AttendeeController ac= new AttendeeController(username, eventManager, accountManager);
-                    ac.runAttendeeInteraction();
-
-                }
-                if(accountManager.containsOrganizer(username)) {
-                    user=true;account=accountManager.fetchOrganizer(username);
-                    password(account);
-                    OrganizerController oc = new OrganizerController(username, eventManager, accountManager);
-                    oc.runOrganizerInteraction();
-                }
-                if(accountManager.containsSpeaker(username)) {
-                    user=true;account=accountManager.fetchSpeaker(username);
-                    password(account);
-                    SpeakerController sc = new SpeakerController(username, eventManager, accountManager);
-                    sc.runSpeakerInteraction();
-                }
+                loginHelper(username);
             }
 
         }
@@ -66,6 +50,32 @@ public class MainSystem {
             password = input.nextLine();
         }
     }
+
+    private boolean loginHelper(String username){
+        if(accountManager.containsAttendee(username)) {
+            Attendee account=accountManager.fetchAttendee(username);
+            password(account);
+            AttendeeController ac = new AttendeeController(username, eventManager, accountManager);
+            ac.runAttendeeInteraction();
+            return true;
+        }
+        if(accountManager.containsOrganizer(username)) {
+            Organizer account=accountManager.fetchOrganizer(username);
+            password(account);
+            OrganizerController oc = new OrganizerController(username, eventManager, accountManager);
+            oc.runOrganizerInteraction();
+            return true;
+        }
+        if(accountManager.containsSpeaker(username)) {
+            Speaker account=accountManager.fetchSpeaker(username);
+            password(account);
+            SpeakerController sc = new SpeakerController(username, eventManager, accountManager);
+            sc.runSpeakerInteraction();
+            return true;
+        }
+        return false;
+    }
+
     public void run(){
         System.out.println("Print enter the address for AccountManager");
         String am = input.nextLine();

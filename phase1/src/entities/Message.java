@@ -1,9 +1,5 @@
 package entities;
 
-import com.sun.xml.internal.bind.v2.TODO;
-
-import java.util.ArrayList;
-
 /**
  * Message represents a message which can be exchanged between Accounts.
  *
@@ -18,28 +14,13 @@ import java.util.ArrayList;
  *
  * Collaborators:
  *     Account, Message
- *
- * Examples:
- *         Message m1 = new Message(new Account(), "I am fine");
- *         m1.addReceiver(new Account());
- *         m1.addReceiver(new Account());
- *         m1.addReceiver(new Account());
- *         m1.addReceiver(new Account());
- *
- *         System.out.println(m1.getNumReceiver()); // 4
- *         System.out.println(m1);
- *
- *         m1.setMsgToReply(new Message(new Account(),"How are you?"));
- *         System.out.println(m1);
  * </pre>
  */
 public class Message {
     private Account sender;
-    private Account receiver; // changed by Lucas
-    private ArrayList<Account> receivers;
+    private Account receiver;
     private String content;
     private Message msgToReply;
-    // TODO: 11/07/20 Do we need both a static and non-static id?
     private static int sid = 0;
     private int id;
 
@@ -54,16 +35,7 @@ public class Message {
      */
     public Message(Account sender, Account receiver, String content) {
         // call other constructor but with default value
-        // TODO: 11/07/20 Is overload design better?
         new Message(sender, receiver, content, null);
-    }
-
-    // Overloaded constructor, accepts ArrayList<Account> for "receivers" parameter, enables group message functionality 
-    public Message(Account sender, ArrayList<Account> receivers, String content) {
-        this.sender = sender;
-        this.receivers = receivers;
-        this.content = content;
-        sid++;
     }
 
     /**
@@ -79,30 +51,35 @@ public class Message {
         this.receiver = receiver;
         this.content = content;
         this.msgToReply = msgToReply;
+        this.id = sid;
         sid++;
     }
 
     /**
-     * Gets the Message info.
+     * (NEW!) Gets the Message info.
      *
-     * @return message info.
+     * @return message info, formatted as
+     *  [Message id] (sender1) : content [ReplyTo] (sender2) : content (first 10 char)...
+     *  [Message id] (sender1) : content [ReplyTo] (None)
      */
     @Override
-    public String toString(){
-        String inReplyTo;
-        // get recipient's username
-        String rec = this.receiver.getUsername(); // changed by Lucas
-
-        if (msgToReply == null){
-            inReplyTo = "reply=None";
+    public String toString() {
+        StringBuilder str_write = new StringBuilder("[Message ");
+        str_write.append(this.id);
+        str_write.append("] (");
+        str_write.append(sender.getUsername());
+        str_write.append(") : ");
+        str_write.append(content);
+        str_write.append(" [ReplyTo] (");
+        if (msgToReply == null) { str_write.append("None)"); }
+        else {
+            str_write.append(msgToReply.getSender().getUsername());
+            str_write.append(") : ");
+            String replyContent = msgToReply.getContent();
+            str_write.append(replyContent, 0, Math.min(replyContent.length(), 10));
+            str_write.append(replyContent.length() <= 10 ? "" : "...");
         }
-        else{
-            inReplyTo = "replyContent=";
-            inReplyTo += msgToReply.getContent();
-            inReplyTo += ", userToReply=" + msgToReply.getSender().getUsername();
-        }
-        return  id + " name=" + sender.getUsername() +
-                " content=" + content + ", "+ "rec=" + rec + ", (" + inReplyTo +")";
+        return str_write.toString();
     }
 
     /**
@@ -137,7 +114,7 @@ public class Message {
     /**
      * Reset the ID counter for testing purpose.
      */
-    public static void resetSid(){
+    static void resetSid(){
         sid = 0;
     }
 
