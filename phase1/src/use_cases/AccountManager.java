@@ -19,9 +19,27 @@ public class AccountManager implements Serializable {
     private HashMap<String, Speaker> SpeakerList;
     private HashMap<String, Account> AccountList;
 
+    // (NEW!)
+    @Override
+    public boolean equals(Object obj) {
+        boolean result = false;
+        if (obj instanceof AccountManager) {
+            boolean sameAttendeeList = AttendeeList.equals(((AccountManager) obj).getAttendeelist());
+            boolean sameOrganizerList = OrganizerList.equals(((AccountManager) obj).getOrganizerList());
+            boolean sameSpeakerList = SpeakerList.equals(((AccountManager) obj).getSpeakerlist());
+            result = sameAttendeeList && sameOrganizerList && sameSpeakerList;
+        }
+        return result;
+    }
+
     /**
      * Constructor; we initially have an empty AccountList until we add stuff
      */
+
+    // (NEW!)
+    public AccountManager() {
+        this(new HashMap<>(), new HashMap<>(), new HashMap<>());
+    }
 
     public AccountManager(HashMap<String, Attendee> AttendeeList, HashMap<String, Organizer> OrganizerList, HashMap<String, Speaker> SpeakerList) {
         this.AttendeeList = AttendeeList;
