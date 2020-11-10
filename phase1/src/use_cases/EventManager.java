@@ -12,8 +12,30 @@ import java.util.Arrays;
 public class EventManager implements Serializable {
     private ArrayList<Event> eventlist;
     private ArrayList<EventTalk> talklist;
-
     private ArrayList<String> locationlist;
+
+    // (NEW!)
+    @Override
+    public boolean equals(Object obj) {
+        boolean result = false;
+        if (obj instanceof EventManager) {
+            boolean sameEventList = eventlist.equals(((EventManager) obj).getEventlist());
+            boolean sameTalkList = talklist.equals(((EventManager) obj).getTalklist());
+            boolean sameLocationList = locationlist.equals(((EventManager) obj).getLocationlist());
+            result = sameEventList && sameTalkList && sameLocationList;
+        }
+        return result;
+    }
+
+    // (NEW!)
+    public ArrayList<Event> getEventlist() { return eventlist; }
+    public ArrayList<EventTalk> getTalklist() { return talklist; }
+    public ArrayList<String> getLocationlist() { return locationlist; }
+
+    // (NEW!)
+    public EventManager() {
+        this(new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+    }
 
     public EventManager(ArrayList<Event> eventlist, ArrayList<EventTalk> talklist, ArrayList<String> locations){
         this.eventlist = eventlist;
