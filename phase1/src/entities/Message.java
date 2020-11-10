@@ -115,7 +115,7 @@ public class Message {
     /**
      * Reset the ID counter for testing purpose.
      */
-    static void resetSid(){
+    public static void resetSid(){
         sid = 0;
     }
 

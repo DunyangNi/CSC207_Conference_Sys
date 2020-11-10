@@ -84,7 +84,7 @@ public class Event implements Serializable, Comparable<Event> {
     /**
      * Reset the ID counter for testing purpose.
      */
-    static void resetSid(){
+    public static void resetSid(){
         sid = 0;
     }
 
