@@ -17,7 +17,7 @@ public class AccountManager implements Serializable {
     private HashMap<String, Attendee> AttendeeList;
     private HashMap<String, Organizer> OrganizerList;
     private HashMap<String, Speaker> SpeakerList;
-    private HashMap<String, Account> AccountList;
+    private HashMap<String, Account> AccountList = new HashMap<String, Account>();
 
     /**
      * Constructor; we initially have an empty AccountList until we add stuff
