@@ -68,6 +68,14 @@ public class Conversation {
         return str_write.toString();
     }
 
+    public ArrayList<String> toArrayList() {
+        ArrayList<String> conversation = new ArrayList<>();
+        for(Message m: messages) {
+            conversation.add(m.toString());
+        }
+        return conversation;
+    }
+
     //------------------------------------------------------------
     // Getters and Setters
     //------------------------------------------------------------

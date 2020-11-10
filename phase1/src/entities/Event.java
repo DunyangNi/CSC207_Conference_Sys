@@ -18,12 +18,12 @@ import java.util.Calendar;
  * None
  *</pre>
  */
-public class Event implements Serializable {
+public class Event implements Serializable, Comparable<Event> {
     private String topic;
     private Calendar time;
     private String location;
     private Account organizer;
-    private ArrayList<Account> attendees = new ArrayList<>();
+    private ArrayList<Attendee> attendees = new ArrayList<>();
     private static int sid = 0;
     private int id;
 
@@ -77,6 +77,10 @@ public class Event implements Serializable {
 
     }
 
+    public int compareTo(Event event) {
+        return this.time.compareTo(event.time);
+    }
+
     /**
      * Reset the ID counter for testing purpose.
      */
@@ -95,10 +99,10 @@ public class Event implements Serializable {
         if (other != null && other instanceof Event){
             Event o = (Event)other;
             return
-                getTopic().equals(o.getTopic()) &&
-                getTime().getTimeInMillis() == o.getTime().getTimeInMillis() &&
-                getLocation().equals(o.getLocation()) &&
-                getOrganizer().getUsername().equals(o.getOrganizer().getUsername());
+                    getTopic().equals(o.getTopic()) &&
+                            getTime().getTimeInMillis() == o.getTime().getTimeInMillis() &&
+                            getLocation().equals(o.getLocation()) &&
+                            getOrganizer().getUsername().equals(o.getOrganizer().getUsername());
         }
         return false;
     }
@@ -136,7 +140,7 @@ public class Event implements Serializable {
         return organizer;
     }
 
-    public ArrayList<Account> getAttendees() {
+    public ArrayList<Attendee> getAttendees() {
         return attendees;
     }
 
@@ -167,7 +171,7 @@ public class Event implements Serializable {
         this.organizer = organizer;
     }
 
-    public void setAttendees(ArrayList<Account> attendees) {
+    public void setAttendees(ArrayList<Attendee> attendees) {
         this.attendees = attendees;
     }
 

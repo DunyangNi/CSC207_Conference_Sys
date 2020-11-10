@@ -1,6 +1,7 @@
 package use_cases;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -16,6 +17,7 @@ public class AccountManager implements Serializable {
     private HashMap<String, Attendee> AttendeeList;
     private HashMap<String, Organizer> OrganizerList;
     private HashMap<String, Speaker> SpeakerList;
+    private HashMap<String, Account> AccountList;
 
     /**
      * Constructor; we initially have an empty AccountList until we add stuff
@@ -25,6 +27,18 @@ public class AccountManager implements Serializable {
         this.AttendeeList = AttendeeList;
         this.OrganizerList = OrganizerList;
         this.SpeakerList = SpeakerList;
+
+        for(String key: AttendeeList.keySet()) {
+            this. AccountList.put(key, AttendeeList.get(key));
+        }
+
+        for(String key: OrganizerList.keySet()) {
+            this.AccountList.put(key, OrganizerList.get(key));
+        }
+
+        for(String key: SpeakerList.keySet()) {
+            this.AccountList.put(key, SpeakerList.get(key));
+        }
 
         // NEEDS TO LOAD IN
     }
@@ -50,19 +64,19 @@ public class AccountManager implements Serializable {
      */
 
     public void AddNewSpeaker(String username, String password, String firstName, String lastName) {
-        if (!(SpeakerList.containsKey(username))) {
+        if (!(AccountList.containsKey(username))) {
             SpeakerList.put(username, new Speaker(username, password, firstName, lastName));
         }
     }
 
     public void AddNewAttendee(String username, String password, String firstName, String lastName) {
-        if (!(AttendeeList.containsKey(username))) {
+        if (!(AccountList.containsKey(username))) {
             AttendeeList.put(username, new Attendee(username, password, firstName, lastName));
         }
     }
 
     public void AddNewOrganizer(String username, String password, String firstName, String lastName) {
-        if (!(OrganizerList.containsKey(username))) {
+        if (!(AccountList.containsKey(username))) {
             OrganizerList.put(username, new Organizer(username, password, firstName, lastName));
         }
     }
@@ -95,16 +109,35 @@ public class AccountManager implements Serializable {
         return SpeakerList.get(username);
     }
 
-    public Iterator<Speaker> speakerIterator() {
-        return this.SpeakerList.values().iterator();
+    public Account fetchAccount(String username) {
+        return AccountList.get(username);
     }
 
-    public Iterator<Attendee> attendeeIterator() {
-        return this.AttendeeList.values().iterator();
+    public Iterator<String> speakerUsernameIterator() {
+        Iterator<Speaker> speakeriterator = this.SpeakerList.values().iterator();
+        ArrayList<String> usernames = new ArrayList<>();
+        while(speakeriterator.hasNext()) {
+            usernames.add(speakeriterator.next().getUsername());
+        }
+        return usernames.iterator();
     }
 
-    public Iterator<Organizer> organizerIterator() {
-        return this.OrganizerList.values().iterator();
+    public Iterator<String> attendeeUsernameIterator() {
+        Iterator<Attendee> speakeriterator = this.AttendeeList.values().iterator();
+        ArrayList<String> usernames = new ArrayList<>();
+        while(speakeriterator.hasNext()) {
+            usernames.add(speakeriterator.next().getUsername());
+        }
+        return usernames.iterator();
+    }
+
+    public Iterator<String> organizerUsernameIterator() {
+        Iterator<Organizer> speakeriterator = this.OrganizerList.values().iterator();
+        ArrayList<String> usernames = new ArrayList<>();
+        while(speakeriterator.hasNext()) {
+            usernames.add(speakeriterator.next().getUsername());
+        }
+        return usernames.iterator();
     }
 
     public Attendee fetchAttendee(String username) {
@@ -123,4 +156,14 @@ public class AccountManager implements Serializable {
     public boolean containsOrganizer (String username){
         return OrganizerList.containsKey(username);
     }
+
+    public ArrayList<EventTalk> fetchSpeakerTalkList(String username) {
+        return this.fetchSpeaker(username).getSpeakerTalks();
+    }
+
+    public boolean isTalkSpeaker(Speaker speaker, EventTalk talk) {
+        return speaker.getUsername().equals(talk.getSpeaker().getUsername());
+    }
+
+
 }
