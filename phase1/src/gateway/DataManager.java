@@ -1,13 +1,14 @@
 package gateway;
 
-import entities.Account;
-import entities.Organizer;
+import entities.*;
 import use_cases.AccountManager;
 import use_cases.EventManager;
 
 import java.io.*;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
 /**
  * The gateway class that can save and read data from files
@@ -81,10 +82,12 @@ public class DataManager {
             return am;
         } catch (IOException e) {
             System.out.println("Cannot read the AccountManager, creating a new AccountManager");
-            return new AccountManager();
+            return new AccountManager(new HashMap<String, Attendee>(), new HashMap<String, Organizer>(),
+                    new HashMap<String, Speaker>());
         } catch (ClassNotFoundException e) {
             System.out.println("There is no AccountManager in database, creating a new AccountManager");
-            return new AccountManager();
+            return new AccountManager(new HashMap<String, Attendee>(), new HashMap<String, Organizer>(),
+                    new HashMap<String, Speaker>());
         }
     }
 
@@ -103,10 +106,10 @@ public class DataManager {
             return em;
         } catch (IOException e) {
             System.out.println("Cannot read the EventManager, creating a new AccountManager");
-            return new EventManager();
+            return new EventManager(new ArrayList<Event>(), new ArrayList<EventTalk>(), new ArrayList<String>());
         } catch (ClassNotFoundException e) {
             System.out.println("There is no EventManager in database, creating a new AccountManager");
-            return new EventManager();
+            return new EventManager(new ArrayList<Event>(), new ArrayList<EventTalk>(), new ArrayList<String>());
         }
     }
 
@@ -116,7 +119,7 @@ public class DataManager {
         AccountManager am = dm.readAccountManager();
         Organizer o = new Organizer("abc", "123456", "a", "bc");
         em.AddNewEvent("abc", Calendar.getInstance(),"room 1", o);
-        am.AddNewAccount("firstuser", "123456", "first", "user");
+        am.AddNewAttendee("firstuser", "123456", "first", "user");
         dm.saveAccountManager(am);
         dm.saveEventManager(em);
     }
