@@ -82,10 +82,17 @@ public class MainSystem {
         System.out.println("Print enter the address for EventManager");
         String em = input.nextLine();
         DataManager dataManager = new DataManager(am, em);
-        EventManager eventManager = dataManager.readEventManager();
-        AccountManager accountManager = dataManager.readAccountManager();
+        eventManager = dataManager.readEventManager();
+        accountManager = dataManager.readAccountManager();
         login();
         dataManager.saveEventManager(eventManager);
         dataManager.saveAccountManager(accountManager);
     }
+
+    public static void main(String[] args){
+        MainSystem ms = new MainSystem();
+        ms.run();
+    }
+
+    
 }
