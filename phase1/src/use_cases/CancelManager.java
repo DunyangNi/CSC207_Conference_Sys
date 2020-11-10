@@ -17,6 +17,7 @@ import entities.*;
  * </pre>
  */
 public class CancelManager {
+    public EventTalk talk;
 
     //------------------------------------------------------------
     // Methods
@@ -27,10 +28,10 @@ public class CancelManager {
      * Does nothing if Attendee is not in Talk.
      * @param attendee given Attendee
      */
-    public void removeAttendee(EventTalk talk, Attendee attendee) {
+    public static void removeAttendee(EventTalk talk, Attendee attendee) {
         if (isSignedUp(talk, attendee)) {
             // Get and copy list of Attendees from EventTalk and list of EventTalks from Attendee
-            ArrayList<Account> eventAttendees = new ArrayList<>(talk.getAttendees());
+            ArrayList<Attendee> eventAttendees = new ArrayList<>(talk.getAttendees());
             ArrayList<EventTalk> attendeeEvents = new ArrayList<>(attendee.getAttendeeTalks());
             // Modify each list
             eventAttendees.remove(attendee);
@@ -47,7 +48,7 @@ public class CancelManager {
      * @param attendee given Attendee
      * @return whether talk contains Attendee or not
      */
-    public boolean isSignedUp(EventTalk talk, Attendee attendee) { return talk.getAttendees().contains(attendee); }
+    public static boolean isSignedUp(EventTalk talk, Attendee attendee) { return talk.getAttendees().contains(attendee); }
 
     //------------------------------------------------------------
     // Test

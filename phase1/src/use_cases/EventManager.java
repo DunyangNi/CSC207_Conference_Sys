@@ -1,19 +1,41 @@
 package use_cases;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
-import entities.EventTalk;
-import entities.Event;
-import entities.Account;
-import entities.Organizer;
-import entities.Speaker;
+
+import entities.*;
+
+import java.util.Arrays;
 
 public class EventManager implements Serializable {
     private ArrayList<Event> eventlist;
     private ArrayList<EventTalk> talklist;
-
     private ArrayList<String> locationlist;
+
+    // (NEW!)
+    @Override
+    public boolean equals(Object obj) {
+        boolean result = false;
+        if (obj instanceof EventManager) {
+            boolean sameEventList = eventlist.equals(((EventManager) obj).getEventlist());
+            boolean sameTalkList = talklist.equals(((EventManager) obj).getTalklist());
+            boolean sameLocationList = locationlist.equals(((EventManager) obj).getLocationlist());
+            result = sameEventList && sameTalkList && sameLocationList;
+        }
+        return result;
+    }
+
+    // (NEW!)
+    public ArrayList<Event> getEventlist() { return eventlist; }
+    public ArrayList<EventTalk> getTalklist() { return talklist; }
+    public ArrayList<String> getLocationlist() { return locationlist; }
+
+    // (NEW!)
+    public EventManager() {
+        this(new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+    }
 
     public EventManager(ArrayList<Event> eventlist, ArrayList<EventTalk> talklist, ArrayList<String> locations){
         this.eventlist = eventlist;
@@ -64,6 +86,9 @@ public class EventManager implements Serializable {
      */
 
     public boolean AddNewEvent(String topic, Calendar time, String location, Account organizer){
+        if(!this.locationlist.contains(location)) {
+            return false;
+        }
         for(Event event: eventlist){
             if (event.getLocation().equals(location) && CheckTimeOverlap(time, event.getTime())){
                 return false;
@@ -85,6 +110,9 @@ public class EventManager implements Serializable {
      */
 
     public boolean AddNewEvent(String topic, Calendar time, String location, Account organizer, Account speaker){
+        if(!this.locationlist.contains(location)) {
+            return false;
+        }
         for(Event event: eventlist) {
             if (event.getLocation().equals(location) && CheckTimeOverlap(time, event.getTime())) {
                 return false;
@@ -145,6 +173,9 @@ public class EventManager implements Serializable {
      */
 
     public boolean ChangeLocation(Event event_to_change, String new_location) {
+        if(!this.locationlist.contains(new_location)) {
+            return false;
+        }
         for(Event event: eventlist) {
             String location1 = event.getLocation();
             Calendar time1 = event.getTime();
@@ -182,10 +213,22 @@ public class EventManager implements Serializable {
         return true;
     }
 
-    public EventTalk fetchTalk(String topic) {
+    public ArrayList<String> fetchLocations() {
+        return this.locationlist;
+    }
+    public EventTalk fetchTalk(String topic, Calendar time) {
         for(EventTalk talk: this.talklist) {
-            if(talk.getTopic().equals(topic)) {
+            if(talk.getTopic().equals(topic) && talk.getTime().compareTo(time) == 0) {
                 return talk;
+            }
+        }
+        throw new RuntimeException();
+    }
+
+    public Event fetchEvent(String topic, Calendar time) {
+        for(Event event: this.eventlist) {
+            if(event.getTopic().equals(topic) && event.getTime().compareTo(time) == 0) {
+                return event;
             }
         }
         throw new RuntimeException();
@@ -198,16 +241,95 @@ public class EventManager implements Serializable {
         }
 
         for(Event event: this.eventlist) {
-            if(event.getTopic().equals(talk.getTopic())) {
+            if(event.getTopic().equals(talk.getTopic()) && event.getTime().compareTo(talk.getTime()) == 0) {
                 this.eventlist.remove(event);
                 break;
             }
         }
         for(EventTalk Talk: this.talklist) {
-            if(Talk.getTopic().equals((talk.getTopic()))){
+            if(Talk.getTopic().equals((talk.getTopic())) && Talk.getTime().compareTo(talk.getTime()) == 0){
                 this.talklist.remove(Talk);
                 break;
             }
         }
     }
+
+    public EventTalk[] fetchSortedTalkList(ArrayList<EventTalk> talklist) {
+        //talk list sorted by time in increasing order
+        EventTalk[] eventarray = new EventTalk[talklist.size()];
+        for(int i = 0; i<= talklist.size() - 1; i++) {
+            eventarray[i] = talklist.get(i);
+        }
+        Arrays.sort(eventarray);
+        return eventarray;
+    }
+
+    public Calendar[] fetchTimeSortedTalkTimes(ArrayList<EventTalk> talklist) {
+        EventTalk[] eventarray = this.fetchSortedTalkList(talklist);
+        Calendar[] sortedtimes = new Calendar[eventarray.length];
+        for(int i = 0; i<= eventarray.length - 1; i++) {
+            sortedtimes[i] = eventarray[i].getTime();
+        }
+        return sortedtimes;
+    }
+
+    public String[] fetchTimeSortedTalkTopics(ArrayList<EventTalk> talklist) {
+        EventTalk[] eventarray = this.fetchSortedTalkList(talklist);
+        String[] sortedtopics = new String[eventarray.length];
+        for(int i = 0; i<= eventarray.length - 1; i++) {
+            sortedtopics[i] = eventarray[i].getTopic();
+        }
+        return sortedtopics;
+    }
+    public String[] fetchTimeSortedTalkSpeakers(ArrayList<EventTalk> talklist) {
+        EventTalk[] eventarray = this.fetchSortedTalkList(talklist);
+        String[] sortedspeakernames = new String[eventarray.length];
+        for(int i = 0; i<= eventarray.length - 1; i++) {
+            sortedspeakernames[i] = eventarray[i].getSpeaker().getFirstName() + " " + eventarray[i].getSpeaker().getLastName();
+        }
+        return sortedspeakernames;
+    }
+
+    public String[] fetchTimeSortedLocations(ArrayList<EventTalk> talklist) {
+        EventTalk[] eventarray = this.fetchSortedTalkList(talklist);
+        String[] sortedlocations = new String[eventarray.length];
+        for(int i = 0; i<= eventarray.length - 1; i++) {
+            sortedlocations[i] = eventarray[i].getLocation();
+        }
+        return sortedlocations;
+    }
+
+    public boolean containsEvent(String topic, Calendar time) {
+        for(Event event: this.eventlist) {
+            if(event.getTopic().equals(topic) && event.getTime().compareTo(time) == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean containsTalk(String topic, Calendar time) {
+        for(EventTalk talk: this.talklist) {
+            if(talk.getTopic().equals(topic) && talk.getTime().compareTo(time) == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public ArrayList<EventTalk> fetchTalkList() {
+        return this.talklist;
+    }
+
+    public ArrayList<String> getAttendeesAtEvent(String topic, Calendar time) {
+        Event event = this.fetchEvent(topic, time);
+        ArrayList<String> attendeeusernames = new ArrayList<>();
+        ArrayList<Attendee> attendees = event.getAttendees();
+
+        for(int i = 0; i<= attendees.size() - 1; i++) {
+            attendeeusernames.add(attendees.get(i).getUsername());
+        }
+        return attendeeusernames;
+    }
+
+
 }

@@ -30,10 +30,10 @@ public class SignupManager {
      * @param talk given EventTalk
      * @param attendee given Attendee
      */
-    public void addAttendee(EventTalk talk, Attendee attendee) {
+    public static void addAttendee(EventTalk talk, Attendee attendee) {
         if (!isFull(talk) && !isSignedUp(talk, attendee)) {
             // Get and copy list of Attendees from EventTalk and list of EventTalks from Attendee
-            ArrayList<Account> eventAttendees = new ArrayList<>(talk.getAttendees());
+            ArrayList<Attendee> eventAttendees = new ArrayList<>(talk.getAttendees());
             ArrayList<EventTalk> attendeeEvents = new ArrayList<>(attendee.getAttendeeTalks());
             // Modify each list
             eventAttendees.add(attendee);
@@ -48,14 +48,14 @@ public class SignupManager {
      * Returns the given seat limit of an EventTalk.
      * @return seat limit
      */
-    public int getSeatLimit() { return 2; }
+    public static int getSeatLimit() { return 2; }
 
     /**
      * Returns whether given EventTalk is full.
      * @param talk given EventTalk
      * @return whether talk is full or not
      */
-    public boolean isFull(EventTalk talk) { return talk.getAttendees().size() == getSeatLimit(); }
+    public static boolean isFull(EventTalk talk) { return talk.getAttendees().size() == getSeatLimit(); }
 
     /**
      * Returns whether given EventTalk contains a given Attendee.
@@ -63,7 +63,7 @@ public class SignupManager {
      * @param attendee given Attendee
      * @return whether talk contains Attendee or not
      */
-    public boolean isSignedUp(EventTalk talk, Attendee attendee) { return talk.getAttendees().contains(attendee); }
+    public static boolean isSignedUp(EventTalk talk, Attendee attendee) { return talk.getAttendees().contains(attendee); }
 
     //------------------------------------------------------------
     // Test

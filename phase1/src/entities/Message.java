@@ -27,16 +27,6 @@ public class Message {
     //------------------------------------------------------------
     // Constructors
     //------------------------------------------------------------
-    /**
-     * Creates a msg object with a sender and a message content.
-     *
-     * @param sender a message sender
-     * @param content a message content
-     */
-    public Message(Account sender, Account receiver, String content) {
-        // call other constructor but with default value
-        new Message(sender, receiver, content, null);
-    }
 
     /**
      * Creates a object with a sender and a message content in reply to
@@ -53,6 +43,17 @@ public class Message {
         this.msgToReply = msgToReply;
         this.id = sid;
         sid++;
+    }
+
+    /**
+     * Creates a msg object with a sender and a message content.
+     *
+     * @param sender a message sender
+     * @param content a message content
+     */
+    public Message(Account sender, Account receiver, String content) {
+        // call other constructor but with default value
+        this(sender, receiver, content, null);
     }
 
     /**

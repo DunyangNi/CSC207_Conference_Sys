@@ -30,12 +30,22 @@ public class ConversationManager {
      * @param recipient given recipient Account of a Conversation
      * @return string representation of selected Conversation.
      */
-    public static String getConversation(Account current, Account recipient) {
+    public static String getConversationString(Account current, Account recipient) {
         Conversation selectConversation = current.getConversations().get(recipient.getUsername());
         if (selectConversation != null)
             return selectConversation.toString();
         else
             return "";
+    }
+
+    public static ArrayList<String> getConversationArrayList(Account current, Account recipient) {
+        Conversation selectConversation = current.getConversations().get(recipient.getUsername());
+        if(selectConversation != null) {
+            return selectConversation.toArrayList();
+        }
+        else {
+            return new ArrayList<String>();
+        }
     }
 
     /**
