@@ -81,7 +81,7 @@ public class MainSystem {
         String am = input.nextLine();
         System.out.println("Print enter the address for EventManager");
         String em = input.nextLine();
-        DataManager dataManager = new DataManager(am, em);
+        dataManager = new DataManager(am, em);
         eventManager = dataManager.readEventManager();
         accountManager = dataManager.readAccountManager();
         login();
