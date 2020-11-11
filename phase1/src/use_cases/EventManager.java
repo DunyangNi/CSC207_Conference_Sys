@@ -55,7 +55,6 @@ public class EventManager implements Serializable {
      * WE ASSUME THAT EVENTS LAST ONE HOUR ACCORDING TO SPECIFICATIONS AND THAT THEY START
      * AT START OF HOUR
      */
-
     public boolean CheckTimeOverlap(Calendar time_1, Calendar time_2){
         return time_1.compareTo(time_2) == 0;
     }
@@ -64,59 +63,76 @@ public class EventManager implements Serializable {
      * NOTE: THESE METHODS WILL CHECK IF TIME CONFLICTS ARE CREATED:
      * THEY WILL REJECT (AND GIVE SIGNAL OF FAILURE) WHEN CONFLICTS
      * WOULD BE CREATED
-     * Overloading is used; two versions of AddNewEvent
+     * Overloading is used; two versions of AddNewEvent() and validEvent() (helper)
      */
+
+    /**
+     * (NEW!) (Helper) Returns true iff EventTalk is valid: no conflicting time or existing events and talks.
+     * @param topic given topic
+     * @param time given time
+     * @param location given location
+     * @param speaker given speaker
+     * @return true iff EventTalk is valid: no conflicting time or existing events and talks.
+     */
+    public boolean validEvent(String topic, Calendar time, String location, Account speaker) {
+        // call general helper
+        if (validEvent(topic, time, location)) {
+            // check talklist
+            for(EventTalk talk: talklist) {
+                if (talk.getSpeaker().equals(speaker) && CheckTimeOverlap(time, talk.getTime())) { return false; }
+                if (talk.getTopic().equals(topic)) { return false; }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * (NEW!) (Helper) Returns true iff Event is valid: no conflicting time or existing events.
+     * @param topic given topic
+     * @param time given time
+     * @param location given location
+     * @return true iff Event is valid: no conflicting time or existing events.
+     */
+    public boolean validEvent(String topic, Calendar time, String location) {
+        // check if location is valid
+        if (!this.locationlist.contains(location)) { return false; }
+        // check if any conflicting events or events already existing
+        for(Event event: eventlist) {
+            if (event.getLocation().equals(location) && CheckTimeOverlap(time, event.getTime())){ return false; }
+            if (event.getTopic().equals(topic)) { return false; }
+        }
+        return true;
+    }
 
     /**
      * AddNewEvent: Checks for same location be used in overlapping time
      */
-
     public boolean AddNewEvent(String topic, Calendar time, String location, Account organizer){
-        if(!this.locationlist.contains(location)) {
-            return false;
-        }
-        for(Event event: eventlist){
-            if (event.getLocation().equals(location) && CheckTimeOverlap(time, event.getTime())){
-                return false;
-            }
-            if(event.getTopic().equals(topic)) {
-                return false;
-            }
-        }
-        eventlist.add(new Event(topic, time, location, organizer));
+        if (validEvent(topic, time, location))
+            eventlist.add(new Event(topic, time, location, organizer));
         return true;
     }
 
     /**
      * AddNewEvent: Checks for same location or same speaker be used in overlapping time
      * SINCE THIS IS AN EVENTTALK IT IS ADDED TO BOTH LISTS
+     * (NEW!) Updates the associated Speaker's speakerTalks
      */
 
-    public boolean AddNewEvent(String topic, Calendar time, String location, Account organizer, Account speaker){
-        if(!this.locationlist.contains(location)) {
-            return false;
+    public boolean AddNewEvent(String topic, Calendar time, String location, Account organizer, Account speaker) {
+        if (validEvent(topic, time, location, speaker) && speaker instanceof Speaker) {
+            // create a new event and add it to both eventlist and talklist
+            EventTalk eventToAdd = new EventTalk(topic, time, location, organizer, speaker);
+            eventlist.add(eventToAdd);
+            talklist.add(eventToAdd);
+            // update speaker's list of talks
+            ArrayList<EventTalk> speakerTalks = ((Speaker) speaker).getSpeakerTalks();
+            speakerTalks.add(eventToAdd);
+            ((Speaker) speaker).setSpeakerTalks(speakerTalks);
+            return true;
         }
-        for(Event event: eventlist) {
-            if (event.getLocation().equals(location) && CheckTimeOverlap(time, event.getTime())) {
-                return false;
-            }
-            if(event.getTopic().equals(topic)) {
-                return false;
-            }
-        }
-
-        for(EventTalk talk: talklist) {
-            if (talk.getSpeaker().equals(speaker) && CheckTimeOverlap(time, talk.getTime())) {
-                return false;
-            }
-            if(talk.getTopic().equals(topic)) {
-                return false;
-            }
-        }
-
-        eventlist.add(new EventTalk(topic, time, location, organizer, speaker));
-        talklist.add(new EventTalk(topic, time, location, organizer, speaker));
-        return true;
+        return false;
     }
 
     public void ChangeTopic(Event event_to_change, String new_topic){
