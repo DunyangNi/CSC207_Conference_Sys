@@ -181,12 +181,24 @@ public class AccountManager implements Serializable {
         return OrganizerList.containsKey(username);
     }
 
+    public boolean containsAccount (String username) { return AccountList.containsKey(username); }
+
     public ArrayList<EventTalk> fetchSpeakerTalkList(String username) {
         return this.fetchSpeaker(username).getSpeakerTalks();
     }
 
     public boolean isTalkSpeaker(Speaker speaker, EventTalk talk) {
         return speaker.getUsername().equals(talk.getSpeaker().getUsername());
+    }
+
+    /**
+     * Precondition: AccountList contains username
+     * @param username the username of some user
+     * @param password the input passport
+     * @return true iff the input passport is the same as the passport in the Account with given username
+     */
+    public boolean checkPassword(String username, String password){
+        return password.equals(fetchAccount(username).getPassword());
     }
 
 
