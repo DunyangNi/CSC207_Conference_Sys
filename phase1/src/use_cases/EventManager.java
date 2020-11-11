@@ -135,9 +135,6 @@ public class EventManager implements Serializable {
 
         eventlist.add(new EventTalk(topic, time, location, organizer, speaker));
         talklist.add(new EventTalk(topic, time, location, organizer, speaker));
-        if(!this.locationlist.contains(location)) {
-            locationlist.add(location);
-        }
         return true;
     }
 
