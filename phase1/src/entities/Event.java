@@ -20,8 +20,8 @@ import java.util.Calendar;
  */
 public class Event implements Serializable, Comparable<Event> {
     private String topic;
-    private Calendar time;
     private String location;
+    private Calendar time;
     private Account organizer;
     private ArrayList<Attendee> attendees = new ArrayList<>();
     private static int sid = 0;
@@ -84,7 +84,7 @@ public class Event implements Serializable, Comparable<Event> {
     /**
      * Reset the ID counter for testing purpose.
      */
-    static void resetSid(){
+    public static void resetSid(){
         sid = 0;
     }
 

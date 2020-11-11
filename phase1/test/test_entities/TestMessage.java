@@ -100,8 +100,8 @@ public class TestMessage {
     @Test(timeout = 50)
     public void test_getId() {
         Message.resetSid();
-        Message m1 = new Message(acct1, null,  "content1") ;
-        Message m2 = new Message(acct1, null,  "content1") ;
+        Message m1 = new Message(acct1, acct2,  "content1") ;
+        Message m2 = new Message(acct1, acct2,  "content1") ;
         String exp1 = "true";
         String exp2 = "true";
         String act1 = (m1.getId() == 1)+ "";

@@ -17,7 +17,7 @@ public class AccountManager implements Serializable {
     private HashMap<String, Attendee> AttendeeList;
     private HashMap<String, Organizer> OrganizerList;
     private HashMap<String, Speaker> SpeakerList;
-    private HashMap<String, Account> AccountList = new HashMap<>();
+    private HashMap<String, Account> AccountList = new HashMap<String, Account>();
 
     // (NEW!)
     @Override

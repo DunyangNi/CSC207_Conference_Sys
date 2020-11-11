@@ -10,6 +10,10 @@ public class Speaker extends Account {
         super(username, password, firstName, lastName);
     }
 
+
+
+
+
     public ArrayList<EventTalk> getSpeakerTalks() {
         return speakerTalks;
     }

@@ -1,7 +1,6 @@
 package gateway;
 
-import entities.Account;
-import entities.Organizer;
+import entities.*;
 import use_cases.AccountManager;
 import use_cases.EventManager;
 
@@ -42,8 +41,6 @@ public class DataManager {
 
         output.writeObject(object);
         output.close();
-        buffer.close(); // added for tests. ~LZ
-        file.close(); // added for tests. ~LZ
     }
 
     /**
@@ -66,7 +63,7 @@ public class DataManager {
         try{
             saveObject(accountPath, accountManager);
         } catch (IOException e) {
-            System.out.println("Failed to save the AccountManager.");
+            System.out.println("Failed to save the EventManager.");
         }
     }
 
@@ -82,15 +79,15 @@ public class DataManager {
 
             AccountManager am = (AccountManager) input.readObject();
             input.close();
-            buffer.close(); // added for tests. ~LZ
-            file.close(); // added for tests. ~LZ
             return am;
         } catch (IOException e) {
             System.out.println("Cannot read the AccountManager, creating a new AccountManager");
-            return new AccountManager();
+            return new AccountManager(new HashMap<String, Attendee>(), new HashMap<String, Organizer>(),
+                    new HashMap<String, Speaker>());
         } catch (ClassNotFoundException e) {
             System.out.println("There is no AccountManager in database, creating a new AccountManager");
-            return new AccountManager();
+            return new AccountManager(new HashMap<String, Attendee>(), new HashMap<String, Organizer>(),
+                    new HashMap<String, Speaker>());
         }
     }
 
@@ -106,16 +103,27 @@ public class DataManager {
 
             EventManager em = (EventManager) input.readObject();
             input.close();
-            buffer.close(); // added for tests. ~LZ
-            file.close(); // added for tests. ~LZ
             return em;
         } catch (IOException e) {
-            System.out.println("Cannot read the EventManager, creating a new EventManager");
-            return new EventManager();
+            System.out.println("Cannot read the EventManager, creating a new AccountManager");
+            return new EventManager(new ArrayList<Event>(), new ArrayList<EventTalk>(), new ArrayList<String>());
         } catch (ClassNotFoundException e) {
-            System.out.println("There is no EventManager in database, creating a new EventManager");
-            return new EventManager();
+            System.out.println("There is no EventManager in database, creating a new AccountManager");
+            return new EventManager(new ArrayList<Event>(), new ArrayList<EventTalk>(), new ArrayList<String>());
         }
     }
+
+    public static void main(String[] args){
+        DataManager dm = new DataManager("AccountDatabase.ser", "EventDatabase.ser");
+        EventManager em = dm.readEventManager();
+        AccountManager am = dm.readAccountManager();
+        Organizer o = new Organizer("abc", "123456", "a", "bc");
+        em.AddNewEvent("abc", Calendar.getInstance(),"room 1", o);
+        am.AddNewAttendee("firstuser", "123456", "first", "user");
+        dm.saveAccountManager(am);
+        dm.saveEventManager(em);
+    }
+
+
 }
 

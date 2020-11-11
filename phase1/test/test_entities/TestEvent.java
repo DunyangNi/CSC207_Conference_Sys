@@ -1,7 +1,6 @@
 package test_entities;
 
-import entities.Account;
-import entities.Event;
+import entities.*;
 import org.junit.*;
 
 import java.text.SimpleDateFormat;
@@ -13,8 +12,8 @@ import static org.junit.Assert.*;
 public class TestEvent {
     static Calendar date1;
     static Calendar date2;
-    static Account acct1;
-    static Account  acct2;
+    static Attendee acct1;
+    static Attendee  acct2;
     static SimpleDateFormat sdf;
 
     @BeforeClass
@@ -25,8 +24,8 @@ public class TestEvent {
         date2 = Calendar.getInstance();
         date2.set(2002, 03, 04, 13, 55, 02);
 
-        acct1 = new Account("Name1","pw1", "first1", "last1");
-        acct2 = new Account("Name2","pw2", "first2", "last2");
+        acct1 = new Attendee("Name1","pw1", "first1", "last1");
+        acct2 = new Attendee("Name2","pw2", "first2", "last2");
 
         sdf = new SimpleDateFormat("yyyy MMM dd HH:mm:ss");
     }
@@ -149,7 +148,7 @@ public class TestEvent {
     @Test(timeout = 50)
     public void test_setAttendees(){
         Event.resetSid();
-        ArrayList<Account> atd1 = new ArrayList<Account>();
+        ArrayList<Attendee> atd1 = new ArrayList<Attendee>();
         atd1.add(acct1);
         atd1.add(acct2);
 
@@ -211,7 +210,7 @@ public class TestEvent {
 
     @Test(timeout = 50)
     public void test_getAttendees(){
-        ArrayList<Account> atd1 = new ArrayList<Account>();
+        ArrayList<Attendee> atd1 = new ArrayList<Attendee>();
         atd1.add(acct1);
         atd1.add(acct2);
 
