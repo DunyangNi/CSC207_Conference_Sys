@@ -83,19 +83,25 @@ public class AccountManager implements Serializable {
 
     public void AddNewSpeaker(String username, String password, String firstName, String lastName) {
         if (!(AccountList.containsKey(username))) {
-            SpeakerList.put(username, new Speaker(username, password, firstName, lastName));
+            Speaker speaker = new Speaker(username, password, firstName, lastName);
+            SpeakerList.put(username, speaker);
+            AccountList.put(username, speaker);
         }
     }
 
     public void AddNewAttendee(String username, String password, String firstName, String lastName) {
         if (!(AccountList.containsKey(username))) {
-            AttendeeList.put(username, new Attendee(username, password, firstName, lastName));
+            Attendee attendee = new Attendee(username, password, firstName, lastName);
+            AttendeeList.put(username, attendee);
+            AccountList.put(username, attendee);
         }
     }
 
     public void AddNewOrganizer(String username, String password, String firstName, String lastName) {
         if (!(AccountList.containsKey(username))) {
-            OrganizerList.put(username, new Organizer(username, password, firstName, lastName));
+            Organizer organizer = new Organizer(username, password, firstName, lastName);
+            OrganizerList.put(username, organizer);
+            AccountList.put(username, organizer);
         }
     }
 
