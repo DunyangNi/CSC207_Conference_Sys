@@ -49,30 +49,4 @@ public class CancelManager {
      * @return whether talk contains Attendee or not
      */
     public static boolean isSignedUp(EventTalk talk, Attendee attendee) { return talk.getAttendees().contains(attendee); }
-
-    //------------------------------------------------------------
-    // Test
-    //------------------------------------------------------------
-
-    public static void main(String[] args){
-        // Create an event, organizer, speaker, attendee
-        Calendar evt_date = Calendar.getInstance();
-        evt_date.set(2020, Calendar.APRIL, 23, 10, 12);
-        Organizer z1 = new Organizer("hugofirst", "pass101", "Hugo", "First");
-        Speaker s1 = new Speaker("kendoe", "pass789", "Ken", "Doe");
-        Attendee a1 = new Attendee("johndoe", "pass123", "John", "Doe");
-        EventTalk e1 = new EventTalk("topic1", evt_date, "auditorium", z1, s1);
-
-        // Create a SignupManager and add Attendee
-        SignupManager m1 = new SignupManager();
-        m1.addAttendee(e1, a1);
-        System.out.println(e1);
-
-        // Create a CancelManager and remove Attendee
-        CancelManager c1 = new CancelManager();
-        c1.removeAttendee(e1, a1);
-        System.out.println(e1);
-        c1.removeAttendee(e1, a1);
-        System.out.println(e1);
-    }
 }
