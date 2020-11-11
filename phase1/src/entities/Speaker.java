@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Speaker extends Account {
 
-    private ArrayList<EventTalk> speakerTalks;
+    private ArrayList<EventTalk> speakerTalks = new ArrayList<EventTalk>();
 
     public Speaker(String username, String password, String firstName, String lastName) {
         super(username, password, firstName, lastName);
