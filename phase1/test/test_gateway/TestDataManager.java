@@ -1,9 +1,10 @@
-package gateway;
+package test_gateway;
 
 import java.io.File;
 import java.util.Calendar;
 import entities.Organizer;
 import entities.Speaker;
+import gateway.DataManager;
 import use_cases.AccountManager;
 import use_cases.EventManager;
 import org.junit.BeforeClass;
