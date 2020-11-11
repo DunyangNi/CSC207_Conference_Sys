@@ -181,6 +181,8 @@ public class AccountManager implements Serializable {
         return OrganizerList.containsKey(username);
     }
 
+    public boolean containsAccount (String username) { return AccountList.containsKey(username); }
+
     public ArrayList<EventTalk> fetchSpeakerTalkList(String username) {
         return this.fetchSpeaker(username).getSpeakerTalks();
     }
