@@ -34,7 +34,7 @@ public class OrganizerController {
 
         Calendar time = Calendar.getInstance();
         time.set(Calendar.YEAR, year);
-        TimeZone tz = TimeZone.getTimeZone("EST");
+        TimeZone tz = TimeZone.getTimeZone("America/New_York");
         time.setTimeZone(tz);
         time.set(Calendar.DAY_OF_MONTH, dayofmonth);
         time.set(Calendar.MONTH, month - 1);
@@ -64,7 +64,7 @@ public class OrganizerController {
         //requires a method that allows you to query speakers based on username
         Calendar time = Calendar.getInstance();
         time.set(Calendar.YEAR, year);
-        TimeZone tz = TimeZone.getTimeZone("EST");
+        TimeZone tz = TimeZone.getTimeZone("America/New_York");
         time.setTimeZone(tz);
         time.set(Calendar.DAY_OF_MONTH, dayofmonth);
         time.set(Calendar.MONTH, month - 1);
@@ -82,7 +82,7 @@ public class OrganizerController {
     public void rescheduleTalk(String topic, Calendar oldtime, int year, int dayofmonth, int month, int hourofday) {
         Calendar time = Calendar.getInstance();
         time.set(Calendar.YEAR, year);
-        TimeZone tz = TimeZone.getTimeZone("EST");
+        TimeZone tz = TimeZone.getTimeZone("America/New_York");
         time.setTimeZone(tz);
         time.set(Calendar.DAY_OF_MONTH, dayofmonth);
         time.set(Calendar.MONTH, month - 1);

@@ -38,7 +38,7 @@ public class AttendeeController {
 
         Calendar time = Calendar.getInstance();
         time.set(Calendar.YEAR, year);
-        TimeZone tz = TimeZone.getTimeZone("EST");
+        TimeZone tz = TimeZone.getTimeZone("America/New_York");
         time.setTimeZone(tz);
         time.set(Calendar.DAY_OF_MONTH, dayofmonth);
         time.set(Calendar.MONTH, month - 1);
