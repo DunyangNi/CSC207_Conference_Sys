@@ -100,9 +100,6 @@ public class EventManager implements Serializable {
             }
         }
         eventlist.add(new Event(topic, time, location, organizer));
-        if(!this.locationlist.contains(location)) {
-            locationlist.add(location);
-        }
         return true;
     }
 
@@ -234,11 +231,6 @@ public class EventManager implements Serializable {
     }
 
     public void cancelTalk(EventTalk talk) {
-        Calendar time = Calendar.getInstance();
-        if(time.compareTo(talk.getTime()) >= 0) {
-            return;
-        }
-
         for(Event event: this.eventlist) {
             if(event.getTopic().equals(talk.getTopic()) && event.getTime().compareTo(talk.getTime()) == 0) {
                 this.eventlist.remove(event);
