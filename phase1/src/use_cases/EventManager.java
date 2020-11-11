@@ -215,6 +215,9 @@ public class EventManager implements Serializable {
     }
 
     public void cancelTalk(EventTalk talk) {
+        if(Calendar.getInstance().compareTo(talk.getTime()) >= 0) {
+            return;
+        }
         for(Event event: this.eventlist) {
             if(event.getTopic().equals(talk.getTopic()) && event.getTime().compareTo(talk.getTime()) == 0) {
                 this.eventlist.remove(event);
