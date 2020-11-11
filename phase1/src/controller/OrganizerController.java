@@ -21,12 +21,16 @@ public class OrganizerController {
         Scanner sc = new Scanner(System.in);
         System.out.println("Specify the year of the talk");
         int year = sc.nextInt();
+        sc.nextLine();
         System.out.println("Specify the month of the talk (1-12)");
         int month = sc.nextInt();
+        sc.nextLine();
         System.out.println("Specify the day of the month of the talk (1-31)");
         int dayofmonth = sc.nextInt();
+        sc.nextLine();
         System.out.println("Specify the hour of the day of the talk (0-23)");
         int hourofday = sc.nextInt();
+        sc.nextLine();
 
         Calendar time = Calendar.getInstance();
         time.set(Calendar.YEAR, year);
@@ -169,55 +173,62 @@ public class OrganizerController {
             System.out.println("12 = remove a contact");
             System.out.println("13 = view contacts list");
             System.out.println("14 = view your conversation with someone");
-            System.out.println("15 = see the list of locations");
+            System.out.println("15 = see the list of rooms");
             int choice = sc.nextInt();
+            sc.nextLine();
 
             if(choice == 1){
                 System.out.println("Specify location:");
-                String line1 = sc.nextLine();
                 String location = sc.nextLine();
                 this.addNewLocation(location);
             }
             else if(choice == 2) {
                 System.out.println("Specify account username");
-                String line1 = sc.nextLine();
+                //sc.nextLine();
                 String username = sc.nextLine();
+
                 System.out.println("Specify account password");
-                line1 = sc.nextLine();
+                //sc.nextLine();
                 String password = sc.nextLine();
-                System.out.println("What is your first name?");
-                line1 = sc.nextLine();
+
+                System.out.println("What is speaker's first name?");
+                //sc.nextLine();
                 String firstname = sc.nextLine();
-                System.out.println("What is your last name?");
-                line1 = sc.nextLine();
+
+                System.out.println("What is speaker's last name?");
+                //sc.nextLine();
                 String lastname = sc.nextLine();
+
                 this.accountmanager.AddNewSpeaker(username, password, firstname, lastname);
             }
             else if(choice == 3) {
                 //public void scheduleSpeaker(int year, int dayofmonth, int month, int hourofday, String topic, String location, String speakerusername) {
                 System.out.println("Specify the username of talk speaker");
-                String line1 = sc.nextLine();
+                //String line1 = sc.nextLine();
                 String username = sc.nextLine();
                 System.out.println("Specify the location of the talk");
-                line1 = sc.nextLine();
+                //line1 = sc.nextLine();
                 String location = sc.nextLine();
                 System.out.println("Specify the topic of the talk");
-                line1 = sc.nextLine();
+                //line1 = sc.nextLine();
                 String topic = sc.nextLine();
                 System.out.println("Specify the year of the talk");
                 int year = sc.nextInt();
+                sc.nextLine();
                 System.out.println("Specify the month of the talk (1-12)");
                 int month = sc.nextInt();
+                sc.nextLine();
                 System.out.println("Specify the day of the month of the talk (1-31)");
                 int dayofmonth = sc.nextInt();
+                sc.nextLine();
                 System.out.println("Specify the hour of the day of the talk (0-23)");
                 int hourofday = sc.nextInt();
+                sc.nextLine();
                 this.scheduleSpeaker(year, dayofmonth, month, hourofday,topic, location, username);
                 this.scheduleSpeaker(year, dayofmonth, month, hourofday, topic, location, username);
             }
             else if(choice == 4) {
                 System.out.println("Specify the exact topic of the talk you wish to cancel");
-                String line1 = sc.nextLine();
                 String topic = sc.nextLine();
 
                 Calendar time = this.timeoftalkrequesthelper();
@@ -227,50 +238,54 @@ public class OrganizerController {
             else if(choice == 5) {
                 // rescheduleTalk(String topic, int year, int dayofmonth, int month, int hourofday)
                 System.out.println("Specify the exact topic of the talk you wish to reschedule");
-                String line1 = sc.nextLine();
+                //String line1 = sc.nextLine();
                 String topic = sc.nextLine();
 
                 Calendar oldtime = this.timeoftalkrequesthelper();
 
                 System.out.println("Specify the year you would like to reschedule this talk to");
                 int year = sc.nextInt();
+                sc.nextLine();
                 System.out.println("Specify the month you would like to reschedule to (1-12)");
                 int month = sc.nextInt();
+                sc.nextLine();
                 System.out.println("Specify the day of the month you would like to reschedule to (1-31)");
                 int dayofmonth = sc.nextInt();
+                sc.nextLine();
                 System.out.println("Specify the hour of the day you would like to reschedule to (0-23)");
                 int hourofday = sc.nextInt();
+                sc.nextLine();
                 this.rescheduleTalk(topic, oldtime, year, dayofmonth, month, hourofday);
             }
             else if(choice == 6) {
                 //messageAllSpeakers(String message)
                 System.out.println("Specify the message that you want to send to all speakers");
-                String line1 = sc.nextLine();
+                //String line1 = sc.nextLine();
                 String message = sc.nextLine();
                 this.messageAllSpeakers(message);
             }
             else if(choice == 7) {
                 //messageSpeaker(String message, String speakerusername)
                 System.out.println("Specify the username of the speaker you want to message");
-                String line1 = sc.nextLine();
+                //String line1 = sc.nextLine();
                 String username = sc.nextLine();
                 System.out.println("Specify the message you want to send the speaker");
-                line1 = sc.nextLine();
+                //line1 = sc.nextLine();
                 String message = sc.nextLine();
                 this.messageSpeaker(message, username);
             }
             else if(choice == 8) {
                 System.out.println("Specify the message that you want to send to all attendees");
-                String line1 = sc.nextLine();
+                //String line1 = sc.nextLine();
                 String message = sc.nextLine();
                 this.messageAllAttendees(message);
             }
             else if(choice == 9) {
                 System.out.println("Specify the username of the attendee you want to message");
-                String line1 = sc.nextLine();
+                //String line1 = sc.nextLine();
                 String username = sc.nextLine();
                 System.out.println("Specify the message you want to send the attendee");
-                line1 = sc.nextLine();
+                //line1 = sc.nextLine();
                 String message = sc.nextLine();
                 this.messageAttendee(message, username);
             }
@@ -279,14 +294,14 @@ public class OrganizerController {
             }
             else if(choice == 11) {
                 System.out.println("Specify username of contact to add");
-                String line1 = sc.nextLine();
+                //String line1 = sc.nextLine();
                 String friendusername = sc.nextLine();
                 this.addFriend(friendusername);
 
             }
             else if(choice == 12) {
                 System.out.println("Specify username of contact to remove");
-                String line1 = sc.nextLine();
+                //String line1 = sc.nextLine();
                 String usernametoremove = sc.nextLine();
                 this.removeFriend(usernametoremove);
 
@@ -299,10 +314,11 @@ public class OrganizerController {
             else if(choice == 14) {
                 //viewMessagesFrom(String recipientusername, int nummessages)
                 System.out.println("Specify username of user you would like to view your conversation with");
-                String line1 = sc.nextLine();
+                //String line1 = sc.nextLine();
                 String user = sc.nextLine();
                 System.out.println("How many past messages would you like to see?");
                 int pastmessages = sc.nextInt();
+                sc.nextLine();
                 this.viewMessagesFrom(user, pastmessages);
 
             }
@@ -313,6 +329,7 @@ public class OrganizerController {
             System.out.println("Thank you. Would you like to do another task?");
             System.out.println("1 = yes, 0 = no");
             int response = sc.nextInt();
+            sc.nextLine();
             if (response == 0) {
                 loop_on = false;
             }

@@ -23,12 +23,16 @@ public class SpeakerController {
         Scanner sc = new Scanner(System.in);
         System.out.println("Specify the year of the talk");
         int year = sc.nextInt();
+        sc.nextLine();
         System.out.println("Specify the month of the talk (1-12)");
         int month = sc.nextInt();
+        sc.nextLine();
         System.out.println("Specify the day of the month of the talk (1-31)");
         int dayofmonth = sc.nextInt();
+        sc.nextLine();
         System.out.println("Specify the hour of the day of the talk (0-23)");
         int hourofday = sc.nextInt();
+        sc.nextLine();
 
         Calendar time = Calendar.getInstance();
         time.set(Calendar.YEAR, year);
@@ -43,6 +47,7 @@ public class SpeakerController {
 
         return time;
     }
+
 
     public void SeeSpeakerTalkSchedule() {
         this.presenter.displaySpeakerTalksSchedule(this.username);
@@ -115,6 +120,7 @@ public class SpeakerController {
             System.out.println("8 = view your conversation with someone");
 
             int choice = sc.nextInt();
+            sc.nextLine();
 
             if(choice == 1){
                 this.SeeSpeakerTalkSchedule();
@@ -123,10 +129,10 @@ public class SpeakerController {
             else if(choice == 2) {
                 // messageAttendee(String message, String attendeeusername)
                 System.out.println("Specify the attendee's username");
-                String line1 = sc.nextLine();
+                //String line1 = sc.nextLine();
                 String attendeeusername = sc.nextLine();
                 System.out.println("Specify the message to send");
-                line1 = sc.nextLine();
+                //line1 = sc.nextLine();
                 String message = sc.nextLine();
                 this.messageAttendee(message, attendeeusername);
 
@@ -138,7 +144,7 @@ public class SpeakerController {
                 boolean loop = true;
                 while(loop == true) {
                     System.out.println("Specify the topic of a talk you're giving");
-                    String line1 = sc.nextLine();
+                    //String line1 = sc.nextLine();
                     String topic = sc.nextLine();
                     Calendar time = this.timeoftalkrequesthelper();
 
@@ -151,12 +157,13 @@ public class SpeakerController {
                     }
                     System.out.println("Would you like to add another talk? (1 = yes, 0 = no)");
                     int response = sc.nextInt();
+                    sc.nextLine();
                     if(response == 0) {
                         loop = false;
                     }
                 }
                 System.out.println("Specify message to send");
-                String line1 = sc.nextLine();
+                //String line1 = sc.nextLine();
                 String message = sc.nextLine();
                 this.messageAttendeesAtTalks(topiclist, timelist, message);
 
@@ -167,14 +174,14 @@ public class SpeakerController {
             }
             else if(choice == 5) {
                 System.out.println("Specify username of contact to add");
-                String line1 = sc.nextLine();
+                //String line1 = sc.nextLine();
                 String friendusername = sc.nextLine();
                 this.addFriend(friendusername);
 
             }
             else if(choice == 6) {
                 System.out.println("Specify username of contact to remove");
-                String line1 = sc.nextLine();
+                //String line1 = sc.nextLine();
                 String usernametoremove = sc.nextLine();
                 this.removeFriend(usernametoremove);
 
@@ -187,10 +194,11 @@ public class SpeakerController {
             else if(choice == 8) {
                 //viewMessagesFrom(String recipientusername, int nummessages)
                 System.out.println("Specify username of user you would like to view your conversation with");
-                String line1 = sc.nextLine();
+                //String line1 = sc.nextLine();
                 String user = sc.nextLine();
                 System.out.println("How many past messages would you like to see?");
                 int pastmessages = sc.nextInt();
+                sc.nextLine();
                 this.viewMessagesFrom(user, pastmessages);
 
             }
@@ -198,6 +206,7 @@ public class SpeakerController {
             System.out.println("Thank you. Would you like to do another task?");
             System.out.println("1 = yes, 0 = no");
             int response = sc.nextInt();
+            sc.nextLine();
             if(response == 0) {
                 loop_on = false;
             }
