@@ -119,6 +119,7 @@ public class DataManager {
         AccountManager am = dm.readAccountManager();
         Organizer o = new Organizer("abc", "123456", "a", "bc");
         em.AddNewEvent("abc", Calendar.getInstance(),"room 1", o);
+        am.AddNewOrganizer("abc", "123456", "a", "bc");
         am.AddNewAttendee("firstuser", "123456", "first", "user");
         dm.saveAccountManager(am);
         dm.saveEventManager(em);

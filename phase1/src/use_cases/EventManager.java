@@ -49,33 +49,17 @@ public class EventManager implements Serializable {
         }
     }
 
-
-
-
-
-    /**
-     * GetEndTime:
-     * Given an event start time, generate a new Calendar representing
-     * the end time. WE ASSUME THAT EVENTS LAST ONE HOUR ACCORDING TO SPECIFICATIONS;
-     * FOR COMPARISON PURPOSES WE SAY THAT IT ENDS 59 MINUTES AFTER START
-     */
-
-    public Calendar GetEndTime(Calendar eventtime){
-        Calendar end_time = (Calendar) eventtime.clone();
-        end_time.add(Calendar.MINUTE, +59);
-        return end_time;
-    }
-
     /**
      * CheckTimeOverlap:
      * Check of two hypothetical events have time conflict
+     * WE ASSUME THAT EVENTS LAST ONE HOUR ACCORDING TO SPECIFICATIONS AND THAT THEY START
+     * AT START OF HOUR
      */
 
     public boolean CheckTimeOverlap(Calendar time_1, Calendar time_2){
-        Calendar endtime_1 = GetEndTime(time_1);
-        Calendar endtime_2 = GetEndTime(time_2);
-        return !(time_1.after(endtime_2) || endtime_1.before(time_2));
+        return time_1.compareTo(time_2) == 0;
     }
+
     /*
      * NOTE: THESE METHODS WILL CHECK IF TIME CONFLICTS ARE CREATED:
      * THEY WILL REJECT (AND GIVE SIGNAL OF FAILURE) WHEN CONFLICTS
