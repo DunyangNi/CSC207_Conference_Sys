@@ -22,8 +22,8 @@ public class Event implements Serializable, Comparable<Event> {
     private String topic;
     private String location;
     private Calendar time;
-    private Account organizer;
-    private ArrayList<Attendee> attendees = new ArrayList<>();
+    private String organizer;
+    private ArrayList<String> attendees = new ArrayList<>();
     private static int sid = 0;
     private int id;
 
@@ -36,7 +36,7 @@ public class Event implements Serializable, Comparable<Event> {
      * @param topic event topic.
      * @param time event time.
      */
-    public Event(String topic, Calendar time, String location, Account organizer) {
+    public Event(String topic, Calendar time, String location, String organizer) {
         this.topic = topic;
         this.time = time;
         this.location = location;
@@ -53,29 +53,6 @@ public class Event implements Serializable, Comparable<Event> {
      * Gets the Event info.
      * @return  Event info.
      */
-    @Override
-    public String toString(){
-        int yyyy = time.get(Calendar.YEAR);
-        int month = time.get(Calendar.MONTH);
-        int date = time.get(Calendar.DAY_OF_MONTH);
-        int hh = time.get(Calendar.HOUR_OF_DAY);
-        int mm = time.get(Calendar.MINUTE);
-
-        String yyyy_mm_dd = yyyy + "-" + month + "-" + date;
-        String hh_mm = hh + ":" + mm;
-        String uname = getOrganizer() == null ? "" : getOrganizer().getUsername();
-        String atd = "";
-        if (getAttendees().size() != 0){
-            for (Account atd1: getAttendees()){
-                atd += atd1.getUsername() + " ";
-            }
-            atd = atd.substring(0, atd.length()-1);
-        }
-        return id + ": (" + topic + ") "+
-                "(" + yyyy_mm_dd + " " + hh_mm +
-                ") organizer (" + uname + ") Attendees (" + atd + ")";
-
-    }
 
     public int compareTo(Event event) {
         return this.time.compareTo(event.time);
@@ -102,7 +79,7 @@ public class Event implements Serializable, Comparable<Event> {
                     getTopic().equals(o.getTopic()) &&
                             getTime().getTimeInMillis() == o.getTime().getTimeInMillis() &&
                             getLocation().equals(o.getLocation()) &&
-                            getOrganizer().getUsername().equals(o.getOrganizer().getUsername());
+                            getOrganizer().equals(o.getOrganizer());
         }
         return false;
     }
@@ -112,7 +89,7 @@ public class Event implements Serializable, Comparable<Event> {
      */
     @Override
     public int hashCode(){
-        return topic.hashCode() / 10 + getOrganizer().getUsername().hashCode() % 1000;
+        return topic.hashCode() / 10 + getOrganizer().hashCode() % 1000;
     }
 
     //------------------------------------------------------------
@@ -136,11 +113,11 @@ public class Event implements Serializable, Comparable<Event> {
         return location;
     }
 
-    public Account getOrganizer() {
+    public String getOrganizer() {
         return organizer;
     }
 
-    public ArrayList<Attendee> getAttendees() {
+    public ArrayList<String> getAttendees() {
         return attendees;
     }
 
@@ -167,11 +144,11 @@ public class Event implements Serializable, Comparable<Event> {
         this.location = location;
     }
 
-    public void setOrganizer(Account organizer) {
+    public void setOrganizer(String organizer) {
         this.organizer = organizer;
     }
 
-    public void setAttendees(ArrayList<Attendee> attendees) {
+    public void setAttendees(ArrayList<String> attendees) {
         this.attendees = attendees;
     }
 

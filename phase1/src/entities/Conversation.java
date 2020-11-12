@@ -16,8 +16,8 @@ import java.util.ArrayList;
  * </pre>
  */
 public class Conversation {
-    private ArrayList<Account> messengers;
-    private ArrayList<Message> messages = new ArrayList<>();
+    private ArrayList<String> messengers;
+    private ArrayList<Integer> messages = new ArrayList<>();
 
     //------------------------------------------------------------
     // Constructors
@@ -28,7 +28,7 @@ public class Conversation {
      * @param users given Accounts that can send messages to this Conversation
      * @param initialMessage the first initial Message of the Conversation
      */
-    public Conversation(ArrayList<Account> users, Message initialMessage) {
+    public Conversation(ArrayList<String> users, int initialMessage) {
         this.messengers = users;
         this.messages.add(initialMessage);
     }
@@ -56,8 +56,8 @@ public class Conversation {
     @Override
     public String toString() {
         StringBuilder str_write = new StringBuilder("[Conversation] ( ");
-        for (Account c : this.messengers) {
-            str_write.append(c.getUsername());
+        for (String username : this.messengers) {
+            str_write.append(username);
             str_write.append(" ");
         }
         str_write.append(") : ");
@@ -83,22 +83,22 @@ public class Conversation {
     /**
      * @return participants of this Conversation
      */
-    public ArrayList<Account> getMessengers() { return messengers; }
+    public ArrayList<String> getMessengers() { return messengers; }
 
     /**
      * @return messages of this Conversation
      */
-    public ArrayList<Message> getMessages() { return messages; }
+    public ArrayList<Integer> getMessages() { return messages; }
 
     /**
      * sets participants of this Conversation
      * @param messengers new array of given Accounts
      */
-    public void setMessengers(ArrayList<Account> messengers) { this.messengers = messengers; }
+    public void setMessengers(ArrayList<String> messengers) { this.messengers = messengers; }
 
     /**
      * sets messages of this Conversation
      * @param messages new array of given Messages
      */
-    public void setMessages(ArrayList<Message> messages) { this.messages = messages; }
+    public void setMessages(ArrayList<Integer> messages) { this.messages = messages; }
 }

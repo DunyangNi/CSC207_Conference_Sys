@@ -11,11 +11,11 @@ public class Account implements Serializable {
     private String lastName;
     private String firstName;
     // TODO: 11/07/20 Consider using ArrayList<String> of Account usernames instead of HashMap<String, Account> of username:Account pairs
-    private HashMap<String, Account> friendsList = new HashMap<>(); // added by Lucas
+    private ArrayList<String> friendsList = new ArrayList<>(); // added by Lucas
     // TODO: 11/07/20 Consider using ArrayList<String> of conversation id's instead of HashMap<String, Conversation> of username:Conversation pairs. Requires conversations to have a static id.
-    private HashMap<String, Conversation> conversations = new HashMap<>(); // added by Lucas
+    private ArrayList<Integer> conversations = new ArrayList<>(); // added by Lucas
     // TODO: 11/07/20 Consider using ArrayList<String> of Event id's instead of ArrayList<EventTalk>. Requires Events to have a static id
-    private ArrayList<EventTalk> attendeeTalks = new ArrayList<>(); // added by Lucas
+    private ArrayList<Integer> attendeeTalks = new ArrayList<>(); // added by Lucas
 
     public Account(String username, String password, String firstName, String lastName) {
         this.username = username;
@@ -34,11 +34,6 @@ public class Account implements Serializable {
 
     public boolean isOrganizer(){return false;}
 
-
-
-
-
-
     public String getUsername() {
         return username;
     }
@@ -55,15 +50,15 @@ public class Account implements Serializable {
         return firstName;
     }
 
-    public HashMap<String, Account> getFriendsList() {
+    public ArrayList<String> getFriendsList() {
         return friendsList;
     }
 
-    public HashMap<String, Conversation> getConversations() {
+    public ArrayList<Integer> getConversations() {
         return conversations;
     }
 
-    public ArrayList<EventTalk> getAttendeeTalks() {
+    public ArrayList<Integer> getAttendeeTalks() {
         return attendeeTalks;
     }
 
@@ -83,15 +78,15 @@ public class Account implements Serializable {
         this.firstName = firstName;
     }
 
-    public void setFriendsList(HashMap<String, Account> friendsList) {
+    public void setFriendsList(ArrayList<String> friendsList) {
         this.friendsList = friendsList;
     }
 
-    public void setConversations(HashMap<String, Conversation> conversations) {
+    public void setConversations(ArrayList<Integer> conversations) {
         this.conversations = conversations;
     }
 
-    public void setAttendeeTalks(ArrayList<EventTalk> attendeeTalks) {
+    public void setAttendeeTalks(ArrayList<Integer> attendeeTalks) {
         this.attendeeTalks = attendeeTalks;
     }
 }

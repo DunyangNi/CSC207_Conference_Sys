@@ -24,7 +24,7 @@ import java.util.Calendar;
  * </pre>
  */
 public class EventTalk extends Event implements Serializable {
-    private Account speaker;
+    private String speaker;
 
     //------------------------------------------------------------
     // Constructors
@@ -51,7 +51,7 @@ public class EventTalk extends Event implements Serializable {
      * @param speaker speaker for the talk
      * @param organizer organizer for the talk
      */
-    public EventTalk(String topic, Calendar time, String location, Account organizer, Account speaker) {
+    public EventTalk(String topic, Calendar time, String location, String organizer, String speaker) {
         super(topic, time, location, organizer);
         this.speaker = speaker;
     }
@@ -59,16 +59,6 @@ public class EventTalk extends Event implements Serializable {
     //------------------------------------------------------------
     // Methods
     //------------------------------------------------------------
-
-    /**
-     * Gets TalkEvent info
-     * @return talk event info
-     */
-    @Override
-    public String toString() {
-        String uname = getSpeaker() == null ? "" : getSpeaker().getUsername();
-        return super.toString() + " speaker (" + uname + ")";
-    }
 
     /**
      * Compares for equality.
@@ -81,7 +71,7 @@ public class EventTalk extends Event implements Serializable {
         if (other != null && other instanceof EventTalk){
             EventTalk o = (EventTalk)other;
             return super.equals(other) &&
-                    getSpeaker().getUsername().equals(o.getSpeaker().getUsername());
+                    getSpeaker().equals(o.getSpeaker());
         }
         return false;
     }
@@ -91,7 +81,7 @@ public class EventTalk extends Event implements Serializable {
      */
     @Override
     public int hashCode(){
-        return super.hashCode() / 10 + getSpeaker().getUsername().hashCode() % 100;
+        return super.hashCode() / 10 + getSpeaker().hashCode() % 100;
     }
     //------------------------------------------------------------
     // Getters and Setters
@@ -100,11 +90,11 @@ public class EventTalk extends Event implements Serializable {
     /**
      * @return speaker
      */
-    public Account getSpeaker() {
+    public String getSpeaker() {
         return speaker;
     }
 
-    public void setSpeaker(Account speaker) {
+    public void setSpeaker(String speaker) {
         this.speaker = speaker;
     }
 }

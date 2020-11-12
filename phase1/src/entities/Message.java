@@ -17,8 +17,8 @@ package entities;
  * </pre>
  */
 public class Message {
-    private Account sender;
-    private Account receiver;
+    private String sender;
+    private String receiver;
     private String content;
     private Message msgToReply;
     private static int sid = 0;
@@ -36,7 +36,7 @@ public class Message {
      * @param content a message content
      * @param msgToReply a message being replied to
      */
-    public Message(Account sender, Account receiver, String content, Message msgToReply) {
+    public Message(String sender, String receiver, String content, Message msgToReply) {
         this.sender = sender;
         this.receiver = receiver;
         this.content = content;
@@ -51,7 +51,7 @@ public class Message {
      * @param sender a message sender
      * @param content a message content
      */
-    public Message(Account sender, Account receiver, String content) {
+    public Message(String sender, String receiver, String content) {
         // call other constructor but with default value
         this(sender, receiver, content, null);
     }
@@ -68,13 +68,13 @@ public class Message {
         StringBuilder str_write = new StringBuilder("[Message ");
         str_write.append(this.id);
         str_write.append("] (");
-        str_write.append(sender.getUsername());
+        str_write.append(sender);
         str_write.append(") : ");
         str_write.append(content);
         str_write.append(" [ReplyTo] (");
         if (msgToReply == null) { str_write.append("None)"); }
         else {
-            str_write.append(msgToReply.getSender().getUsername());
+            str_write.append(msgToReply.getSender());
             str_write.append(") : ");
             String replyContent = msgToReply.getContent();
             str_write.append(replyContent, 0, Math.min(replyContent.length(), 10));
@@ -88,7 +88,7 @@ public class Message {
      */
     @Override
     public int hashCode() {
-        return getSender().getUsername().hashCode() / 10 + getContent().hashCode() % 101;
+        return getSender().hashCode() / 10 + getContent().hashCode() % 101;
     }
 
     /**
@@ -125,14 +125,14 @@ public class Message {
     /**
      * @return gets sender.
      */
-    public Account getSender() {
+    public String getSender() {
         return sender;
     }
 
     /**
      * @return gets receiver.
      */
-    public Account getReceiver() {
+    public String getReceiver() {
         return receiver;
     } // changed by Lucas
 
@@ -172,11 +172,11 @@ public class Message {
         this.msgToReply = msgToReply;
     }
 
-    public void setSender(Account sender) {
+    public void setSender(String sender) {
         this.sender = sender;
     }
 
-    public void setReceiver(Account receiver) {
+    public void setReceiver(String receiver) {
         this.receiver = receiver;
     } // changed by Lucas
 }
