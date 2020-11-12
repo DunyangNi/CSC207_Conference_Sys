@@ -33,8 +33,8 @@ public class TestMessage {
     public void test_Message() {
         Message.resetSid();
         Message m1 = new Message(acct1, acct2,  "content1") ;
-        String exp1 = m1.toString();
-        String act1 = "[Message 1] (Name1) : content1 [ReplyTo] (None)";
+        String exp1 = "[Message 0] (Name1) : content1 [ReplyTo] (None)";
+        String act1 = m1.toString();
         assertEquals(exp1, act1);
     }
 
@@ -43,8 +43,8 @@ public class TestMessage {
         Message.resetSid();
         Message reply = new Message(acct1, acct2,  "content2") ;
         Message m1 = new Message(acct2, acct1,  "content1", reply) ;
-        String exp1 = m1.toString();
-        String act1 = "[Message 1] (Name2) : content1 [ReplyTo] (Name1) : content2";
+        String exp1 = "[Message 1] (Name2) : content1 [ReplyTo] (Name1) : content2";
+        String act1 = m1.toString();
         assertEquals(exp1, act1);
     }
 
@@ -104,8 +104,8 @@ public class TestMessage {
         Message m2 = new Message(acct1, acct2,  "content1") ;
         String exp1 = "true";
         String exp2 = "true";
-        String act1 = (m1.getId() == 1)+ "";
-        String act2 = (m2.getId() == 2) + "";
+        String act1 = (m1.getId() == 0)+ "";
+        String act2 = (m2.getId() == 1) + "";
         assertEquals(exp1, act1);
         assertEquals(exp2, act2);
     }

@@ -45,11 +45,11 @@ public class TestEvent {
         String act4 = ev4.toString();
         String act5 = ev5.toString();
 
-        String exp1 = "1: (CLEAN arch1) (2001-2-3 4:5) organizer (Name1) Attendees ()";
-        String exp2 = "2: (CLEAN arch2) (2001-2-3 4:5) organizer (Name1) Attendees ()";
-        String exp3 = "3: (CLEAN arch1) (2002-3-4 13:55) organizer (Name2) Attendees ()";
-        String exp4 = "4: (CLEAN arch2) (2002-3-4 13:55) organizer (Name2) Attendees ()";
-        String exp5 = "5: (CLEAN arch2) (2002-3-4 13:55) organizer () Attendees ()";
+        String exp1 = "0: (CLEAN arch1) (2001-2-3 4:5) organizer (Name1) Attendees ()";
+        String exp2 = "1: (CLEAN arch2) (2001-2-3 4:5) organizer (Name1) Attendees ()";
+        String exp3 = "2: (CLEAN arch1) (2002-3-4 13:55) organizer (Name2) Attendees ()";
+        String exp4 = "3: (CLEAN arch2) (2002-3-4 13:55) organizer (Name2) Attendees ()";
+        String exp5 = "4: (CLEAN arch2) (2002-3-4 13:55) organizer () Attendees ()";
 
         assertEquals(exp1, act1);
         assertEquals(exp2, act2);
@@ -72,8 +72,8 @@ public class TestEvent {
 
         String act1 = ev5.getId() + "";
         String act2 = ev6.getId() + "";
-        String exp1 = "5";
-        String exp2 = "1";
+        String exp1 = "4";
+        String exp2 = "0";
 
         assertEquals(exp1, act1);
         assertEquals(exp2, act2);
@@ -161,7 +161,7 @@ public class TestEvent {
             act1 += atd.getUsername() + " ";
         }
         String exp1 = "Name1 Name2 ";
-        String exp2 = "1: (CLEAN arch1) (2001-2-3 4:5) organizer (Name1) Attendees (Name1 Name2)";
+        String exp2 = "0: (CLEAN arch1) (2001-2-3 4:5) organizer (Name1) Attendees (Name1 Name2)";
         assertEquals(exp1, act1);
         assertEquals(exp2, act2);
     }
@@ -229,7 +229,7 @@ public class TestEvent {
         Event.resetSid();
         Event ev1 = new Event("CLEAN arch1", date1, "Toronto" , acct1);
         String act1 = ""+ ev1.getId();
-        String exp1 = "1";
+        String exp1 = "0";
         assertEquals(exp1, act1);
     }
 }

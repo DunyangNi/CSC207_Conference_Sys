@@ -44,9 +44,9 @@ public class TestEventTalk {
         String act2 = ev2.toString();
         String act5 = ev5.toString();
 
-        String exp1 = "1: (CLEAN arch1) (2001-2-3 4:5) organizer (Name1) Attendees () speaker (Name2)";
-        String exp2 = "2: (CLEAN arch2) (2001-2-3 4:5) organizer (Name1) Attendees () speaker (Name2)";
-        String exp5 = "3: (CLEAN arch2) (2002-3-4 13:55) organizer () Attendees () speaker ()";
+        String exp1 = "0: (CLEAN arch1) (2001-2-3 4:5) organizer (Name1) Attendees () speaker (Name2)";
+        String exp2 = "1: (CLEAN arch2) (2001-2-3 4:5) organizer (Name1) Attendees () speaker (Name2)";
+        String exp5 = "2: (CLEAN arch2) (2002-3-4 13:55) organizer () Attendees () speaker ()";
 
         assertEquals(exp1, act1);
         assertEquals(exp2, act2);
