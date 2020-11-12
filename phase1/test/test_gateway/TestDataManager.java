@@ -72,8 +72,8 @@ public class TestDataManager {
         Organizer o1 = new Organizer("rizahawkeye", "guardian6", "Riza", "Hawkeye");
         Organizer o2 = new Organizer("abarairenji", "redpineapple8", "Renji", "Abarai");
         Speaker s1 = new Speaker("kirishima17", "rabbit997", "Touka", "Kirishima");
-        Calendar c0 = Calendar.getInstance(); c0.set(2009, Calendar.APRIL, 7, 13, 35);
-        Calendar c1 = Calendar.getInstance(); c1.set(2009, Calendar.APRIL, 7, 9, 15);
+        Calendar c0 = Calendar.getInstance(); c0.set(2021, Calendar.APRIL, 7, 13, 0);
+        Calendar c1 = Calendar.getInstance(); c1.set(2021, Calendar.APRIL, 7, 9, 0);
         em1.addLocation("auditorium");
         em1.addLocation("spiritroom7");
         // add events to EventManager
@@ -130,9 +130,9 @@ public class TestDataManager {
         am1.AddNewAttendee("pirateking15", "strawhatluffy", "Monkey D.", "Luffy");
         am1.AddNewAttendee("kirito", "theblackswordsman77", "Kazuto", "Kirigaya");
         // construct event parameters
-        Calendar c0 = Calendar.getInstance(); c0.set(2009, Calendar.APRIL, 7, 13, 35);
-        Calendar c1 = Calendar.getInstance(); c1.set(2009, Calendar.APRIL, 7, 9, 15);
-        Calendar c2 = Calendar.getInstance(); c2.set(2009, Calendar.APRIL, 7, 17, 15);
+        Calendar c0 = Calendar.getInstance(); c0.set(2021, Calendar.APRIL, 7, 13, 0);
+        Calendar c1 = Calendar.getInstance(); c1.set(2021, Calendar.APRIL, 7, 9, 0);
+        Calendar c2 = Calendar.getInstance(); c2.set(2021, Calendar.APRIL, 7, 17, 0);
         em1.addLocation("auditorium");
         em1.addLocation("classroomA54");
         // add events to EventManager

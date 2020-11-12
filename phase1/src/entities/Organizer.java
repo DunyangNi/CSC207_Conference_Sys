@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Organizer extends Account {
 
-    private ArrayList<Event> organizerEvents;
+    private ArrayList<Event> organizerEvents = new ArrayList<>();
 
     public Organizer(String username, String password, String firstName, String lastName) {
         super(username, password, firstName, lastName);

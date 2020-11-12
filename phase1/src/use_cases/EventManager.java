@@ -109,9 +109,16 @@ public class EventManager implements Serializable {
      * AddNewEvent: Checks for same location be used in overlapping time
      */
     public boolean AddNewEvent(String topic, Calendar time, String location, Account organizer){
-        if (validEvent(topic, time, location))
-            eventlist.add(new Event(topic, time, location, organizer));
-        return true;
+        if (validEvent(topic, time, location) && organizer instanceof Organizer) {
+            Event eventToAdd = new Event(topic, time, location, organizer);
+            eventlist.add(eventToAdd);
+            // update organizer's list of events
+            ArrayList<Event> organizerTalks = ((Organizer) organizer).getOrganizerEvents();
+            organizerTalks.add(eventToAdd);
+            ((Organizer) organizer).setOrganizerEvents(organizerTalks);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -121,11 +128,15 @@ public class EventManager implements Serializable {
      */
 
     public boolean AddNewEvent(String topic, Calendar time, String location, Account organizer, Account speaker) {
-        if (validEvent(topic, time, location, speaker) && speaker instanceof Speaker) {
+        if (validEvent(topic, time, location, speaker) && speaker instanceof Speaker && organizer instanceof Organizer) {
             // create a new event and add it to both eventlist and talklist
             EventTalk eventToAdd = new EventTalk(topic, time, location, organizer, speaker);
             eventlist.add(eventToAdd);
             talklist.add(eventToAdd);
+            // update organizer's list of events
+            ArrayList<Event> organizerTalks = ((Organizer) organizer).getOrganizerEvents();
+            organizerTalks.add(eventToAdd);
+            ((Organizer) organizer).setOrganizerEvents(organizerTalks);
             // update speaker's list of talks
             ArrayList<EventTalk> speakerTalks = ((Speaker) speaker).getSpeakerTalks();
             speakerTalks.add(eventToAdd);

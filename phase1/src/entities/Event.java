@@ -41,8 +41,8 @@ public class Event implements Serializable, Comparable<Event> {
         this.time = time;
         this.location = location;
         this.organizer = organizer;
-        sid++;
         id = sid;
+        sid++;
     }
 
     //------------------------------------------------------------

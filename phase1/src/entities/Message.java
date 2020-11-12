@@ -41,7 +41,7 @@ public class Message {
         this.receiver = receiver;
         this.content = content;
         this.msgToReply = msgToReply;
-        this.id = sid;
+        id = sid;
         sid++;
     }
 
