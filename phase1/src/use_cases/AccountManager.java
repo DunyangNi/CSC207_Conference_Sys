@@ -77,6 +77,8 @@ public class AccountManager implements Serializable {
         return this.OrganizerList;
     }
 
+    public HashMap<String, Account> getAccountlist() { return this.AccountList; }
+
     /**
      * Creates new account and adds to list IF IT WON'T CREATE DUPLICATE USERNAMES. OTHERWISE DO NOTHING
      */

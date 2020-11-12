@@ -20,30 +20,39 @@ public class SpeakerController {
     }
 
     private Calendar timeoftalkrequesthelper(){
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Specify the year of the talk");
-        int year = sc.nextInt();
-        sc.nextLine();
-        System.out.println("Specify the month of the talk (1-12)");
-        int month = sc.nextInt();
-        sc.nextLine();
-        System.out.println("Specify the day of the month of the talk (1-31)");
-        int dayofmonth = sc.nextInt();
-        sc.nextLine();
-        System.out.println("Specify the hour of the day of the talk (0-23)");
-        int hourofday = sc.nextInt();
-        sc.nextLine();
-
+        boolean isDone = false;
         Calendar time = Calendar.getInstance();
-        time.set(Calendar.YEAR, year);
-        TimeZone tz = TimeZone.getTimeZone("America/New_York");
-        time.setTimeZone(tz);
-        time.set(Calendar.DAY_OF_MONTH, dayofmonth);
-        time.set(Calendar.MONTH, month - 1);
-        time.set(Calendar.HOUR_OF_DAY, hourofday);
-        time.set(Calendar.MINUTE, 0);
-        time.set(Calendar.SECOND, 0);
-        time.set(Calendar.MILLISECOND, 0);
+        while (!isDone) {
+            try {
+                Scanner sc = new Scanner(System.in);
+                System.out.println("Specify the year of the talk");
+                int year = sc.nextInt();
+                sc.nextLine();
+                System.out.println("Specify the month of the talk (1-12)");
+                int month = sc.nextInt();
+                sc.nextLine();
+                System.out.println("Specify the day of the month of the talk (1-31)");
+                int dayofmonth = sc.nextInt();
+                sc.nextLine();
+                System.out.println("Specify the hour of the day of the talk (0-23)");
+                int hourofday = sc.nextInt();
+                sc.nextLine();
+
+                time.set(Calendar.YEAR, year);
+                TimeZone tz = TimeZone.getTimeZone("America/New_York");
+                time.setTimeZone(tz);
+                time.set(Calendar.DAY_OF_MONTH, dayofmonth);
+                time.set(Calendar.MONTH, month - 1);
+                time.set(Calendar.HOUR_OF_DAY, hourofday);
+                time.set(Calendar.MINUTE, 0);
+                time.set(Calendar.SECOND, 0);
+                time.set(Calendar.MILLISECOND, 0);
+                isDone = true;
+            }
+            catch (Exception e){
+                System.out.println("Invalid value! Try again\n");
+            }
+        }
 
         return time;
     }
@@ -54,7 +63,7 @@ public class SpeakerController {
     }
 
     public void messageAttendee(String message, String attendeeusername) {
-        ConversationManager.sendMessage(this.accountmanager.fetchOrganizer(this.username), this.accountmanager.fetchAttendee(attendeeusername), message);
+        ConversationManager.sendMessage(this.accountmanager.fetchSpeaker(this.username), this.accountmanager.fetchAttendee(attendeeusername), message);
     }
 
     public void messageAttendeesAtTalks(ArrayList<String> topiclist, ArrayList<Calendar> timelist, String message) {
@@ -97,12 +106,19 @@ public class SpeakerController {
             return;
         }
         Account recipient = this.accountmanager.fetchAccount(recipientusername);
-        ArrayList<String> convo = ConversationManager.getConversationArrayList(this.accountmanager.fetchAccount(this.username), recipient);
-        System.out.println("Your recent " + nummessages + " messages with " + recipientusername + ":");
-        System.out.println("");
-        for(int i = 0; i<=Math.min(nummessages, convo.size()) - 1; i++) {
-            System.out.println(convo.get(convo.size() - 1 - i));
+        if (recipient == null) {
+            System.out.println("Error: User '" + recipientusername + "' is not found");
             System.out.println("");
+        }
+        else{
+            ArrayList<String> convo = ConversationManager.
+                    getConversationArrayList(this.accountmanager.fetchAccount(this.username), recipient);
+            System.out.println("Your recent " + nummessages + " messages with " + recipientusername + ":");
+            System.out.println("");
+            for(int i = 0; i<=Math.min(nummessages, convo.size()) - 1; i++) {
+                System.out.println(convo.get(convo.size() - 1 - i));
+                System.out.println("");
+            }
         }
     }
     public void runSpeakerInteraction() {
@@ -127,14 +143,33 @@ public class SpeakerController {
 
             }
             else if(choice == 2) {
-                // messageAttendee(String message, String attendeeusername)
-                System.out.println("Specify the attendee's username");
-                //String line1 = sc.nextLine();
-                String attendeeusername = sc.nextLine();
-                System.out.println("Specify the message to send");
-                //line1 = sc.nextLine();
-                String message = sc.nextLine();
-                this.messageAttendee(message, attendeeusername);
+                Set<String> allAttendees = accountmanager.getAttendeelist().keySet();
+                if (!allAttendees.isEmpty()) {
+                    System.out.println("List of attendees");
+                    System.out.println("---------------------------------------------");
+                    for (String atd: allAttendees) {
+                        System.out.println(atd);
+                    }
+                    System.out.println("---------------------------------------------\n");
+
+                    // messageAttendee(String message, String attendeeusername)
+                    System.out.println("Specify the attendee's username");
+                    //String line1 = sc.nextLine();
+                    String attendeeusername = sc.nextLine();
+                    System.out.println("Specify the message to send");
+                    //line1 = sc.nextLine();
+                    String message = sc.nextLine();
+
+                    if (allAttendees.contains(attendeeusername)) {
+                        this.messageAttendee(message, attendeeusername);
+                    }
+                    else{
+                        System.out.println("ERROR: Invalid user");
+                    }
+                }
+                else{
+                    System.out.println("No attendee to search");
+                }
 
             }
             else if(choice == 3) {
@@ -173,17 +208,42 @@ public class SpeakerController {
                 this.SeeTalkSchedule();
             }
             else if(choice == 5) {
-                System.out.println("Specify username of contact to add");
-                //String line1 = sc.nextLine();
-                String friendusername = sc.nextLine();
-                this.addFriend(friendusername);
+                Set<String> allAccts = accountmanager.getAccountlist().keySet();
+                if (!allAccts.isEmpty()) {
+                    System.out.println("List of users");
+                    System.out.println("---------------------------------------------");
+                    for (String acct : allAccts) {
+                        System.out.println(acct);
+                    }
+                    System.out.println("---------------------------------------------\n");
+                    System.out.println("Specify username of contact to add");
+                    //String line1 = sc.nextLine();
+                    String friendusername = sc.nextLine();
+
+                    if (allAccts.contains(friendusername)) {
+                        this.addFriend(friendusername);
+                    }
+                    else{
+                        System.out.println("ERROR: Invalid User");
+                    }
+                }
+                else{
+                    System.out.println("ERROR: No users");
+                }
 
             }
             else if(choice == 6) {
                 System.out.println("Specify username of contact to remove");
                 //String line1 = sc.nextLine();
                 String usernametoremove = sc.nextLine();
-                this.removeFriend(usernametoremove);
+
+                Set<String> allAccts = accountmanager.getAccountlist().keySet();
+                if (allAccts.contains(usernametoremove)) {
+                    this.removeFriend(usernametoremove);
+                }
+                else {
+                    System.out.println("ERROR: invalid user to remove");
+                }
 
             }
 
@@ -193,13 +253,28 @@ public class SpeakerController {
             }
             else if(choice == 8) {
                 //viewMessagesFrom(String recipientusername, int nummessages)
-                System.out.println("Specify username of user you would like to view your conversation with");
-                //String line1 = sc.nextLine();
-                String user = sc.nextLine();
-                System.out.println("How many past messages would you like to see?");
-                int pastmessages = sc.nextInt();
-                sc.nextLine();
-                this.viewMessagesFrom(user, pastmessages);
+                Set<String> convUsersWithMe = ConversationManager.getAllUserConversation(
+                        accountmanager.fetchAccount(username));
+
+                if (convUsersWithMe.isEmpty()) {
+                    System.out.println("There is no conversion to search");
+                }
+                else {
+                    System.out.println("List of users you have had conversation with");
+                    System.out.println("---------------------------------------------");
+                    for (String conUser : convUsersWithMe) {
+                        System.out.println(conUser);
+                    }
+                    System.out.println("---------------------------------------------\n");
+
+                    System.out.println("Specify username of user you would like to view your conversation with");
+                    //String line1 = sc.nextLine();
+                    String user = sc.nextLine();
+                    System.out.println("How many past messages would you like to see?");
+                    int pastmessages = sc.nextInt();
+                    sc.nextLine();
+                    this.viewMessagesFrom(user, pastmessages);
+                }
 
             }
 

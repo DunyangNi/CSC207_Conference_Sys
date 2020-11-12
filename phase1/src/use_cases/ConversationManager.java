@@ -3,6 +3,8 @@ package use_cases;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Set;
+import java.util.Collections;
 import entities.*;
 
 /**
@@ -50,13 +52,28 @@ public class ConversationManager {
     }
 
     /**
+     * (NEW!) Returns all users who have had conversion with the current account
+     * @param current given Account to search for Conversion
+     * @return All users who have had conversation with the current account
+     */
+    public static Set<String> getAllUserConversation(Account current) {
+        Set<String> users = current.getConversations().keySet();
+        if(!users.isEmpty()){
+            return users;
+        }
+        else {
+            return Collections.emptySet();
+        }
+    }
+
+    /**
      * Sends a message from a sender Account to a recipient Account
      * @param sender given sender Account
      * @param recipient given recipient Account
      * @param message given String content for message
      */
     public static void sendMessage(Account sender, Account recipient, String message) {
-        if (validRecipient(sender, recipient)) {
+        if (recipient != null && validRecipient(sender, recipient)) {
             HashMap<String, Conversation> senderConversations = sender.getConversations();
             HashMap<String, Conversation> recipientConversations = recipient.getConversations();
             Conversation givenConversation = senderConversations.get(recipient.getUsername());
@@ -73,6 +90,10 @@ public class ConversationManager {
             }
             sender.setConversations(senderConversations);
             recipient.setConversations(recipientConversations);
+        }
+        else{
+            System.out.println("ERROR: invalid recipient username: '"
+                    + recipient.getUsername() + "'");
         }
     }
 
