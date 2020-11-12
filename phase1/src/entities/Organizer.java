@@ -10,15 +10,6 @@ public class Organizer extends Account {
         super(username, password, firstName, lastName);
     }
 
-    // TODO: 11/07/20 Ask what this is for
-    public boolean isAttendee(){return false;}
-    
-    public boolean isOrganizer(){return true;}
-    
-    
-    
-    
-    
     public ArrayList<Integer> getOrganizerEvents() {
         return organizerEvents;
     }
@@ -26,5 +17,4 @@ public class Organizer extends Account {
     public void setOrganizerEvents(ArrayList<Integer> organizerEvents) {
         this.organizerEvents = organizerEvents;
     }
-    
 }
