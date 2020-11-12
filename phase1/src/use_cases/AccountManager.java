@@ -83,28 +83,34 @@ public class AccountManager implements Serializable {
      * Creates new account and adds to list IF IT WON'T CREATE DUPLICATE USERNAMES. OTHERWISE DO NOTHING
      */
 
-    public void AddNewSpeaker(String username, String password, String firstName, String lastName) {
-        if (!(AccountList.containsKey(username))) {
-            Speaker speaker = new Speaker(username, password, firstName, lastName);
-            SpeakerList.put(username, speaker);
-            AccountList.put(username, speaker);
+    public boolean AddNewSpeaker(String username, String password, String firstName, String lastName) {
+        if (AccountList.containsKey(username)) {
+            return false;
         }
+        Speaker speaker = new Speaker(username, password, firstName, lastName);
+        SpeakerList.put(username, speaker);
+        AccountList.put(username, speaker);
+        return true;
     }
 
-    public void AddNewAttendee(String username, String password, String firstName, String lastName) {
-        if (!(AccountList.containsKey(username))) {
-            Attendee attendee = new Attendee(username, password, firstName, lastName);
-            AttendeeList.put(username, attendee);
-            AccountList.put(username, attendee);
+    public boolean AddNewAttendee(String username, String password, String firstName, String lastName) {
+        if (AccountList.containsKey(username)) {
+            return false;
         }
+        Attendee attendee = new Attendee(username, password, firstName, lastName);
+        AttendeeList.put(username, attendee);
+        AccountList.put(username, attendee);
+        return true;
     }
 
-    public void AddNewOrganizer(String username, String password, String firstName, String lastName) {
-        if (!(AccountList.containsKey(username))) {
-            Organizer organizer = new Organizer(username, password, firstName, lastName);
-            OrganizerList.put(username, organizer);
-            AccountList.put(username, organizer);
+    public boolean AddNewOrganizer(String username, String password, String firstName, String lastName) {
+        if (AccountList.containsKey(username)) {
+            return false;
         }
+        Organizer organizer = new Organizer(username, password, firstName, lastName);
+        OrganizerList.put(username, organizer);
+        AccountList.put(username, organizer);
+        return true;
     }
 
     /**

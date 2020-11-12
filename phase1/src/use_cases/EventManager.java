@@ -43,10 +43,12 @@ public class EventManager implements Serializable {
         this.locationlist = locations;
     }
 
-    public void addLocation(String location) {
+    public boolean addLocation(String location) {
         if(!this.locationlist.contains(location)) {
             this.locationlist.add(location);
+            return true;
         }
+        return false;
     }
 
     /**
