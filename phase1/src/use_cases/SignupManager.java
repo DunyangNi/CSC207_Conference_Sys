@@ -1,8 +1,8 @@
 package use_cases;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import entities.*;
+import entities.Attendee;
+import entities.EventTalk;
 
 /**
  * SignupManager adds given Attendee to a given EventTalk.
@@ -32,15 +32,8 @@ public class SignupManager {
      */
     public static void addAttendee(EventTalk talk, Attendee attendee) {
         if (!isFull(talk) && !isSignedUp(talk, attendee)) {
-            // Get and copy list of Attendees from EventTalk and list of EventTalks from Attendee
-            ArrayList<Attendee> eventAttendees = new ArrayList<>(talk.getAttendees());
-            ArrayList<EventTalk> attendeeEvents = new ArrayList<>(attendee.getAttendeeTalks());
-            // Modify each list
-            eventAttendees.add(attendee);
-            attendeeEvents.add(talk);
-            // Set new list of Attendees to EventTalk and new list of EventTalks to Attendee
-            attendee.setAttendeeTalks(attendeeEvents);
-            talk.setAttendees(eventAttendees);
+            ArrayList<String> eventAttendees = talk.getAttendees();
+            eventAttendees.add(attendee.getUsername());
         }
     }
 
@@ -63,5 +56,7 @@ public class SignupManager {
      * @param attendee given Attendee
      * @return whether talk contains Attendee or not
      */
-    public static boolean isSignedUp(EventTalk talk, Attendee attendee) { return talk.getAttendees().contains(attendee); }
+    public static boolean isSignedUp(EventTalk talk, Attendee attendee) {
+        return talk.getAttendees().contains(attendee.getUsername());
+    }
 }

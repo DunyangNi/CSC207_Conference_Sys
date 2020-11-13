@@ -68,7 +68,7 @@ public class EventTalk extends Event implements Serializable {
      */
     @Override
     public boolean equals(Object other){
-        if (other != null && other instanceof EventTalk){
+        if (other instanceof EventTalk){
             EventTalk o = (EventTalk)other;
             return super.equals(other) &&
                     getSpeaker().equals(o.getSpeaker());
