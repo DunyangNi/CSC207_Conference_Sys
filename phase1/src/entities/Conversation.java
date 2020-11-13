@@ -49,24 +49,7 @@ public class Conversation {
                 ((Conversation) obj).getMessages().equals(this.getMessages());
     }
 
-    /**
-     * Returns Conversation info
-     * @return Conversation info
-     */
-    @Override
-    public String toString() {
-        StringBuilder str_write = new StringBuilder("[Conversation] ( ");
-        for (String username : this.messengers) {
-            str_write.append(username);
-            str_write.append(" ");
-        }
-        str_write.append(") : ");
-        for (Message m : messages) {
-            str_write.append(m.toString());
-            str_write.append(" ; ");
-        }
-        return str_write.toString();
-    }
+    // toString() is now in EventManager under conversationToString()
 
     public ArrayList<String> toArrayList() {
         ArrayList<String> conversation = new ArrayList<>();

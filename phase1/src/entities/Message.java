@@ -20,7 +20,7 @@ public class Message {
     private String sender;
     private String receiver;
     private String content;
-    private Message msgToReply;
+    private Integer msgToReply; // changed by Lucas~
     private static int sid = 0;
     private int id;
 
@@ -36,7 +36,7 @@ public class Message {
      * @param content a message content
      * @param msgToReply a message being replied to
      */
-    public Message(String sender, String receiver, String content, Message msgToReply) {
+    public Message(String sender, String receiver, String content, Integer msgToReply) {
         this.sender = sender;
         this.receiver = receiver;
         this.content = content;
@@ -56,32 +56,7 @@ public class Message {
         this(sender, receiver, content, null);
     }
 
-    /**
-     * (NEW!) Gets the Message info.
-     *
-     * @return message info, formatted as
-     *  [Message id] (sender1) : content [ReplyTo] (sender2) : content (first 10 char)...
-     *  [Message id] (sender1) : content [ReplyTo] (None)
-     */
-    @Override
-    public String toString() {
-        StringBuilder str_write = new StringBuilder("[Message ");
-        str_write.append(this.id);
-        str_write.append("] (");
-        str_write.append(sender);
-        str_write.append(") : ");
-        str_write.append(content);
-        str_write.append(" [ReplyTo] (");
-        if (msgToReply == null) { str_write.append("None)"); }
-        else {
-            str_write.append(msgToReply.getSender());
-            str_write.append(") : ");
-            String replyContent = msgToReply.getContent();
-            str_write.append(replyContent, 0, Math.min(replyContent.length(), 10));
-            str_write.append(replyContent.length() <= 10 ? "" : "...");
-        }
-        return str_write.toString();
-    }
+    // toString() has now been moved to ConversationManager. Just letting you know~
 
     /**
      * @return hash code
@@ -144,10 +119,11 @@ public class Message {
     }
 
     /**
+     * (UPDATED!)
      * @return gets msg to reply. It can be a null if there is no msg
      * being replied to.
      */
-    public Message getMsgToReply() {
+    public Integer getMsgToReply() {
         return msgToReply;
     }
 
