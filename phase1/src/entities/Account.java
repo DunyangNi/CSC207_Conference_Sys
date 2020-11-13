@@ -2,7 +2,6 @@ package entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Account implements Serializable {
     private String username;
@@ -10,8 +9,6 @@ public class Account implements Serializable {
     private String lastName;
     private String firstName;
     private ArrayList<String> friendsList = new ArrayList<>(); // added by Lucas
-    private ArrayList<Integer> conversations = new ArrayList<>(); // added by Lucas
-    private ArrayList<Integer> attendeeTalks = new ArrayList<>(); // added by Lucas
 
     public Account(String username, String password, String firstName, String lastName) {
         this.username = username;
@@ -45,14 +42,6 @@ public class Account implements Serializable {
         return friendsList;
     }
 
-    public ArrayList<Integer> getConversations() {
-        return conversations;
-    }
-
-    public ArrayList<Integer> getAttendeeTalks() {
-        return attendeeTalks;
-    }
-
     public void setUsername(String username) {
         this.username = username;
     }
@@ -73,11 +62,3 @@ public class Account implements Serializable {
         this.friendsList = friendsList;
     }
 
-    public void setConversations(ArrayList<Integer> conversations) {
-        this.conversations = conversations;
-    }
-
-    public void setAttendeeTalks(ArrayList<Integer> attendeeTalks) {
-        this.attendeeTalks = attendeeTalks;
-    }
-}
