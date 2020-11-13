@@ -12,12 +12,15 @@ public class AttendeeController {
     private String username;
     private EventManager eventmanager;
     private AccountManager accountmanager;
+    private ConversationManager conversationManager;
     private Presenter presenter;
 
-    public AttendeeController(String username, EventManager eventmanager, AccountManager accountmanager) {
+    public AttendeeController(String username, EventManager eventmanager, 
+                              AccountManager accountmanager, ConversationManager conversationManager) {
         this.username = username;
         this.eventmanager = eventmanager;
         this.accountmanager = accountmanager;
+        this.conversationManager = conversationManager;
         this.presenter = new Presenter(eventmanager, accountmanager);
     }
 
@@ -74,12 +77,12 @@ public class AttendeeController {
         this.presenter.displayAttendeeTalkSchedule(this.username);
     }
 
-    public void messageAttendee(String message, String attendeeusername) {
-        ConversationManager.sendMessage(this.accountmanager.fetchAttendee(this.username), this.accountmanager.fetchAttendee(attendeeusername), message);
+    public void messageAttendee(String message, String attendeeUsername) {
+        conversationManager.sendMessage(this.username, attendeeUsername, message);
     }
 
     public void messageSpeaker(String message, String speakerusername) {
-        ConversationManager.sendMessage(this.accountmanager.fetchAttendee(this.username), this.accountmanager.fetchSpeaker(speakerusername), message);
+        conversationManager.sendMessage(this.username, speakerusername, message);
     }
 
     public void addFriend(String accountusername) {
@@ -94,18 +97,19 @@ public class AttendeeController {
         this.presenter.displayFriendList(this.username);
     }
 
-    public void viewMessagesFrom(String recipientusername, int nummessages) {
-        if (nummessages < 0) {
-            System.out.println("This is an invalid number");
-            return;
-        }
-        Account recipient = this.accountmanager.fetchAccount(recipientusername);
-        ArrayList<String> convo = ConversationManager.getConversationArrayList(this.accountmanager.fetchAccount(this.username), recipient);
-        System.out.println("Your recent " + nummessages + " messages with " + recipientusername + ":");
-        System.out.println("");
-        for(int i = 0; i<=Math.min(nummessages, convo.size()) - 1; i++) {
-            System.out.println(convo.get(convo.size() - 1 - i));
-            System.out.println("");
+    public void viewMessagesFrom(String recipient, int numMessages) {
+        if (numMessages < 0) { System.out.println("This is an invalid number"); }
+        else {
+            String msgToPrint;
+            ArrayList<Integer> convo = conversationManager.getConversationMessages(this.username, recipient);
+            System.out.println("Your recent " + numMessages + " messages with " + recipient + ":");
+            System.out.println();
+            int recent_num = Math.min(numMessages, convo.size());
+            for (int i = 0; i < recent_num; i++) {
+                msgToPrint = conversationManager.messageToString(convo.get(numMessages - recent_num - 1 + i));
+                System.out.println(msgToPrint);
+                System.out.println();
+            }
         }
     }
 
@@ -152,14 +156,14 @@ public class AttendeeController {
                 this.seeAttendeeTalkSchedule();
             }
             else if(choice == 5) {
-                //messageAttendee(String message, String attendeeusername)
+                //messageAttendee(String message, String attendeeUsername)
                 System.out.println("Specify the username of the attendee you're messaging");
                 //String line1 = sc.nextLine();
-                String attendeeusername = sc.nextLine();
+                String attendeeUsername = sc.nextLine();
                 System.out.println("Specify the message you're sending");
                 //line1 = sc.nextLine();
                 String message = sc.nextLine();
-                this.messageAttendee(message, attendeeusername);
+                this.messageAttendee(message, attendeeUsername);
             }
             else if(choice == 6) {
                 //messageSpeaker(String message, String speakerusername)

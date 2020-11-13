@@ -15,6 +15,7 @@ public class OrganizerController {
     private String username;
     private EventManager eventmanager;
     private AccountManager accountmanager;
+    private ConversationManager conversationManager;
     private Presenter presenter;
 
     private Calendar timeoftalkrequesthelper(){
@@ -46,10 +47,12 @@ public class OrganizerController {
         return time;
     }
 
-    public OrganizerController(String username, EventManager eventmanager, AccountManager accountmanager) {
+    public OrganizerController(String username, EventManager eventmanager,
+                               AccountManager accountmanager, ConversationManager conversationManager) {
         this.username = username;
         this.eventmanager = eventmanager;
         this.accountmanager = accountmanager;
+        this.conversationManager = conversationManager;
         this.presenter = new Presenter(eventmanager,accountmanager);
     }
     public void addNewLocation(String location) {
@@ -95,23 +98,23 @@ public class OrganizerController {
     public void messageAllSpeakers(String message) {
         Iterator<String> speakerusernameiterator = this.accountmanager.speakerUsernameIterator();
         while( speakerusernameiterator.hasNext()){
-            ConversationManager.sendMessage(this.accountmanager.fetchOrganizer(this.username), this.accountmanager.fetchSpeaker(speakerusernameiterator.next()), message);
+            conversationManager.sendMessage(this.username, speakerusernameiterator.next(), message);
         }
     }
 
-    public void messageSpeaker(String message, String speakerusername) {
-        ConversationManager.sendMessage(this.accountmanager.fetchOrganizer(this.username), this.accountmanager.fetchSpeaker(speakerusername), message);
+    public void messageSpeaker(String message, String speakerUsername) {
+        conversationManager.sendMessage(this.username, speakerUsername, message);
     }
 
     public void messageAllAttendees(String message) {
         Iterator<String> attendeeusernameiterator = this.accountmanager.attendeeUsernameIterator();
         while(attendeeusernameiterator.hasNext()){
-            ConversationManager.sendMessage(this.accountmanager.fetchOrganizer(this.username),this.accountmanager.fetchAttendee(attendeeusernameiterator.next()), message);
+            conversationManager.sendMessage(this.username, attendeeusernameiterator.next(), message);
         }
     }
 
-    public void messageAttendee(String message, String attendeeusername) {
-        ConversationManager.sendMessage(this.accountmanager.fetchOrganizer(this.username), this.accountmanager.fetchAttendee(attendeeusername), message);
+    public void messageAttendee(String message, String attendeeUsername) {
+        conversationManager.sendMessage(this.username, attendeeUsername, message);
     }
 
     public void SeeTalkSchedule() {
@@ -130,25 +133,26 @@ public class OrganizerController {
         this.presenter.displayFriendList(this.username);
     }
 
-    public void viewMessagesFrom(String recipientusername, int nummessages) {
-        if (nummessages < 0) {
-            System.out.println("This is an invalid number");
-            return;
-        }
-        Account recipient = this.accountmanager.fetchAccount(recipientusername);
-        ArrayList<String> convo = ConversationManager.getConversationArrayList(this.accountmanager.fetchAccount(this.username), recipient);
-        System.out.println("Your recent " + nummessages + " messages with " + recipientusername + ":");
-        System.out.println("");
-        for(int i = 0; i<=Math.min(nummessages, convo.size()) - 1; i++) {
-            System.out.println(convo.get(convo.size() - 1 - i));
-            System.out.println("");
+    public void viewMessagesFrom(String recipient, int numMessages) {
+        if (numMessages < 0) { System.out.println("This is an invalid number"); }
+        else {
+            String msgToPrint;
+            ArrayList<Integer> convo = conversationManager.getConversationMessages(this.username, recipient);
+            System.out.println("Your recent " + numMessages + " messages with " + recipient + ":");
+            System.out.println();
+            int recent_num = Math.min(numMessages, convo.size());
+            for (int i = 0; i < recent_num; i++) {
+                msgToPrint = conversationManager.messageToString(convo.get(numMessages - recent_num - 1 + i));
+                System.out.println(msgToPrint);
+                System.out.println();
+            }
         }
     }
 
     public void seeLocationList() {
         ArrayList<String> locations = this.eventmanager.fetchLocations();
         System.out.println("Locations:");
-        System.out.println("");
+        System.out.println();
         for(int i = 0; i<=locations.size() - 1; i++) {
             System.out.println(locations.get(i));
         }

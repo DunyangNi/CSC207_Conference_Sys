@@ -17,8 +17,6 @@ import entities.*;
  * </pre>
  */
 public class CancelManager {
-    public EventTalk talk;
-
     //------------------------------------------------------------
     // Methods
     //------------------------------------------------------------

@@ -83,6 +83,7 @@ public class EventManager implements Serializable {
             for(EventTalk talk: talklist) {
                 if (talk.getSpeaker().equals(speaker) && CheckTimeOverlap(time, talk.getTime())) { return false; }
                 if (talk.getTopic().equals(topic)) { return false; }
+                // possible extension (double booking speaker in two locations)
             }
             return true;
         }
