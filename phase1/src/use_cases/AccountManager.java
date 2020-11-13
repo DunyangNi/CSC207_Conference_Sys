@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-
-import entities.Account;
 import entities.*;
 
 public class AccountManager implements Serializable {
@@ -48,9 +46,7 @@ public class AccountManager implements Serializable {
         // NEEDS TO LOAD IN
     }
 
-    public boolean isTalkSpeaker(Speaker speaker, EventTalk talk) {
-        return speaker.getUsername().equals(talk.getSpeaker());
-    }
+    // isTalkSpeaker() has been moved to EventManager instead.
 
     public boolean checkPassword(String username, String password){
         return password.equals(fetchAccount(username).getPassword());
@@ -145,6 +141,7 @@ public class AccountManager implements Serializable {
 //    public ArrayList<Integer> fetchSpeakerTalkList(String username) {
 //        return this.fetchSpeaker(username).getSpeakerTalks();
 //    }
+    // the issue is now fixed, as this responsibility is now in EventManager as fetchSortedTalks(speaker)
 
     public Iterator<String> speakerUsernameIterator() {
         Iterator<Speaker> speakeriterator = this.speakerList.values().iterator();
@@ -184,6 +181,9 @@ public class AccountManager implements Serializable {
     public boolean containsOrganizer (String username){
         return organizerList.containsKey(username);
     }
+
+    // (NEW!)
+    public boolean doesNotContainAccount(String user) { return !fetchAccountList().containsKey(user); }
 
     public HashMap<String, Speaker> getSpeakerList() {
         return this.speakerList;

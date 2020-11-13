@@ -1,7 +1,5 @@
 package controller;
 
-import entities.Organizer;
-import entities.Speaker;
 import use_cases.*;
 
 import java.util.Scanner;
@@ -24,23 +22,33 @@ public class LoginController {
     }
 
     public void login(){
-        System.out.println("Please enter your username:");
-        String username = input.nextLine();
-        boolean user = false;
-        user = loginHelper(username);
-        while (!user){
-            System.out.println("This username does not exist, please enter again.");
+        boolean incorrectUsername;
+        String username;
+        String prompt;
+        int firstMessage = 0;
+        do {
+            prompt = firstMessage == 0 ? "Please enter your username: " : "This username does not exist, please enter again: ";
+            System.out.print(prompt);
             username = input.nextLine();
-            loginHelper(username);
+            incorrectUsername = !loginHelper(username);
+            firstMessage = incorrectUsername ? 1 : 0;
         }
+        while (incorrectUsername);
     }
+
     private void password(String username){
-        System.out.println("Please enter the password:");
-        String password = input.nextLine();
-        while(!accountManager.checkPassword(username,password)){
-            System.out.println("Wrong! Please enter again:");
+        boolean incorrectPassword;
+        String password;
+        String prompt;
+        int firstMessage = 0;
+        do {
+            prompt = firstMessage == 0 ? "Please enter the password: " : "Wrong! Please enter again: ";
+            System.out.print(prompt);
             password = input.nextLine();
+            incorrectPassword = !accountManager.checkPassword(username,password);
+            firstMessage = incorrectPassword ? 1 : 0;
         }
+        while (incorrectPassword);
     }
 
     private boolean loginHelper(String username){
@@ -51,7 +59,6 @@ public class LoginController {
             return true;
         }
         if (accountManager.containsOrganizer(username)) {
-            Organizer account = accountManager.fetchOrganizer(username);
             password(username);
             OrganizerController oc = new OrganizerController(
                     username, eventManager, accountManager, conversationManager, friendManager);
@@ -59,7 +66,6 @@ public class LoginController {
             return true;
         }
         if (accountManager.containsSpeaker(username)) {
-            Speaker account = accountManager.fetchSpeaker(username);
             password(username);
             SpeakerController sc = new SpeakerController(
                     username, eventManager, accountManager, conversationManager, friendManager);

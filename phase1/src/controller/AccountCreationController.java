@@ -25,7 +25,7 @@ public class AccountCreationController {
         System.out.println("What type of account you want to create?");
         System.out.println("Enter 1 for Attendee; enter 2 for Organizer");
         String in = input.nextLine();
-        Boolean valid = false;
+        boolean valid = false;
         while (!valid){
             if(in.equals("1")){
                 signupAttendee();
@@ -64,22 +64,24 @@ public class AccountCreationController {
     }
 
     private String[] accountInformation(){
-        Boolean valid = false;
-        System.out.println("Please enter your username:");
-        String username = input.nextLine();
-        if(!accountManager.containsAccount(username)) valid = true;
-        while (!valid){
-            System.out.println("The username already exists, please enter another one:");
+        boolean usernamePicked;
+        int firstMessage = 0;
+        String username;
+        String prompt;
+        do {
+            prompt = firstMessage == 0 ? "Please enter your username:" : "The username already exists, please enter another one:";
+            System.out.println(prompt);
             username = input.nextLine();
-            if(!accountManager.containsAccount(username)) valid = true;
+            usernamePicked = accountManager.doesNotContainAccount(username);
+            firstMessage = !usernamePicked ? 1 : 0;
         }
-        System.out.println("Please enter your first name:");
+        while (!usernamePicked);
+        System.out.print("Please enter your first name: ");
         String firstname = input.nextLine();
-        System.out.println("Please enter your last name:");
+        System.out.print("Please enter your last name: ");
         String lastname = input.nextLine();
-        System.out.println("Please enter your password:");
+        System.out.print("Please enter your password: ");
         String password = input.nextLine();
-        String[] info = {username, password, firstname, lastname};
-        return info;
+        return new String[]{username, password, firstname, lastname};
     }
 }

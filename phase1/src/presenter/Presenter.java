@@ -20,6 +20,7 @@ public class Presenter {
     public void displayTalkSchedule() {
         HashMap<String[], Calendar> allTalks = eventmanager.fetchSortedTalks();
         System.out.println("Schedule for all talks:\n");
+        if (allTalks.keySet().isEmpty()) System.out.println("Nothing!");
         Calendar timeNow = Calendar.getInstance();
         for(String[] eventInfo : allTalks.keySet()) {
             if(timeNow.compareTo(allTalks.get(eventInfo)) < 0) {
@@ -37,6 +38,7 @@ public class Presenter {
         HashMap<String[], Calendar> attendeeTalks = eventmanager.fetchSortedTalks();
         System.out.println("Talks you've signed up for:\n");
         Calendar timeNow = Calendar.getInstance();
+        if (attendeeTalks.keySet().isEmpty()) System.out.println("Nothing!");
         for(String[] eventInfo : attendeeTalks.keySet()) {
             if(timeNow.compareTo(attendeeTalks.get(eventInfo)) < 0 &&
                     signupManager.isSignedUp(Integer.parseInt(eventInfo[4]), attendee)) {
@@ -53,6 +55,7 @@ public class Presenter {
     public void displaySpeakerTalksSchedule(String speaker) {
         HashMap<String[], Calendar> speakerTalks = eventmanager.fetchSortedTalks(speaker);
         System.out.println("Schedule for talks you're speaking at:\n");
+        if (speakerTalks.keySet().isEmpty()) System.out.println("Nothing!");
         Calendar timeNow = Calendar.getInstance();
         for(String[] eventInfo : speakerTalks.keySet()) {
             if(timeNow.compareTo(speakerTalks.get(eventInfo)) < 0) {
@@ -69,8 +72,7 @@ public class Presenter {
     public void displayFriendList(String user) {
         ArrayList<String> selectedFriends = friendManager.getFriendList(user);
         System.out.println("Your Contacts List:\n");
-        for (String friend : selectedFriends) {
-            System.out.println(friend);
-        }
+        if (selectedFriends == null) System.out.println("No one!");
+        else { for (String friend : selectedFriends) { System.out.println(friend); } }
     }
 }
