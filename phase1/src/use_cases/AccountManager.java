@@ -14,18 +14,18 @@ public class AccountManager implements Serializable {
      * AUTHOR: ANDREW
      * The key represents username (never changes) and maps to an account
      */
-    private HashMap<String, Attendee> AttendeeList;
-    private HashMap<String, Organizer> OrganizerList;
-    private HashMap<String, Speaker> SpeakerList;
+    private HashMap<String, Attendee> attendeeList;
+    private HashMap<String, Organizer> organizerList;
+    private HashMap<String, Speaker> speakerList;
 
     // (NEW!)
     @Override
     public boolean equals(Object obj) {
         boolean result = false;
         if (obj instanceof AccountManager) {
-            boolean sameAttendeeList = AttendeeList.equals(((AccountManager) obj).getAttendeeList());
-            boolean sameOrganizerList = OrganizerList.equals(((AccountManager) obj).getOrganizerList());
-            boolean sameSpeakerList = SpeakerList.equals(((AccountManager) obj).getSpeakerList());
+            boolean sameAttendeeList = attendeeList.equals(((AccountManager) obj).getAttendeeList());
+            boolean sameOrganizerList = organizerList.equals(((AccountManager) obj).getOrganizerList());
+            boolean sameSpeakerList = speakerList.equals(((AccountManager) obj).getSpeakerList());
             result = sameAttendeeList && sameOrganizerList && sameSpeakerList;
         }
         return result;
@@ -41,9 +41,9 @@ public class AccountManager implements Serializable {
     }
 
     public AccountManager(HashMap<String, Attendee> AttendeeList, HashMap<String, Organizer> OrganizerList, HashMap<String, Speaker> SpeakerList) {
-        this.AttendeeList = AttendeeList;
-        this.OrganizerList = OrganizerList;
-        this.SpeakerList = SpeakerList;
+        this.attendeeList = AttendeeList;
+        this.organizerList = OrganizerList;
+        this.speakerList = SpeakerList;
 
         // NEEDS TO LOAD IN
     }
@@ -61,29 +61,29 @@ public class AccountManager implements Serializable {
      */
 
     public boolean AddNewSpeaker(String username, String password, String firstName, String lastName) {
-        if (SpeakerList.containsKey(username)) {
+        if (speakerList.containsKey(username)) {
             return false;
         }
         Speaker newSpeaker = new Speaker(username, password, firstName, lastName);
-        SpeakerList.put(username, newSpeaker);
+        speakerList.put(username, newSpeaker);
         return true;
     }
 
     public boolean AddNewAttendee(String username, String password, String firstName, String lastName) {
-        if (AttendeeList.containsKey(username)) {
+        if (attendeeList.containsKey(username)) {
             return false;
         }
         Attendee newAttendee = new Attendee(username, password, firstName, lastName);
-        AttendeeList.put(username, newAttendee);
+        attendeeList.put(username, newAttendee);
         return true;
     }
 
     public boolean AddNewOrganizer(String username, String password, String firstName, String lastName) {
-        if (OrganizerList.containsKey(username)) {
+        if (organizerList.containsKey(username)) {
             return false;
         }
         Organizer newOrganizer = new Organizer(username, password, firstName, lastName);
-        OrganizerList.put(username, newOrganizer);
+        organizerList.put(username, newOrganizer);
         return true;
     }
 
@@ -107,15 +107,15 @@ public class AccountManager implements Serializable {
 
     public Organizer fetchOrganizer(String username) {
         //retrieves organizer with the username
-        return OrganizerList.get(username);
+        return organizerList.get(username);
     }
 
     public Speaker fetchSpeaker(String username) {
-        return SpeakerList.get(username);
+        return speakerList.get(username);
     }
 
     public Attendee fetchAttendee(String username) {
-        return AttendeeList.get(username);
+        return attendeeList.get(username);
     }
 
     /**
@@ -125,16 +125,20 @@ public class AccountManager implements Serializable {
      * @return Attendee, Speaker, or Organizer object otherwise null
      */
     public Account fetchAccount(String username) {
-        if (this.getAttendeeList().containsKey(username)) {
-            return this.fetchAttendee(username);
-        }
-        if (this.getSpeakerList().containsKey(username)) {
-            return this.fetchSpeaker(username);
-        }
-        if (this.getOrganizerList().containsKey(username)) {
-            return this.fetchOrganizer(username);
-        }
-        return null;
+        return this.fetchAccountList().get(username);
+    }
+
+    /**
+     * NEW!
+     * Redesigned implementation of accountList, now an instance variable.
+     * @return a HashMap<String, Account> of all username: Accounts pairs.
+     */
+    public HashMap<String, Account> fetchAccountList() {
+        HashMap<String, Account> accountList = new HashMap<>();
+        accountList.putAll(this.getAttendeeList());
+        accountList.putAll(this.getSpeakerList());
+        accountList.putAll(this.getOrganizerList());
+        return accountList;
     }
 
     public ArrayList<Integer> fetchSpeakerTalkList(String username) {
@@ -142,7 +146,7 @@ public class AccountManager implements Serializable {
     }
 
     public Iterator<String> speakerUsernameIterator() {
-        Iterator<Speaker> speakeriterator = this.SpeakerList.values().iterator();
+        Iterator<Speaker> speakeriterator = this.speakerList.values().iterator();
         ArrayList<String> usernames = new ArrayList<>();
         while(speakeriterator.hasNext()) {
             usernames.add(speakeriterator.next().getUsername());
@@ -151,7 +155,7 @@ public class AccountManager implements Serializable {
     }
 
     public Iterator<String> attendeeUsernameIterator() {
-        Iterator<Attendee> speakeriterator = this.AttendeeList.values().iterator();
+        Iterator<Attendee> speakeriterator = this.attendeeList.values().iterator();
         ArrayList<String> usernames = new ArrayList<>();
         while(speakeriterator.hasNext()) {
             usernames.add(speakeriterator.next().getUsername());
@@ -160,7 +164,7 @@ public class AccountManager implements Serializable {
     }
 
     public Iterator<String> organizerUsernameIterator() {
-        Iterator<Organizer> speakeriterator = this.OrganizerList.values().iterator();
+        Iterator<Organizer> speakeriterator = this.organizerList.values().iterator();
         ArrayList<String> usernames = new ArrayList<>();
         while(speakeriterator.hasNext()) {
             usernames.add(speakeriterator.next().getUsername());
@@ -169,26 +173,26 @@ public class AccountManager implements Serializable {
     }
 
     public boolean containsAttendee (String username){
-        return AttendeeList.containsKey(username);
+        return attendeeList.containsKey(username);
     }
 
     public boolean containsSpeaker (String username){
-        return SpeakerList.containsKey(username);
+        return speakerList.containsKey(username);
     }
 
     public boolean containsOrganizer (String username){
-        return OrganizerList.containsKey(username);
+        return organizerList.containsKey(username);
     }
 
     public HashMap<String, Speaker> getSpeakerList() {
-        return this.SpeakerList;
+        return this.speakerList;
     }
 
     public HashMap<String, Attendee> getAttendeeList() {
-        return this.AttendeeList;
+        return this.attendeeList;
     }
 
     public HashMap<String, Organizer> getOrganizerList() {
-        return this.OrganizerList;
+        return this.organizerList;
     }
 }
