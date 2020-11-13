@@ -6,7 +6,6 @@ import entities.Organizer;
 import entities.Speaker;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import use_cases.CancelManager;
 import use_cases.SignupManager;
 
 import java.util.Calendar;

@@ -37,6 +37,13 @@ public class SignupManager {
         }
     }
 
+    public static void removeAttendee(EventTalk talk, Attendee attendee) {
+        if (isSignedUp(talk, attendee)) {
+            ArrayList<String> eventAttendees = talk.getAttendees();
+            eventAttendees.remove(attendee.getUsername());
+        }
+    }
+
     /**
      * Returns the given seat limit of an EventTalk.
      * @return seat limit
