@@ -53,7 +53,7 @@ public class Conversation {
 
     public ArrayList<String> toArrayList() {
         ArrayList<String> conversation = new ArrayList<>();
-        for(Message m: messages) {
+        for(Integer m: messages) {
             conversation.add(m.toString());
         }
         return conversation;

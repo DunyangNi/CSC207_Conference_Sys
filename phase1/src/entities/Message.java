@@ -22,11 +22,7 @@ public class Message {
     private String content;
     private Integer msgToReply; // changed by Lucas~
     private static int sid = 0;
-    private int id;
-
-    //------------------------------------------------------------
-    // Constructors
-    //------------------------------------------------------------
+    private final int id;
 
     /**
      * Creates a object with a sender and a message content in reply to
@@ -94,9 +90,6 @@ public class Message {
         sid = 0;
     }
 
-    //------------------------------------------------------------
-    // Getters and Setters
-    //------------------------------------------------------------
     /**
      * @return gets sender.
      */
@@ -156,4 +149,3 @@ public class Message {
         this.receiver = receiver;
     } // changed by Lucas
 }
-
