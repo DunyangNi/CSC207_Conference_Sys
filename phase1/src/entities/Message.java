@@ -144,7 +144,7 @@ public class Message {
     /**
      * @param msgToReply msg being replied to.
      */
-    public void setMsgToReply(Message msgToReply) {
+    public void setMsgToReply(int msgToReply) {
         this.msgToReply = msgToReply;
     }
 
