@@ -61,4 +61,4 @@ public class Account implements Serializable {
     public void setFriendsList(ArrayList<String> friendsList) {
         this.friendsList = friendsList;
     }
-
+}
