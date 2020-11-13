@@ -1,5 +1,4 @@
 package controller;
-import entities.Speaker;
 import use_cases.*;
 import entities.*;
 import java.util.*;
@@ -143,7 +142,7 @@ public class SpeakerController {
 
             }
             else if(choice == 2) {
-                Set<String> allAttendees = accountmanager.getAttendeelist().keySet();
+                Set<String> allAttendees = accountmanager.getAttendeeList().keySet();
                 if (!allAttendees.isEmpty()) {
                     System.out.println("List of attendees");
                     System.out.println("---------------------------------------------");

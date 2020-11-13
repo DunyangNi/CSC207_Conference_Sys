@@ -17,16 +17,15 @@ public class AccountManager implements Serializable {
     private HashMap<String, Attendee> AttendeeList;
     private HashMap<String, Organizer> OrganizerList;
     private HashMap<String, Speaker> SpeakerList;
-    private HashMap<String, Account> AccountList = new HashMap<String, Account>();
 
     // (NEW!)
     @Override
     public boolean equals(Object obj) {
         boolean result = false;
         if (obj instanceof AccountManager) {
-            boolean sameAttendeeList = AttendeeList.equals(((AccountManager) obj).getAttendeelist());
+            boolean sameAttendeeList = AttendeeList.equals(((AccountManager) obj).getAttendeeList());
             boolean sameOrganizerList = OrganizerList.equals(((AccountManager) obj).getOrganizerList());
-            boolean sameSpeakerList = SpeakerList.equals(((AccountManager) obj).getSpeakerlist());
+            boolean sameSpeakerList = SpeakerList.equals(((AccountManager) obj).getSpeakerList());
             result = sameAttendeeList && sameOrganizerList && sameSpeakerList;
         }
         return result;
@@ -46,70 +45,45 @@ public class AccountManager implements Serializable {
         this.OrganizerList = OrganizerList;
         this.SpeakerList = SpeakerList;
 
-        for(String key: AttendeeList.keySet()) {
-            this. AccountList.put(key, AttendeeList.get(key));
-        }
-
-        for(String key: OrganizerList.keySet()) {
-            this.AccountList.put(key, OrganizerList.get(key));
-        }
-
-        for(String key: SpeakerList.keySet()) {
-            this.AccountList.put(key, SpeakerList.get(key));
-        }
-
         // NEEDS TO LOAD IN
     }
 
-    /**
-     * Getter
-     */
-
-    public HashMap<String, Speaker> getSpeakerlist() {
-        return this.SpeakerList;
+    public boolean isTalkSpeaker(Speaker speaker, EventTalk talk) {
+        return speaker.getUsername().equals(talk.getSpeaker());
     }
 
-    public HashMap<String, Attendee> getAttendeelist() {
-        return this.AttendeeList;
+    public boolean checkPassword(String username, String password){
+        return password.equals(fetchAccount(username).getPassword());
     }
-
-    public HashMap<String, Organizer> getOrganizerList() {
-        return this.OrganizerList;
-    }
-
-    public HashMap<String, Account> getAccountlist() { return this.AccountList; }
 
     /**
      * Creates new account and adds to list IF IT WON'T CREATE DUPLICATE USERNAMES. OTHERWISE DO NOTHING
      */
 
     public boolean AddNewSpeaker(String username, String password, String firstName, String lastName) {
-        if (AccountList.containsKey(username)) {
+        if (SpeakerList.containsKey(username)) {
             return false;
         }
-        Speaker speaker = new Speaker(username, password, firstName, lastName);
-        SpeakerList.put(username, speaker);
-        AccountList.put(username, speaker);
+        Speaker newSpeaker = new Speaker(username, password, firstName, lastName);
+        SpeakerList.put(username, newSpeaker);
         return true;
     }
 
     public boolean AddNewAttendee(String username, String password, String firstName, String lastName) {
-        if (AccountList.containsKey(username)) {
+        if (AttendeeList.containsKey(username)) {
             return false;
         }
-        Attendee attendee = new Attendee(username, password, firstName, lastName);
-        AttendeeList.put(username, attendee);
-        AccountList.put(username, attendee);
+        Attendee newAttendee = new Attendee(username, password, firstName, lastName);
+        AttendeeList.put(username, newAttendee);
         return true;
     }
 
     public boolean AddNewOrganizer(String username, String password, String firstName, String lastName) {
-        if (AccountList.containsKey(username)) {
+        if (OrganizerList.containsKey(username)) {
             return false;
         }
-        Organizer organizer = new Organizer(username, password, firstName, lastName);
-        OrganizerList.put(username, organizer);
-        AccountList.put(username, organizer);
+        Organizer newOrganizer = new Organizer(username, password, firstName, lastName);
+        OrganizerList.put(username, newOrganizer);
         return true;
     }
 
@@ -127,7 +101,6 @@ public class AccountManager implements Serializable {
         ChangeNameAccount.setLastName(NewLastName);
     }
 
-
     public void ChangePassword(Account ChangePasswordAccount, String NewPassword) {
         ChangePasswordAccount.setPassword(NewPassword);
     }
@@ -141,8 +114,31 @@ public class AccountManager implements Serializable {
         return SpeakerList.get(username);
     }
 
+    public Attendee fetchAttendee(String username) {
+        return AttendeeList.get(username);
+    }
+
+    /**
+     * NEW!
+     * General Account fetcher.
+     * @param username Account username
+     * @return Attendee, Speaker, or Organizer object otherwise null
+     */
     public Account fetchAccount(String username) {
-        return AccountList.get(username);
+        if (this.getAttendeeList().containsKey(username)) {
+            return this.fetchAttendee(username);
+        }
+        if (this.getSpeakerList().containsKey(username)) {
+            return this.fetchSpeaker(username);
+        }
+        if (this.getOrganizerList().containsKey(username)) {
+            return this.fetchOrganizer(username);
+        }
+        return null;
+    }
+
+    public ArrayList<Integer> fetchSpeakerTalkList(String username) {
+        return this.fetchSpeaker(username).getSpeakerTalks();
     }
 
     public Iterator<String> speakerUsernameIterator() {
@@ -172,11 +168,6 @@ public class AccountManager implements Serializable {
         return usernames.iterator();
     }
 
-    public Attendee fetchAttendee(String username) {
-        return AttendeeList.get(username);
-
-    }
-
     public boolean containsAttendee (String username){
         return AttendeeList.containsKey(username);
     }
@@ -189,25 +180,15 @@ public class AccountManager implements Serializable {
         return OrganizerList.containsKey(username);
     }
 
-    public boolean containsAccount (String username) { return AccountList.containsKey(username); }
-
-    public ArrayList<EventTalk> fetchSpeakerTalkList(String username) {
-        return this.fetchSpeaker(username).getSpeakerTalks();
+    public HashMap<String, Speaker> getSpeakerList() {
+        return this.SpeakerList;
     }
 
-    public boolean isTalkSpeaker(Speaker speaker, EventTalk talk) {
-        return speaker.getUsername().equals(talk.getSpeaker().getUsername());
+    public HashMap<String, Attendee> getAttendeeList() {
+        return this.AttendeeList;
     }
 
-    /**
-     * Precondition: AccountList contains username
-     * @param username the username of some user
-     * @param password the input passport
-     * @return true iff the input passport is the same as the passport in the Account with given username
-     */
-    public boolean checkPassword(String username, String password){
-        return password.equals(fetchAccount(username).getPassword());
+    public HashMap<String, Organizer> getOrganizerList() {
+        return this.OrganizerList;
     }
-
-
 }

@@ -19,9 +19,9 @@ public class TestAccountManager {
         accountmanager = new AccountManager(
                 new HashMap<String, Attendee>(), new HashMap<String, Organizer>(), new HashMap<String, Speaker>());
 
-        assert(accountmanager.getAttendeelist().isEmpty());
+        assert(accountmanager.getAttendeeList().isEmpty());
         assert(accountmanager.getOrganizerList().isEmpty());
-        assert(accountmanager.getSpeakerlist().isEmpty());
+        assert(accountmanager.getSpeakerList().isEmpty());
 
         assertFalse(accountmanager.containsAttendee("lbj23"));
         assertFalse(accountmanager.containsOrganizer("kb24"));
@@ -72,7 +72,7 @@ public class TestAccountManager {
         //All accounts in all list must have distinct usernames//
 
         accountmanager.AddNewSpeaker("lbj123", "bruh", "Bruh","Bruh");
-        assertFalse(accountmanager.getSpeakerlist().containsKey("lbj123"));
+        assertFalse(accountmanager.getSpeakerList().containsKey("lbj123"));
         assertNull(accountmanager.fetchSpeaker("lbj123"));
         assert(accountmanager.fetchSpeaker("mj23").equals(new Account
                 ("mj23", "goat", "Michael","Jordan")));
