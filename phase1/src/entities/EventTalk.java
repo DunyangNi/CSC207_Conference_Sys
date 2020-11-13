@@ -76,13 +76,6 @@ public class EventTalk extends Event implements Serializable {
         return false;
     }
 
-    /**
-     * @return hash code
-     */
-    @Override
-    public int hashCode(){
-        return super.hashCode() / 10 + getSpeaker().hashCode() % 100;
-    }
     //------------------------------------------------------------
     // Getters and Setters
     //------------------------------------------------------------
