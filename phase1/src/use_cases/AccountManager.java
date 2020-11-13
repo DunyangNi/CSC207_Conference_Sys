@@ -141,9 +141,10 @@ public class AccountManager implements Serializable {
         return accountList;
     }
 
-    public ArrayList<Integer> fetchSpeakerTalkList(String username) {
-        return this.fetchSpeaker(username).getSpeakerTalks();
-    }
+    // TODO: 11/13/20 This method is obsolete now that we've removed Speaker.speakerTalks. Will need to resolve usage errors in Presenter. 
+//    public ArrayList<Integer> fetchSpeakerTalkList(String username) {
+//        return this.fetchSpeaker(username).getSpeakerTalks();
+//    }
 
     public Iterator<String> speakerUsernameIterator() {
         Iterator<Speaker> speakeriterator = this.speakerList.values().iterator();
