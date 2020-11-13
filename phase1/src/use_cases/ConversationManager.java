@@ -13,117 +13,117 @@ import entities.*;
  * <pre>
  * Use Case ConversationManager
  * Responsibilities:
+ *      Stores a HashMap of every Account's Hashmap of Conversations with a recipient
+ *      Stores a Hashmap of every Message sent by its ID
+ *      Returns an ArrayList of all Messages in a Conversation by its ID
+ *      Returns a Set of all existing recipients of a given Account
  *      Can send a message from a sender Account to a recipient Account
  *      Can add a given Message to a given Conversation
- *      Can check whether Message recipient is in sender's friends list
  *
  * Collaborators:
- *      Conversation, Message, Account
+ *      Conversation, Message
  * </pre>
  */
 public class ConversationManager {
+    private HashMap<String, HashMap<String, Conversation>> conversations = new HashMap<>(); // (NEW!) key: username ; value: hash of convos
+    private HashMap<Integer, Message> messages = new HashMap<>(); // (NEW!) key: message id ; value: Message object
+
     //------------------------------------------------------------
     // Methods
     //------------------------------------------------------------
 
-    /**
-     * (NEW!) Returns the string representation of a Conversation between two given Accounts.
-     *  If no such conversation exists, returns the empty string.
-     * @param current given Account to search for Conversation
-     * @param recipient given recipient Account of a Conversation
-     * @return string representation of selected Conversation.
-     */
-    public static String getConversationString(Account current, Account recipient) {
-        Conversation selectConversation = current.getConversations().get(recipient.getUsername());
-        if (selectConversation != null)
-            return selectConversation.toString();
-        else
-            return "";
-    }
-
-    public static ArrayList<String> getConversationArrayList(Account current, Account recipient) {
-        Conversation selectConversation = current.getConversations().get(recipient.getUsername());
-        if(selectConversation != null) {
-            return selectConversation.toArrayList();
-        }
+    public String messageToString(Integer id) {
+        // Obtain Message information
+        Message selectedMsg = messages.get(id);
+        Message msgToReply = messages.get(selectedMsg.getMsgToReply());
+        String sender = selectedMsg.getSender();
+        String content = selectedMsg.getContent();
+        // Construct the String representation
+        StringBuilder str_write = new StringBuilder("[Message ");
+        str_write.append(id);
+        str_write.append("] (");
+        str_write.append(sender);
+        str_write.append(") : ");
+        str_write.append(content);
+        str_write.append(" [ReplyTo] (");
+        if (msgToReply == null) { str_write.append("None)"); }
         else {
-            return new ArrayList<String>();
+            str_write.append(msgToReply.getSender());
+            str_write.append(") : ");
+            String replyContent = msgToReply.getContent();
+            str_write.append(replyContent, 0, Math.min(replyContent.length(), 10));
+            str_write.append(replyContent.length() <= 10 ? "" : "...");
         }
+        return str_write.toString();
+    }
+
+    // formerly getConversationArrayList
+    public ArrayList<Integer> getConversationMessages(String user, String recipient) {
+        Conversation selectedConvo = conversations.get(user).get(recipient);
+        if (selectedConvo == null) { return new ArrayList<>(); }
+        return selectedConvo.getMessages();
     }
 
     /**
-     * (NEW!) Returns all users who have had conversion with the current account
-     * @param current given Account to search for Conversion
-     * @return All users who have had conversation with the current account
+     * (UPDATED!) Returns all Accounts who have had Conversations with the given Account.
+     *  If given Account has no Conversations, returns the empty set.
+     * @param current username of given Account
+     * @return Set of usernames associated with recipient Accounts
      */
-    public static Set<String> getAllUserConversation(Account current) {
-        Set<String> users = current.getConversations().keySet();
-        if(!users.isEmpty()){
-            return users;
-        }
-        else {
-            return Collections.emptySet();
-        }
+    public Set<String> getAllUserConversationRecipients(String current) {
+        Set<String> recipients = this.conversations.get(current).keySet();
+        return recipients.isEmpty() ? Collections.emptySet() : recipients;
     }
 
     /**
-     * Sends a message from a sender Account to a recipient Account
+     * (UPDATED!) Sends a message from a sender Account to a recipient Account
      * @param sender given sender Account
      * @param recipient given recipient Account
      * @param message given String content for message
      */
-    public static void sendMessage(Account sender, Account recipient, String message) {
-        if (recipient != null && validRecipient(sender, recipient)) {
-            HashMap<String, Conversation> senderConversations = sender.getConversations();
-            HashMap<String, Conversation> recipientConversations = recipient.getConversations();
-            Conversation givenConversation = senderConversations.get(recipient.getUsername());
-            Message newMessage = new Message(sender, recipient, message);
-            // if we don't assume a Conversation is automatically instantiated for all friends.
-            if (givenConversation == null) {
-                ArrayList<Account> participants = new ArrayList<>(Arrays.asList(sender, recipient));
-                givenConversation = new Conversation(participants, newMessage);
-                senderConversations.put(recipient.getUsername(), givenConversation);
-                recipientConversations.put(sender.getUsername(), givenConversation);
-            }
-            else {
-                addMessageToConversation(givenConversation, newMessage);
-            }
-            sender.setConversations(senderConversations);
-            recipient.setConversations(recipientConversations);
+    public void sendMessage(String sender, String recipient, String message) {
+        //if (recipient != null && validRecipient(sender, recipient)) {
+        HashMap<String, Conversation> senderConversations = this.conversations.get(sender);
+        HashMap<String, Conversation> recipientConversations = this.conversations.get(recipient);
+        Conversation givenConversation = senderConversations.get(recipient);
+        Message newMessage = new Message(sender, recipient, message);
+        // Create a new Conversation if an existing one isn't found.
+        if (givenConversation == null) {
+            ArrayList<String> participants = new ArrayList<>(Arrays.asList(sender, recipient));
+            givenConversation = new Conversation(participants, newMessage.getId());
+            senderConversations.put(recipient, givenConversation);
+            recipientConversations.put(sender, givenConversation);
         }
-        else{
-            System.out.println("ERROR: invalid recipient username: '"
-                    + recipient.getUsername() + "'");
+        else {
+            addMessageToConversation(givenConversation, newMessage);
+            senderConversations.replace(recipient, givenConversation);
+            recipientConversations.replace(sender, givenConversation);
         }
+        this.conversations.replace(sender, senderConversations);
+        this.conversations.replace(recipient, recipientConversations);
+        //}
+        //else{
+        //    System.out.println("ERROR: invalid recipient username: '"
+        //            + recipient.getUsername() + "'");
+        //}
     }
 
     /**
-     * Adds given Message to given Conversation, assigning msgToReply if needed.
+     * (UPDATED!) (Helper) Adds given Message to given Conversation, assigning msgToReply if needed.
      * @param conversation given Conversation
      * @param message given Message
      */
-    public static void addMessageToConversation(Conversation conversation, Message message) {
+    public void addMessageToConversation(Conversation conversation, Message message) {
         // Get list of Messages from Conversation
-        ArrayList<Message> existingMessages = conversation.getMessages();
-        // Assign message to reply to
+        ArrayList<Integer> existingMessages = conversation.getMessages();
+        // Assign message to reply to. By default, it is the Message last added to the Conversation.
         if (existingMessages.size() != 0) {
-            Message msgToReply = existingMessages.get(existingMessages.size()-1);
+            Message msgToReply = this.messages.get(existingMessages.get(existingMessages.size()-1));
             message.setMsgToReply(msgToReply);
         }
         // Add new message to Conversation
-        existingMessages.add(message);
+        existingMessages.add(message.getId());
         // Set new list of Messages to Conversation
         conversation.setMessages(existingMessages);
-    }
-
-    /**
-     * (TO BE REVISED!) Returns whether two Accounts are in each other's friend list or not.
-     * @param a1 given Account 1
-     * @param a2 given Account 2
-     * @return whether a1 and a2 are in each other's friend list or not.
-     */
-    public static boolean validRecipient(Account a1, Account a2) {
-        // return (a1.getFriendsList().containsValue(a2) && a2.getFriendsList().containsValue(a1));
-        return true; // for a later fix/extension
     }
 }

@@ -5,6 +5,7 @@ import entities.Attendee;
 import entities.Organizer;
 import entities.Speaker;
 import use_cases.AccountManager;
+import use_cases.ConversationManager;
 import use_cases.EventManager;
 
 import java.util.Scanner;
@@ -12,11 +13,13 @@ import java.util.Scanner;
 public class LoginController {
     private AccountManager accountManager;
     private EventManager eventManager;
+    private ConversationManager conversationManager;
     Scanner input;
 
-    public LoginController(AccountManager am, EventManager em, Scanner input){
+    public LoginController(AccountManager am, EventManager em, ConversationManager cm, Scanner input){
         this.accountManager = am;
         this.eventManager = em;
+        this.conversationManager = cm;
         this.input = input;
     }
 
@@ -43,21 +46,21 @@ public class LoginController {
     private boolean loginHelper(String username){
         if(accountManager.containsAttendee(username)) {
             password(username);
-            AttendeeController ac = new AttendeeController(username, eventManager, accountManager);
+            AttendeeController ac = new AttendeeController(username, eventManager, accountManager, conversationManager);
             ac.runAttendeeInteraction();
             return true;
         }
         if(accountManager.containsOrganizer(username)) {
-            Organizer account=accountManager.fetchOrganizer(username);
+            Organizer account = accountManager.fetchOrganizer(username);
             password(username);
-            OrganizerController oc = new OrganizerController(username, eventManager, accountManager);
+            OrganizerController oc = new OrganizerController(username, eventManager, accountManager, conversationManager);
             oc.runOrganizerInteraction();
             return true;
         }
         if(accountManager.containsSpeaker(username)) {
-            Speaker account=accountManager.fetchSpeaker(username);
+            Speaker account = accountManager.fetchSpeaker(username);
             password(username);
-            SpeakerController sc = new SpeakerController(username, eventManager, accountManager);
+            SpeakerController sc = new SpeakerController(username, eventManager, accountManager, conversationManager);
             sc.runSpeakerInteraction();
             return true;
         }

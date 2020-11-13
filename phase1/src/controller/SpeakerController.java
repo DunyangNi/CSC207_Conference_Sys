@@ -1,4 +1,5 @@
 package controller;
+import entities.Speaker;
 import use_cases.*;
 import entities.*;
 import java.util.*;
@@ -9,12 +10,15 @@ public class SpeakerController {
     private String username;
     private EventManager eventmanager;
     private AccountManager accountmanager;
+    private ConversationManager conversationManager;
     private Presenter presenter;
 
-    public SpeakerController(String username, EventManager eventmanager, AccountManager accountmanager) {
+    public SpeakerController(String username, EventManager eventmanager,
+                             AccountManager accountmanager, ConversationManager conversationManager) {
         this.username = username;
         this.eventmanager = eventmanager;
         this.accountmanager = accountmanager;
+        this.conversationManager = conversationManager;
         this.presenter = new Presenter(eventmanager, accountmanager);
     }
 
@@ -61,25 +65,25 @@ public class SpeakerController {
         this.presenter.displaySpeakerTalksSchedule(this.username);
     }
 
-    public void messageAttendee(String message, String attendeeusername) {
-        ConversationManager.sendMessage(this.accountmanager.fetchSpeaker(this.username), this.accountmanager.fetchAttendee(attendeeusername), message);
+    public void messageAttendee(String message, String attendeeUsername) {
+        conversationManager.sendMessage(this.username, attendeeUsername, message);
     }
 
     public void messageAttendeesAtTalks(ArrayList<String> topiclist, ArrayList<Calendar> timelist, String message) {
-        ArrayList<String> seenattendeeusernames = new ArrayList<>();
+        ArrayList<String> seenAttendeeUsernames = new ArrayList<>();
         for(int i = 0; i <= topiclist.size() - 1; i++) {
             if(this.eventmanager.containsTalk(topiclist.get(i), timelist.get(i))) {
-                ArrayList<String> attendeesattalk = this.eventmanager.getAttendeesAtEvent(topiclist.get(i), timelist.get(i));
-                for(String attendeeusername: attendeesattalk) {
-                    if(!seenattendeeusernames.contains(attendeeusername)) {
-                        seenattendeeusernames.add(attendeeusername);
+                ArrayList<String> attendeesAtTalk = this.eventmanager.getAttendeesAtEvent(topiclist.get(i), timelist.get(i));
+                for(String attendeeUsername: attendeesAtTalk) {
+                    if(!seenAttendeeUsernames.contains(attendeeUsername)) {
+                        seenAttendeeUsernames.add(attendeeUsername);
                     }
                 }
             }
         }
 
-        for(String attendeeusername: seenattendeeusernames) {
-            ConversationManager.sendMessage(this.accountmanager.fetchSpeaker(this.username), this.accountmanager.fetchAttendee(attendeeusername), message);
+        for(String attendeeUsername: seenAttendeeUsernames) {
+            conversationManager.sendMessage(this.username, attendeeUsername, message);
         }
     }
 
@@ -87,36 +91,36 @@ public class SpeakerController {
         this.presenter.displayTalkSchedule();
     }
 
-    public void addFriend(String accountusername) {
-        FriendManager.AddFriend(this.accountmanager.fetchAccount(this.username), this.accountmanager.fetchAccount(accountusername));
+    public void addFriend(String accountUsername) {
+        FriendManager.AddFriend(this.accountmanager.fetchAccount(this.username), this.accountmanager.fetchAccount(accountUsername));
     }
 
-    public void removeFriend(String accountusername) {
-        FriendManager.RemoveFriend(this.accountmanager.fetchAccount(this.username), this.accountmanager.fetchAccount(accountusername));
+    public void removeFriend(String accountUsername) {
+        FriendManager.RemoveFriend(this.accountmanager.fetchAccount(this.username), this.accountmanager.fetchAccount(accountUsername));
     }
 
     public void seeFriendList() {
         this.presenter.displayFriendList(this.username);
     }
 
-    public void viewMessagesFrom(String recipientusername, int nummessages) {
-        if (nummessages < 0) {
+    public void viewMessagesFrom(String recipient, int numMessages) {
+        if (numMessages < 0) {
             System.out.println("This is an invalid number");
-            return;
         }
-        Account recipient = this.accountmanager.fetchAccount(recipientusername);
-        if (recipient == null) {
-            System.out.println("Error: User '" + recipientusername + "' is not found");
-            System.out.println("");
+        else if (!conversationManager.getAllUserConversationRecipients(this.username).contains(recipient)) {
+            System.out.println("Error: User '" + recipient + "' is not found");
+            System.out.println();
         }
-        else{
-            ArrayList<String> convo = ConversationManager.
-                    getConversationArrayList(this.accountmanager.fetchAccount(this.username), recipient);
-            System.out.println("Your recent " + nummessages + " messages with " + recipientusername + ":");
-            System.out.println("");
-            for(int i = 0; i<=Math.min(nummessages, convo.size()) - 1; i++) {
-                System.out.println(convo.get(convo.size() - 1 - i));
-                System.out.println("");
+        else {
+            String msgToPrint;
+            ArrayList<Integer> selectedConversation = conversationManager.getConversationMessages(this.username, recipient);
+            System.out.println("Your last " + numMessages + " messages with " + recipient + ":");
+            System.out.println();
+            int recent_num = Math.min(numMessages, selectedConversation.size());
+            for (int i = 0; i < recent_num; i++) {
+                msgToPrint = conversationManager.messageToString(selectedConversation.get(numMessages - recent_num - 1 + i));
+                System.out.println(msgToPrint);
+                System.out.println();
             }
         }
     }
@@ -142,7 +146,7 @@ public class SpeakerController {
 
             }
             else if(choice == 2) {
-                Set<String> allAttendees = accountmanager.getAttendeeList().keySet();
+                Set<String> allAttendees = accountmanager.getAttendeelist().keySet();
                 if (!allAttendees.isEmpty()) {
                     System.out.println("List of attendees");
                     System.out.println("---------------------------------------------");
@@ -176,7 +180,7 @@ public class SpeakerController {
                 ArrayList<String> topiclist = new ArrayList<>();
                 ArrayList<Calendar> timelist = new ArrayList<>();
                 boolean loop = true;
-                while(loop == true) {
+                while (loop) {
                     System.out.println("Specify the topic of a talk you're giving");
                     //String line1 = sc.nextLine();
                     String topic = sc.nextLine();
@@ -251,9 +255,8 @@ public class SpeakerController {
 
             }
             else if(choice == 8) {
-                //viewMessagesFrom(String recipientusername, int nummessages)
-                Set<String> convUsersWithMe = ConversationManager.getAllUserConversation(
-                        accountmanager.fetchAccount(username));
+                //viewMessagesFrom(String recipientUsername, int numMessages)
+                Set<String> convUsersWithMe = conversationManager.getAllUserConversationRecipients(username);
 
                 if (convUsersWithMe.isEmpty()) {
                     System.out.println("There is no conversion to search");

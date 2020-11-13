@@ -1,6 +1,7 @@
 package controller;
 
 import use_cases.AccountManager;
+import use_cases.ConversationManager;
 import use_cases.EventManager;
 
 import java.util.Scanner;
@@ -8,12 +9,14 @@ import java.util.Scanner;
 public class SignupController {
     private AccountManager accountManager;
     private EventManager eventManager;
+    private ConversationManager conversationManager;
     Scanner input;
     private String organizerPassword = "123456"; //we can move this to eventmanager, have an extra constructor for it
 
-    public SignupController(AccountManager am, EventManager em, Scanner input){
+    public SignupController(AccountManager am, EventManager em, ConversationManager cm, Scanner input){
         this.accountManager = am;
         this.eventManager = em;
+        this.conversationManager = cm;
         this.input = input;
     }
     public void signup(){
@@ -38,7 +41,7 @@ public class SignupController {
     private void signupAttendee(){
         String[] info = accountInformation();
         accountManager.AddNewAttendee(info[0], info[1], info[2], info[3]);
-        AttendeeController ac = new AttendeeController(info[0], eventManager, accountManager);
+        AttendeeController ac = new AttendeeController(info[0], eventManager, accountManager, conversationManager);
         ac.runAttendeeInteraction();
     }
     private void signupOrganizer(){
@@ -53,7 +56,7 @@ public class SignupController {
         }
         String[] info = accountInformation();
         accountManager.AddNewOrganizer(info[0], info[1], info[2], info[3]);
-        OrganizerController oc = new OrganizerController(info[0], eventManager, accountManager);
+        OrganizerController oc = new OrganizerController(info[0], eventManager, accountManager, conversationManager);
         oc.runOrganizerInteraction();
     }
 
