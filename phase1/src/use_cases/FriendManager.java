@@ -13,42 +13,51 @@ public class FriendManager {
     /**
      * Add friend IF APPLICABLE (THEY AREN'T ALREADY FRIENDS). OTHERWISE DO NOTHING
      */
-
-    public static boolean AddFriend(Account Account1, Account Account2){
-        String username_2 = Account2.getUsername();
-        HashMap<String, Account> list_1 = Account1.getFriendsList();
-
-        if (list_1.containsKey(username_2)){
+    public static boolean AddFriend(Account adder, Account added){
+        if (adder.getFriendsList().contains(added.getUsername())){
             return false;
         }
-        list_1.put(username_2, Account2);
+        adder.getFriendsList().add(added.getUsername());
+        added.getFriendsList().add(adder.getUsername());
         return true;
-    }
+        }
 
     /**
      * Remove friend IF APPLICABLE (THEY ARE ACTUALLY FRIENDS). OTHERWISE DO NOTHING
      */
 
-    public static boolean RemoveFriend(Account Account1, Account Account2){
-        /*
-         * Assumption: If Account1 is in Account2's friend list, then
-         * Account2 is in Account1's friend list, due to the
-         * AddFriend method's implementation
-         */
-        if (Account1.getFriendsList().containsKey(Account2.getUsername())){
-            Account1.getFriendsList().remove(Account2.getUsername());
-            return true;
+//    // Old version
+//    public static boolean removeFriend(Account Account1, Account Account2){
+//        /*
+//         * Assumption: If Account1 is in Account2's friend list, then
+//         * Account2 is in Account1's friend list, due to the
+//         * AddFriend method's implementation
+//         */
+//        if (Account1.getFriendsList().containsKey(Account2.getUsername())){
+//            Account1.getFriendsList().remove(Account2.getUsername());
+//            return true;
+//        }
+//        return false;
+//    }
+
+    public static boolean RemoveFriend(Account deleter, Account deleted){
+        if (!deleter.getFriendsList().contains(deleted.getUsername())) {
+            return false;
         }
-        return false;
+        deleter.getFriendsList().remove(deleted.getUsername());
+        deleted.getFriendsList().remove(deleter.getUsername());
+        return true;
     }
 
     public static ArrayList<String> getFriendList(Account account) {
-        ArrayList<String> friendarray = new ArrayList<>();
-        for(String friendusername: account.getFriendsList().keySet()) {
-            Account friend = account.getFriendsList().get(friendusername);
-            friendarray.add(friend.getUsername() + ": " + friend.getFirstName() + " " + friend.getLastName());
-        }
-        return friendarray;
+//        // Old version
+//        ArrayList<String> friendarray = new ArrayList<>();
+//        for(String friendUsername: account.getFriendsList().keySet()) {
+//            Account friend = account.getFriendsList().get(friendUsername);
+//            friendarray.add(friend.getUsername() + ": " + friend.getFirstName() + " " + friend.getLastName());
+//        }
+//        return friendarray;
+        return account.getFriendsList();
     }
 
 }

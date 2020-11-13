@@ -146,7 +146,7 @@ public class SpeakerController {
 
             }
             else if(choice == 2) {
-                Set<String> allAttendees = accountmanager.getAttendeelist().keySet();
+                Set<String> allAttendees = accountmanager.getAttendeeList().keySet();
                 if (!allAttendees.isEmpty()) {
                     System.out.println("List of attendees");
                     System.out.println("---------------------------------------------");
@@ -211,7 +211,7 @@ public class SpeakerController {
                 this.SeeTalkSchedule();
             }
             else if(choice == 5) {
-                Set<String> allAccts = accountmanager.getAccountlist().keySet();
+                Set<String> allAccts = accountmanager.fetchAccountList().keySet();
                 if (!allAccts.isEmpty()) {
                     System.out.println("List of users");
                     System.out.println("---------------------------------------------");
@@ -240,7 +240,7 @@ public class SpeakerController {
                 //String line1 = sc.nextLine();
                 String usernametoremove = sc.nextLine();
 
-                Set<String> allAccts = accountmanager.getAccountlist().keySet();
+                Set<String> allAccts = accountmanager.fetchAccountList().keySet();
                 if (allAccts.contains(usernametoremove)) {
                     this.removeFriend(usernametoremove);
                 }
