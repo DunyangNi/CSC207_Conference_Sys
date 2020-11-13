@@ -1,13 +1,8 @@
 package controller;
 
-import entities.Account;
-import entities.Attendee;
 import entities.Organizer;
 import entities.Speaker;
-import use_cases.AccountManager;
-import use_cases.ConversationManager;
-import use_cases.EventManager;
-import use_cases.SignupManager;
+import use_cases.*;
 
 import java.util.Scanner;
 
@@ -15,13 +10,15 @@ public class LoginController {
     private AccountManager accountManager;
     private EventManager eventManager;
     private ConversationManager conversationManager;
+    private FriendManager friendManager;
     private SignupManager signupManager;
     Scanner input;
 
-    public LoginController(AccountManager am, EventManager em, ConversationManager cm, Scanner input){
+    public LoginController(AccountManager am, EventManager em, ConversationManager cm, FriendManager fm, Scanner input){
         this.accountManager = am;
         this.eventManager = em;
         this.conversationManager = cm;
+        this.friendManager = fm;
         signupManager = new SignupManager(eventManager);
         this.input = input;
     }
@@ -47,23 +44,25 @@ public class LoginController {
     }
 
     private boolean loginHelper(String username){
-        if(accountManager.containsAttendee(username)) {
+        if (accountManager.containsAttendee(username)) {
             password(username);
-            AttendeeController ac = new AttendeeController(username, eventManager, accountManager, conversationManager, signupManager);
+            AttendeeController ac = new AttendeeController(username, eventManager, conversationManager, friendManager, signupManager);
             ac.runAttendeeInteraction();
             return true;
         }
-        if(accountManager.containsOrganizer(username)) {
+        if (accountManager.containsOrganizer(username)) {
             Organizer account = accountManager.fetchOrganizer(username);
             password(username);
-            OrganizerController oc = new OrganizerController(username, eventManager, accountManager, conversationManager);
+            OrganizerController oc = new OrganizerController(
+                    username, eventManager, accountManager, conversationManager, friendManager);
             oc.runOrganizerInteraction();
             return true;
         }
-        if(accountManager.containsSpeaker(username)) {
+        if (accountManager.containsSpeaker(username)) {
             Speaker account = accountManager.fetchSpeaker(username);
             password(username);
-            SpeakerController sc = new SpeakerController(username, eventManager, accountManager, conversationManager);
+            SpeakerController sc = new SpeakerController(
+                    username, eventManager, accountManager, conversationManager, friendManager);
             sc.runSpeakerInteraction();
             return true;
         }

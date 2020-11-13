@@ -9,6 +9,7 @@ public class MainSystem {
     private EventManager eventManager;
     private DataManager dataManager;
     private ConversationManager conversationManager;
+    private FriendManager friendManager;
     Scanner input = new Scanner(System.in);
     private LoginController loginController;
     private AccountCreationController accountCreationController;
@@ -32,21 +33,31 @@ public class MainSystem {
 
 
     public void run(){
+        // Obtain filepath of all .ser files
         System.out.println("Print enter the address for AccountManager");
         String am = input.nextLine();
         System.out.println("Print enter the address for EventManager");
         String em = input.nextLine();
         System.out.print("Enter the filepath for ConversationManager: ");
         String cm = input.nextLine();
-        dataManager = new DataManager(am, em, cm);
+        System.out.print("Enter the filepath for FriendManager: ");
+        String fm = input.nextLine();
+        // Deserialization
+        dataManager = new DataManager(am, em, cm, fm);
         eventManager = dataManager.readEventManager();
         accountManager = dataManager.readAccountManager();
         conversationManager = dataManager.readConversationManager();
-        loginController = new LoginController(accountManager, eventManager, conversationManager, input);
-        accountCreationController = new AccountCreationController(accountManager, eventManager, conversationManager, input);
+        friendManager = dataManager.readFriendManager();
+        // Initiation
+        loginController = new LoginController(accountManager, eventManager, conversationManager, friendManager, input);
+        accountCreationController = new AccountCreationController(
+                accountManager, eventManager, conversationManager, friendManager, input);
         startSystem();
+        // Saving changes
         dataManager.saveEventManager(eventManager);
         dataManager.saveAccountManager(accountManager);
+        dataManager.saveConversationManager(conversationManager);
+        dataManager.saveFriendManager(friendManager);
     }
 
     public static void main(String[] args){

@@ -8,19 +8,20 @@ import java.lang.*;
 public class AttendeeController {
     private String username;
     private EventManager eventmanager;
-    private AccountManager accountmanager;
     private ConversationManager conversationManager;
+    private FriendManager friendManager;
     private SignupManager signupManager;
     private Presenter presenter;
 
-    public AttendeeController(String username, EventManager eventmanager, AccountManager accountmanager,
-                              ConversationManager conversationManager, SignupManager signupManager) {
+    public AttendeeController(String username, EventManager eventmanager,
+                              ConversationManager conversationManager, FriendManager friendManager,
+                              SignupManager signupManager) {
         this.username = username;
         this.eventmanager = eventmanager;
-        this.accountmanager = accountmanager;
         this.conversationManager = conversationManager;
+        this.friendManager = friendManager;
         this.signupManager = signupManager;
-        this.presenter = new Presenter(eventmanager, accountmanager, signupManager);
+        this.presenter = new Presenter(eventmanager, friendManager, signupManager);
     }
 
     // timeoftalkrequesthelper() is now deprecated due to use of IDs.
@@ -55,12 +56,12 @@ public class AttendeeController {
         conversationManager.sendMessage(this.username, speakerusername, message);
     }
 
-    public void addFriend(String accountusername) {
-        FriendManager.AddFriend(this.accountmanager.fetchAccount(this.username), this.accountmanager.fetchAccount(accountusername));
+    public void addFriend(String friendToAdd) {
+        friendManager.AddFriend(this.username, friendToAdd);
     }
 
-    public void removeFriend(String accountusername) {
-        FriendManager.RemoveFriend(this.accountmanager.fetchAccount(this.username), this.accountmanager.fetchAccount(accountusername));
+    public void removeFriend(String friendToRemove) {
+        friendManager.RemoveFriend(this.username, friendToRemove);
     }
 
     public void seeFriendList() {

@@ -8,13 +8,13 @@ import java.util.Calendar;
 public class Presenter {
 
     private EventManager eventmanager;
-    private AccountManager accountmanager;
     private SignupManager signupManager;
+    private FriendManager friendManager;
 
-    public Presenter(EventManager eventmanager, AccountManager accountmanager, SignupManager signupManager) {
+    public Presenter(EventManager eventmanager, FriendManager friendManager, SignupManager signupManager) {
         this.eventmanager = eventmanager;
-        this.accountmanager = accountmanager;
         this.signupManager = signupManager;
+        this.friendManager = friendManager;
     }
 
     public void displayTalkSchedule() {
@@ -66,12 +66,11 @@ public class Presenter {
         }
     }
 
-    public void displayFriendList(String myusername) {
-        ArrayList<String> friendslist = FriendManager.getFriendList(this.accountmanager.fetchAccount(myusername));
+    public void displayFriendList(String user) {
+        ArrayList<String> selectedFriends = friendManager.getFriendList(user);
         System.out.println("Your Contacts List:\n");
-        for(int i = 0; i<= friendslist.size() - 1; i++) {
-            System.out.println(friendslist.get(i));
-            System.out.println();
+        for (String friend : selectedFriends) {
+            System.out.println(friend);
         }
     }
 }

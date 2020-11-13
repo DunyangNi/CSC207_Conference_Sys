@@ -10,17 +10,19 @@ public class SpeakerController {
     private EventManager eventmanager;
     private AccountManager accountmanager;
     private ConversationManager conversationManager;
+    private FriendManager friendManager;
     private SignupManager signupManager;
     private Presenter presenter;
 
-    public SpeakerController(String username, EventManager eventmanager,
-                             AccountManager accountmanager, ConversationManager conversationManager) {
+    public SpeakerController(String username, EventManager eventmanager, AccountManager accountmanager,
+                             ConversationManager conversationManager, FriendManager friendManager) {
         this.username = username;
         this.eventmanager = eventmanager;
         this.accountmanager = accountmanager;
         this.conversationManager = conversationManager;
+        this.friendManager = friendManager;
         signupManager = new SignupManager(eventmanager);
-        this.presenter = new Presenter(eventmanager, accountmanager, signupManager);
+        this.presenter = new Presenter(eventmanager, friendManager, signupManager);
     }
 
     // timeoftalkrequesthelper() is deprecated due to use of IDs.
@@ -47,12 +49,12 @@ public class SpeakerController {
         this.presenter.displayTalkSchedule();
     }
 
-    public void addFriend(String accountUsername) {
-        FriendManager.AddFriend(this.accountmanager.fetchAccount(this.username), this.accountmanager.fetchAccount(accountUsername));
+    public void addFriend(String friendToAdd) {
+        friendManager.AddFriend(this.username, friendToAdd);
     }
 
-    public void removeFriend(String accountUsername) {
-        FriendManager.RemoveFriend(this.accountmanager.fetchAccount(this.username), this.accountmanager.fetchAccount(accountUsername));
+    public void removeFriend(String friendToRemove) {
+        friendManager.RemoveFriend(this.username, friendToRemove);
     }
 
     public void seeFriendList() {

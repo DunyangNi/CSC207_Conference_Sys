@@ -1,8 +1,6 @@
 package gateway;
 
-import use_cases.AccountManager;
-import use_cases.ConversationManager;
-import use_cases.EventManager;
+import use_cases.*;
 import java.io.*;
 
 /**
@@ -13,16 +11,18 @@ public class DataManager {
     private String accountPath;
     private String eventPath;
     private String conversationPath;
+    private String friendPath;
 
     /**
      * The constructor of DataManager
      * @param accountPath address of account database
      * @param eventPath address of event database
      */
-    public DataManager(String accountPath, String eventPath, String conversationPath){
+    public DataManager(String accountPath, String eventPath, String conversationPath, String friendPath){
         this.accountPath = accountPath;
         this.eventPath = eventPath;
         this.conversationPath = conversationPath;
+        this.friendPath = friendPath;
     }
 
     /**
@@ -67,14 +67,26 @@ public class DataManager {
     }
 
     /**
-     * (NEW!) Saving the EventManager
-     * @param conversationManager The AccountManager we are saving
+     * (NEW!) Saving the ConversationManager
+     * @param conversationManager The ConversationManager we are saving
      */
     public void saveConversationManager(ConversationManager conversationManager) {
         try{
             saveObject(conversationPath, conversationManager);
         } catch (IOException e) {
             System.out.println("Failed to save the ConversationManager.");
+        }
+    }
+
+    /**
+     * (NEW!) Saving the FriendManager
+     * @param friendManager The FriendManager we are saving
+     */
+    public void saveFriendManager(FriendManager friendManager) {
+        try{
+            saveObject(friendPath, friendManager);
+        } catch (IOException e) {
+            System.out.println("Failed to save the FriendManager.");
         }
     }
 
@@ -136,17 +148,41 @@ public class DataManager {
             InputStream buffer = new BufferedInputStream(file);
             ObjectInput input = new ObjectInputStream(buffer);
 
-            ConversationManager em = (ConversationManager) input.readObject();
+            ConversationManager cm = (ConversationManager) input.readObject();
             input.close();
             buffer.close();
             file.close();
-            return em;
+            return cm;
         } catch (IOException e) {
             System.out.println("Cannot read the ConversationManager, creating a new ConversationManager");
             return new ConversationManager();
         } catch (ClassNotFoundException e) {
             System.out.println("There is no ConversationManager in database, creating a new ConversationManager");
             return new ConversationManager();
+        }
+    }
+
+    /**
+     * Read the FriendManager from database.
+     * @return The FriendManager from the file
+     */
+    public FriendManager readFriendManager() {
+        try {
+            InputStream file = new FileInputStream(friendPath);
+            InputStream buffer = new BufferedInputStream(file);
+            ObjectInput input = new ObjectInputStream(buffer);
+
+            FriendManager fm = (FriendManager) input.readObject();
+            input.close();
+            buffer.close();
+            file.close();
+            return fm;
+        } catch (IOException e) {
+            System.out.println("Cannot read the FriendManager, creating a new FriendManager");
+            return new FriendManager();
+        } catch (ClassNotFoundException e) {
+            System.out.println("There is no FriendManager in database, creating a new FriendManager");
+            return new FriendManager();
         }
     }
 }

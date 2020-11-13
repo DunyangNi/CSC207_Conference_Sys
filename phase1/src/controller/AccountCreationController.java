@@ -8,14 +8,16 @@ public class AccountCreationController {
     private AccountManager accountManager;
     private EventManager eventManager;
     private ConversationManager conversationManager;
+    private FriendManager friendManager;
     private SignupManager signupManager;
     Scanner input;
     private String organizerPassword = "123456"; //we can move this to eventmanager, have an extra constructor for it
 
-    public AccountCreationController(AccountManager am, EventManager em, ConversationManager cm, Scanner input){
+    public AccountCreationController(AccountManager am, EventManager em, ConversationManager cm, FriendManager fm, Scanner input){
         this.accountManager = am;
         this.eventManager = em;
         this.conversationManager = cm;
+        this.friendManager = fm;
         signupManager = new SignupManager(eventManager);
         this.input = input;
     }
@@ -41,7 +43,7 @@ public class AccountCreationController {
     private void signupAttendee(){
         String[] info = accountInformation();
         accountManager.AddNewAttendee(info[0], info[1], info[2], info[3]);
-        AttendeeController ac = new AttendeeController(info[0], eventManager, accountManager, conversationManager, signupManager);
+        AttendeeController ac = new AttendeeController(info[0], eventManager, conversationManager, friendManager, signupManager);
         ac.runAttendeeInteraction();
     }
     private void signupOrganizer(){
@@ -56,7 +58,8 @@ public class AccountCreationController {
         }
         String[] info = accountInformation();
         accountManager.AddNewOrganizer(info[0], info[1], info[2], info[3]);
-        OrganizerController oc = new OrganizerController(info[0], eventManager, accountManager, conversationManager);
+        OrganizerController oc = new OrganizerController(info[0],
+                eventManager, accountManager, conversationManager, friendManager);
         oc.runOrganizerInteraction();
     }
 

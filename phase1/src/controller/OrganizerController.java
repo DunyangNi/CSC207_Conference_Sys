@@ -1,12 +1,6 @@
 package controller;
-import entities.Speaker;
-import use_cases.*;
-import entities.*;
 
-import java.util.Iterator;
-import java.util.Scanner;
-import java.util.Calendar;
-import java.util.TimeZone;
+import use_cases.*;
 import presenter.*;
 import java.util.*;
 import java.lang.*;
@@ -16,19 +10,21 @@ public class OrganizerController {
     private EventManager eventmanager;
     private AccountManager accountmanager;
     private ConversationManager conversationManager;
+    private FriendManager friendManager;
     private SignupManager signupManager;
     private Presenter presenter;
 
     // timeoftalkrequesthelper() is now deprecated due to use of IDs.
 
-    public OrganizerController(String username, EventManager eventmanager,
-                               AccountManager accountmanager, ConversationManager conversationManager) {
+    public OrganizerController(String username, EventManager eventmanager, AccountManager accountmanager,
+                               ConversationManager conversationManager, FriendManager friendManager) {
         this.username = username;
         this.eventmanager = eventmanager;
         this.accountmanager = accountmanager;
         this.conversationManager = conversationManager;
+        this.friendManager = friendManager;
         signupManager = new SignupManager(eventmanager);
-        this.presenter = new Presenter(eventmanager,accountmanager, signupManager);
+        this.presenter = new Presenter(eventmanager, friendManager, signupManager);
     }
     public void addNewLocation(String location) {
         this.eventmanager.addLocation(location);
@@ -94,12 +90,12 @@ public class OrganizerController {
         this.presenter.displayTalkSchedule();
     }
 
-    public void addFriend(String accountusername) {
-        FriendManager.AddFriend(this.accountmanager.fetchAccount(this.username), this.accountmanager.fetchAccount(accountusername));
+    public void addFriend(String friendToAdd) {
+        friendManager.AddFriend(this.username, friendToAdd);
     }
 
-    public void removeFriend(String accountusername) {
-        FriendManager.RemoveFriend(this.accountmanager.fetchAccount(this.username), this.accountmanager.fetchAccount(accountusername));
+    public void removeFriend(String friendToRemove) {
+        friendManager.RemoveFriend(this.username, friendToRemove);
     }
 
     public void seeFriendList() {

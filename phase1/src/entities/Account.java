@@ -1,14 +1,12 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class Account implements Serializable {
     private String username;
     private String password;
     private String lastName;
     private String firstName;
-    private ArrayList<String> friendsList = new ArrayList<>(); // added by Lucas
 
     public Account(String username, String password, String firstName, String lastName) {
         this.username = username;
@@ -38,10 +36,6 @@ public class Account implements Serializable {
         return firstName;
     }
 
-    public ArrayList<String> getFriendsList() {
-        return friendsList;
-    }
-
     public void setUsername(String username) {
         this.username = username;
     }
@@ -56,9 +50,5 @@ public class Account implements Serializable {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
-    }
-
-    public void setFriendsList(ArrayList<String> friendsList) {
-        this.friendsList = friendsList;
     }
 }
