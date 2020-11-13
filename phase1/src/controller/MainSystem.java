@@ -43,12 +43,14 @@ public class MainSystem {
         String am = input.nextLine();
         System.out.println("Print enter the address for EventManager");
         String em = input.nextLine();
-        dataManager = new DataManager(am, em);
+        System.out.print("Enter the filepath for ConversationManager: ");
+        String cm = input.nextLine();
+        dataManager = new DataManager(am, em, cm);
         eventManager = dataManager.readEventManager();
         accountManager = dataManager.readAccountManager();
         conversationManager = dataManager.readConversationManager();
-        loginController = new LoginController(accountManager, eventManager, input);
-        signupController = new SignupController(accountManager, eventManager, input);
+        loginController = new LoginController(accountManager, eventManager, conversationManager, input);
+        signupController = new SignupController(accountManager, eventManager, conversationManager, input);
         startSystem();
         dataManager.saveEventManager(eventManager);
         dataManager.saveAccountManager(accountManager);
