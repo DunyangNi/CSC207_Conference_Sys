@@ -47,7 +47,7 @@ public class AccountTest {
         Account org2 = new Organizer("orguser2", "pass2", "fname2", "lname2" );
 
         account1.getFriendsList().put(acc1.getUsername(), acc1);
-        account1.getConversations().put(convo1.getMessengers().toString(), convo1);
+        account1.getConversations().put(convo1.getParticipants().toString(), convo1);
         account1.getAttendeeTalks().add(event1);
     }
 

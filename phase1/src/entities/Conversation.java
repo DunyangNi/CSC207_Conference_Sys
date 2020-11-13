@@ -1,5 +1,6 @@
 package entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -15,27 +16,19 @@ import java.util.ArrayList;
  *      Message, Account
  * </pre>
  */
-public class Conversation {
-    private ArrayList<String> messengers;
+public class Conversation implements Serializable {
+    private ArrayList<String> participants;
     private ArrayList<Integer> messages = new ArrayList<>();
-
-    //------------------------------------------------------------
-    // Constructors
-    //------------------------------------------------------------
 
     /**
      * Creates an event with topic and time.
-     * @param users given Accounts that can send messages to this Conversation
+     * @param participants given Accounts that can send messages to this Conversation
      * @param initialMessage the first initial Message of the Conversation
      */
-    public Conversation(ArrayList<String> users, int initialMessage) {
-        this.messengers = users;
+    public Conversation(ArrayList<String> participants, int initialMessage) {
+        this.participants = participants;
         this.messages.add(initialMessage);
     }
-
-    //------------------------------------------------------------
-    // Methods
-    //------------------------------------------------------------
 
     /**
      * Compares for equality.
@@ -45,7 +38,7 @@ public class Conversation {
     @Override
     public boolean equals(Object obj) {
         return (obj instanceof Conversation) &&
-                ((Conversation) obj).getMessengers().equals(this.getMessengers()) &&
+                ((Conversation) obj).getParticipants().equals(this.getParticipants()) &&
                 ((Conversation) obj).getMessages().equals(this.getMessages());
     }
 
@@ -59,14 +52,10 @@ public class Conversation {
         return conversation;
     }
 
-    //------------------------------------------------------------
-    // Getters and Setters
-    //------------------------------------------------------------
-
     /**
      * @return participants of this Conversation
      */
-    public ArrayList<String> getMessengers() { return messengers; }
+    public ArrayList<String> getParticipants() { return participants; }
 
     /**
      * @return messages of this Conversation
@@ -75,9 +64,9 @@ public class Conversation {
 
     /**
      * sets participants of this Conversation
-     * @param messengers new array of given Accounts
+     * @param participants new array of given Accounts
      */
-    public void setMessengers(ArrayList<String> messengers) { this.messengers = messengers; }
+    public void setParticipants(ArrayList<String> participants) { this.participants = participants; }
 
     /**
      * sets messages of this Conversation
