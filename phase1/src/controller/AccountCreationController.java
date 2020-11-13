@@ -1,13 +1,10 @@
 package controller;
 
-import use_cases.AccountManager;
-import use_cases.ConversationManager;
-import use_cases.EventManager;
-import use_cases.SignupManager;
+import use_cases.*;
 
 import java.util.Scanner;
 
-public class SignupController {
+public class AccountCreationController {
     private AccountManager accountManager;
     private EventManager eventManager;
     private ConversationManager conversationManager;
@@ -15,7 +12,7 @@ public class SignupController {
     Scanner input;
     private String organizerPassword = "123456"; //we can move this to eventmanager, have an extra constructor for it
 
-    public SignupController(AccountManager am, EventManager em, ConversationManager cm, Scanner input){
+    public AccountCreationController(AccountManager am, EventManager em, ConversationManager cm, Scanner input){
         this.accountManager = am;
         this.eventManager = em;
         this.conversationManager = cm;

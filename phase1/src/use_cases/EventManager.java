@@ -1,7 +1,6 @@
 package use_cases;
 
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -13,24 +12,6 @@ import java.util.HashMap;
 public class EventManager implements Serializable {
     private HashMap<Integer, Event> events;
     private ArrayList<String> locations;
-
-    // (NEW!)
-    //@Override
-    //public boolean equals(Object obj) {
-    //    boolean result = false;
-    //    if (obj instanceof EventManager) {
-    //        boolean sameEventList = eventlist.equals(((EventManager) obj).getEventlist());
-    //        boolean sameTalkList = talklist.equals(((EventManager) obj).getTalklist());
-    //        boolean samelocations = locations.equals(((EventManager) obj).getlocations());
-    //        result = sameEventList && sameTalkList && samelocations;
-    //    }
-    //    return result;
-    //}
-
-    // (NEW!)
-    //public ArrayList<Event> getEventlist() { return eventlist; }
-    //public ArrayList<EventTalk> getTalklist() { return talklist; }
-    //public ArrayList<String> getlocations() { return locations; }
 
     // (NEW!)
     public EventManager() {
@@ -70,7 +51,7 @@ public class EventManager implements Serializable {
 
     public ArrayList<Event> getAllEvents() { return new ArrayList<>(events.values()); }
 
-    // (NEW!) possible merge with fetchEvent
+    // (NEW!)
     public EventTalk getTalk(Integer id) {
         Event selectedTalk = events.get(id);
         return selectedTalk instanceof EventTalk ? (EventTalk) selectedTalk : null;
@@ -159,24 +140,16 @@ public class EventManager implements Serializable {
      * ChangeTime: Checks for conlicts due to same location be used in overlapping time
      */
 
-    public boolean ChangeTime(Event event_to_change, Calendar new_time){
+    public boolean ChangeTime(Integer id, Calendar newTime){
         Calendar curr_time = Calendar.getInstance();
-        if(curr_time.compareTo(event_to_change.getTime()) >= 0) {
-            return false;
+        Event selectedEvent = events.get(id);
+        if (curr_time.compareTo(selectedEvent.getTime()) >= 0 || curr_time.compareTo(newTime) >= 0) { return false; }
+        for (Event event: getAllEvents()) {
+            String eventLocation = event.getLocation(); Calendar eventTime = event.getTime();
+            if (!event.equals(selectedEvent) && eventLocation.equals(selectedEvent.getLocation()) &&
+                    CheckTimeOverlap(eventTime, newTime)) { return false; }
         }
-        if(curr_time.compareTo(new_time) >= 0) {
-            return false;
-        }
-        for(Event event: getAllEvents()) {
-            String location1 = event.getLocation();
-            String location2 = event_to_change.getLocation();
-            Calendar time1 = event.getTime();
-
-            if (event != event_to_change && location1.equals(location2) && CheckTimeOverlap(time1, new_time)) {
-                return false;
-            }
-        }
-        event_to_change.setTime(new_time);
+        selectedEvent.setTime(newTime);
         return true;
     }
 
@@ -225,39 +198,9 @@ public class EventManager implements Serializable {
         return true;
     }
 
+    // consider returning a copy of Locations to prevent any outside modification !
     public ArrayList<String> fetchLocations() {
         return this.locations;
-    }
-
-    // Temporary fix subject to removal
-    public Integer fetchTalkID(String topic, Calendar time) {
-        for(EventTalk talk: getAllTalks()) {
-            if(talk.getTopic().equals(topic) && talk.getTime().compareTo(time) == 0) {
-                return talk.getId();
-            }
-        }
-        throw new RuntimeException();
-    }
-
-
-    // consider changing into id parameter
-    public EventTalk fetchTalk(String topic, Calendar time) {
-        for(EventTalk talk: getAllTalks()) {
-            if(talk.getTopic().equals(topic) && talk.getTime().compareTo(time) == 0) {
-                return talk;
-            }
-        }
-        throw new RuntimeException();
-    }
-
-    // consider changing into id parameter
-    public Event fetchEvent(String topic, Calendar time) {
-        for(Event event: getAllEvents()) {
-            if(event.getTopic().equals(topic) && event.getTime().compareTo(time) == 0) {
-                return event;
-            }
-        }
-        throw new RuntimeException();
     }
 
     public void cancelTalk(Integer id) {
@@ -304,30 +247,16 @@ public class EventManager implements Serializable {
         return fetchSortedTalks(fetchSpeakerTalks(speaker));
     }
 
-
-    public boolean containsEvent(String topic, Calendar time) {
-        for(Event event: getAllEvents()) {
-            if(event.getTopic().equals(topic) && event.getTime().compareTo(time) == 0) {
-                return true;
-            }
-        }
-        return false;
+    public boolean isTalk(Integer id) {
+        return events.get(id) instanceof EventTalk;
     }
 
-    public boolean containsTalk(String topic, Calendar time) {
-        for(EventTalk talk: getAllTalks()) {
-            if(talk.getTopic().equals(topic) && talk.getTime().compareTo(time) == 0) {
-                return true;
-            }
-        }
-        return false;
+    public boolean isSpeakerOfTalk(Integer id, String speaker) {
+        return isTalk(id) && getTalk(id).getSpeaker().equals(speaker);
     }
 
-    // consider changing into id parameter
-    public ArrayList<String> getAttendeesAtEvent(String topic, Calendar time) {
-        Event event = this.fetchEvent(topic, time);
-        return event == null ? new ArrayList<>() : event.getAttendees();
+    public ArrayList<String> getAttendeesAtEvent(Integer id) {
+        Event selectedEvent = events.get(id);
+        return selectedEvent == null ? new ArrayList<>() : selectedEvent.getAttendees();
     }
-
-
 }

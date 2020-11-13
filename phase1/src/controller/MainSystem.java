@@ -1,14 +1,7 @@
 package controller;
 
-import entities.Account;
-import entities.Attendee;
-import entities.Organizer;
-import entities.Speaker;
-import gateway.DataManager;
-import use_cases.AccountManager;
-import use_cases.ConversationManager;
-import use_cases.EventManager;
-
+import gateway.*;
+import use_cases.*;
 import java.util.Scanner;
 
 public class MainSystem {
@@ -18,7 +11,7 @@ public class MainSystem {
     private ConversationManager conversationManager;
     Scanner input = new Scanner(System.in);
     private LoginController loginController;
-    private SignupController signupController;
+    private AccountCreationController accountCreationController;
 
     public void startSystem(){
         System.out.println("Do you already have an account?");
@@ -30,7 +23,7 @@ public class MainSystem {
             in = input.nextLine();
         }
         if(in.equals("N")){
-            signupController.signup();
+            accountCreationController.signup();
         }
         else{
             loginController.login();
@@ -50,7 +43,7 @@ public class MainSystem {
         accountManager = dataManager.readAccountManager();
         conversationManager = dataManager.readConversationManager();
         loginController = new LoginController(accountManager, eventManager, conversationManager, input);
-        signupController = new SignupController(accountManager, eventManager, conversationManager, input);
+        accountCreationController = new AccountCreationController(accountManager, eventManager, conversationManager, input);
         startSystem();
         dataManager.saveEventManager(eventManager);
         dataManager.saveAccountManager(accountManager);

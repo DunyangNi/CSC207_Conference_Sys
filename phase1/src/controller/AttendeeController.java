@@ -1,9 +1,6 @@
 package controller;
 
-import use_cases.AccountManager;
-import use_cases.EventManager;
 import use_cases.*;
-import entities.*;
 import presenter.*;
 import java.util.*;
 import java.lang.*;
@@ -26,52 +23,23 @@ public class AttendeeController {
         this.presenter = new Presenter(eventmanager, accountmanager, signupManager);
     }
 
-    private Calendar timeoftalkrequesthelper(){
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Specify the year of the talk");
-        int year = sc.nextInt();
-        sc.nextLine();
-        System.out.println("Specify the month of the talk (1-12)");
-        int month = sc.nextInt();
-        sc.nextLine();
-        System.out.println("Specify the day of the month of the talk (1-31)");
-        int dayofmonth = sc.nextInt();
-        sc.nextLine();
-        System.out.println("Specify the hour of the day of the talk (0-23)");
-        int hourofday = sc.nextInt();
-        sc.nextLine();
-
-        Calendar time = Calendar.getInstance();
-        time.set(Calendar.YEAR, year);
-        TimeZone tz = TimeZone.getTimeZone("America/New_York");
-        time.setTimeZone(tz);
-        time.set(Calendar.DAY_OF_MONTH, dayofmonth);
-        time.set(Calendar.MONTH, month - 1);
-        time.set(Calendar.HOUR_OF_DAY, hourofday);
-        time.set(Calendar.MINUTE, 0);
-        time.set(Calendar.SECOND, 0);
-        time.set(Calendar.MILLISECOND, 0);
-
-        return time;
-    }
+    // timeoftalkrequesthelper() is now deprecated due to use of IDs.
 
     public void SeeTalkSchedule() {
         this.presenter.displayTalkSchedule();
     }
 
     // subject to change, error handling
-    public void signupfortalk(String topic, Calendar time) {
-        Integer selectedTalkID = eventmanager.fetchTalkID(topic, time);
-        if(this.eventmanager.containsTalk(topic, time)) {
-            signupManager.addAttendee(selectedTalkID, username);
+    public void signupForTalk(Integer id) {
+        if(this.eventmanager.isTalk(id)) {
+            signupManager.addAttendee(id, username);
         }
     }
 
     // subject to change, error handling
-    public void cancelenrolmentfortalk(String topic, Calendar time) {
-        Integer selectedTalkID = eventmanager.fetchTalkID(topic, time);
-        if(this.eventmanager.containsTalk(topic, time)) {
-            signupManager.removeAttendee(selectedTalkID, username);
+    public void cancelSignupForTalk(Integer id) {
+        if(this.eventmanager.isTalk(id)) {
+            signupManager.removeAttendee(id, username);
         }
     }
 
@@ -139,20 +107,17 @@ public class AttendeeController {
 
             }
             else if(choice == 2) {
-                //signupfortalk(String topic, Calendar time)
-                System.out.println("Specify the exact topic of the talk");
-                //String line1 = sc.nextLine();
-                String topic = sc.nextLine();
-                Calendar time = this.timeoftalkrequesthelper();
-                this.signupfortalk(topic, time);
+                System.out.print("Please enter the ID of the Talk you wish to attend: ");
+                // Grab ID number and attempt to sign up (error handling?)
+                Integer id = Integer.parseInt(sc.nextLine());
+                this.signupForTalk(id);
 
             }
             else if(choice == 3) {
-                System.out.println("Specify the exact topic of the talk");
-                //String line1 = sc.nextLine();
-                String topic = sc.nextLine();
-                Calendar time = this.timeoftalkrequesthelper();
-                this.cancelenrolmentfortalk(topic, time);
+                System.out.print("Please enter the ID of the Talk you wish to cancel: ");
+                // Grab ID number and attempt to cancel (error handling?)
+                Integer id = Integer.parseInt(sc.nextLine());
+                this.cancelSignupForTalk(id);
             }
             else if(choice == 4) {
                 this.seeAttendeeTalkSchedule();
@@ -171,24 +136,22 @@ public class AttendeeController {
                 //messageSpeaker(String message, String speakerusername)
                 System.out.println("Specify the username of the speaker you're messaging");
                 //String line1 = sc.nextLine();
-                String speakerusername = sc.nextLine();
+                String speakerUsername = sc.nextLine();
                 System.out.println("Specify the message you're sending");
                 //line1 = sc.nextLine();
                 String message = sc.nextLine();
-                this.messageAttendee(message, speakerusername);
+                this.messageAttendee(message, speakerUsername);
             }
             else if(choice == 7) {
-                System.out.println("Specify username of contact to add");
-               // String line1 = sc.nextLine();
-                String friendusername = sc.nextLine();
-                this.addFriend(friendusername);
+                System.out.print("Please enter the username of a contact to add: ");
+                String contactToAdd = sc.nextLine();
+                this.addFriend(contactToAdd);
 
             }
             else if(choice == 8) {
-                System.out.println("Specify username of contact to remove");
-                //String line1 = sc.nextLine();
-                String usernametoremove = sc.nextLine();
-                this.removeFriend(usernametoremove);
+                System.out.print("Please enter the username of a contact to remove: ");
+                String contactToRemove = sc.nextLine();
+                this.removeFriend(contactToRemove);
 
             }
 
@@ -196,17 +159,23 @@ public class AttendeeController {
                 this.seeFriendList();
 
             }
-            else if(choice == 10) {
-                //viewMessagesFrom(String recipientusername, int nummessages)
-                System.out.println("Specify username of user you would like to view your conversation with");
-                //String line1 = sc.nextLine();
-                String user = sc.nextLine();
-                System.out.println("How many past messages would you like to see?");
-                int pastmessages = sc.nextInt();
-                sc.nextLine();
-                this.viewMessagesFrom(user, pastmessages);
 
+            else if(choice == 10) {
+                Set<String> myConversations = conversationManager.getAllUserConversationRecipients(username);
+                if (myConversations.isEmpty()) { System.out.println("(No conversations)"); }
+                else {
+                    System.out.println("List of Conversation Recipients");
+                    System.out.println("---------------------------------------------");
+                    for (String recipient : myConversations) { System.out.println(recipient); }
+                    System.out.println("---------------------------------------------\n");
+                    System.out.print("To access a conversation, please enter the recipient's username: ");
+                    String user = sc.nextLine();
+                    System.out.println("How many past messages would you like to see?");
+                    int pastMessages = sc.nextInt(); sc.nextLine();
+                    this.viewMessagesFrom(user, pastMessages);
+                }
             }
+
             System.out.println("Thank you. Would you like to do another task?");
             System.out.println("1 = yes, 0 = no");
             int response = sc.nextInt();
