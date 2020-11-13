@@ -114,16 +114,22 @@ public class ConversationManager {
      * @param message given Message
      */
     public void addMessageToConversation(Conversation conversation, Message message) {
-        // Get list of Messages from Conversation
+//        Old Version:
+//        Get list of Messages from Conversation
+//        ArrayList<Integer> existingMessages = conversation.getMessages();
+//        // Assign message to reply to. By default, it is the Message last added to the Conversation.
+//        if (existingMessages.size() != 0) {
+//            Message msgToReply = this.messages.get(existingMessages.get(existingMessages.size()-1));
+//            message.setMsgToReply(msgToReply);
+//        }
+//        // Add new message to Conversation
+//        existingMessages.add(message.getId());
+//        // Set new list of Messages to Conversation
+//        conversation.setMessages(existingMessages);
         ArrayList<Integer> existingMessages = conversation.getMessages();
-        // Assign message to reply to. By default, it is the Message last added to the Conversation.
         if (existingMessages.size() != 0) {
-            Message msgToReply = this.messages.get(existingMessages.get(existingMessages.size()-1));
-            message.setMsgToReply(msgToReply);
+            message.setMsgToReply(existingMessages.get(existingMessages.size()-1));
         }
-        // Add new message to Conversation
-        existingMessages.add(message.getId());
-        // Set new list of Messages to Conversation
-        conversation.setMessages(existingMessages);
+        conversation.getMessages().add(message.getId());
     }
 }
