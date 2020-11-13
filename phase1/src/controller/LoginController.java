@@ -7,6 +7,7 @@ import entities.Speaker;
 import use_cases.AccountManager;
 import use_cases.ConversationManager;
 import use_cases.EventManager;
+import use_cases.SignupManager;
 
 import java.util.Scanner;
 
@@ -14,12 +15,14 @@ public class LoginController {
     private AccountManager accountManager;
     private EventManager eventManager;
     private ConversationManager conversationManager;
+    private SignupManager signupManager;
     Scanner input;
 
     public LoginController(AccountManager am, EventManager em, ConversationManager cm, Scanner input){
         this.accountManager = am;
         this.eventManager = em;
         this.conversationManager = cm;
+        signupManager = new SignupManager(eventManager);
         this.input = input;
     }
 
@@ -46,7 +49,7 @@ public class LoginController {
     private boolean loginHelper(String username){
         if(accountManager.containsAttendee(username)) {
             password(username);
-            AttendeeController ac = new AttendeeController(username, eventManager, accountManager, conversationManager);
+            AttendeeController ac = new AttendeeController(username, eventManager, accountManager, conversationManager, signupManager);
             ac.runAttendeeInteraction();
             return true;
         }

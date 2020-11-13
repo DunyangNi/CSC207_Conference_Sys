@@ -9,75 +9,56 @@ public class Presenter {
 
     private EventManager eventmanager;
     private AccountManager accountmanager;
+    private SignupManager signupManager;
 
-    public Presenter(EventManager eventmanager, AccountManager accountmanager) {
-
+    public Presenter(EventManager eventmanager, AccountManager accountmanager, SignupManager signupManager) {
         this.eventmanager = eventmanager;
         this.accountmanager = accountmanager;
+        this.signupManager = signupManager;
     }
 
     public void displayTalkSchedule() {
-        String[] topiclist = eventmanager.fetchTimeSortedTalkTopics(eventmanager.fetchTalkList());
-        String[] speakerlist = eventmanager.fetchTimeSortedTalkSpeakers(eventmanager.fetchTalkList());
-        String[] locationlist = eventmanager.fetchTimeSortedLocations(eventmanager.fetchTalkList());
-        Calendar[] timelist = eventmanager.fetchTimeSortedTalkTimes(eventmanager.fetchTalkList());
-
-        System.out.println("Schedule for events:");
-        System.out.println("");
-
-        Calendar timenow = Calendar.getInstance();
-        for(int i = 0; i<= topiclist.length - 1; i++) {
-            if(timenow.compareTo(timelist[i]) < 0) {
-                System.out.println("Topic: " + topiclist[i]);
-                System.out.println("Speaker: " + speakerlist[i]);
-                System.out.println("Location: " + locationlist[i]);
-                System.out.println("Time: " + timelist[i].getTime());
-                System.out.println("");
+        HashMap<String[], Calendar> allTalks = eventmanager.fetchSortedTalks();
+        System.out.println("Schedule for events:\n");
+        Calendar timeNow = Calendar.getInstance();
+        for(String[] eventInfo : allTalks.keySet()) {
+            if(timeNow.compareTo(allTalks.get(eventInfo)) < 0) {
+                System.out.println("Topic: " + eventInfo[0]);
+                System.out.println("Speaker: " + eventInfo[1]);
+                System.out.println("Location: " + eventInfo[2]);
+                System.out.println("Time: " + eventInfo[3]);
+                System.out.println();
             }
         }
     }
 
-    public void displayAttendeeTalkSchedule(String attendeeusername) {
-        String[] topiclist = eventmanager.fetchTimeSortedTalkTopics(eventmanager.fetchTalkList());
-        String[] speakerlist = eventmanager.fetchTimeSortedTalkSpeakers(eventmanager.fetchTalkList());
-        String[] locationlist = eventmanager.fetchTimeSortedLocations(eventmanager.fetchTalkList());
-        Calendar[] timelist = eventmanager.fetchTimeSortedTalkTimes(eventmanager.fetchTalkList());
-
-        System.out.println("Events you've signed up for:");
-        System.out.println("");
-
-        Calendar timenow = Calendar.getInstance();
-        for(int i = 0; i<= topiclist.length - 1; i++) {
-            if(timenow.compareTo(timelist[i]) < 0) {
-                if (SignupManager.isSignedUp(this.eventmanager.fetchTalk(topiclist[i], timelist[i]), this.accountmanager.fetchAttendee(attendeeusername))) {
-                    System.out.println("Topic: " + topiclist[i]);
-                    System.out.println("Speaker: " + speakerlist[i]);
-                    System.out.println("Location: " + locationlist[i]);
-                    System.out.println("Time: " + timelist[i].getTime());
-                    System.out.println("");
-                }
-
+    public void displayAttendeeTalkSchedule(String attendee) {
+        HashMap<String[], Calendar> attendeeTalks = eventmanager.fetchSortedTalks();
+        System.out.println("Events you've signed up for:\n");
+        Calendar timeNow = Calendar.getInstance();
+        for(String[] eventInfo : attendeeTalks.keySet()) {
+            if(timeNow.compareTo(attendeeTalks.get(eventInfo)) < 0 &&
+                    signupManager.isSignedUp(Integer.parseInt(eventInfo[4]), attendee)) {
+                System.out.println("Topic: " + eventInfo[0]);
+                System.out.println("Speaker: " + eventInfo[1]);
+                System.out.println("Location: " + eventInfo[2]);
+                System.out.println("Time: " + eventInfo[3]);
+                System.out.println();
             }
         }
     }
 
-    public void displaySpeakerTalksSchedule(String speakerusername) {
-        String[] topiclist = eventmanager.fetchTimeSortedTalkTopics(accountmanager.fetchSpeakerTalkList(speakerusername));
-        String[] speakerlist = eventmanager.fetchTimeSortedTalkSpeakers(accountmanager.fetchSpeakerTalkList(speakerusername));
-        String[] locationlist = eventmanager.fetchTimeSortedLocations(accountmanager.fetchSpeakerTalkList(speakerusername));
-        Calendar[] timelist = eventmanager.fetchTimeSortedTalkTimes(accountmanager.fetchSpeakerTalkList(speakerusername));
-
-        System.out.println("Schedule for events:");
-        System.out.println("");
-
-        Calendar timenow = Calendar.getInstance();
-        for(int i = 0; i<= topiclist.length - 1; i++) {
-            if(timenow.compareTo(timelist[i]) < 0) {
-                System.out.println("Topic: " + topiclist[i]);
-                System.out.println("Speaker: " + speakerlist[i]);
-                System.out.println("Location: " + locationlist[i]);
-                System.out.println("Time: " + timelist[i].getTime());
-                System.out.println("");
+    public void displaySpeakerTalksSchedule(String speaker) {
+        HashMap<String[], Calendar> speakerTalks = eventmanager.fetchSortedTalks(speaker);
+        System.out.println("Schedule for events:\n");
+        Calendar timeNow = Calendar.getInstance();
+        for(String[] eventInfo : speakerTalks.keySet()) {
+            if(timeNow.compareTo(speakerTalks.get(eventInfo)) < 0) {
+                System.out.println("Topic: " + eventInfo[0]);
+                System.out.println("Speaker: " + eventInfo[1]);
+                System.out.println("Location: " + eventInfo[2]);
+                System.out.println("Time: " + eventInfo[3]);
+                System.out.println();
             }
         }
     }

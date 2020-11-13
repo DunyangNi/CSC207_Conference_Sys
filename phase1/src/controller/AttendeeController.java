@@ -13,15 +13,17 @@ public class AttendeeController {
     private EventManager eventmanager;
     private AccountManager accountmanager;
     private ConversationManager conversationManager;
+    private SignupManager signupManager;
     private Presenter presenter;
 
-    public AttendeeController(String username, EventManager eventmanager, 
-                              AccountManager accountmanager, ConversationManager conversationManager) {
+    public AttendeeController(String username, EventManager eventmanager, AccountManager accountmanager,
+                              ConversationManager conversationManager, SignupManager signupManager) {
         this.username = username;
         this.eventmanager = eventmanager;
         this.accountmanager = accountmanager;
         this.conversationManager = conversationManager;
-        this.presenter = new Presenter(eventmanager, accountmanager);
+        this.signupManager = signupManager;
+        this.presenter = new Presenter(eventmanager, accountmanager, signupManager);
     }
 
     private Calendar timeoftalkrequesthelper(){
@@ -57,19 +59,19 @@ public class AttendeeController {
         this.presenter.displayTalkSchedule();
     }
 
+    // subject to change, error handling
     public void signupfortalk(String topic, Calendar time) {
+        Integer selectedTalkID = eventmanager.fetchTalkID(topic, time);
         if(this.eventmanager.containsTalk(topic, time)) {
-            if (!(SignupManager.isFull(eventmanager.fetchTalk(topic, time))) && !(SignupManager.isSignedUp(eventmanager.fetchTalk(topic, time), accountmanager.fetchAttendee(username)))) {
-                SignupManager.addAttendee(eventmanager.fetchTalk(topic, time), accountmanager.fetchAttendee(username));
-            }
+            signupManager.addAttendee(selectedTalkID, username);
         }
     }
 
+    // subject to change, error handling
     public void cancelenrolmentfortalk(String topic, Calendar time) {
+        Integer selectedTalkID = eventmanager.fetchTalkID(topic, time);
         if(this.eventmanager.containsTalk(topic, time)) {
-            if(CancelManager.isSignedUp(this.eventmanager.fetchTalk(topic, time), this.accountmanager.fetchAttendee(username))){
-                CancelManager.removeAttendee(this.eventmanager.fetchTalk(topic, time), this.accountmanager.fetchAttendee(username));
-            }
+            signupManager.removeAttendee(selectedTalkID, username);
         }
     }
 

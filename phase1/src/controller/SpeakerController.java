@@ -11,6 +11,7 @@ public class SpeakerController {
     private EventManager eventmanager;
     private AccountManager accountmanager;
     private ConversationManager conversationManager;
+    private SignupManager signupManager;
     private Presenter presenter;
 
     public SpeakerController(String username, EventManager eventmanager,
@@ -19,7 +20,8 @@ public class SpeakerController {
         this.eventmanager = eventmanager;
         this.accountmanager = accountmanager;
         this.conversationManager = conversationManager;
-        this.presenter = new Presenter(eventmanager, accountmanager);
+        signupManager = new SignupManager(eventmanager);
+        this.presenter = new Presenter(eventmanager, accountmanager, signupManager);
     }
 
     private Calendar timeoftalkrequesthelper(){

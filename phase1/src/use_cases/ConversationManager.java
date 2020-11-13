@@ -1,5 +1,6 @@
 package use_cases;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -24,7 +25,7 @@ import entities.*;
  *      Conversation, Message
  * </pre>
  */
-public class ConversationManager {
+public class ConversationManager implements Serializable {
     private HashMap<String, HashMap<String, Conversation>> conversations = new HashMap<>(); // (NEW!) key: username ; value: hash of convos
     private HashMap<Integer, Message> messages = new HashMap<>(); // (NEW!) key: message id ; value: Message object
 

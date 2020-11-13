@@ -16,6 +16,7 @@ public class OrganizerController {
     private EventManager eventmanager;
     private AccountManager accountmanager;
     private ConversationManager conversationManager;
+    private SignupManager signupManager;
     private Presenter presenter;
 
     private Calendar timeoftalkrequesthelper(){
@@ -53,7 +54,8 @@ public class OrganizerController {
         this.eventmanager = eventmanager;
         this.accountmanager = accountmanager;
         this.conversationManager = conversationManager;
-        this.presenter = new Presenter(eventmanager,accountmanager);
+        signupManager = new SignupManager(eventmanager);
+        this.presenter = new Presenter(eventmanager,accountmanager, signupManager);
     }
     public void addNewLocation(String location) {
         this.eventmanager.addLocation(location);
@@ -75,11 +77,12 @@ public class OrganizerController {
         time.set(Calendar.MINUTE, 0);
         time.set(Calendar.SECOND, 0);
         time.set(Calendar.MILLISECOND, 0);
-        this.eventmanager.AddNewEvent(topic, time, location, this.accountmanager.fetchOrganizer(this.username), this.accountmanager.fetchSpeaker(speakerusername));
+        this.eventmanager.AddNewEvent(topic, time, location, username, speakerusername);
     }
+
+    // subject to change, error handling and id.
     public void cancelTalk(String topic, Calendar time) {
-        //needs a method for encoding string as event
-        this.eventmanager.cancelTalk(this.eventmanager.fetchTalk(topic, time));
+        this.eventmanager.cancelTalk(this.eventmanager.fetchTalkID(topic, time));
     }
 
     public void rescheduleTalk(String topic, Calendar oldtime, int year, int dayofmonth, int month, int hourofday) {

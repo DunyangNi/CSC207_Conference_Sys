@@ -19,6 +19,11 @@ import entities.EventTalk;
  * </pre>
  */
 public class SignupManager {
+    private EventManager eventManager;
+
+    public SignupManager(EventManager em) {
+        this.eventManager = em;
+    }
 
     //------------------------------------------------------------
     // Methods
@@ -27,20 +32,22 @@ public class SignupManager {
     /**
      * Adds given Attendee to Talk.
      * Does nothing if Talk is full or Attendee is already in Talk.
-     * @param talk given EventTalk
-     * @param attendee given Attendee
+     * @param talk_id given EventTalk id
+     * @param attendee given Attendee id
      */
-    public static void addAttendee(EventTalk talk, Attendee attendee) {
-        if (!isFull(talk) && !isSignedUp(talk, attendee)) {
+    public void addAttendee(Integer talk_id, String attendee) {
+        EventTalk talk = eventManager.getTalk(talk_id);
+        if (!isFull(talk_id) && !isSignedUp(talk_id, attendee)) {
             ArrayList<String> eventAttendees = talk.getAttendees();
-            eventAttendees.add(attendee.getUsername());
+            eventAttendees.add(attendee);
         }
     }
 
-    public static void removeAttendee(EventTalk talk, Attendee attendee) {
-        if (isSignedUp(talk, attendee)) {
+    public void removeAttendee(Integer talk_id, String attendee) {
+        EventTalk talk = eventManager.getTalk(talk_id);
+        if (isSignedUp(talk_id, attendee)) {
             ArrayList<String> eventAttendees = talk.getAttendees();
-            eventAttendees.remove(attendee.getUsername());
+            eventAttendees.remove(attendee);
         }
     }
 
@@ -48,22 +55,24 @@ public class SignupManager {
      * Returns the given seat limit of an EventTalk.
      * @return seat limit
      */
-    public static int getSeatLimit() { return 2; }
+    public int getSeatLimit() { return 2; }
 
     /**
      * Returns whether given EventTalk is full.
-     * @param talk given EventTalk
+     * @param talk_id given EventTalk id
      * @return whether talk is full or not
      */
-    public static boolean isFull(EventTalk talk) { return talk.getAttendees().size() == getSeatLimit(); }
+    public boolean isFull(Integer talk_id) {
+        return eventManager.getTalk(talk_id).getAttendees().size() == getSeatLimit();
+    }
 
     /**
      * Returns whether given EventTalk contains a given Attendee.
-     * @param talk given EventTalk
-     * @param attendee given Attendee
+     * @param talk_id given EventTalk id
+     * @param attendee given Attendee id
      * @return whether talk contains Attendee or not
      */
-    public static boolean isSignedUp(EventTalk talk, Attendee attendee) {
-        return talk.getAttendees().contains(attendee.getUsername());
+    public boolean isSignedUp(Integer talk_id, String attendee) {
+        return eventManager.getTalk(talk_id).getAttendees().contains(attendee);
     }
 }
