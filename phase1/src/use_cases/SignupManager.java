@@ -36,17 +36,15 @@ public class SignupManager {
      * @param attendee given Attendee id
      */
     public void addAttendee(Integer talk_id, String attendee) {
-        EventTalk talk = eventManager.getTalk(talk_id);
         if (!isFull(talk_id) && !isSignedUp(talk_id, attendee)) {
-            ArrayList<String> eventAttendees = talk.getAttendees();
+            ArrayList<String> eventAttendees = eventManager.getAttendeesAtEvent(talk_id);
             eventAttendees.add(attendee);
         }
     }
 
     public void removeAttendee(Integer talk_id, String attendee) {
-        EventTalk talk = eventManager.getTalk(talk_id);
         if (isSignedUp(talk_id, attendee)) {
-            ArrayList<String> eventAttendees = talk.getAttendees();
+            ArrayList<String> eventAttendees = eventManager.getAttendeesAtEvent(talk_id);
             eventAttendees.remove(attendee);
         }
     }
@@ -63,7 +61,7 @@ public class SignupManager {
      * @return whether talk is full or not
      */
     public boolean isFull(Integer talk_id) {
-        return eventManager.getTalk(talk_id).getAttendees().size() == getSeatLimit();
+        return eventManager.getAttendeesAtEvent(talk_id).size() == getSeatLimit();
     }
 
     /**
@@ -73,6 +71,6 @@ public class SignupManager {
      * @return whether talk contains Attendee or not
      */
     public boolean isSignedUp(Integer talk_id, String attendee) {
-        return eventManager.getTalk(talk_id).getAttendees().contains(attendee);
+        return eventManager.getAttendeesAtEvent(talk_id).contains(attendee);
     }
 }

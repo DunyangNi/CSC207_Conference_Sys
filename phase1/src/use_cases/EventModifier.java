@@ -59,4 +59,8 @@ public class EventModifier {
         return true;
     }
 
+    public ArrayList<String> getAttendees(Event event){
+        return event.getAttendees();
+    }
+
 }

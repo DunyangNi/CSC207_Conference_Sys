@@ -137,7 +137,7 @@ public class EventManager implements Serializable {
      */
 
     public boolean ChangeSpeaker(Integer talk_id, String new_speaker){
-        return modifier.ChangeSpeaker((EventTalk) events.get(talk_id), new_speaker, getAllTalks());
+        return modifier.ChangeSpeaker(getTalk(talk_id), new_speaker, getAllTalks());
     }
 
     // consider returning a copy of Locations to prevent any outside modification !
@@ -197,8 +197,14 @@ public class EventManager implements Serializable {
         return isTalk(id) && getTalk(id).getSpeaker().equals(speaker);
     }
 
+    /**
+     * Precondition: the event with given exist
+     * @param id given id for an event
+     * @return A list of username of Attendees
+     */
     public ArrayList<String> getAttendeesAtEvent(Integer id) {
         Event selectedEvent = events.get(id);
-        return selectedEvent == null ? new ArrayList<>() : selectedEvent.getAttendees();
+        return modifier.getAttendees(selectedEvent);
     }
+
 }
