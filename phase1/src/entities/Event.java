@@ -73,7 +73,7 @@ public class Event implements Serializable, Comparable<Event> {
      */
     @Override
     public boolean equals(Object other){
-        if (other != null && other instanceof Event){
+        if (other instanceof Event){
             Event o = (Event)other;
             return
                     getTopic().equals(o.getTopic()) &&
@@ -125,10 +125,13 @@ public class Event implements Serializable, Comparable<Event> {
         return id;
     }
 
+    public static int getSid() {
+        return sid;
+    }
+
     /**
      * @param topic event topic
      */
-
     public void setTopic(String topic) {
         this.topic = topic;
     }
@@ -156,5 +159,8 @@ public class Event implements Serializable, Comparable<Event> {
         this.id = id;
     }
 
+    public static void setSid(int sid) {
+        Event.sid = sid;
+    }
 }
 
