@@ -31,16 +31,6 @@ public class EventManager implements Serializable {
         return false;
     }
 
-    /**
-     * CheckTimeOverlap:
-     * Check of two hypothetical events have time conflict
-     * WE ASSUME THAT EVENTS LAST ONE HOUR ACCORDING TO SPECIFICATIONS AND THAT THEY START
-     * AT START OF HOUR
-     */
-    public boolean CheckTimeOverlap(Calendar time_1, Calendar time_2){
-        return time_1.compareTo(time_2) == 0;
-    }
-
     public ArrayList<EventTalk> getAllTalks() {
         ArrayList<EventTalk> talks = new ArrayList<>();
         for (Event e : getAllEvents()) {
@@ -131,7 +121,7 @@ public class EventManager implements Serializable {
         for (Event event: getAllEvents()) {
             String eventLocation = event.getLocation(); Calendar eventTime = event.getTime();
             if (!event.equals(selectedEvent) && eventLocation.equals(selectedEvent.getLocation()) &&
-                    CheckTimeOverlap(eventTime, newTime)) { return false; }
+                    checker.CheckTimeOverlap(eventTime, newTime)) { return false; }
         }
         selectedEvent.setTime(newTime);
         return true;
@@ -150,14 +140,11 @@ public class EventManager implements Serializable {
             Calendar time1 = event.getTime();
             Calendar time2 = event_to_change.getTime();
 
-            if (event != event_to_change && location1.equals(new_location) && CheckTimeOverlap(time1, time2)) {
+            if (event != event_to_change && location1.equals(new_location) && checker.CheckTimeOverlap(time1, time2)) {
                 return false;
             }
         }
         event_to_change.setLocation(new_location);
-        if(!this.locations.contains(new_location)) {
-            locations.add(new_location);
-        }
         return true;
     }
 

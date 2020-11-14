@@ -8,6 +8,12 @@ import java.util.Calendar;
 
 public class EventChecker {
 
+    /**
+     * CheckTimeOverlap:
+     * Check of two hypothetical events have time conflict
+     * WE ASSUME THAT EVENTS LAST ONE HOUR ACCORDING TO SPECIFICATIONS AND THAT THEY START
+     * AT START OF HOUR
+     */
     public boolean CheckTimeOverlap(Calendar time_1, Calendar time_2){
         return time_1.compareTo(time_2) == 0;
     }

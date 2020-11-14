@@ -38,7 +38,8 @@ public class AccountManager implements Serializable {
         this(new HashMap<>(), new HashMap<>(), new HashMap<>());
     }
 
-    public AccountManager(HashMap<String, Attendee> AttendeeList, HashMap<String, Organizer> OrganizerList, HashMap<String, Speaker> SpeakerList) {
+    public AccountManager(HashMap<String, Attendee> AttendeeList, HashMap<String, Organizer> OrganizerList,
+                          HashMap<String, Speaker> SpeakerList) {
         this.attendeeList = AttendeeList;
         this.organizerList = OrganizerList;
         this.speakerList = SpeakerList;
