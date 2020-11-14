@@ -23,10 +23,7 @@ public class FriendManager implements Serializable {
         friends.computeIfAbsent(user, k -> new ArrayList<>());
         // Checking if friend already exists
         if (friends.get(user).contains(friendToAdd)) { return false; }
-        else {
-            friends.get(user).add(friendToAdd);
-            friends.get(friendToAdd).add(user);
-        }
+        else { friends.get(user).add(friendToAdd); }
         return true;
     }
 
@@ -36,10 +33,7 @@ public class FriendManager implements Serializable {
     public boolean RemoveFriend(String user, String friendToRemove){
         // Checking if friend ArrayList exists or friendToRemove is not in it
         if (friends.get(user) == null || !friends.get(user).contains(friendToRemove)) { return false; }
-        else {
-            friends.get(user).remove(friendToRemove);
-            friends.get(friendToRemove).remove(user);
-        }
+        else { friends.get(user).remove(friendToRemove); }
         return true;
     }
 
