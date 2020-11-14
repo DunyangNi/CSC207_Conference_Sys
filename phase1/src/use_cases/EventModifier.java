@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class EventModifier implements Serializable {
+
     public boolean ChangeLocation(Event event_to_change, String new_location,
                                   ArrayList<String> locations, ArrayList<Event> events) {
         if(!locations.contains(new_location)) {
@@ -29,11 +30,17 @@ public class EventModifier implements Serializable {
 
     public boolean ChangeTime(Event selectedEvent, Calendar newTime, ArrayList<Event> events){
         Calendar curr_time = Calendar.getInstance();
-        if (curr_time.compareTo(selectedEvent.getTime()) >= 0 || curr_time.compareTo(newTime) >= 0) { return false; }
+        if (curr_time.compareTo(selectedEvent.getTime()) >= 0 || curr_time.compareTo(newTime) >= 0) {
+            return false;
+        }
+        if (!(9 < newTime.get(Calendar.HOUR_OF_DAY) && newTime.get(Calendar.HOUR_OF_DAY) < 4)) {
+            return false;
+        }
         for (Event event: events) {
             String eventLocation = event.getLocation(); Calendar eventTime = event.getTime();
-            if (!event.equals(selectedEvent) && eventLocation.equals(selectedEvent.getLocation()) &&
-                    (eventTime.compareTo(newTime) == 0)) { return false; }
+            if (!event.equals(selectedEvent) && eventLocation.equals(selectedEvent.getLocation()) && (eventTime.compareTo(newTime) == 0)) {
+                return false;
+            }
         }
         selectedEvent.setTime(newTime);
         return true;
@@ -63,5 +70,4 @@ public class EventModifier implements Serializable {
     public ArrayList<String> getAttendees(Event event){
         return event.getAttendees();
     }
-
 }
