@@ -44,7 +44,6 @@ public class EventChecker implements Serializable {
             // check talks
             for(EventTalk talk: talks) {
                 if (talk.getSpeaker().equals(speaker) && CheckTimeOverlap(time, talk.getTime())) { return false; }
-                if (talk.getTopic().equals(topic)) { return false; }
                 // possible extension (double booking speaker in two locations)
             }
             return true;
@@ -68,7 +67,6 @@ public class EventChecker implements Serializable {
         // check if any conflicting events or events already existing
         for(Event event: events) {
             if (event.getLocation().equals(location) && CheckTimeOverlap(time, event.getTime())){ return false; }
-            if (event.getTopic().equals(topic)) { return false; }
         }
         return true;
     }
