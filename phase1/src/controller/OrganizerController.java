@@ -13,6 +13,8 @@ public class OrganizerController extends UserController{
         super(username, eventmanager,conversationManager, friendManager);
         this.accountmanager = accountmanager;
     }
+
+
     public void addNewLocation(String location) {
         this.eventmanager.addLocation(location);
     }
@@ -21,35 +23,14 @@ public class OrganizerController extends UserController{
         this.accountmanager.AddNewSpeaker(username, password, firstname, lastname);
     }
 
-
-    public void scheduleSpeaker(int year, int day, int month, int hour, String topic, String location, String speaker) {
-        Calendar time = Calendar.getInstance();
-        time.set(Calendar.YEAR, year);
-        TimeZone tz = TimeZone.getTimeZone("America/New_York");
-        time.setTimeZone(tz);
-        time.set(Calendar.DAY_OF_MONTH, day);
-        time.set(Calendar.MONTH, month - 1);
-        time.set(Calendar.HOUR_OF_DAY, hour);
-        time.set(Calendar.MINUTE, 0);
-        time.set(Calendar.SECOND, 0);
-        time.set(Calendar.MILLISECOND, 0);
+    public void scheduleSpeaker(Calendar time, String topic, String location, String speaker) {
         this.eventmanager.AddNewEvent(topic, time, location, username, speaker);
     }
 
     public void cancelTalk(Integer id) { this.eventmanager.cancelTalk(id); }
 
-    public void rescheduleTalk(Integer id, int newYear, int newDay, int newMonth, int newHour) {
-        Calendar time = Calendar.getInstance();
-        time.set(Calendar.YEAR, newYear);
-        TimeZone tz = TimeZone.getTimeZone("America/New_York");
-        time.setTimeZone(tz);
-        time.set(Calendar.DAY_OF_MONTH, newDay);
-        time.set(Calendar.MONTH, newMonth - 1);
-        time.set(Calendar.HOUR_OF_DAY, newHour);
-        time.set(Calendar.MINUTE, 0);
-        time.set(Calendar.SECOND, 0);
-        time.set(Calendar.MILLISECOND, 0);
-        this.eventmanager.ChangeTime(id, time);
+    public void rescheduleTalk(Integer id, Calendar newtime) {
+        this.eventmanager.ChangeTime(id, newtime);
     }
     public void messageAllSpeakers(String message) {
         Iterator<String> speakerusernameiterator = this.accountmanager.speakerUsernameIterator();
@@ -121,40 +102,23 @@ public class OrganizerController extends UserController{
                 System.out.println("Specify the username of talk speaker"); String username = sc.nextLine();
                 System.out.println("Specify the location of the talk"); String location = sc.nextLine();
                 System.out.println("Specify the topic of the talk"); String topic = sc.nextLine();
-                System.out.println("Specify the year of the talk"); int year = sc.nextInt();
-                sc.nextLine();
-                System.out.println("Specify the numerical month for this talk (1-12)"); int month = sc.nextInt();
-                sc.nextLine();
-                System.out.println("Specify the date of the month for this talk (1-31)"); int day = sc.nextInt();
-                sc.nextLine();
-                // the schedule only goes from 9-5 !
-                System.out.println("Specify the hour of the day for this talk (0-23)"); int hour = sc.nextInt();
-                sc.nextLine();
-                this.scheduleSpeaker(year, day, month, hour, topic, location, username);
+                Calendar time = this._timeoftalkrequesthelper("");
+                this.scheduleSpeaker(time, topic, location, username);
             }
 
             else if(choice == 4) {
                 System.out.print("Please enter the ID of a talk you wish to cancel: ");
                 int id = sc.nextInt();
+                sc.nextLine();
                 this.cancelTalk(id);
             }
 
             else if(choice == 5) {
                 System.out.println("Please enter the ID of a talk you wish to reschedule: ");
                 int id = sc.nextInt();
-                System.out.println("Specify the new year you would like to reschedule this talk to");
-                int year = sc.nextInt();
                 sc.nextLine();
-                System.out.println("Specify the new month you would like to reschedule to (1-12)");
-                int month = sc.nextInt();
-                sc.nextLine();
-                System.out.println("Specify the new day of the month you would like to reschedule to (1-31)");
-                int day = sc.nextInt();
-                sc.nextLine();
-                System.out.println("Specify the new hour of the day you would like to reschedule to (0-23)");
-                int hour = sc.nextInt();
-                sc.nextLine();
-                this.rescheduleTalk(id, year, day, month, hour);
+                Calendar newtime = this._timeoftalkrequesthelper("to reschedule");
+                this.rescheduleTalk(id, newtime);
             }
 
             else if(choice == 6) {

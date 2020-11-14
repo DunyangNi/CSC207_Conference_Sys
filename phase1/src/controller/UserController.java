@@ -54,5 +54,34 @@ public abstract class UserController {
         }
     }
 
+    protected Calendar _timeoftalkrequesthelper(String talkdescriptor){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Specify the year of the talk " + talkdescriptor);
+        int year = sc.nextInt();
+        sc.nextLine();
+        System.out.println("Specify the numerical month (1-12) of the talk " + talkdescriptor);
+        int month = sc.nextInt();
+        sc.nextLine();
+        System.out.println("Specify the day of the month (1-31) of the talk " + talkdescriptor);
+        int dayofmonth = sc.nextInt();
+        sc.nextLine();
+        System.out.println("Specify the hour of the day (0-23) of the talk " + talkdescriptor);
+        int hourofday = sc.nextInt();
+        sc.nextLine();
+
+        Calendar time = Calendar.getInstance();
+        time.set(Calendar.YEAR, year);
+        TimeZone tz = TimeZone.getTimeZone("EST");
+        time.setTimeZone(tz);
+        time.set(Calendar.DAY_OF_MONTH, dayofmonth);
+        time.set(Calendar.MONTH, month - 1);
+        time.set(Calendar.HOUR_OF_DAY, hourofday);
+        time.set(Calendar.MINUTE, 0);
+        time.set(Calendar.SECOND, 0);
+        time.set(Calendar.MILLISECOND, 0);
+
+        return time;
+    }
+
     public abstract void runInteraction();
 }
