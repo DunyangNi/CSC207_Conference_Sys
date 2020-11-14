@@ -147,9 +147,8 @@ public class EventManager implements Serializable {
 
     public void cancelTalk(Integer id) {
         Event talkToCancel = events.get(id);
-        if (talkToCancel instanceof EventTalk && !(Calendar.getInstance().compareTo(talkToCancel.getTime()) >= 0)) {
+        if (talkToCancel instanceof EventTalk && !(Calendar.getInstance().compareTo(talkToCancel.getTime()) >= 0))
             events.remove(id);
-        }
     }
 
     // (Helper) (NEW!)
@@ -189,9 +188,7 @@ public class EventManager implements Serializable {
         return fetchSortedTalks(fetchSpeakerTalks(speaker));
     }
 
-    public boolean isTalk(Integer id) {
-        return events.get(id) instanceof EventTalk;
-    }
+    public boolean isTalk(Integer id) { return events.get(id) instanceof EventTalk; }
 
     public boolean isSpeakerOfTalk(Integer id, String speaker) {
         return isTalk(id) && getTalk(id).getSpeaker().equals(speaker);

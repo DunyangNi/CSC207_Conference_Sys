@@ -3,7 +3,6 @@ package use_cases;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import entities.Account;
 
 public class FriendManager implements Serializable {
     HashMap<String, ArrayList<String>> friends;
@@ -44,6 +43,9 @@ public class FriendManager implements Serializable {
         return true;
     }
 
-    public ArrayList<String> getFriendList(String user) { return friends.get(user); }
+    public ArrayList<String> getFriendList(String user) {
+        ArrayList<String> selectedFriendList = friends.get(user);
+        return selectedFriendList == null ? new ArrayList<>() : selectedFriendList;
+    }
 
 }

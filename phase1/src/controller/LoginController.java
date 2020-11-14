@@ -1,7 +1,6 @@
 package controller;
 
 import use_cases.*;
-
 import java.util.Scanner;
 
 public class LoginController {
@@ -22,10 +21,7 @@ public class LoginController {
     }
 
     public void login(){
-        boolean incorrectUsername;
-        String username;
-        String prompt;
-        int firstMessage = 0;
+        boolean incorrectUsername; String username; String prompt; int firstMessage = 0;
         do {
             prompt = firstMessage == 0 ? "Please enter your username: " : "This username does not exist, please enter again: ";
             System.out.print(prompt);
@@ -37,15 +33,12 @@ public class LoginController {
     }
 
     private void password(String username){
-        boolean incorrectPassword;
-        String password;
-        String prompt;
-        int firstMessage = 0;
+        boolean incorrectPassword; String password; String prompt; int firstMessage = 0;
         do {
             prompt = firstMessage == 0 ? "Please enter the password: " : "Wrong! Please enter again: ";
             System.out.print(prompt);
             password = input.nextLine();
-            incorrectPassword = !accountManager.checkPassword(username,password);
+            incorrectPassword = !accountManager.checkPassword(username, password);
             firstMessage = incorrectPassword ? 1 : 0;
         }
         while (incorrectPassword);

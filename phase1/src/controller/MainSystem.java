@@ -15,22 +15,22 @@ public class MainSystem {
     private AccountCreationController accountCreationController;
 
     public void startSystem(){
+        // Evaluate choice
+        boolean validChoice; String choice; String prompt; int firstMessage = 0;
         System.out.println("Do you already have an account?");
-        System.out.println("Enter 'Y' to log in.");
-        System.out.println("Enter 'N' to sign up.");
-        String in = input.nextLine();
-        while(!(in.equals("Y")||in.equals("N"))){
-            System.out.println("Invalid input");
-            in = input.nextLine();
+        System.out.println("Enter 'Y' to log into an existing account.");
+        System.out.println("Enter 'N' to create a new account.");
+        do {
+            prompt = firstMessage == 0 ? "" : "Invalid choice, please enter again.";
+            System.out.println(prompt); choice = input.nextLine();
+            validChoice = choice.equals("Y") || choice.equals("N");
+            firstMessage = !validChoice ? 1 : 0;
         }
-        if(in.equals("N")){
-            accountCreationController.signup();
-        }
-        else{
-            loginController.login();
-        }
+        while (!validChoice);
+        // Execute controller based on choice
+        if (choice.equals("Y")) loginController.login();
+        else accountCreationController.createAccount();
     }
-
 
     public void run(){
         // Obtain filepath of all .ser files

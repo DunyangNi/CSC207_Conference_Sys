@@ -72,7 +72,7 @@ public class Presenter {
     public void displayFriendList(String user) {
         ArrayList<String> selectedFriends = friendManager.getFriendList(user);
         System.out.println("Your Contacts List:\n");
-        if (selectedFriends == null) System.out.println("No one!");
+        if (selectedFriends.isEmpty()) { System.out.println("No one!"); }
         else { for (String friend : selectedFriends) { System.out.println(friend); } }
     }
 }
