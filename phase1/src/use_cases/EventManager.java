@@ -12,7 +12,7 @@ import java.util.HashMap;
 public class EventManager implements Serializable {
     private HashMap<Integer, Event> events;
     private ArrayList<String> locations;
-
+    private EventChecker checker = new EventChecker();
     // (NEW!)
     public EventManager() {
         this(new HashMap<>(), new ArrayList<>());
@@ -74,16 +74,7 @@ public class EventManager implements Serializable {
      */
     public boolean validEvent(String topic, Calendar time, String location, String speaker) {
         // call general helper
-        if (validEvent(topic, time, location)) {
-            // check talks
-            for(EventTalk talk: getAllTalks()) {
-                if (talk.getSpeaker().equals(speaker) && CheckTimeOverlap(time, talk.getTime())) { return false; }
-                if (talk.getTopic().equals(topic)) { return false; }
-                // possible extension (double booking speaker in two locations)
-            }
-            return true;
-        }
-        return false;
+        return checker.validEvent(topic, time, location, speaker, this.locations, getAllTalks(), getAllEvents());
     }
 
     /**
@@ -94,14 +85,7 @@ public class EventManager implements Serializable {
      * @return true iff Event is valid: no conflicting time or existing events.
      */
     public boolean validEvent(String topic, Calendar time, String location) {
-        // check if location is valid
-        if (!this.locations.contains(location)) { return false; }
-        // check if any conflicting events or events already existing
-        for(Event event: getAllEvents()) {
-            if (event.getLocation().equals(location) && CheckTimeOverlap(time, event.getTime())){ return false; }
-            if (event.getTopic().equals(topic)) { return false; }
-        }
-        return true;
+        return checker.validEvent(topic, time, location, this.locations, getAllEvents());
     }
 
     /**
