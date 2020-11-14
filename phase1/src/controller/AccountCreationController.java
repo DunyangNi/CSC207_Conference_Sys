@@ -44,7 +44,7 @@ public class AccountCreationController {
         String[] info = accountInformation();
         accountManager.AddNewAttendee(info[0], info[1], info[2], info[3]);
         AttendeeController ac = new AttendeeController(info[0], eventManager, conversationManager, friendManager, signupManager);
-        ac.runAttendeeInteraction();
+        ac.runInteraction();
     }
     private void signupOrganizer(){
         Boolean valid = false;
@@ -60,7 +60,7 @@ public class AccountCreationController {
         accountManager.AddNewOrganizer(info[0], info[1], info[2], info[3]);
         OrganizerController oc = new OrganizerController(info[0],
                 eventManager, accountManager, conversationManager, friendManager);
-        oc.runOrganizerInteraction();
+        oc.runInteraction();
     }
 
     private String[] accountInformation(){

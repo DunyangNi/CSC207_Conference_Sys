@@ -5,24 +5,14 @@ import java.util.*;
 import java.lang.*;
 import presenter.*;
 
-public class SpeakerController {
-    private String username;
-    private EventManager eventmanager;
+public class SpeakerController extends UserController{
+
     private AccountManager accountmanager;
-    private ConversationManager conversationManager;
-    private FriendManager friendManager;
-    private SignupManager signupManager;
-    private Presenter presenter;
 
     public SpeakerController(String username, EventManager eventmanager, AccountManager accountmanager,
                              ConversationManager conversationManager, FriendManager friendManager) {
-        this.username = username;
-        this.eventmanager = eventmanager;
+        super(username, eventmanager, conversationManager, friendManager);
         this.accountmanager = accountmanager;
-        this.conversationManager = conversationManager;
-        this.friendManager = friendManager;
-        signupManager = new SignupManager(eventmanager);
-        this.presenter = new Presenter(eventmanager, friendManager, signupManager);
     }
 
     // timeoftalkrequesthelper() is deprecated due to use of IDs.
@@ -45,44 +35,8 @@ public class SpeakerController {
         }
     }
 
-    public void SeeTalkSchedule() {
-        this.presenter.displayTalkSchedule();
-    }
 
-    public void addFriend(String friendToAdd) {
-        friendManager.AddFriend(this.username, friendToAdd);
-    }
-
-    public void removeFriend(String friendToRemove) {
-        friendManager.RemoveFriend(this.username, friendToRemove);
-    }
-
-    public void seeFriendList() {
-        this.presenter.displayFriendList(this.username);
-    }
-
-    public void viewMessagesFrom(String recipient, int numMessages) {
-        if (numMessages < 0) {
-            System.out.println("This is an invalid number");
-        }
-        else if (!conversationManager.getAllUserConversationRecipients(this.username).contains(recipient)) {
-            System.out.println("Error: Account '" + recipient + "' is not found");
-            System.out.println();
-        }
-        else {
-            String msgToPrint;
-            ArrayList<Integer> selectedConversation = conversationManager.getConversationMessages(this.username, recipient);
-            System.out.println("Your last " + numMessages + " messages with " + recipient + ":");
-            System.out.println();
-            int recent_num = Math.min(numMessages, selectedConversation.size());
-            for (int i = 0; i < recent_num; i++) {
-                msgToPrint = conversationManager.messageToString(selectedConversation.get(numMessages - recent_num - 1 + i));
-                System.out.println(msgToPrint);
-                System.out.println();
-            }
-        }
-    }
-    public void runSpeakerInteraction() {
+    public void runInteraction() {
         Scanner sc = new Scanner(System.in);
         boolean loop_on = true;
         while(loop_on){

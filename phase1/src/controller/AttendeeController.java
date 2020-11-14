@@ -5,30 +5,17 @@ import presenter.*;
 import java.util.*;
 import java.lang.*;
 
-public class AttendeeController {
-    private String username;
-    private EventManager eventmanager;
-    private ConversationManager conversationManager;
-    private FriendManager friendManager;
-    private SignupManager signupManager;
-    private Presenter presenter;
+public class AttendeeController extends UserController{
 
+    private SignupManager signupManager;
     public AttendeeController(String username, EventManager eventmanager,
                               ConversationManager conversationManager, FriendManager friendManager,
                               SignupManager signupManager) {
-        this.username = username;
-        this.eventmanager = eventmanager;
-        this.conversationManager = conversationManager;
-        this.friendManager = friendManager;
+        super(username, eventmanager,conversationManager, friendManager);
         this.signupManager = signupManager;
-        this.presenter = new Presenter(eventmanager, friendManager, signupManager);
     }
 
     // timeoftalkrequesthelper() is now deprecated due to use of IDs.
-
-    public void SeeTalkSchedule() {
-        this.presenter.displayTalkSchedule();
-    }
 
     // subject to change, error handling
     public void signupForTalk(Integer id) {
@@ -56,35 +43,8 @@ public class AttendeeController {
         conversationManager.sendMessage(this.username, speakerusername, message);
     }
 
-    public void addFriend(String friendToAdd) {
-        friendManager.AddFriend(this.username, friendToAdd);
-    }
-
-    public void removeFriend(String friendToRemove) {
-        friendManager.RemoveFriend(this.username, friendToRemove);
-    }
-
-    public void seeFriendList() {
-        this.presenter.displayFriendList(this.username);
-    }
-
-    public void viewMessagesFrom(String recipient, int numMessages) {
-        if (numMessages < 0) { System.out.println("This is an invalid number"); }
-        else {
-            String msgToPrint;
-            ArrayList<Integer> convo = conversationManager.getConversationMessages(this.username, recipient);
-            System.out.println("Your recent " + numMessages + " messages with " + recipient + ":");
-            System.out.println();
-            int recent_num = Math.min(numMessages, convo.size());
-            for (int i = 0; i < recent_num; i++) {
-                msgToPrint = conversationManager.messageToString(convo.get(numMessages - recent_num - 1 + i));
-                System.out.println(msgToPrint);
-                System.out.println();
-            }
-        }
-    }
-
-    public void runAttendeeInteraction() {
+    @Override
+    public void runInteraction() {
         Scanner sc = new Scanner(System.in);
         boolean loop_on = true;
         while(loop_on){

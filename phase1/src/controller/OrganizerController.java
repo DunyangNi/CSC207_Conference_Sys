@@ -5,26 +5,13 @@ import presenter.*;
 import java.util.*;
 import java.lang.*;
 
-public class OrganizerController {
-    private String username;
-    private EventManager eventmanager;
-    private AccountManager accountmanager;
-    private ConversationManager conversationManager;
-    private FriendManager friendManager;
-    private SignupManager signupManager;
-    private Presenter presenter;
-
+public class OrganizerController extends UserController{
     // timeoftalkrequesthelper() is now deprecated due to use of IDs.
-
+    private AccountManager accountmanager;
     public OrganizerController(String username, EventManager eventmanager, AccountManager accountmanager,
                                ConversationManager conversationManager, FriendManager friendManager) {
-        this.username = username;
-        this.eventmanager = eventmanager;
+        super(username, eventmanager,conversationManager, friendManager);
         this.accountmanager = accountmanager;
-        this.conversationManager = conversationManager;
-        this.friendManager = friendManager;
-        signupManager = new SignupManager(eventmanager);
-        this.presenter = new Presenter(eventmanager, friendManager, signupManager);
     }
     public void addNewLocation(String location) {
         this.eventmanager.addLocation(location);
@@ -86,45 +73,14 @@ public class OrganizerController {
         conversationManager.sendMessage(this.username, attendeeUsername, message);
     }
 
-    public void SeeTalkSchedule() {
-        this.presenter.displayTalkSchedule();
-    }
-
-    public void addFriend(String friendToAdd) {
-        friendManager.AddFriend(this.username, friendToAdd);
-    }
-
-    public void removeFriend(String friendToRemove) {
-        friendManager.RemoveFriend(this.username, friendToRemove);
-    }
-
-    public void seeFriendList() {
-        this.presenter.displayFriendList(this.username);
-    }
-
-    public void viewMessagesFrom(String recipient, int numMessages) {
-        if (numMessages < 0) { System.out.println("This is an invalid number"); }
-        else {
-            String msgToPrint;
-            ArrayList<Integer> convo = conversationManager.getConversationMessages(this.username, recipient);
-            System.out.println("Your recent " + numMessages + " messages with " + recipient + ":");
-            System.out.println();
-            int recent_num = Math.min(numMessages, convo.size());
-            for (int i = 0; i < recent_num; i++) {
-                msgToPrint = conversationManager.messageToString(convo.get(numMessages - recent_num - 1 + i));
-                System.out.println(msgToPrint);
-                System.out.println();
-            }
-        }
-    }
-
     public void seeLocationList() {
         ArrayList<String> locations = this.eventmanager.fetchLocations();
         System.out.println("Locations:\n");
         for (String location : locations) { System.out.println(location); }
     }
 
-    public void runOrganizerInteraction() {
+    @Override
+    public void runInteraction() {
         Scanner sc = new Scanner(System.in);
         boolean loop_on = true;
         while(loop_on){
@@ -158,7 +114,7 @@ public class OrganizerController {
                 System.out.println("Specify account password"); String password = sc.nextLine();
                 System.out.println("What is speaker's first name?"); String firstname = sc.nextLine();
                 System.out.println("What is speaker's last name?"); String lastname = sc.nextLine();
-                this.accountmanager.AddNewSpeaker(username, password, firstname, lastname);
+                this.createSpeakerAccount(username, password, firstname, lastname);
             }
 
             else if(choice == 3) {

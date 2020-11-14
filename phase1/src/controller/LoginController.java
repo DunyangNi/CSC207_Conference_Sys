@@ -55,21 +55,21 @@ public class LoginController {
         if (accountManager.containsAttendee(username)) {
             password(username);
             AttendeeController ac = new AttendeeController(username, eventManager, conversationManager, friendManager, signupManager);
-            ac.runAttendeeInteraction();
+            ac.runInteraction();
             return true;
         }
         if (accountManager.containsOrganizer(username)) {
             password(username);
             OrganizerController oc = new OrganizerController(
                     username, eventManager, accountManager, conversationManager, friendManager);
-            oc.runOrganizerInteraction();
+            oc.runInteraction();
             return true;
         }
         if (accountManager.containsSpeaker(username)) {
             password(username);
             SpeakerController sc = new SpeakerController(
                     username, eventManager, accountManager, conversationManager, friendManager);
-            sc.runSpeakerInteraction();
+            sc.runInteraction();
             return true;
         }
         return false;
