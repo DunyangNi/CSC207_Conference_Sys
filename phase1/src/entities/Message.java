@@ -127,6 +127,10 @@ public class Message {
         return id;
     }
 
+    public static int getSid() {
+        return sid;
+    }
+
     /**
      * @param content content to set.
      */
@@ -137,7 +141,7 @@ public class Message {
     /**
      * @param msgToReply msg being replied to.
      */
-    public void setMsgToReply(int msgToReply) {
+    public void setMsgToReply(Integer msgToReply) {
         this.msgToReply = msgToReply;
     }
 
@@ -148,4 +152,8 @@ public class Message {
     public void setReceiver(String receiver) {
         this.receiver = receiver;
     } // changed by Lucas
+
+    public static void setSid(int sid) {
+        Message.sid = sid;
+    }
 }
