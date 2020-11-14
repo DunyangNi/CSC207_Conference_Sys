@@ -13,6 +13,7 @@ public class EventManager implements Serializable {
     private HashMap<Integer, Event> events;
     private ArrayList<String> locations;
     private EventChecker checker = new EventChecker();
+    private EventModifier modifier = new EventModifier();
     // (NEW!)
     public EventManager() {
         this(new HashMap<>(), new ArrayList<>());
@@ -106,8 +107,8 @@ public class EventManager implements Serializable {
         return false;
     }
 
-    public void ChangeTopic(Event event_to_change, String new_topic){
-        event_to_change.setTopic(new_topic);
+    public void ChangeTopic(Integer id, String new_topic){
+        modifier.ChangeTopic(events.get(id), new_topic);
     }
 
     /**
@@ -115,58 +116,28 @@ public class EventManager implements Serializable {
      */
 
     public boolean ChangeTime(Integer id, Calendar newTime){
-        Calendar curr_time = Calendar.getInstance();
-        Event selectedEvent = events.get(id);
-        if (curr_time.compareTo(selectedEvent.getTime()) >= 0 || curr_time.compareTo(newTime) >= 0) { return false; }
-        for (Event event: getAllEvents()) {
-            String eventLocation = event.getLocation(); Calendar eventTime = event.getTime();
-            if (!event.equals(selectedEvent) && eventLocation.equals(selectedEvent.getLocation()) &&
-                    checker.CheckTimeOverlap(eventTime, newTime)) { return false; }
-        }
-        selectedEvent.setTime(newTime);
-        return true;
+        return modifier.ChangeTime(events.get(id), newTime, getAllEvents());
     }
 
     /**
      * ChangeTime: Checks for conflicts due to same location be used in overlapping time
      */
 
-    public boolean ChangeLocation(Event event_to_change, String new_location) {
-        if(!this.locations.contains(new_location)) {
-            return false;
-        }
-        for(Event event: getAllEvents()) {
-            String location1 = event.getLocation();
-            Calendar time1 = event.getTime();
-            Calendar time2 = event_to_change.getTime();
-
-            if (event != event_to_change && location1.equals(new_location) && checker.CheckTimeOverlap(time1, time2)) {
-                return false;
-            }
-        }
-        event_to_change.setLocation(new_location);
-        return true;
+    public boolean ChangeLocation(Integer id, String new_location) {
+        return modifier.ChangeLocation(events.get(id), new_location, this.locations, getAllEvents());
     }
 
-    public void ChangeOrganizer(Event event_to_change, String new_organizer){
-        event_to_change.setOrganizer(new_organizer);
+    public void ChangeOrganizer(Integer id, String new_organizer){
+        modifier.ChangeOrganizer(events.get(id), new_organizer);
     }
 
     /**
      * ChangeTime: Checks for conflicts due to same speaker being used in overlapping time
+     * Need to ensure the input id is for an EventTalk
      */
 
-    public boolean ChangeSpeaker(EventTalk talk_to_change, String new_speaker){
-        for(EventTalk talk: getAllTalks()) {
-            Calendar time1 = talk.getTime();
-            Calendar time2 = talk_to_change.getTime();
-
-            if (talk != talk_to_change && time1.equals(time2) && talk.getSpeaker().equals(talk_to_change.getSpeaker())){
-                return false;
-            }
-        }
-        talk_to_change.setSpeaker(new_speaker);
-        return true;
+    public boolean ChangeSpeaker(Integer talk_id, String new_speaker){
+        return modifier.ChangeSpeaker((EventTalk) events.get(talk_id), new_speaker, getAllTalks());
     }
 
     // consider returning a copy of Locations to prevent any outside modification !
