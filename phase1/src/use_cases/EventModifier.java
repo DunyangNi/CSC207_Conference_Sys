@@ -3,10 +3,11 @@ package use_cases;
 import entities.Event;
 import entities.EventTalk;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class EventModifier {
+public class EventModifier implements Serializable {
     public boolean ChangeLocation(Event event_to_change, String new_location,
                                   ArrayList<String> locations, ArrayList<Event> events) {
         if(!locations.contains(new_location)) {

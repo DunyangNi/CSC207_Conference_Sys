@@ -3,10 +3,11 @@ package use_cases;
 import entities.Event;
 import entities.EventTalk;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class EventChecker {
+public class EventChecker implements Serializable {
 
     /**
      * CheckTimeOverlap:
