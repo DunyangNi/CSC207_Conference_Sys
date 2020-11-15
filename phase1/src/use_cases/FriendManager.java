@@ -27,10 +27,10 @@ public class FriendManager implements Serializable {
         if(!friends.containsKey(friendToAdd)) {
             throw new ObjectNotFoundException();
         }
-        // Create the new ArrayList if does not exist
-        friends.computeIfAbsent(user, k -> new ArrayList<>());
-        // Checking if friend already exists
-        if (!friends.get(user).contains(friendToAdd)) { friends.get(user).add(friendToAdd); }
+        if (friends.get(user).contains(friendToAdd)) {
+            throw new ConflictException("Friend is already in your Contacts.");
+        }
+        friends.get(user).add(friendToAdd);
     }
 
     /**
