@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-
 import Throwables.ConflictException;
 import entities.*;
 
@@ -139,12 +138,6 @@ public class AccountManager implements Serializable {
         accountList.putAll(this.getOrganizerList());
         return accountList;
     }
-
-    // TODO: 11/13/20 This method is obsolete now that we've removed Speaker.speakerTalks. Will need to resolve usage errors in Presenter. 
-//    public ArrayList<Integer> fetchSpeakerTalkList(String username) {
-//        return this.fetchSpeaker(username).getSpeakerTalks();
-//    }
-    // the issue is now fixed, as this responsibility is now in EventManager as fetchSortedTalks(speaker)
 
     public Iterator<String> speakerUsernameIterator() {
         Iterator<Speaker> speakeriterator = this.speakerList.values().iterator();

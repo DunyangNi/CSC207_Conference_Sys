@@ -11,12 +11,13 @@ public class LoginController {
     private SignupManager signupManager;
     Scanner input;
 
-    public LoginController(AccountManager am, EventManager em, ConversationManager cm, FriendManager fm, Scanner input){
+    public LoginController(AccountManager am, EventManager em, ConversationManager cm,
+                           FriendManager fm, SignupManager sm, Scanner input){
         this.accountManager = am;
         this.eventManager = em;
         this.conversationManager = cm;
         this.friendManager = fm;
-        signupManager = new SignupManager(eventManager);
+        this.signupManager = sm;
         this.input = input;
     }
 
@@ -47,7 +48,8 @@ public class LoginController {
     private boolean loginHelper(String username){
         if (accountManager.containsAttendee(username)) {
             password(username);
-            AttendeeController ac = new AttendeeController(username, eventManager, conversationManager, friendManager, signupManager);
+            AttendeeController ac = new AttendeeController(
+                    username, eventManager, conversationManager, friendManager, signupManager);
             ac.runInteraction();
             return true;
         }

@@ -10,9 +10,10 @@ public class MainSystem {
     private DataManager dataManager;
     private ConversationManager conversationManager;
     private FriendManager friendManager;
-    Scanner input = new Scanner(System.in);
+    private SignupManager signupManager;
     private LoginController loginController;
     private AccountCreationController accountCreationController;
+    Scanner input = new Scanner(System.in);
 
     public void startSystem(){
         // Evaluate choice
@@ -42,22 +43,27 @@ public class MainSystem {
         String cm = input.nextLine();
         System.out.print("Enter the filepath for FriendManager: ");
         String fm = input.nextLine();
+        System.out.print("Enter the filepath for SignupManager: ");
+        String sm = input.nextLine();
         // Deserialization
-        dataManager = new DataManager(am, em, cm, fm);
+        dataManager = new DataManager(am, em, cm, fm, sm);
         eventManager = dataManager.readEventManager();
         accountManager = dataManager.readAccountManager();
         conversationManager = dataManager.readConversationManager();
         friendManager = dataManager.readFriendManager();
+        signupManager = dataManager.readSignupManager();
         // Initiation
-        loginController = new LoginController(accountManager, eventManager, conversationManager, friendManager, input);
+        loginController = new LoginController(
+                accountManager, eventManager, conversationManager, friendManager, signupManager, input);
         accountCreationController = new AccountCreationController(
-                accountManager, eventManager, conversationManager, friendManager, input);
+                accountManager, eventManager, conversationManager, friendManager, signupManager, input);
         startSystem();
         // Saving changes
-        dataManager.saveEventManager(eventManager);
-        dataManager.saveAccountManager(accountManager);
-        dataManager.saveConversationManager(conversationManager);
-        dataManager.saveFriendManager(friendManager);
+        dataManager.saveManager("EventManager", em, eventManager);
+        dataManager.saveManager("AccountManager", am, accountManager);
+        dataManager.saveManager("ConversationManager", cm, conversationManager);
+        dataManager.saveManager("FriendManager", fm, friendManager);
+        dataManager.saveManager("SignupManager", sm, signupManager);
     }
 
     public static void main(String[] args){

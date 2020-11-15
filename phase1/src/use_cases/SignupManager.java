@@ -1,6 +1,9 @@
 package use_cases;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import entities.Attendee;
 import entities.EventTalk;
 
@@ -18,16 +21,23 @@ import entities.EventTalk;
  *      Attendee, EventTalk
  * </pre>
  */
-public class SignupManager {
-    private EventManager eventManager;
+public class SignupManager implements Serializable {
+    private HashMap<Integer, ArrayList<String>> signups;
 
-    public SignupManager(EventManager em) {
-        this.eventManager = em;
+    public SignupManager(HashMap<Integer, ArrayList<String>> signups) {
+        this.signups = signups;
     }
+
+    public SignupManager() { this(new HashMap<>()); }
 
     //------------------------------------------------------------
     // Methods
     //------------------------------------------------------------
+
+    // (NEW!)
+    public void addEventKey(Integer id) { signups.put(id, new ArrayList<>()); }
+
+    public void removeEventKey(Integer id) { signups.remove(id); }
 
     /**
      * Adds given Attendee to Talk.
@@ -36,17 +46,11 @@ public class SignupManager {
      * @param attendee given Attendee id
      */
     public void addAttendee(Integer talk_id, String attendee) {
-        if (!isFull(talk_id) && !isSignedUp(talk_id, attendee)) {
-            ArrayList<String> eventAttendees = eventManager.getAttendeesAtEvent(talk_id);
-            eventAttendees.add(attendee);
-        }
+        if (!isFull(talk_id) && !isSignedUp(talk_id, attendee)) { signups.get(talk_id).add(attendee); }
     }
 
     public void removeAttendee(Integer talk_id, String attendee) {
-        if (isSignedUp(talk_id, attendee)) {
-            ArrayList<String> eventAttendees = eventManager.getAttendeesAtEvent(talk_id);
-            eventAttendees.remove(attendee);
-        }
+        if (isSignedUp(talk_id, attendee)) { signups.get(talk_id).remove(attendee); }
     }
 
     /**
@@ -61,7 +65,7 @@ public class SignupManager {
      * @return whether talk is full or not
      */
     public boolean isFull(Integer talk_id) {
-        return eventManager.getAttendeesAtEvent(talk_id).size() == getSeatLimit();
+        return signups.get(talk_id).size() == getSeatLimit();
     }
 
     /**
@@ -71,6 +75,6 @@ public class SignupManager {
      * @return whether talk contains Attendee or not
      */
     public boolean isSignedUp(Integer talk_id, String attendee) {
-        return eventManager.getAttendeesAtEvent(talk_id).contains(attendee);
+        return signups.get(talk_id).contains(attendee);
     }
 }

@@ -3,7 +3,6 @@ package use_cases;
 import Throwables.ConflictException;
 import entities.Event;
 import entities.EventTalk;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;

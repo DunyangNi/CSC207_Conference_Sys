@@ -1,21 +1,15 @@
 package controller;
 
 import use_cases.*;
-import presenter.*;
 import java.util.*;
 import java.lang.*;
 
-public class AttendeeController extends UserController{
+public class AttendeeController extends UserController {
 
-    private SignupManager signupManager;
-    public AttendeeController(String username, EventManager eventmanager,
-                              ConversationManager conversationManager, FriendManager friendManager,
-                              SignupManager signupManager) {
-        super(username, eventmanager,conversationManager, friendManager);
-        this.signupManager = signupManager;
+    public AttendeeController(String username, EventManager eventmanager, ConversationManager conversationManager,
+                              FriendManager friendManager, SignupManager signupManager) {
+        super(username, eventmanager, conversationManager, friendManager, signupManager);
     }
-
-    // timeoftalkrequesthelper() is now deprecated due to use of IDs.
 
     // subject to change, error handling
     public void signupForTalk(Integer id) {

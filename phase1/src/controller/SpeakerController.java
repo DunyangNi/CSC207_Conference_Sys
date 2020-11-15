@@ -3,9 +3,8 @@ package controller;
 import use_cases.*;
 import java.util.*;
 import java.lang.*;
-import presenter.*;
 
-public class SpeakerController extends UserController{
+public class SpeakerController extends UserController {
 
     private AccountManager accountmanager;
 
@@ -14,8 +13,6 @@ public class SpeakerController extends UserController{
         super(username, eventmanager, conversationManager, friendManager);
         this.accountmanager = accountmanager;
     }
-
-    // timeoftalkrequesthelper() is deprecated due to use of IDs.
 
     public void SeeSpeakerTalkSchedule() {
         this.presenter.displaySpeakerTalksSchedule(this.username);
@@ -85,7 +82,7 @@ public class SpeakerController extends UserController{
                     if (eventmanager.isSpeakerOfTalk(id, username)) { selectedSpeakerTalks.add(id); }
                     else { System.out.println("Invalid ID. You are not speaking at this talk."); continue; }
                     System.out.println("Would you like to add another Talk? (1 = yes, 0 = no)");
-                    int response = sc.nextInt(); sc.nextLine();
+                    int response = sc.nextInt();
                     doneAddingTalks = response == 0;
                 }
                 System.out.println("Please enter your message to send: ");

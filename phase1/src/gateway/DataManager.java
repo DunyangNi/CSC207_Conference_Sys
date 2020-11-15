@@ -12,82 +12,40 @@ public class DataManager {
     private String eventPath;
     private String conversationPath;
     private String friendPath;
+    private String signupPath;
 
     /**
      * The constructor of DataManager
      * @param accountPath address of account database
      * @param eventPath address of event database
      */
-    public DataManager(String accountPath, String eventPath, String conversationPath, String friendPath){
+    public DataManager(String accountPath, String eventPath, String conversationPath, String friendPath, String signupPath){
         this.accountPath = accountPath;
         this.eventPath = eventPath;
         this.conversationPath = conversationPath;
         this.friendPath = friendPath;
+        this.signupPath = signupPath;
     }
 
     /**
-     * The helper function that can save any type of objects.
+     * The helper function that saves a particular Serializable.
      * @param filePath The address of the database
-     * @param object The object we are saving
+     * @param ser The Serializable we are saving
      * @throws IOException Throw exception when failed to save.
      */
-    private void saveObject(String filePath, Object object) throws IOException {
+    private void saveSerializable(String filePath, Serializable ser) throws IOException {
         OutputStream file = new FileOutputStream(filePath);
         OutputStream buffer = new BufferedOutputStream(file);
         ObjectOutput output = new ObjectOutputStream(buffer);
-
-        output.writeObject(object);
+        output.writeObject(ser);
         output.close();
         buffer.close();
         file.close();
     }
 
-    /**
-     * Saving the EventManager
-     * @param eventManager The EventManager we are saving
-     */
-    public void saveEventManager(EventManager eventManager) {
-        try{
-            saveObject(eventPath, eventManager);
-        } catch (IOException e) {
-            System.out.println("Failed to save the EventManager.");
-        }
-    }
-
-    /**
-     * Saving the EventManager
-     * @param accountManager The AccountManager we are saving
-     */
-    public void saveAccountManager(AccountManager accountManager) {
-        try{
-            saveObject(accountPath, accountManager);
-        } catch (IOException e) {
-            System.out.println("Failed to save the AccountManager.");
-        }
-    }
-
-    /**
-     * (NEW!) Saving the ConversationManager
-     * @param conversationManager The ConversationManager we are saving
-     */
-    public void saveConversationManager(ConversationManager conversationManager) {
-        try{
-            saveObject(conversationPath, conversationManager);
-        } catch (IOException e) {
-            System.out.println("Failed to save the ConversationManager.");
-        }
-    }
-
-    /**
-     * (NEW!) Saving the FriendManager
-     * @param friendManager The FriendManager we are saving
-     */
-    public void saveFriendManager(FriendManager friendManager) {
-        try{
-            saveObject(friendPath, friendManager);
-        } catch (IOException e) {
-            System.out.println("Failed to save the FriendManager.");
-        }
+    public void saveManager(String managerName, String filePath, Serializable manager) {
+        try { saveSerializable(filePath, manager); }
+        catch (IOException e) { System.out.printf("Failed to save the %s.%n", managerName); }
     }
 
     /**
@@ -99,7 +57,6 @@ public class DataManager {
             InputStream file = new FileInputStream(accountPath);
             InputStream buffer = new BufferedInputStream(file);
             ObjectInput input = new ObjectInputStream(buffer);
-
             AccountManager am = (AccountManager) input.readObject();
             input.close();
             buffer.close();
@@ -123,7 +80,6 @@ public class DataManager {
             InputStream file = new FileInputStream(eventPath);
             InputStream buffer = new BufferedInputStream(file);
             ObjectInput input = new ObjectInputStream(buffer);
-
             EventManager em = (EventManager) input.readObject();
             input.close();
             buffer.close();
@@ -147,7 +103,6 @@ public class DataManager {
             InputStream file = new FileInputStream(conversationPath);
             InputStream buffer = new BufferedInputStream(file);
             ObjectInput input = new ObjectInputStream(buffer);
-
             ConversationManager cm = (ConversationManager) input.readObject();
             input.close();
             buffer.close();
@@ -171,7 +126,6 @@ public class DataManager {
             InputStream file = new FileInputStream(friendPath);
             InputStream buffer = new BufferedInputStream(file);
             ObjectInput input = new ObjectInputStream(buffer);
-
             FriendManager fm = (FriendManager) input.readObject();
             input.close();
             buffer.close();
@@ -183,6 +137,29 @@ public class DataManager {
         } catch (ClassNotFoundException e) {
             System.out.println("There is no FriendManager in database, creating a new FriendManager");
             return new FriendManager();
+        }
+    }
+
+    /**
+     * Read the SignupManager from database.
+     * @return The SignupManager from the file
+     */
+    public SignupManager readSignupManager() {
+        try {
+            InputStream file = new FileInputStream(signupPath);
+            InputStream buffer = new BufferedInputStream(file);
+            ObjectInput input = new ObjectInputStream(buffer);
+            SignupManager fm = (SignupManager) input.readObject();
+            input.close();
+            buffer.close();
+            file.close();
+            return fm;
+        } catch (IOException e) {
+            System.out.println("Cannot read the SignupManager, creating a new SignupManager");
+            return new SignupManager();
+        } catch (ClassNotFoundException e) {
+            System.out.println("There is no SignupManager in database, creating a new SignupManager");
+            return new SignupManager();
         }
     }
 }

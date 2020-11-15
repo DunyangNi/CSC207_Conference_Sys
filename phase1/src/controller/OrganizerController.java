@@ -2,7 +2,6 @@ package controller;
 
 import Throwables.ConflictException;
 import use_cases.*;
-import presenter.*;
 import java.util.*;
 import java.lang.*;
 
@@ -11,7 +10,7 @@ public class OrganizerController extends UserController{
 
     public OrganizerController(String username, EventManager eventmanager, AccountManager accountmanager,
                                ConversationManager conversationManager, FriendManager friendManager) {
-        super(username, eventmanager,conversationManager, friendManager);
+        super(username, eventmanager, conversationManager, friendManager);
         this.accountmanager = accountmanager;
     }
 
@@ -27,12 +26,18 @@ public class OrganizerController extends UserController{
     }
 
     public void scheduleSpeaker(Calendar time, String topic, String location, String speaker) {
-        try { this.eventmanager.AddNewEvent(topic, time, location, username, speaker); }
+        try {
+            Integer newTalkID = eventmanager.AddNewEvent(topic, time, location, username, speaker);
+            signupManager.addEventKey(newTalkID);
+        }
         catch (Exception e) { System.out.println("\nSomething went wrong. Please enter valid input.\n"); }
     }
 
     public void cancelTalk(Integer id) {
-        try { this.eventmanager.cancelTalk(id); }
+        try {
+            this.eventmanager.cancelTalk(id);
+            signupManager.removeEventKey(id);
+        }
         catch (Exception e) { System.out.println("\nSomething went wrong. Please enter valid input.\n"); }
     }
 
@@ -106,6 +111,7 @@ public class OrganizerController extends UserController{
                 System.out.println("What is speaker's last name?"); String lastname = sc.nextLine();
                 createSpeakerAccount(username, password, firstname, lastname);
                 conversationManager.addAccountKey(username);
+                friendManager.addAccountKey(username);
             }
 
             else if(choice == 3) {
@@ -127,8 +133,8 @@ public class OrganizerController extends UserController{
                 System.out.println("Please enter the ID of a talk you wish to reschedule: ");
                 int id = sc.nextInt();
                 sc.nextLine();
-                Calendar newtime = this._timeoftalkrequesthelper("to reschedule");
-                this.rescheduleTalk(id, newtime);
+                Calendar newTime = this._timeoftalkrequesthelper("to reschedule");
+                this.rescheduleTalk(id, newTime);
             }
 
             else if(choice == 6) {

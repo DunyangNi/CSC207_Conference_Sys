@@ -10,11 +10,12 @@ public class FriendManager implements Serializable {
 
     /* AUTHOR: ANDREW */
 
-    // (NEW!)
     public FriendManager(HashMap<String, ArrayList<String>> friends) { this.friends = friends; }
 
-    // (NEW!)
     public FriendManager() { this(new HashMap<>()); }
+
+    // (NEW!)
+    public void addAccountKey(String user) { friends.put(user, new ArrayList<>()); }
 
     /**
      * Add friend IF APPLICABLE (THEY AREN'T ALREADY FRIENDS). OTHERWISE DO NOTHING
@@ -42,14 +43,8 @@ public class FriendManager implements Serializable {
         if(!friends.containsKey(friendToRemove)) {
             throw new ObjectNotFoundException();
         }
-        // Checking if friend ArrayList exists or friendToRemove is not in it
-        if (friends.get(user) == null || !friends.get(user).contains(friendToRemove)) { return; }
         else { friends.get(user).remove(friendToRemove); }
     }
 
-    public ArrayList<String> getFriendList(String user) {
-        ArrayList<String> selectedFriendList = friends.get(user);
-        return selectedFriendList == null ? new ArrayList<>() : selectedFriendList;
-    }
-
+    public ArrayList<String> getFriendList(String user) { return friends.get(user); }
 }

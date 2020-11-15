@@ -1,4 +1,5 @@
 package controller;
+
 import use_cases.*;
 import presenter.*;
 import java.util.*;
@@ -12,14 +13,20 @@ public abstract class UserController {
     protected SignupManager signupManager;
     protected Presenter presenter;
 
-    public UserController(String username, EventManager eventmanager,
-                          ConversationManager conversationManager, FriendManager friendManager) {
+    public UserController(String username, EventManager eventmanager, ConversationManager conversationManager,
+                          FriendManager friendManager, SignupManager signupManager) {
         this.username = username;
         this.eventmanager = eventmanager;
         this.conversationManager = conversationManager;
         this.friendManager = friendManager;
-        this.signupManager = new SignupManager(eventmanager);
+        this.signupManager = signupManager;
         this.presenter = new Presenter(eventmanager, friendManager, signupManager);
+    }
+
+    // (NEW!) This is only used by Organizer and Speaker, since Organizer and Speaker cannot sign up to talks?
+    public UserController(String username, EventManager eventmanager, ConversationManager conversationManager,
+                          FriendManager friendManager) {
+        this(username, eventmanager, conversationManager, friendManager, null);
     }
 
     public void SeeTalkSchedule() {
@@ -31,9 +38,7 @@ public abstract class UserController {
             friendManager.AddFriend(this.username, friendToAdd);
         }
         catch(Exception e) {
-            System.out.println("");
-            System.out.println("Something went wrong. Please enter valid input.");
-            System.out.println("");
+            System.out.println("\nSomething went wrong. Please enter valid input.\n");
         }
     }
 
@@ -42,9 +47,7 @@ public abstract class UserController {
             friendManager.RemoveFriend(this.username, friendToRemove);
         }
         catch(Exception e) {
-            System.out.println("");
-            System.out.println("Something went wrong. Please enter valid input.");
-            System.out.println("");
+            System.out.println("\nSomething went wrong. Please enter valid input.\n");
         }
     }
 
@@ -54,7 +57,7 @@ public abstract class UserController {
 
     public void viewMessagesFrom(String recipient, int numMessages) {
         try {
-            if (numMessages < 0) { System.out.println("You have requested an invalid number"); return;}
+            if (numMessages < 0) { System.out.println("You have requested an invalid number"); }
             else {
                 String msgToPrint;
                 ArrayList<Integer> convo = conversationManager.getConversationMessages(this.username, recipient);
@@ -69,9 +72,7 @@ public abstract class UserController {
             }
         }
         catch(Exception e) {
-            System.out.println("");
-            System.out.println("Something went wrong. Please enter valid input.");
-            System.out.println("");
+            System.out.println("\nSomething went wrong. Please enter valid input.\n");
         }
     }
 
@@ -105,9 +106,7 @@ public abstract class UserController {
             return time;
         }
         catch(Exception e) {
-            System.out.println("");
-            System.out.println("Something went wrong. Please enter valid input.");
-            System.out.println("");
+            System.out.println("\nSomething went wrong. Please enter valid input.\n");
             throw new InstantiationException();
         }
     }

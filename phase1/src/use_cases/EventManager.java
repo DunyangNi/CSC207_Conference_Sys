@@ -83,10 +83,11 @@ public class EventManager implements Serializable {
     /**
      * AddNewEvent: Checks for same location be used in overlapping time
      */
-    public void AddNewEvent(String topic, Calendar time, String location, String organizer) throws ConflictException{
+    public Integer AddNewEvent(String topic, Calendar time, String location, String organizer) throws ConflictException{
         if (validEvent(topic, time, location)) {
             Event eventToAdd = new Event(topic, time, location, organizer);
             events.put(eventToAdd.getId(), eventToAdd);
+            return eventToAdd.getId();
         }
         throw new ConflictException("Event conflicts with another");
     }
@@ -97,11 +98,12 @@ public class EventManager implements Serializable {
      * (NEW!) Updates the associated Speaker's speakerTalks
      */
 
-    public void AddNewEvent(String topic, Calendar time, String location, String organizer, String speaker) throws ConflictException{
+    public Integer AddNewEvent(String topic, Calendar time, String location, String organizer, String speaker) throws ConflictException{
         if (validEvent(topic, time, location, speaker)) {
             // create a new event and add it to events
             EventTalk eventToAdd = new EventTalk(topic, time, location, organizer, speaker);
             events.put(eventToAdd.getId(), eventToAdd);
+            return eventToAdd.getId();
         }
         throw new ConflictException("Event conflicts with another");
     }
