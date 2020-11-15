@@ -16,7 +16,7 @@ public class MainSystem {
     private AccountCreationController accountCreationController;
     Scanner input = new Scanner(System.in);
 
-    public void startSystem() throws InstantiationException, ObjectNotFoundException {
+    public void startSystem(){
         // Evaluate choice
         boolean validChoice; String choice; String prompt; int firstMessage = 0;
         System.out.println("Do you already have an account?");
@@ -34,7 +34,7 @@ public class MainSystem {
         else accountCreationController.createAccount();
     }
 
-    public void run() throws ObjectNotFoundException, InstantiationException {
+    public void run(){
         // Obtain filepath of all .ser files
         System.out.println("Print enter the address for AccountManager");
         String am = input.nextLine();

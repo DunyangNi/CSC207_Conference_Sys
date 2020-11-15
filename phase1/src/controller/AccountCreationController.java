@@ -22,7 +22,7 @@ public class AccountCreationController {
         this.input = input;
     }
     
-    public void createAccount() throws InstantiationException {
+    public void createAccount(){
         // Obtain type of Account to create.
         boolean accountSelected; Integer accountType; String prompt; int firstMessage = 0;
         System.out.println("What type of account do you want to create?");
@@ -51,7 +51,7 @@ public class AccountCreationController {
         ac.runInteraction();
     }
     
-    private void createNewOrganizer() throws InstantiationException {
+    private void createNewOrganizer(){
         // Evaluate Organizer creation password
         boolean correctOrganizerPassword; int firstMessage = 0; String inputPassword; String prompt;
         do {

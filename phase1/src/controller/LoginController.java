@@ -22,7 +22,7 @@ public class LoginController {
         this.input = input;
     }
 
-    public void login() throws ObjectNotFoundException, InstantiationException {
+    public void login(){
         boolean incorrectUsername; String username; String prompt; int firstMessage = 0;
         do {
             prompt = firstMessage == 0 ? "Please enter your username: " : "This username does not exist, please enter again: ";
@@ -46,7 +46,7 @@ public class LoginController {
         while (incorrectPassword);
     }
 
-    private boolean loginHelper(String username) throws InstantiationException, ObjectNotFoundException {
+    private boolean loginHelper(String username){
         if (accountManager.containsAttendee(username)) {
             password(username);
             AttendeeController ac = new AttendeeController(

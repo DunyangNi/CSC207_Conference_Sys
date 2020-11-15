@@ -112,5 +112,5 @@ public abstract class UserController {
         }
     }
 
-    public abstract void runInteraction() throws InstantiationException, ObjectNotFoundException;
+    public abstract void runInteraction() throws InstantiationException;
 }
