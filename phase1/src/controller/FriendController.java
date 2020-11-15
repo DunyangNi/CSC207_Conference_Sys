@@ -2,13 +2,19 @@ package controller;
 
 import Throwables.ConflictException;
 import Throwables.ObjectNotFoundException;
-import presenter.Presenter;
 import use_cases.FriendManager;
+import presenter.Presenter;
 
 public class FriendController {
     protected String username;
     protected FriendManager friendManager;
     protected Presenter presenter;
+
+    public FriendController(String username, FriendManager friendManager, Presenter presenter){
+        this.username = username;
+        this.friendManager = friendManager;
+        this.presenter = presenter;
+    }
 
     public void addFriend(String friendToAdd) {
         try {

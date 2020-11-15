@@ -5,9 +5,9 @@ import use_cases.*;
 import java.util.Scanner;
 
 public class MainSystem {
+    private DataManager dataManager;
     private AccountManager accountManager;
     private EventManager eventManager;
-    private DataManager dataManager;
     private ConversationManager conversationManager;
     private FriendManager friendManager;
     private SignupManager signupManager;

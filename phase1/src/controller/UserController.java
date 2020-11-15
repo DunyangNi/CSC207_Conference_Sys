@@ -1,5 +1,6 @@
 package controller;
 
+import Throwables.ObjectNotFoundException;
 import use_cases.*;
 import presenter.*;
 import java.util.*;
@@ -11,22 +12,22 @@ public abstract class UserController {
     protected ConversationManager conversationManager;
     protected FriendManager friendManager;
     protected SignupManager signupManager;
+    protected FriendController friendController;
+    protected MessageController messageController;
+    protected AccountManager accountManager;
     protected Presenter presenter;
 
     public UserController(String username, EventManager eventmanager, ConversationManager conversationManager,
-                          FriendManager friendManager, SignupManager signupManager) {
+                          FriendManager friendManager, SignupManager signupManager, AccountManager accountManager) {
         this.username = username;
         this.eventmanager = eventmanager;
+        this.accountManager = accountManager;
         this.conversationManager = conversationManager;
         this.friendManager = friendManager;
         this.signupManager = signupManager;
         this.presenter = new Presenter(eventmanager, friendManager, signupManager);
-    }
-
-    // (NEW!) This is only used by Organizer and Speaker, since Organizer and Speaker cannot sign up to talks?
-    public UserController(String username, EventManager eventmanager, ConversationManager conversationManager,
-                          FriendManager friendManager) {
-        this(username, eventmanager, conversationManager, friendManager, null);
+        this.friendController = new FriendController(username, friendManager, presenter);
+        this.messageController = new MessageController(username, accountManager, conversationManager, eventmanager);
     }
 
     public void SeeTalkSchedule() {
@@ -111,5 +112,5 @@ public abstract class UserController {
         }
     }
 
-    public abstract void runInteraction();
+    public abstract void runInteraction() throws InstantiationException, ObjectNotFoundException;
 }

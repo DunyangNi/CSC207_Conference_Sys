@@ -6,12 +6,10 @@ import java.util.*;
 import java.lang.*;
 
 public class OrganizerController extends UserController{
-    private AccountManager accountmanager;
-
-    public OrganizerController(String username, EventManager eventmanager, AccountManager accountmanager,
-                               ConversationManager conversationManager, FriendManager friendManager) {
-        super(username, eventmanager, conversationManager, friendManager);
-        this.accountmanager = accountmanager;
+    public OrganizerController(String username, EventManager eventmanager, AccountManager accountManager,
+                               SignupManager signupManager, ConversationManager conversationManager,
+                               FriendManager friendManager) {
+        super(username, eventmanager, conversationManager, friendManager, signupManager, accountManager);
     }
 
 
@@ -21,7 +19,7 @@ public class OrganizerController extends UserController{
     }
 
     public void createSpeakerAccount(String username, String password, String firstname, String lastname) {
-        try { this.accountmanager.AddNewSpeaker(username, password, firstname, lastname); }
+        try { this.accountManager.AddNewSpeaker(username, password, firstname, lastname); }
         catch (ConflictException e) { System.out.println("\nSomething went wrong. Please enter valid input.\n"); }
     }
 
@@ -53,7 +51,7 @@ public class OrganizerController extends UserController{
     }
 
     @Override
-    public void runInteraction() {
+    public void runInteraction() throws InstantiationException {
         Scanner sc = new Scanner(System.in);
         boolean loop_on = true;
         while(loop_on){
@@ -118,7 +116,7 @@ public class OrganizerController extends UserController{
             else if(choice == 6) {
                 System.out.println("Please enter the message that you want to send to all speakers:");
                 String message = sc.nextLine();
-                this.messageAllSpeakers(message);
+                messageController.messageAllSpeakers(message);
             }
 
             else if(choice == 7) {
@@ -126,13 +124,13 @@ public class OrganizerController extends UserController{
                 String username = sc.nextLine();
                 System.out.println("Please enter the message you want to send to this speaker:");
                 String message = sc.nextLine();
-                this.messageSpeaker(message, username);
+                messageController.messageSpeaker(message, username);
             }
 
             else if(choice == 8) {
                 System.out.println("Please enter the message that you want to send to all attendees:");
                 String message = sc.nextLine();
-                this.messageAllAttendees(message);
+                messageController.messageAllAttendees(message);
             }
 
             else if(choice == 9) {
@@ -140,7 +138,7 @@ public class OrganizerController extends UserController{
                 String username = sc.nextLine();
                 System.out.println("Please enter the message you want to send the attendee:");
                 String message = sc.nextLine();
-                this.messageAttendee(message, username);
+                messageController.messageAttendee(message, username);
             }
 
             else if(choice == 10) {

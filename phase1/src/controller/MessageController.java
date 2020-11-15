@@ -3,18 +3,25 @@ package controller;
 import Throwables.ObjectNotFoundException;
 import presenter.Presenter;
 import use_cases.ConversationManager;
+import use_cases.AccountManager;
 import use_cases.EventManager;
 import use_cases.FriendManager;
-import use_cases.SignupManager;
-import use_cases.AccountManager;
 
-import java.util.Iterator;
+import java.util.*;
 
 public class MessageController {
     protected String username;
-    protected AccountManager accountmanager;
+    protected AccountManager accountManager;
     protected ConversationManager conversationManager;
-    protected Presenter presenter;
+    protected EventManager eventManager;
+
+    public MessageController(String username, AccountManager accountManager, ConversationManager conversationManager,
+                             EventManager eventManager){
+        this.username = username;
+        this.accountManager = accountManager;
+        this.conversationManager = conversationManager;
+        this.eventManager = eventManager;
+    }
 
     public void messageAccount(String message, String account) {
         try{
@@ -28,7 +35,7 @@ public class MessageController {
     }
 
     public void messageSpeaker(String message, String speaker) {
-        if (accountmanager.containsSpeaker(speaker)){
+        if (accountManager.containsSpeaker(speaker)){
             messageAccount(message, speaker);
         }
         else {
@@ -40,7 +47,7 @@ public class MessageController {
     }
 
     public void messageAttendee(String message, String attendeeUsername) {
-        if (accountmanager.containsAttendee(attendeeUsername)){
+        if (accountManager.containsAttendee(attendeeUsername)){
             messageAccount(message, attendeeUsername);
         }
         else {
@@ -53,7 +60,7 @@ public class MessageController {
 
     public void messageAllSpeakers(String message) {
         try{
-            Iterator<String> speakerusernameiterator = this.accountmanager.speakerUsernameIterator();
+            Iterator<String> speakerusernameiterator = this.accountManager.speakerUsernameIterator();
             while(speakerusernameiterator.hasNext()){
                 conversationManager.sendMessage(this.username, speakerusernameiterator.next(), message);}
         }
@@ -66,7 +73,7 @@ public class MessageController {
 
     public void messageAllAttendees(String message) {
         try{
-            Iterator<String> attendeeusernameiterator = this.accountmanager.attendeeUsernameIterator();
+            Iterator<String> attendeeusernameiterator = this.accountManager.attendeeUsernameIterator();
             while(attendeeusernameiterator.hasNext()){
                 conversationManager.sendMessage(this.username, attendeeusernameiterator.next(), message);}
         }
@@ -74,6 +81,17 @@ public class MessageController {
             System.out.println("");
             System.out.println("Something went wrong. Please try again.");
             System.out.println("");
+        }
+    }
+
+    public void messageAttendeesAtTalks(ArrayList<Integer> selectedSpeakerTalks, String message)
+            throws ObjectNotFoundException {
+        Set<String> selectedAttendeeUsernames = new HashSet<>();
+        for (Integer id : selectedSpeakerTalks) {
+            if (eventManager.isTalk(id)) { selectedAttendeeUsernames.addAll(eventManager.getAttendeesAtEvent(id)); }
+        }
+        for(String attendeeUsername : selectedAttendeeUsernames) {
+            conversationManager.sendMessage(this.username, attendeeUsername, message);
         }
     }
 }

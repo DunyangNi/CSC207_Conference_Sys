@@ -7,8 +7,8 @@ import java.lang.*;
 public class AttendeeController extends UserController {
 
     public AttendeeController(String username, EventManager eventmanager, ConversationManager conversationManager,
-                              FriendManager friendManager, SignupManager signupManager) {
-        super(username, eventmanager, conversationManager, friendManager, signupManager);
+                              FriendManager friendManager, SignupManager signupManager, AccountManager accountManager) {
+        super(username, eventmanager, conversationManager, friendManager, signupManager, accountManager);
     }
 
     // subject to change, error handling
@@ -77,7 +77,7 @@ public class AttendeeController extends UserController {
                 System.out.println("Specify the message you're sending");
                 //line1 = sc.nextLine();
                 String message = sc.nextLine();
-                this.messageAttendee(message, attendeeUsername);
+                messageController.messageAttendee(message, attendeeUsername);
             }
             else if(choice == 6) {
                 //messageSpeaker(String message, String speakerusername)
@@ -87,7 +87,7 @@ public class AttendeeController extends UserController {
                 System.out.println("Specify the message you're sending");
                 //line1 = sc.nextLine();
                 String message = sc.nextLine();
-                this.messageAttendee(message, speakerUsername);
+                messageController.messageAttendee(message, speakerUsername);
             }
             else if(choice == 7) {
                 System.out.print("Please enter the username of a contact to add: ");

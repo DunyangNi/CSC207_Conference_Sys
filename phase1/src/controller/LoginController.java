@@ -1,5 +1,6 @@
 package controller;
 
+import Throwables.ObjectNotFoundException;
 import use_cases.*;
 import java.util.Scanner;
 
@@ -21,7 +22,7 @@ public class LoginController {
         this.input = input;
     }
 
-    public void login(){
+    public void login() throws ObjectNotFoundException, InstantiationException {
         boolean incorrectUsername; String username; String prompt; int firstMessage = 0;
         do {
             prompt = firstMessage == 0 ? "Please enter your username: " : "This username does not exist, please enter again: ";
@@ -45,25 +46,27 @@ public class LoginController {
         while (incorrectPassword);
     }
 
-    private boolean loginHelper(String username){
+    private boolean loginHelper(String username) throws InstantiationException, ObjectNotFoundException {
         if (accountManager.containsAttendee(username)) {
             password(username);
             AttendeeController ac = new AttendeeController(
-                    username, eventManager, conversationManager, friendManager, signupManager);
+                    username, eventManager, conversationManager,
+                    friendManager, signupManager, accountManager);
             ac.runInteraction();
             return true;
         }
         if (accountManager.containsOrganizer(username)) {
             password(username);
             OrganizerController oc = new OrganizerController(
-                    username, eventManager, accountManager, conversationManager, friendManager);
+                    username, eventManager, accountManager, signupManager,
+                    conversationManager, friendManager);
             oc.runInteraction();
             return true;
         }
         if (accountManager.containsSpeaker(username)) {
             password(username);
             SpeakerController sc = new SpeakerController(
-                    username, eventManager, accountManager, conversationManager, friendManager);
+                    username, eventManager, accountManager, conversationManager, signupManager, friendManager);
             sc.runInteraction();
             return true;
         }

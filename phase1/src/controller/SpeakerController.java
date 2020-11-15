@@ -1,39 +1,23 @@
 package controller;
 
+import Throwables.ObjectNotFoundException;
 import use_cases.*;
 import java.util.*;
 import java.lang.*;
 
 public class SpeakerController extends UserController {
 
-    private AccountManager accountmanager;
-
     public SpeakerController(String username, EventManager eventmanager, AccountManager accountmanager,
-                             ConversationManager conversationManager, FriendManager friendManager) {
-        super(username, eventmanager, conversationManager, friendManager);
-        this.accountmanager = accountmanager;
+                             ConversationManager conversationManager, SignupManager signupManager,
+                             FriendManager friendManager) {
+        super(username, eventmanager, conversationManager, friendManager, signupManager, accountmanager);
     }
 
     public void SeeSpeakerTalkSchedule() {
         this.presenter.displaySpeakerTalksSchedule(this.username);
     }
 
-    public void messageAttendee(String message, String attendeeUsername) {
-        conversationManager.sendMessage(this.username, attendeeUsername, message);
-    }
-
-    public void messageAttendeesAtTalks(ArrayList<Integer> selectedSpeakerTalks, String message) {
-        Set<String> selectedAttendeeUsernames = new HashSet<>();
-        for (Integer id : selectedSpeakerTalks) {
-            if (eventmanager.isTalk(id)) { selectedAttendeeUsernames.addAll(eventmanager.getAttendeesAtEvent(id)); }
-        }
-        for(String attendeeUsername : selectedAttendeeUsernames) {
-            conversationManager.sendMessage(this.username, attendeeUsername, message);
-        }
-    }
-
-
-    public void runInteraction() {
+    public void runInteraction() throws ObjectNotFoundException {
         Scanner sc = new Scanner(System.in);
         boolean loop_on = true;
         while(loop_on){
@@ -55,7 +39,7 @@ public class SpeakerController extends UserController {
 
             }
             else if(choice == 2) {
-                Set<String> allAttendees = accountmanager.getAttendeeList().keySet();
+                Set<String> allAttendees = accountManager.getAttendeeList().keySet();
                 if (!allAttendees.isEmpty()) {
                     System.out.println("List of attendees");
                     System.out.println("---------------------------------------------");
@@ -65,7 +49,7 @@ public class SpeakerController extends UserController {
                     String attendee = sc.nextLine();
                     System.out.println("Please enter your message to send: ");
                     String message = sc.nextLine();
-                    if (allAttendees.contains(attendee)) { this.messageAttendee(message, attendee); }
+                    if (allAttendees.contains(attendee)) { messageController.messageAttendee(message, attendee); }
                     else { System.out.println("The entered recipient username is invalid."); }
                 }
                 else {
@@ -87,7 +71,7 @@ public class SpeakerController extends UserController {
                 }
                 System.out.println("Please enter your message to send: ");
                 String message = sc.nextLine();
-                this.messageAttendeesAtTalks(selectedSpeakerTalks, message);
+                messageController.messageAttendeesAtTalks(selectedSpeakerTalks, message);
             }
 
             else if(choice == 4) {
@@ -95,7 +79,7 @@ public class SpeakerController extends UserController {
             }
 
             else if(choice == 5) {
-                Set<String> allAccts = accountmanager.fetchAccountList().keySet();
+                Set<String> allAccts = accountManager.fetchAccountList().keySet();
                 if (!allAccts.isEmpty()) {
                     System.out.println("List of users");
                     System.out.println("---------------------------------------------");
@@ -112,7 +96,7 @@ public class SpeakerController extends UserController {
             else if(choice == 6) {
                 System.out.println("Specify username of contact to remove");
                 String removeContact = sc.nextLine();
-                Set<String> allAccounts = accountmanager.fetchAccountList().keySet();
+                Set<String> allAccounts = accountManager.fetchAccountList().keySet();
                 if (allAccounts.contains(removeContact)) { this.removeFriend(removeContact); }
                 else { System.out.println("The entered contact username is invalid."); }
             }
