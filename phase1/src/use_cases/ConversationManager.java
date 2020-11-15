@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.Collections;
 import entities.*;
+import Throwables.*;
 
 /**
  * ConversationManager manages a given Conversation between a sender Account and a recipient Account.
@@ -33,7 +34,10 @@ public class ConversationManager implements Serializable {
     // Methods
     //------------------------------------------------------------
 
-    public String messageToString(Integer id) {
+    public String messageToString(Integer id) throws ObjectNotFoundException{
+        if(!this.messages.containsKey(id)) {
+            throw new ObjectNotFoundException();
+        }
         // Obtain Message information
         Message selectedMsg = messages.get(id);
         Message msgToReply = messages.get(selectedMsg.getMsgToReply());
@@ -59,7 +63,13 @@ public class ConversationManager implements Serializable {
     }
 
     // formerly getConversationArrayList
-    public ArrayList<Integer> getConversationMessages(String user, String recipient) {
+    public ArrayList<Integer> getConversationMessages(String user, String recipient) throws ObjectNotFoundException{
+        if(!this.conversations.containsKey(user)) {
+            throw new ObjectNotFoundException();
+        }
+        if(!this.conversations.containsKey(recipient)) {
+            throw new ObjectNotFoundException();
+        }
         Conversation selectedConvo = conversations.get(user).get(recipient);
         if (selectedConvo == null) { return new ArrayList<>(); }
         return selectedConvo.getMessages();

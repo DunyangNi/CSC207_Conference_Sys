@@ -51,7 +51,7 @@ public class EventChecker implements Serializable {
     }
 
     /**
-     * (NEW!) (Helper) Returns true iff Event is valid: no conflicting time or existing events.
+     * (NEW!) (Helper) R    eturns true iff Event is valid: no conflicting time or existing events.
      * @param topic given topic
      * @param time given time
      * @param location given location

@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import Throwables.ConflictException;
+import Throwables.ObjectNotFoundException;
 import entities.*;
 
 import java.util.Arrays;
@@ -24,12 +26,11 @@ public class EventManager implements Serializable {
         this.locations = locations;
     }
 
-    public boolean addLocation(String location) {
+    public void addLocation(String location) throws ConflictException{
         if (!this.locations.contains(location)) {
             this.locations.add(location);
-            return true;
         }
-        return false;
+        throw new ConflictException("Location already exists");
     }
 
     public ArrayList<EventTalk> getAllTalks() {
@@ -82,13 +83,12 @@ public class EventManager implements Serializable {
     /**
      * AddNewEvent: Checks for same location be used in overlapping time
      */
-    public boolean AddNewEvent(String topic, Calendar time, String location, String organizer){
+    public void AddNewEvent(String topic, Calendar time, String location, String organizer) throws ConflictException{
         if (validEvent(topic, time, location)) {
             Event eventToAdd = new Event(topic, time, location, organizer);
             events.put(eventToAdd.getId(), eventToAdd);
-            return true;
         }
-        return false;
+        throw new ConflictException("Event conflicts with another");
     }
 
     /**
@@ -97,14 +97,13 @@ public class EventManager implements Serializable {
      * (NEW!) Updates the associated Speaker's speakerTalks
      */
 
-    public boolean AddNewEvent(String topic, Calendar time, String location, String organizer, String speaker) {
+    public void AddNewEvent(String topic, Calendar time, String location, String organizer, String speaker) throws ConflictException{
         if (validEvent(topic, time, location, speaker)) {
             // create a new event and add it to events
             EventTalk eventToAdd = new EventTalk(topic, time, location, organizer, speaker);
             events.put(eventToAdd.getId(), eventToAdd);
-            return true;
         }
-        return false;
+        throw new ConflictException("Event conflicts with another");
     }
 
     public void ChangeTopic(Integer id, String new_topic){
@@ -115,8 +114,16 @@ public class EventManager implements Serializable {
      * ChangeTime: Checks for conlicts due to same location be used in overlapping time
      */
 
-    public boolean ChangeTime(Integer id, Calendar newTime){
-        return modifier.ChangeTime(events.get(id), newTime, getAllEvents());
+    public void ChangeTime(Integer id, Calendar newTime) throws ObjectNotFoundException, ConflictException{
+        try{
+            if(!events.containsKey(id)) {
+                throw new ObjectNotFoundException();
+            }
+            modifier.ChangeTime(events.get(id), newTime, getAllEvents());
+        }
+        catch(Exception e) {
+            throw e;
+        }
     }
 
     /**
@@ -136,16 +143,18 @@ public class EventManager implements Serializable {
      * Need to ensure the input id is for an EventTalk
      */
 
-    public boolean ChangeSpeaker(Integer talk_id, String new_speaker){
-        return modifier.ChangeSpeaker(getTalk(talk_id), new_speaker, getAllTalks());
-    }
-
     // consider returning a copy of Locations to prevent any outside modification !
     public ArrayList<String> fetchLocations() {
         return this.locations;
     }
 
-    public void cancelTalk(Integer id) {
+    public void cancelTalk(Integer id) throws ObjectNotFoundException{
+        if(!events.containsKey(id)) {
+            throw new ObjectNotFoundException();
+        }
+        if(!(events.get(id) instanceof  EventTalk)) {
+            throw new ObjectNotFoundException();
+        }
         Event talkToCancel = events.get(id);
         if (talkToCancel instanceof EventTalk && !(Calendar.getInstance().compareTo(talkToCancel.getTime()) >= 0))
             events.remove(id);

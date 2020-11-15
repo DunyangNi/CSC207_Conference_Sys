@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+
+import Throwables.ConflictException;
 import entities.*;
 
 public class AccountManager implements Serializable {
@@ -57,13 +59,13 @@ public class AccountManager implements Serializable {
      * Creates new account and adds to list IF IT WON'T CREATE DUPLICATE USERNAMES. OTHERWISE DO NOTHING
      */
 
-    public boolean AddNewSpeaker(String username, String password, String firstName, String lastName) {
+    public void AddNewSpeaker(String username, String password, String firstName, String lastName)throws ConflictException {
         if (speakerList.containsKey(username)) {
-            return false;
+            throw new ConflictException("Username already exists");
         }
         Speaker newSpeaker = new Speaker(username, password, firstName, lastName);
         speakerList.put(username, newSpeaker);
-        return true;
+
     }
 
     public boolean AddNewAttendee(String username, String password, String firstName, String lastName) {

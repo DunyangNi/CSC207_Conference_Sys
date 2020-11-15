@@ -1,5 +1,6 @@
 package controller;
 
+import Throwables.ConflictException;
 import use_cases.*;
 import presenter.*;
 import java.util.*;
@@ -16,21 +17,59 @@ public class OrganizerController extends UserController{
 
 
     public void addNewLocation(String location) {
-        this.eventmanager.addLocation(location);
+
+        try {
+            this.eventmanager.addLocation(location);
+        }
+        catch(ConflictException e) {
+            System.out.println("");
+            System.out.println("Something went wrong. Please enter valid input.");
+            System.out.println("");
+        }
     }
 
     public void createSpeakerAccount(String username, String password, String firstname, String lastname) {
-        this.accountmanager.AddNewSpeaker(username, password, firstname, lastname);
+        try{
+            this.accountmanager.AddNewSpeaker(username, password, firstname, lastname);
+        }
+        catch(ConflictException e) {
+            System.out.println("");
+            System.out.println("Something went wrong. Please enter valid input.");
+            System.out.println("");
+        }
     }
 
     public void scheduleSpeaker(Calendar time, String topic, String location, String speaker) {
-        this.eventmanager.AddNewEvent(topic, time, location, username, speaker);
+        try{
+            this.eventmanager.AddNewEvent(topic, time, location, username, speaker);
+        }
+        catch(Exception e){
+            System.out.println("");
+            System.out.println("Something went wrong. Please enter valid input");
+            System.out.println("");
+        }
     }
 
-    public void cancelTalk(Integer id) { this.eventmanager.cancelTalk(id); }
+    public void cancelTalk(Integer id) {
+        try {
+            this.eventmanager.cancelTalk(id);
+        }
+        catch(Exception e) {
+            System.out.println("");
+            System.out.println("Something went wrong. Please enter valid input");
+            System.out.println("");
+        }
+    }
 
     public void rescheduleTalk(Integer id, Calendar newtime) {
-        this.eventmanager.ChangeTime(id, newtime);
+        try{
+            this.eventmanager.ChangeTime(id, newtime);
+        }
+        catch(Exception e) {
+            System.out.println("");
+            System.out.println("Something went wrong. Please enter valid input");
+            System.out.println("");
+        }
     }
     public void messageAllSpeakers(String message) {
         Iterator<String> speakerusernameiterator = this.accountmanager.speakerUsernameIterator();
