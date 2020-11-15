@@ -30,7 +30,9 @@ public class EventManager implements Serializable {
         if (!this.locations.contains(location)) {
             this.locations.add(location);
         }
-        throw new ConflictException("Location already exists");
+        else {
+            throw new ConflictException("Location already exists");
+        }
     }
 
     public ArrayList<EventTalk> getAllTalks() {

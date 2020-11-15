@@ -27,7 +27,7 @@ public class FriendController {
         }
         catch(ConflictException e) {
             System.out.println("");
-            System.out.println(e.getMessage());
+            System.out.println("This account is already on your contact list.");
             System.out.println("");
         }
     }

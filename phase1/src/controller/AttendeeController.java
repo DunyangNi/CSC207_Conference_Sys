@@ -109,13 +109,13 @@ public class AttendeeController extends UserController {
             else if(choice == 7) {
                 System.out.print("Please enter the username of a contact to add: ");
                 String contactToAdd = sc.nextLine();
-                this.addFriend(contactToAdd);
+                friendController.addFriend(contactToAdd);
 
             }
             else if(choice == 8) {
                 System.out.print("Please enter the username of a contact to remove: ");
                 String contactToRemove = sc.nextLine();
-                this.removeFriend(contactToRemove);
+                friendController.removeFriend(contactToRemove);
 
             }
 

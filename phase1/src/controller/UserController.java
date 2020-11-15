@@ -34,24 +34,6 @@ public abstract class UserController {
         this.presenter.displayTalkSchedule();
     }
 
-    public void addFriend(String friendToAdd) {
-        try {
-            friendManager.AddFriend(this.username, friendToAdd);
-        }
-        catch(Exception e) {
-            System.out.println("\nSomething went wrong. Please enter valid input.\n");
-        }
-    }
-
-    public void removeFriend(String friendToRemove) {
-        try{
-            friendManager.RemoveFriend(this.username, friendToRemove);
-        }
-        catch(Exception e) {
-            System.out.println("\nSomething went wrong. Please enter valid input.\n");
-        }
-    }
-
     public void seeFriendList() {
         this.presenter.displayFriendList(this.username);
     }

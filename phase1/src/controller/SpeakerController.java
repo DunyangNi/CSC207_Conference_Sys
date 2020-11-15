@@ -88,7 +88,7 @@ public class SpeakerController extends UserController {
                     System.out.println("---------------------------------------------\n");
                     System.out.println("Specify username of contact to add");
                     String newContact = sc.nextLine();
-                    if (allAccts.contains(newContact)) { this.addFriend(newContact); }
+                    if (allAccts.contains(newContact)) { friendController.addFriend(newContact); }
                     else { System.out.println("The entered contact username is invalid."); }
                 }
                 else { System.out.println("(No users)"); }
@@ -98,7 +98,7 @@ public class SpeakerController extends UserController {
                 System.out.println("Specify username of contact to remove");
                 String removeContact = sc.nextLine();
                 Set<String> allAccounts = accountManager.fetchAccountList().keySet();
-                if (allAccounts.contains(removeContact)) { this.removeFriend(removeContact); }
+                if (allAccounts.contains(removeContact)) { friendController.removeFriend(removeContact); }
                 else { System.out.println("The entered contact username is invalid."); }
             }
 
