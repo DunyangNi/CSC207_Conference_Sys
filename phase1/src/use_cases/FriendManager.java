@@ -20,7 +20,7 @@ public class FriendManager implements Serializable {
     /**
      * Add friend IF APPLICABLE (THEY AREN'T ALREADY FRIENDS). OTHERWISE DO NOTHING
      */
-    public void AddFriend(String user, String friendToAdd) throws ObjectNotFoundException{
+    public void AddFriend(String user, String friendToAdd) throws ObjectNotFoundException, ConflictException {
         if(!friends.containsKey(user)) {
             throw new ObjectNotFoundException();
         }
@@ -28,7 +28,7 @@ public class FriendManager implements Serializable {
             throw new ObjectNotFoundException();
         }
         if (friends.get(user).contains(friendToAdd)) {
-            throw new ConflictException("Friend is already in your Contacts.");
+            throw new ConflictException("b r u h, Friend is already in your Contacts.");
         }
         friends.get(user).add(friendToAdd);
     }
