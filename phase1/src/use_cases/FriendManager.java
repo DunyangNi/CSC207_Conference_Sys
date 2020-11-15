@@ -28,7 +28,7 @@ public class FriendManager implements Serializable {
             throw new ObjectNotFoundException();
         }
         if (friends.get(user).contains(friendToAdd)) {
-            throw new ConflictException("b r u h, Friend is already in your Contacts.");
+            throw new ConflictException("This user is already in your contacts. Please try again");
         }
         friends.get(user).add(friendToAdd);
     }
