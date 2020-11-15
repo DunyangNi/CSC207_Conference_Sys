@@ -65,7 +65,7 @@ public class EventChecker implements Serializable {
             return false;
         }
         // check if time is valid
-        if (!(9 < time.get(Calendar.HOUR_OF_DAY) && time.get(Calendar.HOUR_OF_DAY) < 4)) {
+        if (!(9 <= time.get(Calendar.HOUR_OF_DAY) && time.get(Calendar.HOUR_OF_DAY) <= 4)) {
             return false;
         }
         // check if any conflicting events or events already existing

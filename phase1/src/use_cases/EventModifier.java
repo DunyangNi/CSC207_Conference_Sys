@@ -33,6 +33,11 @@ public class EventModifier implements Serializable {
         if (curr_time.compareTo(selectedEvent.getTime()) >= 0 || curr_time.compareTo(newTime) >= 0) {
             throw new ConflictException("Event to be reschedules takes place in the past");
         }
+
+        if (!(9 <= newTime.get(Calendar.HOUR_OF_DAY) && newTime.get(Calendar.HOUR_OF_DAY) <= 4)) {
+            throw new ConflictException("Rescheduled time must start between 9am and 5pm");
+        }
+
         for (Event event: events) {
             String eventLocation = event.getLocation(); Calendar eventTime = event.getTime();
             if (!event.equals(selectedEvent) && eventLocation.equals(selectedEvent.getLocation()) &&
