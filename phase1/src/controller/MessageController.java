@@ -20,24 +20,34 @@ public class MessageController {
         try{
             conversationManager.sendMessage(this.username, account, message);
         }
-        catch(ObjectNotFoundException e){
-            System.out.println("");
-            System.out.println("This recipient does not exist. Try again.");
-            System.out.println("");
-        }
         catch(Exception e){
             System.out.println("");
-            System.out.println("Something went wrong. Try again.");
+            System.out.println("Something went wrong with messageAccount while messaging. Try again.");
             System.out.println("");
         }
     }
 
     public void messageSpeaker(String message, String speaker) {
-        messageAccount(message, speaker);
+        if (accountmanager.containsSpeaker(speaker)){
+            messageAccount(message, speaker);
+        }
+        else {
+            System.out.println("");
+            System.out.println("This recipient is not a speaker. Try again.");
+            System.out.println("");
+        }
+
     }
 
     public void messageAttendee(String message, String attendeeUsername) {
-        messageAccount(message, attendeeUsername);
+        if (accountmanager.containsAttendee(attendeeUsername)){
+            messageAccount(message, attendeeUsername);
+        }
+        else {
+            System.out.println("");
+            System.out.println("This recipient is not an attendee. Try again.");
+            System.out.println("");
+        }
     }
 
 
