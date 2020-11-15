@@ -46,28 +46,6 @@ public class OrganizerController extends UserController{
         catch (Exception e) { System.out.println("\nSomething went wrong. Please enter valid input.\n"); }
     }
 
-    public void messageAllSpeakers(String message) {
-        Iterator<String> speakerusernameiterator = this.accountmanager.speakerUsernameIterator();
-        while(speakerusernameiterator.hasNext()){
-            conversationManager.sendMessage(this.username, speakerusernameiterator.next(), message);
-        }
-    }
-
-    public void messageSpeaker(String message, String speaker) {
-        conversationManager.sendMessage(this.username, speaker, message);
-    }
-
-    public void messageAllAttendees(String message) {
-        Iterator<String> attendeeusernameiterator = this.accountmanager.attendeeUsernameIterator();
-        while(attendeeusernameiterator.hasNext()){
-            conversationManager.sendMessage(this.username, attendeeusernameiterator.next(), message);
-        }
-    }
-
-    public void messageAttendee(String message, String attendeeUsername) {
-        conversationManager.sendMessage(this.username, attendeeUsername, message);
-    }
-
     public void seeLocationList() {
         ArrayList<String> locations = this.eventmanager.fetchLocations();
         System.out.println("Locations:\n");

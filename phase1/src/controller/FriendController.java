@@ -32,7 +32,8 @@ public class FriendController {
         }
         catch(Exception e) {
             System.out.println("");
-            System.out.println("We could not find an account with this username on your contact list. Please try again.");
+            System.out.println("We could not find an account with this username on your contact list. " +
+                    "Please try again.");
             System.out.println("");
         }
     }

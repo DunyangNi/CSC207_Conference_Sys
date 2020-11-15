@@ -29,14 +29,6 @@ public class AttendeeController extends UserController {
         this.presenter.displayAttendeeTalkSchedule(this.username);
     }
 
-    public void messageAttendee(String message, String attendeeUsername) {
-        conversationManager.sendMessage(this.username, attendeeUsername, message);
-    }
-
-    public void messageSpeaker(String message, String speakerusername) {
-        conversationManager.sendMessage(this.username, speakerusername, message);
-    }
-
     @Override
     public void runInteraction() {
         Scanner sc = new Scanner(System.in);
