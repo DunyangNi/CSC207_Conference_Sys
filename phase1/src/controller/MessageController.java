@@ -1,5 +1,6 @@
 package controller;
 
+import Throwables.ObjectNotFoundException;
 import presenter.Presenter;
 import use_cases.ConversationManager;
 import use_cases.EventManager;
@@ -15,28 +16,54 @@ public class MessageController {
     protected ConversationManager conversationManager;
     protected Presenter presenter;
 
-    public void messageAllSpeakers(String message) {
-        Iterator<String> speakerusernameiterator = this.accountmanager.speakerUsernameIterator();
-        while(speakerusernameiterator.hasNext()){
-            conversationManager.sendMessage(this.username, speakerusernameiterator.next(), message);
+    public void messageAccount(String message, String account) {
+        try{
+            conversationManager.sendMessage(this.username, account, message);
+        }
+        catch(ObjectNotFoundException e){
+            System.out.println("");
+            System.out.println("This recipient does not exist. Try again.");
+            System.out.println("");
+        }
+        catch(Exception e){
+            System.out.println("");
+            System.out.println("Something went wrong. Try again.");
+            System.out.println("");
         }
     }
 
     public void messageSpeaker(String message, String speaker) {
-        conversationManager.sendMessage(this.username, speaker, message);
-    }
-
-    public void messageAllAttendees(String message) {
-        Iterator<String> attendeeusernameiterator = this.accountmanager.attendeeUsernameIterator();
-        while(attendeeusernameiterator.hasNext()){
-            conversationManager.sendMessage(this.username, attendeeusernameiterator.next(), message);
-        }
+        messageAccount(message, speaker);
     }
 
     public void messageAttendee(String message, String attendeeUsername) {
-        conversationManager.sendMessage(this.username, attendeeUsername, message);
+        messageAccount(message, attendeeUsername);
     }
 
 
+    public void messageAllSpeakers(String message) {
+        try{
+            Iterator<String> speakerusernameiterator = this.accountmanager.speakerUsernameIterator();
+            while(speakerusernameiterator.hasNext()){
+                conversationManager.sendMessage(this.username, speakerusernameiterator.next(), message);}
+        }
+        catch(Exception e) {
+            System.out.println("");
+            System.out.println("Something went wrong. Please try again.");
+            System.out.println("");
+        }
+    }
 
+    public void messageAllAttendees(String message) {
+        try{
+            Iterator<String> attendeeusernameiterator = this.accountmanager.attendeeUsernameIterator();
+            while(attendeeusernameiterator.hasNext()){
+                conversationManager.sendMessage(this.username, attendeeusernameiterator.next(), message);}
+        }
+        catch(Exception e) {
+            System.out.println("");
+            System.out.println("Something went wrong. Please try again.");
+            System.out.println("");
+        }
+    }
 }
