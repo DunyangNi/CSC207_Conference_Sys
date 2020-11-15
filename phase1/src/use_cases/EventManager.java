@@ -210,7 +210,10 @@ public class EventManager implements Serializable {
      * @param id given id for an event
      * @return A list of username of Attendees
      */
-    public ArrayList<String> getAttendeesAtEvent(Integer id) {
+    public ArrayList<String> getAttendeesAtEvent(Integer id) throws ObjectNotFoundException{
+        if(!this.isTalk(id)) {
+            throw new ObjectNotFoundException();
+        }
         Event selectedEvent = events.get(id);
         return modifier.getAttendees(selectedEvent);
     }
