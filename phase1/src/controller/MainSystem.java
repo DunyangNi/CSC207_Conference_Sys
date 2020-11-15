@@ -1,5 +1,6 @@
 package controller;
 
+import Throwables.ObjectNotFoundException;
 import gateway.*;
 import use_cases.*;
 import java.util.Scanner;
@@ -15,7 +16,7 @@ public class MainSystem {
     private AccountCreationController accountCreationController;
     Scanner input = new Scanner(System.in);
 
-    public void startSystem(){
+    public void startSystem() throws InstantiationException, ObjectNotFoundException {
         // Evaluate choice
         boolean validChoice; String choice; String prompt; int firstMessage = 0;
         System.out.println("Do you already have an account?");
@@ -33,7 +34,7 @@ public class MainSystem {
         else accountCreationController.createAccount();
     }
 
-    public void run(){
+    public void run() throws ObjectNotFoundException, InstantiationException {
         // Obtain filepath of all .ser files
         System.out.println("Print enter the address for AccountManager");
         String am = input.nextLine();
@@ -66,7 +67,7 @@ public class MainSystem {
         dataManager.saveManager("SignupManager", sm, signupManager);
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws InstantiationException, ObjectNotFoundException {
         MainSystem ms = new MainSystem();
         ms.run();
     }

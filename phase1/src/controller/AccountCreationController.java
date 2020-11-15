@@ -22,7 +22,7 @@ public class AccountCreationController {
         this.input = input;
     }
     
-    public void createAccount(){
+    public void createAccount() throws InstantiationException {
         // Obtain type of Account to create.
         boolean accountSelected; Integer accountType; String prompt; int firstMessage = 0;
         System.out.println("What type of account do you want to create?");
@@ -46,11 +46,12 @@ public class AccountCreationController {
         accountManager.AddNewAttendee(info[0], info[1], info[2], info[3]);
         conversationManager.addAccountKey(info[0]);
         friendManager.addAccountKey(info[0]);
-        AttendeeController ac = new AttendeeController(info[0], eventManager, conversationManager, friendManager, signupManager);
+        AttendeeController ac = new AttendeeController(info[0], eventManager, conversationManager, friendManager,
+                signupManager, accountManager);
         ac.runInteraction();
     }
     
-    private void createNewOrganizer(){
+    private void createNewOrganizer() throws InstantiationException {
         // Evaluate Organizer creation password
         boolean correctOrganizerPassword; int firstMessage = 0; String inputPassword; String prompt;
         do {
@@ -67,7 +68,8 @@ public class AccountCreationController {
         accountManager.AddNewOrganizer(info[0], info[1], info[2], info[3]);
         conversationManager.addAccountKey(info[0]);
         friendManager.addAccountKey(info[0]);
-        OrganizerController oc = new OrganizerController(info[0], eventManager, accountManager, conversationManager, friendManager);
+        OrganizerController oc = new OrganizerController(info[0], eventManager, accountManager, signupManager,
+                conversationManager, friendManager);
         oc.runInteraction();
     }
 
