@@ -84,14 +84,20 @@ public class MessageController {
         }
     }
 
-    public void messageAttendeesAtTalks(ArrayList<Integer> selectedSpeakerTalks, String message)
-            throws ObjectNotFoundException {
-        Set<String> selectedAttendeeUsernames = new HashSet<>();
-        for (Integer id : selectedSpeakerTalks) {
-            if (eventManager.isTalk(id)) { selectedAttendeeUsernames.addAll(eventManager.getAttendeesAtEvent(id)); }
+    public void messageAttendeesAtTalks(ArrayList<Integer> selectedSpeakerTalks, String message) {
+        try {
+            Set<String> selectedAttendeeUsernames = new HashSet<>();
+            for (Integer id : selectedSpeakerTalks) {
+                if (eventManager.isTalk(id)) {
+                    selectedAttendeeUsernames.addAll(eventManager.getAttendeesAtEvent(id));
+                }
+            }
+            for (String attendeeUsername : selectedAttendeeUsernames) {
+                conversationManager.sendMessage(this.username, attendeeUsername, message);
+            }
         }
-        for(String attendeeUsername : selectedAttendeeUsernames) {
-            conversationManager.sendMessage(this.username, attendeeUsername, message);
+        catch(Exception e) {
+            System.out.println("\nSomething went wrong. Please enter valid input.\n");
         }
     }
 }
