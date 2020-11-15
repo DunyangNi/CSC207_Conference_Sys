@@ -7,8 +7,8 @@ import java.util.*;
 import java.lang.*;
 
 public class OrganizerController extends UserController{
-    // timeoftalkrequesthelper() is now deprecated due to use of IDs.
     private AccountManager accountmanager;
+
     public OrganizerController(String username, EventManager eventmanager, AccountManager accountmanager,
                                ConversationManager conversationManager, FriendManager friendManager) {
         super(username, eventmanager,conversationManager, friendManager);
@@ -17,63 +17,33 @@ public class OrganizerController extends UserController{
 
 
     public void addNewLocation(String location) {
-
-        try {
-            this.eventmanager.addLocation(location);
-        }
-        catch(ConflictException e) {
-            System.out.println("");
-            System.out.println("Something went wrong. Please enter valid input.");
-            System.out.println("");
-        }
+        try { this.eventmanager.addLocation(location); }
+        catch (ConflictException e) { System.out.println("\nSomething went wrong. Please enter valid input.\n"); }
     }
 
     public void createSpeakerAccount(String username, String password, String firstname, String lastname) {
-        try{
-            this.accountmanager.AddNewSpeaker(username, password, firstname, lastname);
-        }
-        catch(ConflictException e) {
-            System.out.println("");
-            System.out.println("Something went wrong. Please enter valid input.");
-            System.out.println("");
-        }
+        try { this.accountmanager.AddNewSpeaker(username, password, firstname, lastname); }
+        catch (ConflictException e) { System.out.println("\nSomething went wrong. Please enter valid input.\n"); }
     }
 
     public void scheduleSpeaker(Calendar time, String topic, String location, String speaker) {
-        try{
-            this.eventmanager.AddNewEvent(topic, time, location, username, speaker);
-        }
-        catch(Exception e){
-            System.out.println("");
-            System.out.println("Something went wrong. Please enter valid input");
-            System.out.println("");
-        }
+        try { this.eventmanager.AddNewEvent(topic, time, location, username, speaker); }
+        catch (Exception e) { System.out.println("\nSomething went wrong. Please enter valid input.\n"); }
     }
 
     public void cancelTalk(Integer id) {
-        try {
-            this.eventmanager.cancelTalk(id);
-        }
-        catch(Exception e) {
-            System.out.println("");
-            System.out.println("Something went wrong. Please enter valid input");
-            System.out.println("");
-        }
+        try { this.eventmanager.cancelTalk(id); }
+        catch (Exception e) { System.out.println("\nSomething went wrong. Please enter valid input.\n"); }
     }
 
-    public void rescheduleTalk(Integer id, Calendar newtime) {
-        try{
-            this.eventmanager.ChangeTime(id, newtime);
-        }
-        catch(Exception e) {
-            System.out.println("");
-            System.out.println("Something went wrong. Please enter valid input");
-            System.out.println("");
-        }
+    public void rescheduleTalk(Integer id, Calendar newTime) {
+        try { this.eventmanager.ChangeTime(id, newTime); }
+        catch (Exception e) { System.out.println("\nSomething went wrong. Please enter valid input.\n"); }
     }
+
     public void messageAllSpeakers(String message) {
         Iterator<String> speakerusernameiterator = this.accountmanager.speakerUsernameIterator();
-        while( speakerusernameiterator.hasNext()){
+        while(speakerusernameiterator.hasNext()){
             conversationManager.sendMessage(this.username, speakerusernameiterator.next(), message);
         }
     }
@@ -134,7 +104,8 @@ public class OrganizerController extends UserController{
                 System.out.println("Specify account password"); String password = sc.nextLine();
                 System.out.println("What is speaker's first name?"); String firstname = sc.nextLine();
                 System.out.println("What is speaker's last name?"); String lastname = sc.nextLine();
-                this.createSpeakerAccount(username, password, firstname, lastname);
+                createSpeakerAccount(username, password, firstname, lastname);
+                conversationManager.addAccountKey(username);
             }
 
             else if(choice == 3) {

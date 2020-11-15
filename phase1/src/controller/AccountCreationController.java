@@ -43,6 +43,7 @@ public class AccountCreationController {
         String[] info = accountInformation();
         // Add new Attendee and run its Controller
         accountManager.AddNewAttendee(info[0], info[1], info[2], info[3]);
+        conversationManager.addAccountKey(info[0]);
         AttendeeController ac = new AttendeeController(info[0], eventManager, conversationManager, friendManager, signupManager);
         ac.runInteraction();
     }
@@ -62,6 +63,7 @@ public class AccountCreationController {
         String[] info = accountInformation();
         // Add new Organizer and run its Controller
         accountManager.AddNewOrganizer(info[0], info[1], info[2], info[3]);
+        conversationManager.addAccountKey(info[0]);
         OrganizerController oc = new OrganizerController(info[0], eventManager, accountManager, conversationManager, friendManager);
         oc.runInteraction();
     }

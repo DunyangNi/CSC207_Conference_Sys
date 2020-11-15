@@ -1,11 +1,7 @@
 package use_cases;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Set;
-import java.util.Collections;
+import java.util.*;
 import entities.*;
 import Throwables.*;
 
@@ -27,30 +23,23 @@ import Throwables.*;
  * </pre>
  */
 public class ConversationManager implements Serializable {
-    private HashMap<String, HashMap<String, Conversation>> conversations = new HashMap<>(); // (NEW!) key: username ; value: hash of convos
-    private HashMap<Integer, Message> messages = new HashMap<>(); // (NEW!) key: message id ; value: Message object
+    private HashMap<String, HashMap<String, Conversation>> conversations = new HashMap<>();
+    private HashMap<Integer, Message> messages = new HashMap<>();
 
     //------------------------------------------------------------
     // Methods
     //------------------------------------------------------------
 
     public String messageToString(Integer id) throws ObjectNotFoundException{
-        if(!this.messages.containsKey(id)) {
-            throw new ObjectNotFoundException();
-        }
+        if (!this.messages.containsKey(id)) { throw new ObjectNotFoundException(); }
         // Obtain Message information
         Message selectedMsg = messages.get(id);
         Message msgToReply = messages.get(selectedMsg.getMsgToReply());
         String sender = selectedMsg.getSender();
         String content = selectedMsg.getContent();
         // Construct the String representation
-        StringBuilder str_write = new StringBuilder("[Message ");
-        str_write.append(id);
-        str_write.append("] (");
-        str_write.append(sender);
-        str_write.append(") : ");
-        str_write.append(content);
-        str_write.append(" [ReplyTo] (");
+        String firstSegment = "[Message " + id + "] (" + sender + ") : " + content + " [ReplyTo] (";
+        StringBuilder str_write = new StringBuilder(firstSegment);
         if (msgToReply == null) { str_write.append("None)"); }
         else {
             str_write.append(msgToReply.getSender());
@@ -62,27 +51,23 @@ public class ConversationManager implements Serializable {
         return str_write.toString();
     }
 
-    // formerly getConversationArrayList
+    // (NEW!)
+    public void addAccountKey(String username) { conversations.put(username, new HashMap<>()); }
+
     public ArrayList<Integer> getConversationMessages(String user, String recipient) throws ObjectNotFoundException{
-        if(!this.conversations.containsKey(user)) {
-            throw new ObjectNotFoundException();
-        }
-        if(!this.conversations.containsKey(recipient)) {
-            throw new ObjectNotFoundException();
-        }
-        Conversation selectedConvo = conversations.get(user).get(recipient);
-        if (selectedConvo == null) { return new ArrayList<>(); }
-        return selectedConvo.getMessages();
+        // Checking username and recipient are valid Accounts
+        if (!conversations.containsKey(user) || !conversations.containsKey(recipient)) { throw new ObjectNotFoundException(); }
+        return conversations.get(user).get(recipient).getMessages();
     }
 
     /**
      * (UPDATED!) Returns all Accounts who have had Conversations with the given Account.
      *  If given Account has no Conversations, returns the empty set.
-     * @param current username of given Account
+     * @param user username of given Account
      * @return Set of usernames associated with recipient Accounts
      */
-    public Set<String> getAllUserConversationRecipients(String current) {
-        Set<String> recipients = this.conversations.get(current).keySet();
+    public Set<String> getAllUserConversationRecipients(String user) {
+        Set<String> recipients = this.conversations.get(user).keySet();
         return recipients.isEmpty() ? Collections.emptySet() : recipients;
     }
 
@@ -92,31 +77,20 @@ public class ConversationManager implements Serializable {
      * @param recipient given recipient Account
      * @param message given String content for message
      */
-    public void sendMessage(String sender, String recipient, String message) {
-        //if (recipient != null && validRecipient(sender, recipient)) {
-        HashMap<String, Conversation> senderConversations = this.conversations.get(sender);
-        HashMap<String, Conversation> recipientConversations = this.conversations.get(recipient);
+    public void sendMessage(String sender, String recipient, String message) throws ObjectNotFoundException {
+        if (!conversations.containsKey(sender) || !conversations.containsKey(recipient)) { throw new ObjectNotFoundException(); }
+        HashMap<String, Conversation> senderConversations = conversations.get(sender);
+        HashMap<String, Conversation> recipientConversations = conversations.get(recipient);
         Conversation givenConversation = senderConversations.get(recipient);
         Message newMessage = new Message(sender, recipient, message);
-        // Create a new Conversation if an existing one isn't found.
+        // Create a new Conversation if an existing one isn't found
         if (givenConversation == null) {
             ArrayList<String> participants = new ArrayList<>(Arrays.asList(sender, recipient));
             givenConversation = new Conversation(participants, newMessage.getId());
-            senderConversations.put(recipient, givenConversation);
-            recipientConversations.put(sender, givenConversation);
         }
-        else {
-            addMessageToConversation(givenConversation, newMessage);
-            senderConversations.replace(recipient, givenConversation);
-            recipientConversations.replace(sender, givenConversation);
-        }
-        this.conversations.replace(sender, senderConversations);
-        this.conversations.replace(recipient, recipientConversations);
-        //}
-        //else{
-        //    System.out.println("ERROR: invalid recipient username: '"
-        //            + recipient.getUsername() + "'");
-        //}
+        else { addMessageToConversation(givenConversation, newMessage); }
+        senderConversations.put(recipient, givenConversation);
+        recipientConversations.put(sender, givenConversation);
     }
 
     /**
@@ -124,23 +98,9 @@ public class ConversationManager implements Serializable {
      * @param conversation given Conversation
      * @param message given Message
      */
-    public void addMessageToConversation(Conversation conversation, Message message) {
-//        Old Version:
-//        Get list of Messages from Conversation
-//        ArrayList<Integer> existingMessages = conversation.getMessages();
-//        // Assign message to reply to. By default, it is the Message last added to the Conversation.
-//        if (existingMessages.size() != 0) {
-//            Message msgToReply = this.messages.get(existingMessages.get(existingMessages.size()-1));
-//            message.setMsgToReply(msgToReply);
-//        }
-//        // Add new message to Conversation
-//        existingMessages.add(message.getId());
-//        // Set new list of Messages to Conversation
-//        conversation.setMessages(existingMessages);
+    private void addMessageToConversation(Conversation conversation, Message message) {
         ArrayList<Integer> existingMessages = conversation.getMessages();
-        if (existingMessages.size() != 0) {
-            message.setMsgToReply(existingMessages.get(existingMessages.size()-1));
-        }
+        if (existingMessages.size() != 0) { message.setMsgToReply(existingMessages.get(existingMessages.size()-1)); }
         conversation.getMessages().add(message.getId());
     }
 }
