@@ -19,7 +19,11 @@ public class OrganizerController extends UserController{
     }
 
     public void createSpeakerAccount(String username, String password, String firstname, String lastname) {
-        try { this.accountManager.AddNewSpeaker(username, password, firstname, lastname); }
+        try {
+            this.accountManager.AddNewSpeaker(username, password, firstname, lastname);
+            conversationManager.addAccountKey(username);
+            friendManager.addAccountKey(username);
+        }
         catch (ConflictException e) { System.out.println("\nSomething went wrong. Please enter valid input.\n"); }
     }
 
@@ -86,8 +90,6 @@ public class OrganizerController extends UserController{
                 System.out.println("What is speaker's first name?"); String firstname = sc.nextLine();
                 System.out.println("What is speaker's last name?"); String lastname = sc.nextLine();
                 createSpeakerAccount(username, password, firstname, lastname);
-                conversationManager.addAccountKey(username);
-                friendManager.addAccountKey(username);
             }
 
             else if(choice == 3) {
@@ -175,18 +177,27 @@ public class OrganizerController extends UserController{
             else if(choice == 13) { this.seeFriendList(); }
 
             else if(choice == 14) {
-                Set<String> myConversations = conversationManager.getAllUserConversationRecipients(username);
-                if (myConversations.isEmpty()) { System.out.println("(No conversations)"); }
-                else {
-                    System.out.println("List of Conversation Recipients");
-                    System.out.println("---------------------------------------------");
-                    for (String recipient : myConversations) { System.out.println(recipient); }
-                    System.out.println("---------------------------------------------\n");
-                    System.out.print("To access a conversation, please enter the recipient's username: ");
-                    String user = sc.nextLine();
-                    System.out.println("How many past messages would you like to see?");
-                    int pastMessages = sc.nextInt(); sc.nextLine();
-                    this.viewMessagesFrom(user, pastMessages);
+                try {
+                    Set<String> myConversations = conversationManager.getAllUserConversationRecipients(username);
+                    if (myConversations.isEmpty()) {
+                        System.out.println("(No conversations)");
+                    } else {
+                        System.out.println("List of Conversation Recipients");
+                        System.out.println("---------------------------------------------");
+                        for (String recipient : myConversations) {
+                            System.out.println(recipient);
+                        }
+                        System.out.println("---------------------------------------------\n");
+                        System.out.print("To access a conversation, please enter the recipient's username: ");
+                        String user = sc.nextLine();
+                        System.out.println("How many past messages would you like to see?");
+                        int pastMessages = sc.nextInt();
+                        sc.nextLine();
+                        this.viewMessagesFrom(user, pastMessages);
+                    }
+                }
+                catch(Exception e) {
+                    System.out.println("\nSomething went wrong. Please enter valid input.");
                 }
             }
 

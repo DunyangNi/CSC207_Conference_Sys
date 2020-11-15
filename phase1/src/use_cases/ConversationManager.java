@@ -66,7 +66,10 @@ public class ConversationManager implements Serializable {
      * @param user username of given Account
      * @return Set of usernames associated with recipient Accounts
      */
-    public Set<String> getAllUserConversationRecipients(String user) {
+    public Set<String> getAllUserConversationRecipients(String user) throws ObjectNotFoundException{
+        if(!conversations.containsKey(user)) {
+            throw new ObjectNotFoundException();
+        }
         Set<String> recipients = this.conversations.get(user).keySet();
         return recipients.isEmpty() ? Collections.emptySet() : recipients;
     }
