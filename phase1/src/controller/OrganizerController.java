@@ -51,7 +51,7 @@ public class OrganizerController extends UserController{
     }
 
     @Override
-    public void runInteraction() throws InstantiationException {
+    public void runInteraction() {
         Scanner sc = new Scanner(System.in);
         boolean loop_on = true;
         while(loop_on){
@@ -91,11 +91,19 @@ public class OrganizerController extends UserController{
             }
 
             else if(choice == 3) {
-                System.out.println("Specify the username of talk speaker"); String username = sc.nextLine();
-                System.out.println("Specify the location of the talk"); String location = sc.nextLine();
-                System.out.println("Specify the topic of the talk"); String topic = sc.nextLine();
-                Calendar time = this._timeoftalkrequesthelper("");
-                this.scheduleSpeaker(time, topic, location, username);
+                try {
+                    System.out.println("Specify the username of talk speaker");
+                    String username = sc.nextLine();
+                    System.out.println("Specify the location of the talk");
+                    String location = sc.nextLine();
+                    System.out.println("Specify the topic of the talk");
+                    String topic = sc.nextLine();
+                    Calendar time = this._timeoftalkrequesthelper("");
+                    this.scheduleSpeaker(time, topic, location, username);
+                }
+                catch(Exception e) {
+                    System.out.println("\nSomething went wrong. Please enter valid input.\n");
+                }
             }
 
             else if(choice == 4) {
@@ -106,11 +114,16 @@ public class OrganizerController extends UserController{
             }
 
             else if(choice == 5) {
-                System.out.println("Please enter the ID of a talk you wish to reschedule: ");
-                int id = sc.nextInt();
-                sc.nextLine();
-                Calendar newTime = this._timeoftalkrequesthelper("to reschedule");
-                this.rescheduleTalk(id, newTime);
+                try {
+                    System.out.println("Please enter the ID of a talk you wish to reschedule: ");
+                    int id = sc.nextInt();
+                    sc.nextLine();
+                    Calendar newTime = this._timeoftalkrequesthelper("to reschedule");
+                    this.rescheduleTalk(id, newTime);
+                }
+                catch(Exception e){
+                    System.out.println("\nSomething went wrong. Please enter valid input.\n");
+                }
             }
 
             else if(choice == 6) {
