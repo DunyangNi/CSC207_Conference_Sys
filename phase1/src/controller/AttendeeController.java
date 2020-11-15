@@ -13,20 +13,31 @@ public class AttendeeController extends UserController {
 
     // subject to change, error handling
     public void signupForTalk(Integer id) {
-        if(this.eventmanager.isTalk(id)) {
-            signupManager.addAttendee(id, username);
+        try {
+            if (this.eventmanager.isTalk(id)) {
+                // addAttendee does not throw an error on an invalid username.
+                // However, in this case we know the username is valid
+                signupManager.addAttendee(id, username);
+            } else {
+                System.out.println("\nSomething went wrong. Please enter valid input.\n");
+            }
         }
-        else{
+        catch(Exception e){
             System.out.println("\nSomething went wrong. Please enter valid input.\n");
         }
     }
 
     // subject to change, error handling
     public void cancelSignupForTalk(Integer id) {
-        if(this.eventmanager.isTalk(id)) {
-            signupManager.removeAttendee(id, username);
+        try {
+            if (this.eventmanager.isTalk(id)) {
+                //Same story, we know username is valid in this case
+                signupManager.removeAttendee(id, username);
+            } else {
+                System.out.println("\nSomething went wrong. Please enter valid input.\n");
+            }
         }
-        else{
+        catch(Exception e) {
             System.out.println("\nSomething went wrong. Please enter valid input.\n");
         }
     }

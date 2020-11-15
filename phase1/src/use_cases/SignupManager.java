@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import Throwables.ConflictException;
+import Throwables.ObjectNotFoundException;
 import entities.Attendee;
 import entities.EventTalk;
 
@@ -45,12 +47,18 @@ public class SignupManager implements Serializable {
      * @param talk_id given EventTalk id
      * @param attendee given Attendee id
      */
-    public void addAttendee(Integer talk_id, String attendee) {
+    public void addAttendee(Integer talk_id, String attendee) throws ConflictException{
         if (!isFull(talk_id) && !isSignedUp(talk_id, attendee)) { signups.get(talk_id).add(attendee); }
+        else{
+            throw new ConflictException("Cannot sign attendee up");
+        }
     }
 
-    public void removeAttendee(Integer talk_id, String attendee) {
+    public void removeAttendee(Integer talk_id, String attendee) throws ObjectNotFoundException{
         if (isSignedUp(talk_id, attendee)) { signups.get(talk_id).remove(attendee); }
+        else{
+            throw new ObjectNotFoundException();
+        }
     }
 
     /**
