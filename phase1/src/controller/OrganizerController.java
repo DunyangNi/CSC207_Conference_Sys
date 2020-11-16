@@ -70,10 +70,8 @@ public class OrganizerController extends AccountController {
         Scanner input = new Scanner(System.in);
         boolean loop_on = true;
         while (loop_on) {
-            presenter.displayPrompt("===[MAIN MENU]===");
+            presenter.displayPrompt("[ACCOUNT COMMANDS]");
             presenter.displayPrompt("0 = logout");
-
-            presenter.displayPrompt("\n[ACCOUNT COMMANDS]");
             presenter.displayPrompt("2 = register a new speaker account");
             presenter.displayPrompt("16 = view list of all accounts");
 
