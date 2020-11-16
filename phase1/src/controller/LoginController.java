@@ -28,10 +28,10 @@ public class LoginController {
         String username = input.nextLine();
 
         while (!accountManager.containsAccount(username)) {
-            presenter.displayPrompt("This username does not exist, please try again.\nEnter '*' to create a new account instead:");
+            presenter.displayPrompt("This username does not exist, please try again.\nEnter '*' to register a new account instead:");
             username = input.nextLine();
             if (username.equals("*")) {
-                registerController.attemptSignup();
+                registerController.attemptRegister();
             }
         }
 
@@ -39,10 +39,10 @@ public class LoginController {
         String password = input.nextLine();
 
         while (!accountManager.verifyPassword(username, password)) {
-            presenter.displayPrompt("Incorrect password, please try again\nEnter '*' to create a new account instead:");
+            presenter.displayPrompt("Incorrect password, please try again\nEnter '*' to register a new account instead:");
             password = input.nextLine();
             if (username.equals("*")) {
-                registerController.attemptSignup();
+                registerController.attemptRegister();
             }
         }
         login(username);

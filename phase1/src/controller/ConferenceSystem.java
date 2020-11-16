@@ -19,7 +19,7 @@ public class ConferenceSystem {
 
     public void loginPrompt() {
         //Prompt attemptLogin or signup
-        presenter.displayPrompt("Enter '1' to login to your account:\nEnter '2' to signup for a new account:");
+        presenter.displayPrompt("Enter '1' to login to your account:\nEnter '2' to register a new account:");
         String command = input.nextLine();
 
         //Invalid input prompt
@@ -32,7 +32,7 @@ public class ConferenceSystem {
         if (command.equals("1")) {
             loginController.attemptLogin();
         } else {
-            registerController.attemptSignup();
+            registerController.attemptRegister();
         }
     }
 

@@ -21,7 +21,7 @@ public class RegisterController {
         this.signupManager = sm;
     }
 
-    public void attemptSignup() {
+    public void attemptRegister() {
         System.out.println("Enter '1' to create an Attendee account.\nEnter '2' to create an Organizer account.");
         String command = input.nextLine();
 
