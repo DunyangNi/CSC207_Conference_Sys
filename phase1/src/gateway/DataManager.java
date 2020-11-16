@@ -19,7 +19,7 @@ public class DataManager {
      * @param accountPath address of account database
      * @param eventPath address of event database
      */
-    public DataManager(String accountPath, String eventPath, String conversationPath, String friendPath, String signupPath){
+    public DataManager(String accountPath, String friendPath, String conversationPath, String eventPath, String signupPath){
         this.accountPath = accountPath;
         this.eventPath = eventPath;
         this.conversationPath = conversationPath;
