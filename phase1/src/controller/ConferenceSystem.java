@@ -10,7 +10,7 @@ public class ConferenceSystem {
     private final Scanner input = new Scanner(System.in);
     private Presenter presenter = new Presenter();
     private LoginController loginController;
-    private AccountCreationController accountCreationController;
+    private RegisterController registerController;
 
     public static void main(String[] args) {
         ConferenceSystem ms = new ConferenceSystem();
@@ -24,7 +24,7 @@ public class ConferenceSystem {
 
         //Invalid input prompt
         while (!(command.equals("1") || (command.equals("2")))) {
-            presenter.displayInvalidInputPrompt("Invalid input, please try again.");
+            presenter.displayPrompt("Invalid input, please try again.");
             command = input.nextLine();
         }
 
@@ -32,7 +32,7 @@ public class ConferenceSystem {
         if (command.equals("1")) {
             loginController.attemptLogin();
         } else {
-            accountCreationController.attemptSignup();
+            registerController.attemptSignup();
         }
     }
 
@@ -59,7 +59,7 @@ public class ConferenceSystem {
 
         // Initiation
         loginController = new LoginController(accountManager, friendManager, conversationManager, eventManager, signupManager);
-        accountCreationController = new AccountCreationController(accountManager, friendManager, conversationManager, eventManager, signupManager);
+        registerController = new RegisterController(accountManager, friendManager, conversationManager, eventManager, signupManager);
         loginPrompt();
 
         // Saving changes

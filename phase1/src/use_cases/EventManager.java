@@ -35,10 +35,10 @@ public class EventManager implements Serializable {
         }
     }
 
-    public ArrayList<EventTalk> getAllTalks() {
-        ArrayList<EventTalk> talks = new ArrayList<>();
+    public ArrayList<Talk> getAllTalks() {
+        ArrayList<Talk> talks = new ArrayList<>();
         for (Event e : getAllEvents()) {
-            if (e instanceof EventTalk) { talks.add((EventTalk) e); }
+            if (e instanceof Talk) { talks.add((Talk) e); }
         }
         return talks;
     }
@@ -46,9 +46,9 @@ public class EventManager implements Serializable {
     public ArrayList<Event> getAllEvents() { return new ArrayList<>(events.values()); }
 
     // (NEW!)
-    public EventTalk getTalk(Integer id) {
+    public Talk getTalk(Integer id) {
         Event selectedTalk = events.get(id);
-        return selectedTalk instanceof EventTalk ? (EventTalk) selectedTalk : null;
+        return selectedTalk instanceof Talk ? (Talk) selectedTalk : null;
     }
 
     /*
@@ -59,12 +59,12 @@ public class EventManager implements Serializable {
      */
 
     /**
-     * (NEW!) (Helper) Returns true iff EventTalk is valid: no conflicting time or existing events and talks.
+     * (NEW!) (Helper) Returns true iff Talk is valid: no conflicting time or existing events and talks.
      * @param topic given topic
      * @param time given time
      * @param location given location
      * @param speaker given speaker
-     * @return true iff EventTalk is valid: no conflicting time or existing events and talks.
+     * @return true iff Talk is valid: no conflicting time or existing events and talks.
      */
     public boolean validEvent(String topic, Calendar time, String location, String speaker) {
         // call general helper
@@ -103,7 +103,7 @@ public class EventManager implements Serializable {
     public Integer AddNewEvent(String topic, Calendar time, String location, String organizer, String speaker) throws ConflictException{
         if (validEvent(topic, time, location, speaker)) {
             // create a new event and add it to events
-            EventTalk eventToAdd = new EventTalk(topic, time, location, organizer, speaker);
+            Talk eventToAdd = new Talk(topic, time, location, organizer, speaker);
             events.put(eventToAdd.getId(), eventToAdd);
             return eventToAdd.getId();
         }
@@ -144,7 +144,7 @@ public class EventManager implements Serializable {
 
     /**
      * ChangeTime: Checks for conflicts due to same speaker being used in overlapping time
-     * Need to ensure the input id is for an EventTalk
+     * Need to ensure the input id is for an Talk
      */
 
     // consider returning a copy of Locations to prevent any outside modification !
@@ -156,30 +156,30 @@ public class EventManager implements Serializable {
         if(!events.containsKey(id)) {
             throw new ObjectNotFoundException();
         }
-        if(!(events.get(id) instanceof  EventTalk)) {
+        if(!(events.get(id) instanceof Talk)) {
             throw new ObjectNotFoundException();
         }
         Event talkToCancel = events.get(id);
-        if (talkToCancel instanceof EventTalk && !(Calendar.getInstance().compareTo(talkToCancel.getTime()) >= 0))
+        if (talkToCancel instanceof Talk && !(Calendar.getInstance().compareTo(talkToCancel.getTime()) >= 0))
             events.remove(id);
     }
 
     // (Helper) (NEW!)
-    public ArrayList<EventTalk> fetchSpeakerTalks(String speaker) {
-        ArrayList<EventTalk> speakerTalks = new ArrayList<>();
-        for (EventTalk e : getAllTalks()) { if (e.getSpeaker().equals(speaker)) { speakerTalks.add(e); } }
+    public ArrayList<Talk> fetchSpeakerTalks(String speaker) {
+        ArrayList<Talk> speakerTalks = new ArrayList<>();
+        for (Talk e : getAllTalks()) { if (e.getSpeaker().equals(speaker)) { speakerTalks.add(e); } }
         return speakerTalks;
     }
 
     // (NEW!)
-    public HashMap<String[], Calendar> fetchSortedTalks(ArrayList<EventTalk> selectedTalks) {
+    public HashMap<String[], Calendar> fetchSortedTalks(ArrayList<Talk> selectedTalks) {
         // Convert to sorted array
-        EventTalk[] selectedTalksToSort = selectedTalks.toArray(new EventTalk[0]);
+        Talk[] selectedTalksToSort = selectedTalks.toArray(new Talk[0]);
         Arrays.sort(selectedTalksToSort);
         // Assemble Tuples of Information
         HashMap<String[], Calendar> sortedSelectedTalks = new HashMap<>();
         String[] eventInfo;
-        for (EventTalk e : selectedTalksToSort) {
+        for (Talk e : selectedTalksToSort) {
             eventInfo = new String[5];
             eventInfo[0] = e.getTopic();
             eventInfo[1] = e.getSpeaker();
@@ -201,7 +201,7 @@ public class EventManager implements Serializable {
         return fetchSortedTalks(fetchSpeakerTalks(speaker));
     }
 
-    public boolean isTalk(Integer id) { return events.get(id) instanceof EventTalk; }
+    public boolean isTalk(Integer id) { return events.get(id) instanceof Talk; }
 
     public boolean isSpeakerOfTalk(Integer id, String speaker) {
         return isTalk(id) && getTalk(id).getSpeaker().equals(speaker);

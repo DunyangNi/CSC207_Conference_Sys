@@ -2,7 +2,8 @@ package use_cases;
 
 import Throwables.ConflictException;
 import entities.Event;
-import entities.EventTalk;
+import entities.Talk;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -43,7 +44,7 @@ public class EventModifier implements Serializable {
                     (eventTime.compareTo(newTime) == 0)) {
                 throw new ConflictException("Conflicts with event at location");
             }
-            if (!event.equals(selectedEvent) && (event instanceof  EventTalk) && (selectedEvent instanceof  EventTalk) && ((EventTalk) event).getSpeaker().equals(((EventTalk) selectedEvent).getSpeaker()) && (eventTime.compareTo(newTime) == 0)) {
+            if (!event.equals(selectedEvent) && (event instanceof Talk) && (selectedEvent instanceof Talk) && ((Talk) event).getSpeaker().equals(((Talk) selectedEvent).getSpeaker()) && (eventTime.compareTo(newTime) == 0)) {
                 throw new ConflictException("Speaker scheduled at 2 places at the same time");
             }
         }

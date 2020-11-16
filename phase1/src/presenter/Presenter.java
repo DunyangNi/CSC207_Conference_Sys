@@ -21,10 +21,6 @@ public class Presenter {
         this.friendManager = friendManager;
     }
 
-    public void displayInvalidInputPrompt(String output) {
-        System.out.println(output);
-    }
-
     public void displayPrompt(String output) {
         System.out.println(output);
     }

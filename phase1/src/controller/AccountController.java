@@ -8,7 +8,7 @@ import java.util.Calendar;
 import java.util.Scanner;
 import java.util.TimeZone;
 
-public abstract class UserController {
+public abstract class AccountController {
     protected String username;
     protected AccountManager accountManager;
     protected FriendManager friendManager;
@@ -19,7 +19,7 @@ public abstract class UserController {
     protected FriendController friendController;
     protected MessageController messageController;
 
-    public UserController(String username, AccountManager accountManager, FriendManager friendManager, ConversationManager conversationManager, EventManager eventManager, SignupManager signupManager) {
+    public AccountController(String username, AccountManager accountManager, FriendManager friendManager, ConversationManager conversationManager, EventManager eventManager, SignupManager signupManager) {
         this.username = username;
         this.accountManager = accountManager;
         this.friendManager = friendManager;

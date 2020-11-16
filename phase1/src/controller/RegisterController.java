@@ -4,7 +4,7 @@ import use_cases.*;
 
 import java.util.Scanner;
 
-public class AccountCreationController {
+public class RegisterController {
     private final String ORGANIZER_PASSWORD = "123456";
     private final Scanner input = new Scanner(System.in);
     private AccountManager accountManager;
@@ -13,7 +13,7 @@ public class AccountCreationController {
     private FriendManager friendManager;
     private SignupManager signupManager;
 
-    public AccountCreationController(AccountManager am, FriendManager fm, ConversationManager cm, EventManager em, SignupManager sm) {
+    public RegisterController(AccountManager am, FriendManager fm, ConversationManager cm, EventManager em, SignupManager sm) {
         this.accountManager = am;
         this.eventManager = em;
         this.conversationManager = cm;

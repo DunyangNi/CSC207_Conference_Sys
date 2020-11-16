@@ -1,14 +1,13 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
- * EventTalk represents Talk in an Event
+ * Talk represents Talk in an Event
  * <pre>
  *
- * Entity EventTalk
+ * Entity Talk
  *
  * Responsibilities:
  * Stores information about the Event.
@@ -23,7 +22,7 @@ import java.util.Calendar;
  * Accounts
  * </pre>
  */
-public class EventTalk extends Event implements Serializable {
+public class Talk extends Event implements Serializable {
     private String speaker;
 
     //------------------------------------------------------------
@@ -31,7 +30,7 @@ public class EventTalk extends Event implements Serializable {
     //------------------------------------------------------------
 
     /**
-     * Create an EventTalk with topic, time, speaker, and organizer.
+     * Create an Talk with topic, time, speaker, and organizer.
      *
      * <pre>
      * Example
@@ -42,8 +41,8 @@ public class EventTalk extends Event implements Serializable {
      * Account speaker = new Account();
      *
      * // Create an event
-     * EventTalk event1 =
-     *         new EventTalk("topic1", ev_date,speaker,organizer);
+     * Talk event1 =
+     *         new Talk("topic1", ev_date,speaker,organizer);
      * System.out.println(event1);
      * </pre>
      * @param topic topic for the talk
@@ -51,7 +50,7 @@ public class EventTalk extends Event implements Serializable {
      * @param speaker speaker for the talk
      * @param organizer organizer for the talk
      */
-    public EventTalk(String topic, Calendar time, String location, String organizer, String speaker) {
+    public Talk(String topic, Calendar time, String location, String organizer, String speaker) {
         super(topic, time, location, organizer);
         this.speaker = speaker;
     }
@@ -68,8 +67,8 @@ public class EventTalk extends Event implements Serializable {
      */
     @Override
     public boolean equals(Object other){
-        if (other instanceof EventTalk){
-            EventTalk o = (EventTalk)other;
+        if (other instanceof Talk){
+            Talk o = (Talk)other;
             return super.equals(other) &&
                     getSpeaker().equals(o.getSpeaker());
         }

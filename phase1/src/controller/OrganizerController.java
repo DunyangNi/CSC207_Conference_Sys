@@ -5,7 +5,7 @@ import use_cases.*;
 import java.util.*;
 import java.lang.*;
 
-public class OrganizerController extends UserController{
+public class OrganizerController extends AccountController {
     public OrganizerController(String username, EventManager eventmanager, AccountManager accountManager,
                                SignupManager signupManager, ConversationManager conversationManager,
                                FriendManager friendManager) {

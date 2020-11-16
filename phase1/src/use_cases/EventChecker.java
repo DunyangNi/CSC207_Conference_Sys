@@ -1,7 +1,7 @@
 package use_cases;
 
 import entities.Event;
-import entities.EventTalk;
+import entities.Talk;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class EventChecker implements Serializable {
      */
 
     /**
-     * (NEW!) (Helper) Returns true iff EventTalk is valid: no conflicting time or existing events and talks.
+     * (NEW!) (Helper) Returns true iff Talk is valid: no conflicting time or existing events and talks.
      * @param topic given topic
      * @param time given time
      * @param location given location
@@ -35,13 +35,13 @@ public class EventChecker implements Serializable {
      * @param locations the current location list
      * @param talks the current talk list
      * @param events the current event list
-     * @return true iff EventTalk is valid: no conflicting time or existing events and talks.
+     * @return true iff Talk is valid: no conflicting time or existing events and talks.
      */
-    public boolean validEvent(String topic, Calendar time, String location, String speaker, ArrayList<String> locations, ArrayList<EventTalk> talks, ArrayList<Event> events) {
+    public boolean validEvent(String topic, Calendar time, String location, String speaker, ArrayList<String> locations, ArrayList<Talk> talks, ArrayList<Event> events) {
         // call general helper
         if (validEvent(topic, time, location, locations, events)) {
             // check talks for double-booked Speaker
-            for(EventTalk talk: talks) {
+            for(Talk talk: talks) {
                 if (talk.getSpeaker().equals(speaker) && CheckTimeOverlap(time, talk.getTime())) {
                     return false; }
             }

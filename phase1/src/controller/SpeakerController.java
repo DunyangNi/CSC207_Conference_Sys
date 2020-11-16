@@ -4,7 +4,7 @@ import use_cases.*;
 import java.util.*;
 import java.lang.*;
 
-public class SpeakerController extends UserController {
+public class SpeakerController extends AccountController {
 
     public SpeakerController(String username, EventManager eventmanager, AccountManager accountmanager,
                              ConversationManager conversationManager, SignupManager signupManager,

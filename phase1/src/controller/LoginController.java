@@ -11,7 +11,7 @@ public class LoginController {
     private FriendManager friendManager;
     private SignupManager signupManager;
     private Presenter presenter = new Presenter();
-    private AccountCreationController accountCreationController;
+    private RegisterController registerController;
 
     public LoginController(AccountManager am, FriendManager fm, ConversationManager cm, EventManager em, SignupManager sm) {
         this.accountManager = am;
@@ -19,7 +19,7 @@ public class LoginController {
         this.friendManager = fm;
         this.eventManager = em;
         this.signupManager = sm;
-        accountCreationController = new AccountCreationController(accountManager, friendManager, conversationManager, eventManager, signupManager);
+        registerController = new RegisterController(accountManager, friendManager, conversationManager, eventManager, signupManager);
     }
     
     public void attemptLogin() {
@@ -28,10 +28,10 @@ public class LoginController {
         String username = input.nextLine();
 
         while (!accountManager.containsAccount(username)) {
-            presenter.displayInvalidInputPrompt("This username does not exist, please try again.\nEnter '*' to create a new account instead:");
+            presenter.displayPrompt("This username does not exist, please try again.\nEnter '*' to create a new account instead:");
             username = input.nextLine();
             if (username.equals("*")) {
-                accountCreationController.attemptSignup();
+                registerController.attemptSignup();
             }
         }
 
@@ -39,10 +39,10 @@ public class LoginController {
         String password = input.nextLine();
 
         while (!accountManager.verifyPassword(username, password)) {
-            presenter.displayInvalidInputPrompt("Incorrect password, please try again\nEnter '*' to create a new account instead:");
+            presenter.displayPrompt("Incorrect password, please try again\nEnter '*' to create a new account instead:");
             password = input.nextLine();
             if (username.equals("*")) {
-                accountCreationController.attemptSignup();
+                registerController.attemptSignup();
             }
         }
         login(username);

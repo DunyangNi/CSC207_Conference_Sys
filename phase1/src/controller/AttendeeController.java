@@ -4,7 +4,7 @@ import use_cases.*;
 import java.util.*;
 import java.lang.*;
 
-public class AttendeeController extends UserController {
+public class AttendeeController extends AccountController {
 
     public AttendeeController(String username, EventManager eventmanager, ConversationManager conversationManager,
                               FriendManager friendManager, SignupManager signupManager, AccountManager accountManager) {

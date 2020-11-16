@@ -6,21 +6,19 @@ import java.util.HashMap;
 
 import Throwables.ConflictException;
 import Throwables.ObjectNotFoundException;
-import entities.Attendee;
-import entities.EventTalk;
 
 /**
- * SignupManager adds given Attendee to a given EventTalk.
+ * SignupManager adds given Attendee to a given Talk.
  *
  * <pre>
  * Use Case SignupManager
  * Responsibilities:
- *      Can add given Attendee to given EventTalk
- *      Can check whether given EventTalk is full or not
- *      Can check whether given Attendee is already in given EventTalk or not
+ *      Can add given Attendee to given Talk
+ *      Can check whether given Talk is full or not
+ *      Can check whether given Attendee is already in given Talk or not
  *
  * Collaborators:
- *      Attendee, EventTalk
+ *      Attendee, Talk
  * </pre>
  */
 public class SignupManager implements Serializable {
@@ -44,7 +42,7 @@ public class SignupManager implements Serializable {
     /**
      * Adds given Attendee to Talk.
      * Does nothing if Talk is full or Attendee is already in Talk.
-     * @param talk_id given EventTalk id
+     * @param talk_id given Talk id
      * @param attendee given Attendee id
      */
     public void addAttendee(Integer talk_id, String attendee) throws ConflictException{
@@ -62,14 +60,14 @@ public class SignupManager implements Serializable {
     }
 
     /**
-     * Returns the given seat limit of an EventTalk.
+     * Returns the given seat limit of an Talk.
      * @return seat limit
      */
     public int getSeatLimit() { return 2; }
 
     /**
-     * Returns whether given EventTalk is full.
-     * @param talk_id given EventTalk id
+     * Returns whether given Talk is full.
+     * @param talk_id given Talk id
      * @return whether talk is full or not
      */
     public boolean isFull(Integer talk_id) {
@@ -77,8 +75,8 @@ public class SignupManager implements Serializable {
     }
 
     /**
-     * Returns whether given EventTalk contains a given Attendee.
-     * @param talk_id given EventTalk id
+     * Returns whether given Talk contains a given Attendee.
+     * @param talk_id given Talk id
      * @param attendee given Attendee id
      * @return whether talk contains Attendee or not
      */
