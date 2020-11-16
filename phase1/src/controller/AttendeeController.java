@@ -8,13 +8,13 @@ public class AttendeeController extends UserController {
 
     public AttendeeController(String username, EventManager eventmanager, ConversationManager conversationManager,
                               FriendManager friendManager, SignupManager signupManager, AccountManager accountManager) {
-        super(username, eventmanager, conversationManager, friendManager, signupManager, accountManager);
+        super(username, accountManager, friendManager, conversationManager, eventmanager, signupManager);
     }
 
     // subject to change, error handling
     public void signupForTalk(Integer id) {
         try {
-            if (this.eventmanager.isTalk(id)) {
+            if (this.eventManager.isTalk(id)) {
                 // addAttendee does not throw an error on an invalid username.
                 // However, in this case we know the username is valid
                 signupManager.addAttendee(id, username);
@@ -30,7 +30,7 @@ public class AttendeeController extends UserController {
     // subject to change, error handling
     public void cancelSignupForTalk(Integer id) {
         try {
-            if (this.eventmanager.isTalk(id)) {
+            if (this.eventManager.isTalk(id)) {
                 //Same story, we know username is valid in this case
                 signupManager.removeAttendee(id, username);
             } else {

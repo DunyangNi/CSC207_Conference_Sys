@@ -9,7 +9,7 @@ public class SpeakerController extends UserController {
     public SpeakerController(String username, EventManager eventmanager, AccountManager accountmanager,
                              ConversationManager conversationManager, SignupManager signupManager,
                              FriendManager friendManager) {
-        super(username, eventmanager, conversationManager, friendManager, signupManager, accountmanager);
+        super(username, accountmanager, friendManager, conversationManager, eventmanager, signupManager);
     }
 
     public void SeeSpeakerTalkSchedule() {
@@ -63,7 +63,7 @@ public class SpeakerController extends UserController {
                 while (!doneAddingTalks) {
                     System.out.print("Please enter the ID of a Talk you are giving: ");
                     Integer id = Integer.parseInt(sc.nextLine());
-                    if (eventmanager.isSpeakerOfTalk(id, username)) { selectedSpeakerTalks.add(id); }
+                    if (eventManager.isSpeakerOfTalk(id, username)) { selectedSpeakerTalks.add(id); }
                     else { System.out.println("Invalid ID. You are not speaking at this talk."); continue; }
                     System.out.println("Would you like to add another Talk? (1 = yes, 0 = no)");
                     int response = sc.nextInt();

@@ -13,7 +13,7 @@ public class AccountCreationController {
     private FriendManager friendManager;
     private SignupManager signupManager;
 
-    public AccountCreationController(AccountManager am, ConversationManager cm, FriendManager fm, EventManager em, SignupManager sm) {
+    public AccountCreationController(AccountManager am, FriendManager fm, ConversationManager cm, EventManager em, SignupManager sm) {
         this.accountManager = am;
         this.eventManager = em;
         this.conversationManager = cm;
@@ -21,7 +21,7 @@ public class AccountCreationController {
         this.signupManager = sm;
     }
 
-    public void createNewAccount() {
+    public void attemptSignup() {
         System.out.println("Enter '1' to create an Attendee account.\nEnter '2' to create an Organizer account.");
         String command = input.nextLine();
 

@@ -9,12 +9,12 @@ public class OrganizerController extends UserController{
     public OrganizerController(String username, EventManager eventmanager, AccountManager accountManager,
                                SignupManager signupManager, ConversationManager conversationManager,
                                FriendManager friendManager) {
-        super(username, eventmanager, conversationManager, friendManager, signupManager, accountManager);
+        super(username, accountManager, friendManager, conversationManager, eventmanager, signupManager);
     }
 
 
     public void addNewLocation(String location) {
-        try { this.eventmanager.addLocation(location); }
+        try { this.eventManager.addLocation(location); }
         catch (ConflictException e) { System.out.println("\nSomething went wrong. Please enter valid input.\n"); }
     }
 
@@ -29,7 +29,7 @@ public class OrganizerController extends UserController{
 
     public void scheduleSpeaker(Calendar time, String topic, String location, String speaker) {
         try {
-            Integer newTalkID = eventmanager.AddNewEvent(topic, time, location, username, speaker);
+            Integer newTalkID = eventManager.AddNewEvent(topic, time, location, username, speaker);
             signupManager.addEventKey(newTalkID);
         }
         catch (Exception e) { System.out.println("\nSomething went wrong. Please enter valid input.\n"); }
@@ -37,19 +37,19 @@ public class OrganizerController extends UserController{
 
     public void cancelTalk(Integer id) {
         try {
-            this.eventmanager.cancelTalk(id);
+            this.eventManager.cancelTalk(id);
             signupManager.removeEventKey(id);
         }
         catch (Exception e) { System.out.println("\nSomething went wrong. Please enter valid input.\n"); }
     }
 
     public void rescheduleTalk(Integer id, Calendar newTime) {
-        try { this.eventmanager.ChangeTime(id, newTime); }
+        try { this.eventManager.ChangeTime(id, newTime); }
         catch (Exception e) { System.out.println("\nSomething went wrong. Please enter valid input.\n"); }
     }
 
     public void seeLocationList() {
-        ArrayList<String> locations = this.eventmanager.fetchLocations();
+        ArrayList<String> locations = this.eventManager.fetchLocations();
         System.out.println("Locations:\n");
         for (String location : locations) { System.out.println(location); }
     }

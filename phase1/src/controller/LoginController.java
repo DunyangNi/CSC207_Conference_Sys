@@ -1,7 +1,7 @@
 package controller;
 
 import use_cases.*;
-
+import presenter.Presenter;
 import java.util.Scanner;
 
 public class LoginController {
@@ -10,37 +10,45 @@ public class LoginController {
     private ConversationManager conversationManager;
     private FriendManager friendManager;
     private SignupManager signupManager;
+    private Presenter presenter = new Presenter();
+    private AccountCreationController accountCreationController;
 
-    public LoginController(AccountManager am, ConversationManager cm, FriendManager fm, EventManager em, SignupManager sm) {
+    public LoginController(AccountManager am, FriendManager fm, ConversationManager cm, EventManager em, SignupManager sm) {
         this.accountManager = am;
         this.conversationManager = cm;
         this.friendManager = fm;
         this.eventManager = em;
         this.signupManager = sm;
+        accountCreationController = new AccountCreationController(accountManager, friendManager, conversationManager, eventManager, signupManager);
     }
     
-    public void login() {
-        System.out.println("Please enter your username:");
+    public void attemptLogin() {
+        presenter.displayPrompt("Please enter your username:");
         Scanner input = new Scanner(System.in);
         String username = input.nextLine();
 
         while (!accountManager.containsAccount(username)) {
-            System.out.println("This username does not exist, please try again:");
+            presenter.displayInvalidInputPrompt("This username does not exist, please try again.\nEnter '*' to create a new account instead:");
             username = input.nextLine();
+            if (username.equals("*")) {
+                accountCreationController.attemptSignup();
+            }
         }
 
-        System.out.println("Please enter your password:");
+        presenter.displayPrompt("Please enter your password:");
         String password = input.nextLine();
 
         while (!accountManager.verifyPassword(username, password)) {
-            System.out.println("Incorrect password, please try again:");
+            presenter.displayInvalidInputPrompt("Incorrect password, please try again\nEnter '*' to create a new account instead:");
             password = input.nextLine();
+            if (username.equals("*")) {
+                accountCreationController.attemptSignup();
+            }
         }
-
-        accountSelector(username);
+        login(username);
     }
-    
-    private void accountSelector(String username) {
+
+    private void login(String username) {
         if (accountManager.containsAttendee(username)) {
             AttendeeController ac = new AttendeeController(username, eventManager, conversationManager, friendManager, signupManager, accountManager);
             ac.runInteraction();

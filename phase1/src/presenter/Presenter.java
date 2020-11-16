@@ -11,10 +11,22 @@ public class Presenter {
     private SignupManager signupManager;
     private FriendManager friendManager;
 
-    public Presenter(EventManager eventmanager, FriendManager friendManager, SignupManager signupManager) {
-        this.eventmanager = eventmanager;
+    // TODO: 11/16/20 Find a better way to do this
+    public Presenter() {
+    }
+
+    public Presenter(EventManager eventManager, FriendManager friendManager, SignupManager signupManager) {
+        this.eventmanager = eventManager;
         this.signupManager = signupManager;
         this.friendManager = friendManager;
+    }
+
+    public void displayInvalidInputPrompt(String output) {
+        System.out.println(output);
+    }
+
+    public void displayPrompt(String output) {
+        System.out.println(output);
     }
 
     public void displayTalkSchedule() {

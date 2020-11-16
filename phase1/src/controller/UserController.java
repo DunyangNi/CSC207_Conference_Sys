@@ -1,33 +1,34 @@
 package controller;
 
-import Throwables.ObjectNotFoundException;
+import presenter.Presenter;
 import use_cases.*;
-import presenter.*;
-import java.util.*;
-import java.lang.*;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Scanner;
+import java.util.TimeZone;
 
 public abstract class UserController {
     protected String username;
-    protected EventManager eventmanager;
-    protected ConversationManager conversationManager;
+    protected AccountManager accountManager;
     protected FriendManager friendManager;
+    protected ConversationManager conversationManager;
+    protected EventManager eventManager;
     protected SignupManager signupManager;
+    protected Presenter presenter;
     protected FriendController friendController;
     protected MessageController messageController;
-    protected AccountManager accountManager;
-    protected Presenter presenter;
 
-    public UserController(String username, EventManager eventmanager, ConversationManager conversationManager,
-                          FriendManager friendManager, SignupManager signupManager, AccountManager accountManager) {
+    public UserController(String username, AccountManager accountManager, FriendManager friendManager, ConversationManager conversationManager, EventManager eventManager, SignupManager signupManager) {
         this.username = username;
-        this.eventmanager = eventmanager;
         this.accountManager = accountManager;
-        this.conversationManager = conversationManager;
         this.friendManager = friendManager;
+        this.conversationManager = conversationManager;
+        this.eventManager = eventManager;
         this.signupManager = signupManager;
-        this.presenter = new Presenter(eventmanager, friendManager, signupManager);
+        this.presenter = new Presenter(eventManager, friendManager, signupManager);
         this.friendController = new FriendController(username, friendManager, presenter);
-        this.messageController = new MessageController(username, accountManager, conversationManager, eventmanager);
+        this.messageController = new MessageController(username, accountManager, conversationManager, eventManager);
     }
 
     public void SeeTalkSchedule() {
@@ -40,8 +41,9 @@ public abstract class UserController {
 
     public void viewMessagesFrom(String recipient, int numMessages) {
         try {
-            if (numMessages < 0) { System.out.println("You have requested an invalid number"); }
-            else {
+            if (numMessages < 0) {
+                System.out.println("You have requested an invalid number");
+            } else {
                 String msgToPrint;
                 ArrayList<Integer> convo = conversationManager.getConversationMessages(this.username, recipient);
                 System.out.println("Your recent " + numMessages + " messages with " + recipient + ":");
@@ -53,13 +55,12 @@ public abstract class UserController {
                     System.out.println();
                 }
             }
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             System.out.println("\nSomething went wrong. Please enter valid input.\n");
         }
     }
 
-    protected Calendar _timeoftalkrequesthelper(String talkdescriptor) throws InstantiationException{
+    protected Calendar _timeoftalkrequesthelper(String talkdescriptor) throws InstantiationException {
         try {
             Scanner sc = new Scanner(System.in);
             System.out.println("Specify the year of the talk " + talkdescriptor);
@@ -87,8 +88,7 @@ public abstract class UserController {
             time.set(Calendar.MILLISECOND, 0);
 
             return time;
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             System.out.println("\nSomething went wrong. Please enter valid input.\n");
             throw new InstantiationException();
         }
