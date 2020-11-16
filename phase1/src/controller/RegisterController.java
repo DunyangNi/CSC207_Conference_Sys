@@ -61,7 +61,7 @@ public class RegisterController {
         conversationManager.addAccountKey(accountInfo[0]);
         friendManager.addAccountKey(accountInfo[0]);
 
-        OrganizerController oc = new OrganizerController(accountInfo[0], eventManager, accountManager, signupManager, conversationManager, friendManager);
+        OrganizerController oc = new OrganizerController(accountInfo[0], accountManager, friendManager, conversationManager, eventManager, signupManager);
         oc.runInteraction();
     }
 

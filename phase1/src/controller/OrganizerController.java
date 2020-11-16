@@ -2,20 +2,23 @@ package controller;
 
 import Throwables.ConflictException;
 import use_cases.*;
-import java.util.*;
-import java.lang.*;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Scanner;
+import java.util.Set;
 
 public class OrganizerController extends AccountController {
-    public OrganizerController(String username, EventManager eventmanager, AccountManager accountManager,
-                               SignupManager signupManager, ConversationManager conversationManager,
-                               FriendManager friendManager) {
+    public OrganizerController(String username, AccountManager accountManager, FriendManager friendManager, ConversationManager conversationManager, EventManager eventmanager, SignupManager signupManager) {
         super(username, accountManager, friendManager, conversationManager, eventmanager, signupManager);
     }
 
-
     public void addNewLocation(String location) {
-        try { this.eventManager.addLocation(location); }
-        catch (ConflictException e) { System.out.println("\nSomething went wrong. Please enter valid input.\n"); }
+        try {
+            this.eventManager.addLocation(location);
+        } catch (ConflictException e) {
+            presenter.displayPrompt("\nSomething went wrong. Please enter valid input.\n");
+        }
     }
 
     public void createSpeakerAccount(String username, String password, String firstname, String lastname) {
@@ -23,192 +26,200 @@ public class OrganizerController extends AccountController {
             this.accountManager.AddNewSpeaker(username, password, firstname, lastname);
             conversationManager.addAccountKey(username);
             friendManager.addAccountKey(username);
+        } catch (ConflictException e) {
+            presenter.displayPrompt("\nSomething went wrong. Please enter valid input.\n");
         }
-        catch (ConflictException e) { System.out.println("\nSomething went wrong. Please enter valid input.\n"); }
     }
 
-    public void scheduleSpeaker(Calendar time, String topic, String location, String speaker) {
+    public void registerNewTalk(Calendar time, String topic, String location, String speaker) {
         try {
             Integer newTalkID = eventManager.AddNewEvent(topic, time, location, username, speaker);
             signupManager.addEventKey(newTalkID);
+        } catch (Exception e) {
+            presenter.displayPrompt("\nSomething went wrong. Please enter valid input.\n");
         }
-        catch (Exception e) { System.out.println("\nSomething went wrong. Please enter valid input.\n"); }
     }
 
     public void cancelTalk(Integer id) {
         try {
             this.eventManager.cancelTalk(id);
             signupManager.removeEventKey(id);
+        } catch (Exception e) {
+            presenter.displayPrompt("\nSomething went wrong. Please enter valid input.\n");
         }
-        catch (Exception e) { System.out.println("\nSomething went wrong. Please enter valid input.\n"); }
     }
 
     public void rescheduleTalk(Integer id, Calendar newTime) {
-        try { this.eventManager.ChangeTime(id, newTime); }
-        catch (Exception e) { System.out.println("\nSomething went wrong. Please enter valid input.\n"); }
+        try {
+            this.eventManager.ChangeTime(id, newTime);
+        } catch (Exception e) {
+            presenter.displayPrompt("\nSomething went wrong. Please enter valid input.\n");
+        }
     }
 
     public void seeLocationList() {
         ArrayList<String> locations = this.eventManager.fetchLocations();
-        System.out.println("Locations:\n");
-        for (String location : locations) { System.out.println(location); }
+        presenter.displayPrompt("Locations:\n");
+        for (String location : locations) {
+            presenter.displayPrompt(location);
+        }
     }
 
     @Override
     public void runInteraction() {
-        Scanner sc = new Scanner(System.in);
+        Scanner input = new Scanner(System.in);
         boolean loop_on = true;
-        while(loop_on){
-            System.out.println("What would you like to do?");
-            System.out.println("1 = enter a room into the system");
-            System.out.println("2 = create a new speaker account");
-            System.out.println("3 = schedule a speaker for a talk");
-            System.out.println("4 = cancel an event");
-            System.out.println("5 = reschedule an event");
-            System.out.println("6 = message all speakers");
-            System.out.println("7 = message an individual speaker");
-            System.out.println("8 = message all attendees");
-            System.out.println("9 = message an individual attendee");
-            System.out.println("10 = see talk schedule");
-            System.out.println("11 = add a contact");
-            System.out.println("12 = remove a contact");
-            System.out.println("13 = view contacts list");
-            System.out.println("14 = view your conversation with someone");
-            System.out.println("15 = see the list of rooms");
-            int choice = sc.nextInt();
-            sc.nextLine();
+        while (loop_on) {
+            presenter.displayPrompt("What would you like to do?");
+            presenter.displayPrompt("0 = logout");
+            presenter.displayPrompt("1 = register a new room into the system");
+            presenter.displayPrompt("2 = register a new speaker account");
+            presenter.displayPrompt("3 = register a new talk");
+            presenter.displayPrompt("4 = cancel an event");
+            presenter.displayPrompt("5 = reschedule an event");
+            presenter.displayPrompt("6 = message all speakers");
+            presenter.displayPrompt("7 = message an individual speaker");
+            presenter.displayPrompt("8 = message all attendees");
+            presenter.displayPrompt("9 = message an individual attendee");
+            presenter.displayPrompt("10 = see talk schedule");
+            presenter.displayPrompt("11 = add a contact");
+            presenter.displayPrompt("12 = remove a contact");
+            presenter.displayPrompt("13 = view contacts list");
+            presenter.displayPrompt("14 = view your conversation with someone");
+            presenter.displayPrompt("15 = see the list of rooms");
+            presenter.displayPrompt("16 = see the list of accounts");
+            String command = input.nextLine();
 
-            if (choice == 1){
-                System.out.print("Please enter name of new location: ");
-                String location = sc.nextLine();
-                this.addNewLocation(location);
-            }
 
-            else if (choice == 2) {
-                System.out.println("Specify account username"); String username = sc.nextLine();
-                System.out.println("Specify account password"); String password = sc.nextLine();
-                System.out.println("What is speaker's first name?"); String firstname = sc.nextLine();
-                System.out.println("What is speaker's last name?"); String lastname = sc.nextLine();
-                createSpeakerAccount(username, password, firstname, lastname);
-            }
-
-            else if(choice == 3) {
-                try {
-                    System.out.println("Specify the username of talk speaker");
-                    String username = sc.nextLine();
-                    System.out.println("Specify the location of the talk");
-                    String location = sc.nextLine();
-                    System.out.println("Specify the topic of the talk");
-                    String topic = sc.nextLine();
-                    Calendar time = this._timeoftalkrequesthelper("");
-                    this.scheduleSpeaker(time, topic, location, username);
+            switch (command) {
+                case "1":
+                    presenter.displayPrompt("Enter a name for the new room:");
+                    String location = input.nextLine();
+                    addNewLocation(location);
+                    break;
+                case "2": {
+                    presenter.displayPrompt("Enter a username");
+                    String username = input.nextLine();
+                    presenter.displayPrompt("Enter a password");
+                    String password = input.nextLine();
+                    presenter.displayPrompt("Enter the speaker's first name");
+                    String firstName = input.nextLine();
+                    presenter.displayPrompt("Enter the speaker's last name");
+                    String lastName = input.nextLine();
+                    createSpeakerAccount(username, password, firstName, lastName);
+                    break;
                 }
-                catch(Exception e) {
-                    System.out.println("\nSomething went wrong. Please enter valid input.\n");
-                }
-            }
+                case "3":
+                    try {
+                        presenter.displayPrompt("Enter the speaker's username:");
+                        String username = input.nextLine();
+                        presenter.displayPrompt("Enter the event room:");
+                        location = input.nextLine();
+                        presenter.displayPrompt("Enter the event topic:");
+                        String topic = input.nextLine();
+                        presenter.displayPrompt("Enter the event time:");
+                        // TODO: 11/16/20 Fix this!
+                        Calendar time = this.registerEventTime();
 
-            else if(choice == 4) {
-                System.out.print("Please enter the ID of a talk you wish to cancel: ");
-                int id = sc.nextInt();
-                sc.nextLine();
-                this.cancelTalk(id);
-            }
-
-            else if(choice == 5) {
-                try {
-                    System.out.println("Please enter the ID of a talk you wish to reschedule: ");
-                    int id = sc.nextInt();
-                    sc.nextLine();
-                    Calendar newTime = this._timeoftalkrequesthelper("to reschedule");
-                    this.rescheduleTalk(id, newTime);
-                }
-                catch(Exception e){
-                    System.out.println("\nSomething went wrong. Please enter valid input.\n");
-                }
-            }
-
-            else if(choice == 6) {
-                System.out.println("Please enter the message that you want to send to all speakers:");
-                String message = sc.nextLine();
-                messageController.messageAllSpeakers(message);
-            }
-
-            else if(choice == 7) {
-                System.out.print("Please enter the username of the speaker you wish to message: ");
-                String username = sc.nextLine();
-                System.out.println("Please enter the message you want to send to this speaker:");
-                String message = sc.nextLine();
-                messageController.messageSpeaker(message, username);
-            }
-
-            else if(choice == 8) {
-                System.out.println("Please enter the message that you want to send to all attendees:");
-                String message = sc.nextLine();
-                messageController.messageAllAttendees(message);
-            }
-
-            else if(choice == 9) {
-                System.out.print("Please enter the username of the attendee you want to message: ");
-                String username = sc.nextLine();
-                System.out.println("Please enter the message you want to send the attendee:");
-                String message = sc.nextLine();
-                messageController.messageAttendee(message, username);
-            }
-
-            else if(choice == 10) {
-                this.SeeTalkSchedule();
-            }
-
-            else if(choice == 11) {
-                System.out.print("Please enter the username of a contact to add: ");
-                String contactToAdd = sc.nextLine();
-                friendController.addFriend(contactToAdd);
-
-            }
-
-            else if(choice == 12) {
-                System.out.print("Please enter the username of a contact to remove: ");
-                String contactToRemove = sc.nextLine();
-                friendController.removeFriend(contactToRemove);
-
-            }
-
-            else if(choice == 13) { this.seeFriendList(); }
-
-            else if(choice == 14) {
-                try {
-                    Set<String> myConversations = conversationManager.getAllUserConversationRecipients(username);
-                    if (myConversations.isEmpty()) {
-                        System.out.println("(No conversations)");
-                    } else {
-                        System.out.println("List of Conversation Recipients");
-                        System.out.println("---------------------------------------------");
-                        for (String recipient : myConversations) {
-                            System.out.println(recipient);
-                        }
-                        System.out.println("---------------------------------------------\n");
-                        System.out.print("To access a conversation, please enter the recipient's username: ");
-                        String user = sc.nextLine();
-                        System.out.println("How many past messages would you like to see?");
-                        int pastMessages = sc.nextInt();
-                        sc.nextLine();
-                        this.viewMessagesFrom(user, pastMessages);
+                        this.registerNewTalk(time, topic, location, username);
+                    } catch (Exception e) {
+                        presenter.displayPrompt("\nSomething went wrong. Please enter valid input.\n");
                     }
+                    break;
+                case "4":
+                    System.out.print("Please enter the ID of a talk you wish to cancel: ");
+                    int id = input.nextInt();
+                    input.nextLine();
+                    this.cancelTalk(id);
+                    break;
+                case "5":
+                    try {
+                        presenter.displayPrompt("Please enter the ID of a talk you wish to reschedule: ");
+                        id = input.nextInt();
+                        input.nextLine();
+                        Calendar newTime = this.registerEventTime();
+                        this.rescheduleTalk(id, newTime);
+                    } catch (Exception e) {
+                        presenter.displayPrompt("\nSomething went wrong. Please enter valid input.\n");
+                    }
+                    break;
+                case "6": {
+                    presenter.displayPrompt("Please enter the message that you want to send to all speakers:");
+                    String message = input.nextLine();
+                    messageController.messageAllSpeakers(message);
+                    break;
                 }
-                catch(Exception e) {
-                    System.out.println("\nSomething went wrong. Please enter valid input.");
+                case "7": {
+                    System.out.print("Please enter the username of the speaker you wish to message: ");
+                    String username = input.nextLine();
+                    presenter.displayPrompt("Please enter the message you want to send to this speaker:");
+                    String message = input.nextLine();
+                    messageController.messageSpeaker(message, username);
+                    break;
                 }
+                case "8": {
+                    presenter.displayPrompt("Please enter the message that you want to send to all attendees:");
+                    String message = input.nextLine();
+                    messageController.messageAllAttendees(message);
+                    break;
+                }
+                case "9": {
+                    System.out.print("Please enter the username of the attendee you want to message: ");
+                    String username = input.nextLine();
+                    presenter.displayPrompt("Please enter the message you want to send the attendee:");
+                    String message = input.nextLine();
+                    messageController.messageAttendee(message, username);
+                    break;
+                }
+                case "10":
+                    this.SeeTalkSchedule();
+                    break;
+                case "11":
+                    System.out.print("Please enter the username of a contact to add: ");
+                    String contactToAdd = input.nextLine();
+                    friendController.addFriend(contactToAdd);
+                    break;
+                case "12":
+                    System.out.print("Please enter the username of a contact to remove: ");
+                    String contactToRemove = input.nextLine();
+                    friendController.removeFriend(contactToRemove);
+                    break;
+                case "13":
+                    this.seeFriendList();
+                    break;
+                case "14":
+                    try {
+                        Set<String> myConversations = conversationManager.getAllUserConversationRecipients(username);
+                        if (myConversations.isEmpty()) {
+                            presenter.displayPrompt("(No conversations)");
+                        } else {
+                            presenter.displayPrompt("List of Conversation Recipients");
+                            presenter.displayPrompt("---------------------------------------------");
+                            for (String recipient : myConversations) {
+                                presenter.displayPrompt(recipient);
+                            }
+                            presenter.displayPrompt("---------------------------------------------\n");
+                            System.out.print("To access a conversation, please enter the recipient's username: ");
+                            String user = input.nextLine();
+                            presenter.displayPrompt("How many past messages would you like to see?");
+                            int pastMessages = input.nextInt();
+                            input.nextLine();
+                            this.viewMessagesFrom(user, pastMessages);
+                        }
+                    } catch (Exception e) {
+                        presenter.displayPrompt("\nSomething went wrong. Please enter valid input.");
+                    }
+                    break;
+                case "15":
+                    this.seeLocationList();
+                    break;
+                case "16":
+                    System.out.println(accountManager.getAccountList().keySet());
             }
-
-            else if(choice == 15) {
-                this.seeLocationList();
-
-            }
-            System.out.println("Thank you. Would you like to do another task?");
-            System.out.println("1 = yes, 0 = no");
-            int response = sc.nextInt();
-            sc.nextLine();
+            presenter.displayPrompt("Thank you. Would you like to do another task?");
+            presenter.displayPrompt("1 = yes, 0 = no");
+            int response = input.nextInt();
+            input.nextLine();
             if (response == 0) {
                 loop_on = false;
             }

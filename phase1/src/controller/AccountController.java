@@ -60,29 +60,29 @@ public abstract class AccountController {
         }
     }
 
-    protected Calendar _timeoftalkrequesthelper(String talkdescriptor) throws InstantiationException {
+    protected Calendar registerEventTime() throws InstantiationException {
         try {
             Scanner sc = new Scanner(System.in);
-            System.out.println("Specify the year of the talk " + talkdescriptor);
-            int year = sc.nextInt();
+            System.out.println("Day of the month (1-31)");
+            int dayOfMonth = sc.nextInt();
             sc.nextLine();
-            System.out.println("Specify the numerical month (1-12) of the talk " + talkdescriptor);
+            System.out.println("Month (1-12)");
             int month = sc.nextInt();
             sc.nextLine();
-            System.out.println("Specify the day of the month (1-31) of the talk " + talkdescriptor);
-            int dayofmonth = sc.nextInt();
+            System.out.println("Year (YYYY)");
+            int year = sc.nextInt();
             sc.nextLine();
-            System.out.println("Specify the hour of the day (0-23) of the talk " + talkdescriptor);
-            int hourofday = sc.nextInt();
+            System.out.println("Hour of the day (9-16)");
+            int hourOfDay = sc.nextInt();
             sc.nextLine();
 
             Calendar time = Calendar.getInstance();
             time.set(Calendar.YEAR, year);
             TimeZone tz = TimeZone.getTimeZone("EST");
             time.setTimeZone(tz);
-            time.set(Calendar.DAY_OF_MONTH, dayofmonth);
+            time.set(Calendar.DAY_OF_MONTH, dayOfMonth);
             time.set(Calendar.MONTH, month - 1);
-            time.set(Calendar.HOUR_OF_DAY, hourofday);
+            time.set(Calendar.HOUR_OF_DAY, hourOfDay);
             time.set(Calendar.MINUTE, 0);
             time.set(Calendar.SECOND, 0);
             time.set(Calendar.MILLISECOND, 0);

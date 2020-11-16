@@ -54,7 +54,7 @@ public class LoginController {
             ac.runInteraction();
         }
         if (accountManager.containsOrganizer(username)) {
-            OrganizerController oc = new OrganizerController(username, eventManager, accountManager, signupManager, conversationManager, friendManager);
+            OrganizerController oc = new OrganizerController(username, accountManager, friendManager, conversationManager, eventManager, signupManager);
             oc.runInteraction();
         }
         if (accountManager.containsSpeaker(username)) {

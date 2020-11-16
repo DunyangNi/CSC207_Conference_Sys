@@ -1,14 +1,14 @@
 package use_cases;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Calendar;
-
 import Throwables.ConflictException;
 import Throwables.ObjectNotFoundException;
-import entities.*;
+import entities.Event;
+import entities.Talk;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashMap;
 
 public class EventManager implements Serializable {
@@ -16,39 +16,71 @@ public class EventManager implements Serializable {
     private ArrayList<String> locations;
     private EventChecker checker = new EventChecker();
     private EventModifier modifier = new EventModifier();
+
     // (NEW!)
     public EventManager() {
         this(new HashMap<>(), new ArrayList<>());
     }
 
-    public EventManager(HashMap<Integer, Event> events, ArrayList<String> locations){
+    public EventManager(HashMap<Integer, Event> events, ArrayList<String> locations) {
         this.events = events;
         this.locations = locations;
     }
 
-    public void addLocation(String location) throws ConflictException{
-        if (!this.locations.contains(location)) {
-            this.locations.add(location);
-        }
-        else {
-            throw new ConflictException("Location already exists");
-        }
+    public HashMap<Integer, Event> getEvents() {
+        return events;
+    }
+
+    public ArrayList<String> getLocations() {
+        return locations;
     }
 
     public ArrayList<Talk> getAllTalks() {
         ArrayList<Talk> talks = new ArrayList<>();
         for (Event e : getAllEvents()) {
-            if (e instanceof Talk) { talks.add((Talk) e); }
+            if (e instanceof Talk) {
+                talks.add((Talk) e);
+            }
         }
         return talks;
     }
 
-    public ArrayList<Event> getAllEvents() { return new ArrayList<>(events.values()); }
+    public ArrayList<Event> getAllEvents() {
+        return new ArrayList<>(events.values());
+    }
 
     // (NEW!)
     public Talk getTalk(Integer id) {
         Event selectedTalk = events.get(id);
         return selectedTalk instanceof Talk ? (Talk) selectedTalk : null;
+    }
+
+    public void setEvents(HashMap<Integer, Event> events) {
+        this.events = events;
+    }
+
+    public void setLocations(ArrayList<String> locations) {
+        this.locations = locations;
+    }
+
+    public void addLocation(String location) throws ConflictException {
+        if (!this.locations.contains(location)) {
+            this.locations.add(location);
+        } else {
+            throw new ConflictException("Location already exists");
+        }
+    }
+
+    /**
+     * AddNewEvent: Checks for same location be used in overlapping time
+     */
+    public Integer AddNewEvent(String topic, Calendar time, String location, String organizer) throws ConflictException {
+        if (validEvent(topic, time, location)) {
+            Event eventToAdd = new Event(topic, time, location, organizer);
+            events.put(eventToAdd.getId(), eventToAdd);
+            return eventToAdd.getId();
+        }
+        throw new ConflictException("Event conflicts with another");
     }
 
     /*
@@ -60,10 +92,11 @@ public class EventManager implements Serializable {
 
     /**
      * (NEW!) (Helper) Returns true iff Talk is valid: no conflicting time or existing events and talks.
-     * @param topic given topic
-     * @param time given time
+     *
+     * @param topic    given topic
+     * @param time     given time
      * @param location given location
-     * @param speaker given speaker
+     * @param speaker  given speaker
      * @return true iff Talk is valid: no conflicting time or existing events and talks.
      */
     public boolean validEvent(String topic, Calendar time, String location, String speaker) {
@@ -73,8 +106,9 @@ public class EventManager implements Serializable {
 
     /**
      * (NEW!) (Helper) Returns true iff Event is valid: no conflicting time or existing events.
-     * @param topic given topic
-     * @param time given time
+     *
+     * @param topic    given topic
+     * @param time     given time
      * @param location given location
      * @return true iff Event is valid: no conflicting time or existing events.
      */
@@ -82,17 +116,7 @@ public class EventManager implements Serializable {
         return checker.validEvent(topic, time, location, this.locations, getAllEvents());
     }
 
-    /**
-     * AddNewEvent: Checks for same location be used in overlapping time
-     */
-    public Integer AddNewEvent(String topic, Calendar time, String location, String organizer) throws ConflictException{
-        if (validEvent(topic, time, location)) {
-            Event eventToAdd = new Event(topic, time, location, organizer);
-            events.put(eventToAdd.getId(), eventToAdd);
-            return eventToAdd.getId();
-        }
-        throw new ConflictException("Event conflicts with another");
-    }
+
 
     /**
      * AddNewEvent: Checks for same location or same speaker be used in overlapping time
@@ -100,7 +124,7 @@ public class EventManager implements Serializable {
      * (NEW!) Updates the associated Speaker's speakerTalks
      */
 
-    public Integer AddNewEvent(String topic, Calendar time, String location, String organizer, String speaker) throws ConflictException{
+    public Integer AddNewEvent(String topic, Calendar time, String location, String organizer, String speaker) throws ConflictException {
         if (validEvent(topic, time, location, speaker)) {
             // create a new event and add it to events
             Talk eventToAdd = new Talk(topic, time, location, organizer, speaker);
@@ -110,7 +134,7 @@ public class EventManager implements Serializable {
         throw new ConflictException("Event conflicts with another");
     }
 
-    public void ChangeTopic(Integer id, String new_topic){
+    public void ChangeTopic(Integer id, String new_topic) {
         modifier.ChangeTopic(events.get(id), new_topic);
     }
 
@@ -118,14 +142,13 @@ public class EventManager implements Serializable {
      * ChangeTime: Checks for conlicts due to same location be used in overlapping time
      */
 
-    public void ChangeTime(Integer id, Calendar newTime) throws ObjectNotFoundException, ConflictException{
-        try{
-            if(!events.containsKey(id)) {
+    public void ChangeTime(Integer id, Calendar newTime) throws ObjectNotFoundException, ConflictException {
+        try {
+            if (!events.containsKey(id)) {
                 throw new ObjectNotFoundException();
             }
             modifier.ChangeTime(events.get(id), newTime, getAllEvents());
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             throw e;
         }
     }
@@ -138,7 +161,7 @@ public class EventManager implements Serializable {
         return modifier.ChangeLocation(events.get(id), new_location, this.locations, getAllEvents());
     }
 
-    public void ChangeOrganizer(Integer id, String new_organizer){
+    public void ChangeOrganizer(Integer id, String new_organizer) {
         modifier.ChangeOrganizer(events.get(id), new_organizer);
     }
 
@@ -152,11 +175,11 @@ public class EventManager implements Serializable {
         return this.locations;
     }
 
-    public void cancelTalk(Integer id) throws ObjectNotFoundException{
-        if(!events.containsKey(id)) {
+    public void cancelTalk(Integer id) throws ObjectNotFoundException {
+        if (!events.containsKey(id)) {
             throw new ObjectNotFoundException();
         }
-        if(!(events.get(id) instanceof Talk)) {
+        if (!(events.get(id) instanceof Talk)) {
             throw new ObjectNotFoundException();
         }
         Event talkToCancel = events.get(id);
@@ -167,7 +190,11 @@ public class EventManager implements Serializable {
     // (Helper) (NEW!)
     public ArrayList<Talk> fetchSpeakerTalks(String speaker) {
         ArrayList<Talk> speakerTalks = new ArrayList<>();
-        for (Talk e : getAllTalks()) { if (e.getSpeaker().equals(speaker)) { speakerTalks.add(e); } }
+        for (Talk e : getAllTalks()) {
+            if (e.getSpeaker().equals(speaker)) {
+                speakerTalks.add(e);
+            }
+        }
         return speakerTalks;
     }
 
@@ -201,7 +228,9 @@ public class EventManager implements Serializable {
         return fetchSortedTalks(fetchSpeakerTalks(speaker));
     }
 
-    public boolean isTalk(Integer id) { return events.get(id) instanceof Talk; }
+    public boolean isTalk(Integer id) {
+        return events.get(id) instanceof Talk;
+    }
 
     public boolean isSpeakerOfTalk(Integer id, String speaker) {
         return isTalk(id) && getTalk(id).getSpeaker().equals(speaker);
@@ -209,11 +238,12 @@ public class EventManager implements Serializable {
 
     /**
      * Precondition: the event with given exist
+     *
      * @param id given id for an event
      * @return A list of username of Attendees
      */
-    public ArrayList<String> getAttendeesAtEvent(Integer id) throws ObjectNotFoundException{
-        if(!this.isTalk(id)) {
+    public ArrayList<String> getAttendeesAtEvent(Integer id) throws ObjectNotFoundException {
+        if (!this.isTalk(id)) {
             throw new ObjectNotFoundException();
         }
         Event selectedEvent = events.get(id);
