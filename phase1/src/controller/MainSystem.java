@@ -7,17 +7,11 @@ import use_cases.*;
 import java.util.Scanner;
 
 public class MainSystem {
-    Scanner input = new Scanner(System.in);
-    private DataManager dataManager;
-    private AccountManager accountManager;
-    private EventManager eventManager;
-    private ConversationManager conversationManager;
-    private FriendManager friendManager;
-    private SignupManager signupManager;
+    private final Scanner input = new Scanner(System.in);
     private LoginController loginController;
     private AccountCreationController accountCreationController;
 
-    public static void main(String[] args) throws InstantiationException, ObjectNotFoundException {
+    public static void main(String[] args) {
         MainSystem ms = new MainSystem();
         ms.run();
     }
@@ -38,25 +32,25 @@ public class MainSystem {
 //        while (!validChoice);
 //        // Execute controller based on choice
 //        if (choice.equals("Y")) loginController.login();
-//        else accountCreationController.createAccount();
+//        else accountCreationController.createNewAccount();
 //    }
 
     public void loginPrompt() {
         //Prompt login or signup
-        System.out.println("Enter '0' to login to your account or '1' to signup for a new account.");
-        String input = this.input.nextLine();
+        System.out.println("Enter '1' to login to your account.\nEnter '2' to signup for a new account.");
+        String command = input.nextLine();
 
         //Invalid input prompt
-        while (!(input.equals("0") || (input.equals("1")))) {
+        while (!(command.equals("1") || (command.equals("2")))) {
             System.out.println("Invalid input, please try again.");
-            input = this.input.nextLine();
+            command = input.nextLine();
         }
 
         //Run login or signup
-        if (input.equals("0")) {
+        if (command.equals("1")) {
             loginController.login();
         } else {
-            accountCreationController.createAccount();
+            accountCreationController.createNewAccount();
         }
     }
 
@@ -74,16 +68,16 @@ public class MainSystem {
         String sm = input.nextLine();
 
         // Deserialization
-        dataManager = new DataManager(am, fm, cm, em, sm);
-        accountManager = dataManager.readAccountManager();
-        friendManager = dataManager.readFriendManager();
-        conversationManager = dataManager.readConversationManager();
-        eventManager = dataManager.readEventManager();
-        signupManager = dataManager.readSignupManager();
+        DataManager dataManager = new DataManager(am, fm, cm, em, sm);
+        AccountManager accountManager = dataManager.readAccountManager();
+        FriendManager friendManager = dataManager.readFriendManager();
+        ConversationManager conversationManager = dataManager.readConversationManager();
+        EventManager eventManager = dataManager.readEventManager();
+        SignupManager signupManager = dataManager.readSignupManager();
 
         // Initiation
-        loginController = new LoginController(accountManager, eventManager, conversationManager, friendManager, signupManager, input);
-        accountCreationController = new AccountCreationController(accountManager, eventManager, conversationManager, friendManager, signupManager, input);
+        loginController = new LoginController(accountManager, conversationManager, friendManager, eventManager, signupManager);
+        accountCreationController = new AccountCreationController(accountManager, conversationManager, friendManager, eventManager, signupManager);
         loginPrompt();
 
         // Saving changes

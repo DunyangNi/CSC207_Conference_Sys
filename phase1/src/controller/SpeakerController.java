@@ -1,6 +1,5 @@
 package controller;
 
-import Throwables.ObjectNotFoundException;
 import use_cases.*;
 import java.util.*;
 import java.lang.*;
@@ -80,7 +79,7 @@ public class SpeakerController extends UserController {
             }
 
             else if(choice == 5) {
-                Set<String> allAccts = accountManager.fetchAccountList().keySet();
+                Set<String> allAccts = accountManager.getAccountList().keySet();
                 if (!allAccts.isEmpty()) {
                     System.out.println("List of users");
                     System.out.println("---------------------------------------------");
@@ -97,7 +96,7 @@ public class SpeakerController extends UserController {
             else if(choice == 6) {
                 System.out.println("Specify username of contact to remove");
                 String removeContact = sc.nextLine();
-                Set<String> allAccounts = accountManager.fetchAccountList().keySet();
+                Set<String> allAccounts = accountManager.getAccountList().keySet();
                 if (allAccounts.contains(removeContact)) { friendController.removeFriend(removeContact); }
                 else { System.out.println("The entered contact username is invalid."); }
             }
