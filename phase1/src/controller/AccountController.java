@@ -39,24 +39,25 @@ public abstract class AccountController {
         this.presenter.displayFriendList(this.username);
     }
 
-    public void viewMessagesFrom(String recipient, int numMessages) {
+    public void viewMessagesFrom(String recipient, int numMessagesRequested) {
         try {
-            if (numMessages < 0) {
+            if (numMessagesRequested < 0) {
                 System.out.println("You have requested an invalid number");
             } else {
                 String msgToPrint;
                 ArrayList<Integer> convo = conversationManager.getConversationMessages(this.username, recipient);
-                System.out.println("Your recent " + numMessages + " messages with " + recipient + ":");
+                System.out.println("Your recent " + numMessagesRequested + " messages with " + recipient + ":");
                 System.out.println();
-                int recent_num = Math.min(numMessages, convo.size());
-                for (int i = 0; i < recent_num; i++) {
-                    msgToPrint = conversationManager.messageToString(convo.get(numMessages - recent_num - 1 + i));
+                int numMessagesRetrieved = Math.min(numMessagesRequested, convo.size());
+                for (int i = 0; i < numMessagesRetrieved; i++) {
+                    // TODO: 11/16/20 Message sIds are not being stored properly so this doesn't work
+                    msgToPrint = conversationManager.messageToString(convo.get(numMessagesRetrieved - 1 + i));
                     System.out.println(msgToPrint);
                     System.out.println();
                 }
             }
         } catch (Exception e) {
-            System.out.println("\nSomething went wrong. Please enter valid input.\n");
+            System.out.println(e.toString());
         }
     }
 
