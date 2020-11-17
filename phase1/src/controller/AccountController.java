@@ -50,7 +50,7 @@ public abstract class AccountController {
                 System.out.println();
                 int numMessagesRetrieved = Math.min(numMessagesRequested, convo.size());
                 for (int i = numMessagesRetrieved; i > 0; i--) {
-                    msgToPrint = conversationManager.messageToString(convo.get(convo.size() - i)); // f
+                    msgToPrint = conversationManager.messageToString(convo.get(convo.size() - i)); // implemented fix
                     System.out.println(msgToPrint);
                     System.out.println();
                 }

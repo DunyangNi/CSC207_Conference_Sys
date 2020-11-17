@@ -27,7 +27,7 @@ public class OrganizerController extends AccountController {
             conversationManager.addAccountKey(username);
             friendManager.addAccountKey(username);
         } catch (ConflictException e) {
-            presenter.displayPrompt("\nSomething went wrong. Please enter valid input.\n");
+            presenter.displayPrompt(e.toString()); // r
         }
     }
 
