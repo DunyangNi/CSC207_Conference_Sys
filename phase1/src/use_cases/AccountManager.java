@@ -33,7 +33,7 @@ public class AccountManager implements Serializable {
     }
 
     public void AddNewAttendee(String username, String password, String firstName, String lastName) {
-        if (attendeeList.containsKey(username)) {
+        if (getAccountList().containsKey(username)) {
             return;
         }
         Attendee newAttendee = new Attendee(username, password, firstName, lastName);
@@ -41,7 +41,7 @@ public class AccountManager implements Serializable {
     }
 
     public void AddNewSpeaker(String username, String password, String firstName, String lastName) throws ConflictException {
-        if (speakerList.containsKey(username)) {
+        if (getAccountList().containsKey(username)) {
             throw new ConflictException("Username already exists");
         }
         Speaker newSpeaker = new Speaker(username, password, firstName, lastName);
@@ -49,7 +49,7 @@ public class AccountManager implements Serializable {
     }
 
     public void AddNewOrganizer(String username, String password, String firstName, String lastName) {
-        if (organizerList.containsKey(username)) {
+        if (getAccountList().containsKey(username)) {
             return;
         }
         Organizer newOrganizer = new Organizer(username, password, firstName, lastName);
