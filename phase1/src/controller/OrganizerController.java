@@ -15,7 +15,7 @@ public class OrganizerController extends AccountController {
 
     public void addNewLocation(String location) {
         try {
-            this.eventManager.addLocation(location);
+            this.eventManager.addNewLocation(location);
         } catch (ConflictException e) {
             presenter.displayPrompt("\nSomething went wrong. Please enter valid input.\n");
         }
@@ -51,14 +51,14 @@ public class OrganizerController extends AccountController {
 
     public void rescheduleTalk(Integer id, Calendar newTime) {
         try {
-            this.eventManager.ChangeTime(id, newTime);
+            this.eventManager.changeTime(id, newTime);
         } catch (Exception e) {
             presenter.displayPrompt("\nSomething went wrong. Please enter valid input.\n");
         }
     }
 
     public void seeLocationList() {
-        ArrayList<String> locations = this.eventManager.fetchLocations();
+        ArrayList<String> locations = this.eventManager.getLocations();
         presenter.displayPrompt("Locations:\n");
         for (String location : locations) {
             presenter.displayPrompt(location);
