@@ -1,11 +1,8 @@
 package controller;
 
-import Throwables.ObjectNotFoundException;
-import presenter.Presenter;
 import use_cases.ConversationManager;
 import use_cases.AccountManager;
 import use_cases.EventManager;
-import use_cases.FriendManager;
 
 import java.util.*;
 
@@ -89,7 +86,7 @@ public class MessageController {
             Set<String> selectedAttendeeUsernames = new HashSet<>();
             for (Integer id : selectedSpeakerTalks) {
                 if (eventManager.isTalk(id)) {
-                    selectedAttendeeUsernames.addAll(eventManager.getAttendeesAtEvent(id));
+                    selectedAttendeeUsernames.addAll(eventManager.fetchTalkAttendeeList(id));
                 }
             }
             for (String attendeeUsername : selectedAttendeeUsernames) {
