@@ -19,7 +19,8 @@ public class ConferenceSystem {
 
     public void loginPrompt() {
         //Prompt attemptLogin or signup
-        presenter.displayPrompt("Enter '1' to login to your account:\nEnter '2' to register a new account:");
+        presenter.displayPrompt("[LOGIN MENU]");
+        presenter.displayPrompt("1 = login to your account:\n2 = to register a new account:");
         String command = input.nextLine();
 
         //Invalid input prompt
