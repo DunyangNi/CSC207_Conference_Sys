@@ -67,29 +67,29 @@ public class OrganizerController extends AccountController {
 
     public void displayCommandMenu() {
         presenter.displayPrompt("[ACCOUNT COMMANDS]");
-        presenter.displayPrompt("0 = logout");
-        presenter.displayPrompt("2 = register a new speaker account");
-        presenter.displayPrompt("16 = view list of all accounts");
+        presenter.displayPrompt("0  = Logout");
+        presenter.displayPrompt("2  = Register a new speaker account");
+        presenter.displayPrompt("16 = View list of all accounts");
 
         presenter.displayPrompt("\n[CONTACT COMMANDS]");
-        presenter.displayPrompt("11 = add a contact");
-        presenter.displayPrompt("12 = remove a contact");
-        presenter.displayPrompt("13 = view contacts list");
+        presenter.displayPrompt("11 = Add a contact");
+        presenter.displayPrompt("12 = Remove a contact");
+        presenter.displayPrompt("13 = View contacts list");
 
         presenter.displayPrompt("\n[CONVERSATION COMMANDS]");
-        presenter.displayPrompt("6 = message all speakers");
-        presenter.displayPrompt("7 = message an individual speaker");
-        presenter.displayPrompt("8 = message all attendees");
-        presenter.displayPrompt("9 = message an individual attendee");
-        presenter.displayPrompt("14 = view your conversation with someone");
+        presenter.displayPrompt("6  = Message all speakers");
+        presenter.displayPrompt("7  = Message an individual speaker");
+        presenter.displayPrompt("8  = Message all attendees");
+        presenter.displayPrompt("9  = Message an individual attendee");
+        presenter.displayPrompt("14 = View your conversation with someone");
 
         presenter.displayPrompt("\n[EVENT COMMANDS]");
-        presenter.displayPrompt("1 = register a new room into the system");
-        presenter.displayPrompt("3 = register a new event");
-        presenter.displayPrompt("4 = cancel an event");
-        presenter.displayPrompt("5 = reschedule an event");
-        presenter.displayPrompt("10 = see talk schedule");
-        presenter.displayPrompt("15 = see the list of rooms");
+        presenter.displayPrompt("1  = Register a new room into the system");
+        presenter.displayPrompt("3  = Register a new event");
+        presenter.displayPrompt("4  = Cancel an event");
+        presenter.displayPrompt("5  = Reschedule an event");
+        presenter.displayPrompt("10 = See talk schedule");
+        presenter.displayPrompt("15 = See the list of rooms");
     }
 
     @Override
