@@ -65,38 +65,41 @@ public class OrganizerController extends AccountController {
         }
     }
 
+    public void displayCommandMenu() {
+        presenter.displayPrompt("[ACCOUNT COMMANDS]");
+        presenter.displayPrompt("0 = logout");
+        presenter.displayPrompt("2 = register a new speaker account");
+        presenter.displayPrompt("16 = view list of all accounts");
+
+        presenter.displayPrompt("\n[CONTACT COMMANDS]");
+        presenter.displayPrompt("11 = add a contact");
+        presenter.displayPrompt("12 = remove a contact");
+        presenter.displayPrompt("13 = view contacts list");
+
+        presenter.displayPrompt("\n[CONVERSATION COMMANDS]");
+        presenter.displayPrompt("6 = message all speakers");
+        presenter.displayPrompt("7 = message an individual speaker");
+        presenter.displayPrompt("8 = message all attendees");
+        presenter.displayPrompt("9 = message an individual attendee");
+        presenter.displayPrompt("14 = view your conversation with someone");
+
+        presenter.displayPrompt("\n[EVENT COMMANDS]");
+        presenter.displayPrompt("1 = register a new room into the system");
+        presenter.displayPrompt("3 = register a new event");
+        presenter.displayPrompt("4 = cancel an event");
+        presenter.displayPrompt("5 = reschedule an event");
+        presenter.displayPrompt("10 = see talk schedule");
+        presenter.displayPrompt("15 = see the list of rooms");
+    }
+
     @Override
     public void runInteraction() {
         Scanner input = new Scanner(System.in);
         boolean loop_on = true;
+        displayCommandMenu();
+        String command = input.nextLine();
+
         while (loop_on) {
-            presenter.displayPrompt("[ACCOUNT COMMANDS]");
-            presenter.displayPrompt("0 = logout");
-            presenter.displayPrompt("2 = register a new speaker account");
-            presenter.displayPrompt("16 = view list of all accounts");
-
-            presenter.displayPrompt("\n[CONTACT COMMANDS]");
-            presenter.displayPrompt("11 = add a contact");
-            presenter.displayPrompt("12 = remove a contact");
-            presenter.displayPrompt("13 = view contacts list");
-
-            presenter.displayPrompt("\n[CONVERSATION COMMANDS]");
-            presenter.displayPrompt("6 = message all speakers");
-            presenter.displayPrompt("7 = message an individual speaker");
-            presenter.displayPrompt("8 = message all attendees");
-            presenter.displayPrompt("9 = message an individual attendee");
-            presenter.displayPrompt("14 = view your conversation with someone");
-
-            presenter.displayPrompt("\n[EVENT COMMANDS]");
-            presenter.displayPrompt("1 = register a new room into the system");
-            presenter.displayPrompt("3 = register a new event");
-            presenter.displayPrompt("4 = cancel an event");
-            presenter.displayPrompt("5 = reschedule an event");
-            presenter.displayPrompt("10 = see talk schedule");
-            presenter.displayPrompt("15 = see the list of rooms");
-
-            String command = input.nextLine();
-
             switch (command) {
                 case "0":
                     loop_on = false;
@@ -228,6 +231,11 @@ public class OrganizerController extends AccountController {
                 default:
                     presenter.displayPrompt("Invalid input, please try again:\n");
             }
+            presenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
+            if (input.nextLine().equals("*")) {
+                displayCommandMenu();
+            }
+
         }
     }
 }
