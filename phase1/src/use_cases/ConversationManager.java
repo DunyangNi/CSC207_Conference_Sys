@@ -92,6 +92,7 @@ public class ConversationManager implements Serializable {
             givenConversation = new Conversation(participants, newMessage.getId());
         }
         else { addMessageToConversation(givenConversation, newMessage); }
+        messages.put(newMessage.getId(), newMessage);
         senderConversations.put(recipient, givenConversation);
         recipientConversations.put(sender, givenConversation);
     }
