@@ -149,11 +149,11 @@ public class DataManager {
             InputStream file = new FileInputStream(signupPath);
             InputStream buffer = new BufferedInputStream(file);
             ObjectInput input = new ObjectInputStream(buffer);
-            SignupManager fm = (SignupManager) input.readObject();
+            SignupManager sm = (SignupManager) input.readObject();
             input.close();
             buffer.close();
             file.close();
-            return fm;
+            return sm;
         } catch (IOException e) {
             System.out.println("Cannot read the SignupManager, creating a new SignupManager");
             return new SignupManager();

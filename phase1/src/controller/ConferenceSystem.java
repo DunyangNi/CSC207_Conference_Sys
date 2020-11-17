@@ -38,19 +38,19 @@ public class ConferenceSystem {
 
     public void run() {
         // Obtain filepath of all .ser files
-        presenter.displayPrompt("Enter the filepath for AccountManager");
-        String am = input.nextLine();
-        presenter.displayPrompt("Enter the filepath for FriendManager:");
-        String fm = input.nextLine();
-        presenter.displayPrompt("Enter the filepath for ConversationManager:");
-        String cm = input.nextLine();
-        presenter.displayPrompt("Enter the filepath for EventManager:");
-        String em = input.nextLine();
-        presenter.displayPrompt("Enter the filepath for SignupManager:");
-        String sm = input.nextLine();
+//        presenter.displayPrompt("Enter the filepath for AccountManager");
+//        String am = input.nextLine();
+//        presenter.displayPrompt("Enter the filepath for FriendManager:");
+//        String fm = input.nextLine();
+//        presenter.displayPrompt("Enter the filepath for ConversationManager:");
+//        String cm = input.nextLine();
+//        presenter.displayPrompt("Enter the filepath for EventManager:");
+//        String em = input.nextLine();
+//        presenter.displayPrompt("Enter the filepath for SignupManager:");
+//        String sm = input.nextLine();
 
         // Deserialization
-        DataManager dataManager = new DataManager(am, fm, cm, em, sm);
+        DataManager dataManager = new DataManager("AccountManager", "FriendManager", "ConversationManager", "EventManager", "SignupManager");
         AccountManager accountManager = dataManager.readAccountManager();
         FriendManager friendManager = dataManager.readFriendManager();
         ConversationManager conversationManager = dataManager.readConversationManager();
@@ -63,10 +63,10 @@ public class ConferenceSystem {
         loginPrompt();
 
         // Saving changes
-        dataManager.saveManager("EventManager", em, eventManager);
-        dataManager.saveManager("AccountManager", am, accountManager);
-        dataManager.saveManager("ConversationManager", cm, conversationManager);
-        dataManager.saveManager("FriendManager", fm, friendManager);
-        dataManager.saveManager("SignupManager", sm, signupManager);
+        dataManager.saveManager("EventManager", "EventManager", eventManager);
+        dataManager.saveManager("AccountManager", "AccountManager", accountManager);
+        dataManager.saveManager("ConversationManager", "ConversationManager", conversationManager);
+        dataManager.saveManager("FriendManager", "FriendManager", friendManager);
+        dataManager.saveManager("SignupManager", "SignupManager", signupManager);
     }
 }
