@@ -32,6 +32,7 @@ public class LoginController {
             username = input.nextLine();
             if (username.equals("*")) {
                 registrationController.attemptRegister();
+                return;
             }
         }
 
@@ -43,6 +44,7 @@ public class LoginController {
             password = input.nextLine();
             if (username.equals("*")) {
                 registrationController.attemptRegister();
+                return;
             }
         }
         login(username);
