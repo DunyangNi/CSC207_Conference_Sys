@@ -60,7 +60,7 @@ public abstract class AccountController {
         }
     }
 
-    protected Calendar registerEventTime() throws InstantiationException {
+    protected Calendar collectTimeInfo() throws InstantiationException {
         try {
             Scanner sc = new Scanner(System.in);
             System.out.println("Day of the month (1-31)");
@@ -77,21 +77,11 @@ public abstract class AccountController {
             sc.nextLine();
 
             Calendar time = Calendar.getInstance();
-            time.set(year, month, dayOfMonth, hourOfDay, 0);
-
-//            time.set(Calendar.YEAR, year);
-//            TimeZone tz = TimeZone.getTimeZone("EST");
-//            time.setTimeZone(tz);
-//            time.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-//            time.set(Calendar.MONTH, month - 1);
-//            time.set(Calendar.HOUR_OF_DAY, hourOfDay);
-//            time.set(Calendar.MINUTE, 0);
-//            time.set(Calendar.SECOND, 0);
-//            time.set(Calendar.MILLISECOND, 0);
+            time.set(year, month, dayOfMonth, hourOfDay, 0, 0);
 
             return time;
         } catch (Exception e) {
-            System.out.println("\nSomething went wrong in registerEventTime. Please enter valid input.\n");
+            System.out.println("\nSomething went wrong in collectTimeInfo. Please enter valid input.\n");
             throw new InstantiationException();
         }
     }

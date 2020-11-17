@@ -74,22 +74,23 @@ public class OrganizerController extends AccountController {
         presenter.displayPrompt("\n[CONTACT COMMANDS]");
         presenter.displayPrompt("11 = Add a contact");
         presenter.displayPrompt("12 = Remove a contact");
-        presenter.displayPrompt("13 = View contacts list");
+        presenter.displayPrompt("13 = View list of all contacts");
 
         presenter.displayPrompt("\n[CONVERSATION COMMANDS]");
-        presenter.displayPrompt("6  = Message all speakers");
-        presenter.displayPrompt("7  = Message an individual speaker");
-        presenter.displayPrompt("8  = Message all attendees");
-        presenter.displayPrompt("9  = Message an individual attendee");
-        presenter.displayPrompt("14 = View your conversation with someone");
+        presenter.displayPrompt("6  = Send a message");
+        presenter.displayPrompt("6  = Send a message to all speakers");
+//        presenter.displayPrompt("7  = Message an individual speaker");
+        presenter.displayPrompt("8  = Send a message to all attendees");
+//        presenter.displayPrompt("9  = Message an individual attendee");
+        presenter.displayPrompt("14 = View a conversation");
 
         presenter.displayPrompt("\n[EVENT COMMANDS]");
-        presenter.displayPrompt("1  = Register a new room into the system");
+        presenter.displayPrompt("1  = Register a new event room");
+        presenter.displayPrompt("15 = View list of all rooms");
         presenter.displayPrompt("3  = Register a new event");
         presenter.displayPrompt("4  = Cancel an event");
         presenter.displayPrompt("5  = Reschedule an event");
-        presenter.displayPrompt("10 = See talk schedule");
-        presenter.displayPrompt("15 = See the list of rooms");
+        presenter.displayPrompt("10 = View talk schedule");
     }
 
     @Override
@@ -130,10 +131,9 @@ public class OrganizerController extends AccountController {
                         presenter.displayPrompt("Enter the event topic:");
                         String topic = input.nextLine();
                         presenter.displayPrompt("Enter the event time:");
-                        // TODO: 11/16/20 Fix this!
-                        Calendar time = this.registerEventTime();
+                        Calendar time = this.collectTimeInfo();
                         eventManager.addNewTalk(topic, time, location, this.username, username);
-//                        this.registerNewTalk(time, topic, location, username);
+
                     } catch (Exception e) {
                         presenter.displayPrompt(e.toString());
                     }
@@ -149,7 +149,7 @@ public class OrganizerController extends AccountController {
                         presenter.displayPrompt("Please enter the ID of a talk you wish to reschedule: ");
                         id = input.nextInt();
                         input.nextLine();
-                        Calendar newTime = this.registerEventTime();
+                        Calendar newTime = this.collectTimeInfo();
                         this.rescheduleTalk(id, newTime);
                     } catch (Exception e) {
                         presenter.displayPrompt("\nSomething went wrong. Please enter valid input.\n");

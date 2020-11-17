@@ -87,11 +87,6 @@ public class EventManager implements Serializable {
         throw new ConflictException("addNewTalk");
     }
 
-    public boolean validTalk(Calendar time, String location, ArrayList<String> locations, String speaker, ArrayList<Talk> talks, ArrayList<Event> events) throws ConflictException {
-        // call general helper
-        return validEvent(time, location, locations, events);
-    }
-
     public boolean validEvent(Calendar time, String location, ArrayList<String> locations, ArrayList<Event> events) throws ConflictException {
         // check if location is valid
         if (!locations.contains(location)) {
@@ -102,18 +97,22 @@ public class EventManager implements Serializable {
             throw new ConflictException("Time");
         }
         // check if any conflicting events or events already existing
-        for(Event event: events) {
-            if (event.getLocation().equals(location) && event.getTime().equals(time)){
+        for (Event event : events) {
+            if (event.getLocation().equals(location) && event.getTime().equals(time)) {
                 throw new ConflictException("Location + Time");
             }
         }
         return true;
     }
 
+    public boolean validTalk(Calendar time, String location, ArrayList<String> locations, String speaker, ArrayList<Talk> talks, ArrayList<Event> events) throws ConflictException {
+        // call general helper
+        return validEvent(time, location, locations, events);
+    }
+
     public void ChangeTopic(Integer id, String new_topic) {
         eventModifier.ChangeTopic(events.get(id), new_topic);
     }
-
 
     public void ChangeTime(Integer id, Calendar newTime) throws ObjectNotFoundException, ConflictException {
         try {
