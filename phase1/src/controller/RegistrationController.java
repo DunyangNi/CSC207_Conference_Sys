@@ -4,7 +4,7 @@ import use_cases.*;
 
 import java.util.Scanner;
 
-public class RegisterController {
+public class RegistrationController {
     private final String ORGANIZER_PASSWORD = "123456";
     private final Scanner input = new Scanner(System.in);
     private AccountManager accountManager;
@@ -13,7 +13,7 @@ public class RegisterController {
     private FriendManager friendManager;
     private SignupManager signupManager;
 
-    public RegisterController(AccountManager am, FriendManager fm, ConversationManager cm, EventManager em, SignupManager sm) {
+    public RegistrationController(AccountManager am, FriendManager fm, ConversationManager cm, EventManager em, SignupManager sm) {
         this.accountManager = am;
         this.eventManager = em;
         this.conversationManager = cm;
@@ -22,7 +22,7 @@ public class RegisterController {
     }
 
     public void attemptRegister() {
-        System.out.println("Enter '1' to create an Attendee account.\nEnter '2' to create an Organizer account.");
+        System.out.println("Enter '1' to register an Attendee account.\nEnter '2' to register an Organizer account.");
         String command = input.nextLine();
 
         while (!(command.equals("1") || (command.equals("2")))) {
@@ -31,13 +31,13 @@ public class RegisterController {
         }
 
         if (command.equals("1")) {
-            createNewAttendee();
+            registerNewAttendee();
         } else {
-            createNewOrganizer();
+            registerNewOrganizer();
         }
     }
 
-    private void createNewAttendee() {
+    private void registerNewAttendee() {
         String[] accountInfo = getNewAccountInfo();
         accountManager.AddNewAttendee(accountInfo[0], accountInfo[1], accountInfo[2], accountInfo[3]);
         conversationManager.addAccountKey(accountInfo[0]);
@@ -47,8 +47,8 @@ public class RegisterController {
         ac.runInteraction();
     }
 
-    private void createNewOrganizer() {
-        System.out.println("Enter the Organizer account creation code:");
+    private void registerNewOrganizer() {
+        System.out.println("Enter the Organizer account registration code:");
         String code = input.nextLine();
 
         while (!code.equals(ORGANIZER_PASSWORD)) {

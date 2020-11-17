@@ -11,7 +11,7 @@ public class LoginController {
     private FriendManager friendManager;
     private SignupManager signupManager;
     private Presenter presenter = new Presenter();
-    private RegisterController registerController;
+    private RegistrationController registrationController;
 
     public LoginController(AccountManager am, FriendManager fm, ConversationManager cm, EventManager em, SignupManager sm) {
         this.accountManager = am;
@@ -19,7 +19,7 @@ public class LoginController {
         this.friendManager = fm;
         this.eventManager = em;
         this.signupManager = sm;
-        registerController = new RegisterController(accountManager, friendManager, conversationManager, eventManager, signupManager);
+        registrationController = new RegistrationController(accountManager, friendManager, conversationManager, eventManager, signupManager);
     }
     
     public void attemptLogin() {
@@ -31,7 +31,7 @@ public class LoginController {
             presenter.displayPrompt("This username does not exist, please try again.\nEnter '*' to register a new account instead:");
             username = input.nextLine();
             if (username.equals("*")) {
-                registerController.attemptRegister();
+                registrationController.attemptRegister();
             }
         }
 
@@ -42,7 +42,7 @@ public class LoginController {
             presenter.displayPrompt("Incorrect password, please try again\nEnter '*' to register a new account instead:");
             password = input.nextLine();
             if (username.equals("*")) {
-                registerController.attemptRegister();
+                registrationController.attemptRegister();
             }
         }
         login(username);

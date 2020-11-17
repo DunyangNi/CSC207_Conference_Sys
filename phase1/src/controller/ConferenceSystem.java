@@ -10,7 +10,7 @@ public class ConferenceSystem {
     private final Scanner input = new Scanner(System.in);
     private Presenter presenter = new Presenter();
     private LoginController loginController;
-    private RegisterController registerController;
+    private RegistrationController registrationController;
 
     public static void main(String[] args) {
         ConferenceSystem ms = new ConferenceSystem();
@@ -33,7 +33,7 @@ public class ConferenceSystem {
         if (command.equals("1")) {
             loginController.attemptLogin();
         } else {
-            registerController.attemptRegister();
+            registrationController.attemptRegister();
         }
     }
 
@@ -60,7 +60,7 @@ public class ConferenceSystem {
 
         // Initiation
         loginController = new LoginController(accountManager, friendManager, conversationManager, eventManager, signupManager);
-        registerController = new RegisterController(accountManager, friendManager, conversationManager, eventManager, signupManager);
+        registrationController = new RegistrationController(accountManager, friendManager, conversationManager, eventManager, signupManager);
         loginPrompt();
 
         // Saving changes
