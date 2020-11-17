@@ -34,7 +34,7 @@ public class EventModifier implements Serializable {
             throw new ConflictException("Event to be reschedules takes place in the past");
         }
 
-        if (!(9 <= newTime.get(Calendar.HOUR_OF_DAY) && newTime.get(Calendar.HOUR_OF_DAY) <= 4)) {
+        if (!(9 <= newTime.get(Calendar.HOUR_OF_DAY) && newTime.get(Calendar.HOUR_OF_DAY) <= 16)) {
             throw new ConflictException("Rescheduled time must start between 9am and 5pm");
         }
 

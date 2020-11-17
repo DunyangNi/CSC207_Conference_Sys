@@ -9,68 +9,35 @@ import java.util.Calendar;
 
 public class EventChecker implements Serializable {
 
-    /**
-     * CheckTimeOverlap:
-     * Check of two hypothetical events have time conflict
-     * WE ASSUME THAT EVENTS LAST ONE HOUR ACCORDING TO SPECIFICATIONS AND THAT THEY START
-     * AT START OF HOUR
-     */
     public boolean CheckTimeOverlap(Calendar time_1, Calendar time_2){
         return time_1.compareTo(time_2) == 0;
     }
 
-    /*
-     * NOTE: THESE METHODS WILL CHECK IF TIME CONFLICTS ARE CREATED:
-     * THEY WILL REJECT (AND GIVE SIGNAL OF FAILURE) WHEN CONFLICTS
-     * WOULD BE CREATED
-     * Overloading is used; two versions of AddNewEvent() and validEvent() (helper)
-     */
-
-    /**
-     * (NEW!) (Helper) Returns true iff Talk is valid: no conflicting time or existing events and talks.
-     * @param topic given topic
-     * @param time given time
-     * @param location given location
-     * @param speaker given speaker
-     * @param locations the current location list
-     * @param talks the current talk list
-     * @param events the current event list
-     * @return true iff Talk is valid: no conflicting time or existing events and talks.
-     */
-    public boolean validEvent(String topic, Calendar time, String location, String speaker, ArrayList<String> locations, ArrayList<Talk> talks, ArrayList<Event> events) {
+    public boolean validTalk(Calendar time, String location, ArrayList<String> locations, String speaker, ArrayList<Talk> talks, ArrayList<Event> events) {
         // call general helper
-        if (validEvent(topic, time, location, locations, events)) {
-            // check talks for double-booked Speaker
-            for(Talk talk: talks) {
-                if (talk.getSpeaker().equals(speaker) && CheckTimeOverlap(time, talk.getTime())) {
-                    return false; }
-            }
+        if (validEvent(time, location, locations, events)) {
+            // TODO: 11/16/20 Prevent double-booking speaker
+//            for(Talk talk: talks) {
+//                if (talk.getSpeaker().equals(speaker) && CheckTimeOverlap(time, talk.getTime())) {
+//                    return false; }
+//            }
             return true;
         }
         return false;
     }
 
-    /**
-     * (NEW!) (Helper) R    eturns true iff Event is valid: no conflicting time or existing events.
-     * @param topic given topic
-     * @param time given time
-     * @param location given location
-     * @param locations the current location list
-     * @param events the current event list
-     * @return true iff Event is valid: no conflicting time or existing events.
-     */
-    public boolean validEvent(String topic, Calendar time, String location, ArrayList<String> locations, ArrayList<Event> events) {
+    public boolean validEvent(Calendar time, String location, ArrayList<String> locations, ArrayList<Event> events) {
         // check if location is valid
         if (!locations.contains(location)) {
             return false;
         }
         // check if time is valid
-        if (!(9 <= time.get(Calendar.HOUR_OF_DAY) && time.get(Calendar.HOUR_OF_DAY) <= 4)) {
+        if (!(9 <= time.get(Calendar.HOUR_OF_DAY) && time.get(Calendar.HOUR_OF_DAY) <= 16)) {
             return false;
         }
         // check if any conflicting events or events already existing
         for(Event event: events) {
-            if (event.getLocation().equals(location) && CheckTimeOverlap(time, event.getTime())){
+            if (event.getLocation().equals(location) && event.getTime().equals(time)){
                 return false;
             }
         }

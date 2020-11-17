@@ -33,7 +33,7 @@ public class OrganizerController extends AccountController {
 
     public void registerNewTalk(Calendar time, String topic, String location, String speaker) {
         try {
-            Integer newTalkID = eventManager.AddNewEvent(topic, time, location, username, speaker);
+            Integer newTalkID = eventManager.addNewTalk(topic, time, location, username, speaker);
             signupManager.addEventKey(newTalkID);
         } catch (Exception e) {
             presenter.displayPrompt("\nSomething went wrong. Please enter valid input.\n");
@@ -132,10 +132,10 @@ public class OrganizerController extends AccountController {
                         presenter.displayPrompt("Enter the event time:");
                         // TODO: 11/16/20 Fix this!
                         Calendar time = this.registerEventTime();
-
+                        eventManager.addNewTalk(topic, time, location, this.username, username);
 //                        this.registerNewTalk(time, topic, location, username);
                     } catch (Exception e) {
-                        presenter.displayPrompt("\nSomething went wrong. Please enter valid input.\n");
+                        presenter.displayPrompt(e.toString());
                     }
                     break;
                 case "4":

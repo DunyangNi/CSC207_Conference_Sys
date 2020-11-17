@@ -14,7 +14,6 @@ import java.util.HashMap;
 public class EventManager implements Serializable {
     private HashMap<Integer, Event> events;
     private ArrayList<String> locations;
-    private EventChecker eventChecker = new EventChecker();
     private EventModifier eventModifier = new EventModifier();
 
     public EventManager() {
@@ -69,8 +68,8 @@ public class EventManager implements Serializable {
         }
     }
 
-    public Integer AddNewEvent(String topic, Calendar time, String location, String organizer) throws ConflictException {
-        if (validEvent(topic, time, location)) {
+    public Integer addNewEvent(String topic, Calendar time, String location, String organizer) throws ConflictException {
+        if (validEvent(time, location, locations, getAllEvents())) {
             Event eventToAdd = new Event(topic, time, location, organizer);
             events.put(eventToAdd.getId(), eventToAdd);
             return eventToAdd.getId();
@@ -78,23 +77,37 @@ public class EventManager implements Serializable {
         throw new ConflictException("Event conflicts with another");
     }
 
-    public Integer AddNewEvent(String topic, Calendar time, String location, String organizer, String speaker) throws ConflictException {
-        if (validEvent(topic, time, location, speaker)) {
+    public Integer addNewTalk(String topic, Calendar time, String location, String organizer, String speaker) throws ConflictException {
+        if (validTalk(time, location, locations, speaker, getAllTalks(), getAllEvents())) {
             // create a new event and add it to events
             Talk eventToAdd = new Talk(topic, time, location, organizer, speaker);
             events.put(eventToAdd.getId(), eventToAdd);
             return eventToAdd.getId();
         }
-        throw new ConflictException("Event conflicts with another");
+        throw new ConflictException("addNewTalk");
     }
 
-    public boolean validEvent(String topic, Calendar time, String location, String speaker) {
+    public boolean validTalk(Calendar time, String location, ArrayList<String> locations, String speaker, ArrayList<Talk> talks, ArrayList<Event> events) throws ConflictException {
         // call general helper
-        return eventChecker.validEvent(topic, time, location, speaker, this.locations, getAllTalks(), getAllEvents());
+        return validEvent(time, location, locations, events);
     }
 
-    public boolean validEvent(String topic, Calendar time, String location) {
-        return eventChecker.validEvent(topic, time, location, this.locations, getAllEvents());
+    public boolean validEvent(Calendar time, String location, ArrayList<String> locations, ArrayList<Event> events) throws ConflictException {
+        // check if location is valid
+        if (!locations.contains(location)) {
+            throw new ConflictException("Location");
+        }
+        // check if time is valid
+        if (!(9 <= time.get(Calendar.HOUR_OF_DAY) && time.get(Calendar.HOUR_OF_DAY) <= 16)) {
+            throw new ConflictException("Time");
+        }
+        // check if any conflicting events or events already existing
+        for(Event event: events) {
+            if (event.getLocation().equals(location) && event.getTime().equals(time)){
+                throw new ConflictException("Location + Time");
+            }
+        }
+        return true;
     }
 
     public void ChangeTopic(Integer id, String new_topic) {

@@ -67,7 +67,7 @@ public abstract class AccountController {
             int dayOfMonth = sc.nextInt();
             sc.nextLine();
             System.out.println("Month (1-12)");
-            int month = sc.nextInt();
+            int month = sc.nextInt()-1;
             sc.nextLine();
             System.out.println("Year (YYYY)");
             int year = sc.nextInt();
@@ -77,19 +77,21 @@ public abstract class AccountController {
             sc.nextLine();
 
             Calendar time = Calendar.getInstance();
-            time.set(Calendar.YEAR, year);
-            TimeZone tz = TimeZone.getTimeZone("EST");
-            time.setTimeZone(tz);
-            time.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            time.set(Calendar.MONTH, month - 1);
-            time.set(Calendar.HOUR_OF_DAY, hourOfDay);
-            time.set(Calendar.MINUTE, 0);
-            time.set(Calendar.SECOND, 0);
-            time.set(Calendar.MILLISECOND, 0);
+            time.set(year, month, dayOfMonth, hourOfDay, 0);
+
+//            time.set(Calendar.YEAR, year);
+//            TimeZone tz = TimeZone.getTimeZone("EST");
+//            time.setTimeZone(tz);
+//            time.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+//            time.set(Calendar.MONTH, month - 1);
+//            time.set(Calendar.HOUR_OF_DAY, hourOfDay);
+//            time.set(Calendar.MINUTE, 0);
+//            time.set(Calendar.SECOND, 0);
+//            time.set(Calendar.MILLISECOND, 0);
 
             return time;
         } catch (Exception e) {
-            System.out.println("\nSomething went wrong. Please enter valid input.\n");
+            System.out.println("\nSomething went wrong in registerEventTime. Please enter valid input.\n");
             throw new InstantiationException();
         }
     }
