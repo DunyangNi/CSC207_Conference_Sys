@@ -46,15 +46,12 @@ public class EventChecker implements Serializable {
 //    }
 
     public boolean isValidEvent(Calendar time, String location, ArrayList<String> locations, ArrayList<Event> events) throws ConflictException {
-        // check if location is valid
         if (!locations.contains(location)) {
             throw new ConflictException("Location");
         }
-        // check if time is valid
         if (!(9 <= time.get(Calendar.HOUR_OF_DAY) && time.get(Calendar.HOUR_OF_DAY) <= 16)) {
             throw new ConflictException("Time");
         }
-        // check if any conflicting events or events already existing
         for (Event event : events) {
             if (event.getLocation().equals(location) && event.getTime().equals(time)) {
                 throw new ConflictException("Location + Time");
@@ -65,6 +62,11 @@ public class EventChecker implements Serializable {
 
     public boolean isValidTalk(Calendar time, String location, ArrayList<String> locations, String speaker, ArrayList<Talk> talks, ArrayList<Event> events) throws ConflictException {
         // TODO: 11/17/20 Prevent double booking a speaker
+        // ^^ Implemented a fix. Please try if it works.
+        for (Talk t : talks) {
+            if (t.getSpeaker().equals(speaker) && t.getTime().equals(time))
+                throw new ConflictException("Speaker + Time");
+        }
         return isValidEvent(time, location, locations, events);
     }
 }

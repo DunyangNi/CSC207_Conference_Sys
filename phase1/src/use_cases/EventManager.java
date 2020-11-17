@@ -62,9 +62,8 @@ public class EventManager implements Serializable {
     }
 
     public ArrayList<String> fetchTalkAttendeeList(Integer id) throws ObjectNotFoundException {
-        if (!this.isTalk(id)) {
+        if (!this.isTalk(id))
             throw new ObjectNotFoundException();
-        }
         Event selectedEvent = events.get(id);
         return eventModifier.getAttendees(selectedEvent);
     }
@@ -80,10 +79,8 @@ public class EventManager implements Serializable {
     }
 
     public HashMap<String[], Calendar> fetchSortedTalks(ArrayList<Talk> selectedTalks) {
-        // Convert to sorted array
         Talk[] selectedTalksToSort = selectedTalks.toArray(new Talk[0]);
         Arrays.sort(selectedTalksToSort);
-        // Assemble Tuples of Information
         HashMap<String[], Calendar> sortedSelectedTalks = new HashMap<>();
         String[] eventInfo;
         for (Talk e : selectedTalksToSort) {
@@ -107,39 +104,33 @@ public class EventManager implements Serializable {
     }
 
     public void addNewLocation(String location) throws ConflictException {
-        if (!this.locations.contains(location)) {
-            this.locations.add(location);
-        } else {
+        if (this.locations.contains(location))
             throw new ConflictException("Location already exists");
-        }
+        this.locations.add(location);
     }
 
     public Integer addNewEvent(String topic, Calendar time, String location, String organizer) throws ConflictException {
-        if (isValidEvent(time, location, locations, fetchEventList())) {
-            Event eventToAdd = new Event(topic, time, location, organizer);
-            events.put(eventToAdd.getId(), eventToAdd);
-            return eventToAdd.getId();
-        }
-        throw new ConflictException("Event conflicts with another");
+        if (!isValidEvent(time, location, locations, fetchEventList()))
+            throw new ConflictException("Event conflicts with another");
+        Event eventToAdd = new Event(topic, time, location, organizer);
+        events.put(eventToAdd.getId(), eventToAdd);
+        return eventToAdd.getId();
+
     }
 
     public Integer addNewTalk(String topic, Calendar time, String location, String organizer, String speaker) throws ConflictException {
-        if (isValidTalk(time, location, locations, speaker, fetchTalkList(), fetchEventList())) {
-            // create a new event and add it to events
-            Talk eventToAdd = new Talk(topic, time, location, organizer, speaker);
-            events.put(eventToAdd.getId(), eventToAdd);
-            return eventToAdd.getId();
-        }
-        throw new ConflictException("addNewTalk");
+        if (!isValidTalk(time, location, locations, speaker, fetchTalkList(), fetchEventList()))
+            throw new ConflictException("addNewTalk");
+        Talk eventToAdd = new Talk(topic, time, location, organizer, speaker);
+        events.put(eventToAdd.getId(), eventToAdd);
+        return eventToAdd.getId();
     }
 
     public void cancelTalk(Integer id) throws ObjectNotFoundException {
-        if (!events.containsKey(id)) {
+        if (!events.containsKey(id))
             throw new ObjectNotFoundException();
-        }
-        if (!(events.get(id) instanceof Talk)) {
+        if (!(events.get(id) instanceof Talk))
             throw new ObjectNotFoundException();
-        }
         Event talkToCancel = events.get(id);
         if (talkToCancel instanceof Talk && !(Calendar.getInstance().compareTo(talkToCancel.getTime()) >= 0))
             events.remove(id);
@@ -150,14 +141,9 @@ public class EventManager implements Serializable {
     }
 
     public void changeTime(Integer id, Calendar newTime) throws ObjectNotFoundException, ConflictException {
-        try {
-            if (!events.containsKey(id)) {
-                throw new ObjectNotFoundException();
-            }
-            eventModifier.ChangeTime(events.get(id), newTime, fetchEventList());
-        } catch (Exception e) {
-            throw e;
-        }
+        if (!events.containsKey(id))
+            throw new ObjectNotFoundException();
+        eventModifier.ChangeTime(events.get(id), newTime, fetchEventList());
     }
 
     public boolean changeLocation(Integer id, String new_location) {
