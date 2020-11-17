@@ -133,7 +133,7 @@ public class OrganizerController extends AccountController {
                         // TODO: 11/16/20 Fix this!
                         Calendar time = this.registerEventTime();
 
-                        this.registerNewTalk(time, topic, location, username);
+//                        this.registerNewTalk(time, topic, location, username);
                     } catch (Exception e) {
                         presenter.displayPrompt("\nSomething went wrong. Please enter valid input.\n");
                     }
@@ -226,16 +226,18 @@ public class OrganizerController extends AccountController {
                     this.seeLocationList();
                     break;
                 case "16":
-                    System.out.println(accountManager.getAccountList().keySet());
+                    presenter.displayPrompt(accountManager.getAccountList().keySet().toString());
                     break;
                 default:
                     presenter.displayPrompt("Invalid input, please try again:\n");
             }
-            presenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
-            if (input.nextLine().equals("*")) {
-                displayCommandMenu();
+            if (!command.equals("0")) {
+                presenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
+                command = input.nextLine();
+                if (command.equals("*")) {
+                    displayCommandMenu();
+                }
             }
-
         }
     }
 }
