@@ -49,9 +49,8 @@ public abstract class AccountController {
                 System.out.println("Your recent " + numMessagesRequested + " messages with " + recipient + ":");
                 System.out.println();
                 int numMessagesRetrieved = Math.min(numMessagesRequested, convo.size());
-                for (int i = 0; i < numMessagesRetrieved; i++) {
-                    // TODO: 11/16/20 Message sIds are not being stored properly so this doesn't work
-                    msgToPrint = conversationManager.messageToString(convo.get(numMessagesRetrieved - 1 + i));
+                for (int i = numMessagesRetrieved; i > 0; i--) {
+                    msgToPrint = conversationManager.messageToString(convo.get(convo.size() - i)); // f
                     System.out.println(msgToPrint);
                     System.out.println();
                 }
