@@ -1,14 +1,15 @@
-//package use_cases;
-//
-//import entities.Event;
-//import entities.Talk;
-//
-//import java.io.Serializable;
-//import java.util.ArrayList;
-//import java.util.Calendar;
-//
-//public class EventChecker implements Serializable {
-//
+package use_cases;
+
+import Throwables.ConflictException;
+import entities.Event;
+import entities.Talk;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Calendar;
+
+public class EventChecker implements Serializable {
+
 //    public boolean CheckTimeOverlap(Calendar time_1, Calendar time_2){
 //        return time_1.compareTo(time_2) == 0;
 //    }
@@ -43,4 +44,27 @@
 //        }
 //        return true;
 //    }
-//}
+
+    public boolean isValidEvent(Calendar time, String location, ArrayList<String> locations, ArrayList<Event> events) throws ConflictException {
+        // check if location is valid
+        if (!locations.contains(location)) {
+            throw new ConflictException("Location");
+        }
+        // check if time is valid
+        if (!(9 <= time.get(Calendar.HOUR_OF_DAY) && time.get(Calendar.HOUR_OF_DAY) <= 16)) {
+            throw new ConflictException("Time");
+        }
+        // check if any conflicting events or events already existing
+        for (Event event : events) {
+            if (event.getLocation().equals(location) && event.getTime().equals(time)) {
+                throw new ConflictException("Location + Time");
+            }
+        }
+        return true;
+    }
+
+    public boolean isValidTalk(Calendar time, String location, ArrayList<String> locations, String speaker, ArrayList<Talk> talks, ArrayList<Event> events) throws ConflictException {
+        // TODO: 11/17/20 Prevent double booking a speaker
+        return isValidEvent(time, location, locations, events);
+    }
+}

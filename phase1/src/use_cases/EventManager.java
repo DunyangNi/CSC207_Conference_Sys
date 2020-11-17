@@ -15,6 +15,7 @@ public class EventManager implements Serializable {
     private HashMap<Integer, Event> events;
     private ArrayList<String> locations;
     private EventModifier eventModifier = new EventModifier();
+    private EventChecker eventChecker = new EventChecker();
 
     public EventManager() {
         this(new HashMap<>(), new ArrayList<>());
@@ -168,26 +169,11 @@ public class EventManager implements Serializable {
     }
 
     public boolean isValidEvent(Calendar time, String location, ArrayList<String> locations, ArrayList<Event> events) throws ConflictException {
-        // check if location is valid
-        if (!locations.contains(location)) {
-            throw new ConflictException("Location");
-        }
-        // check if time is valid
-        if (!(9 <= time.get(Calendar.HOUR_OF_DAY) && time.get(Calendar.HOUR_OF_DAY) <= 16)) {
-            throw new ConflictException("Time");
-        }
-        // check if any conflicting events or events already existing
-        for (Event event : events) {
-            if (event.getLocation().equals(location) && event.getTime().equals(time)) {
-                throw new ConflictException("Location + Time");
-            }
-        }
-        return true;
+        return eventChecker.isValidEvent(time, location, locations, events);
     }
 
     public boolean isValidTalk(Calendar time, String location, ArrayList<String> locations, String speaker, ArrayList<Talk> talks, ArrayList<Event> events) throws ConflictException {
-        // TODO: 11/17/20 Prevent double booking a speaker
-        return isValidEvent(time, location, locations, events);
+        return eventChecker.isValidTalk(time, location, locations, speaker, talks, events);
     }
 
     public boolean isTalk(Integer id) {
