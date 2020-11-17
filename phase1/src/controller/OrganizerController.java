@@ -77,12 +77,11 @@ public class OrganizerController extends AccountController {
         presenter.displayPrompt("13 = View list of all contacts");
 
         presenter.displayPrompt("\n[CONVERSATION COMMANDS]");
-        presenter.displayPrompt("6  = Send a message");
-        presenter.displayPrompt("6  = Send a message to all speakers");
-//        presenter.displayPrompt("7  = Message an individual speaker");
-        presenter.displayPrompt("8  = Send a message to all attendees");
-//        presenter.displayPrompt("9  = Message an individual attendee");
-        presenter.displayPrompt("14 = View a conversation");
+        presenter.displayPrompt("7  = Message a speaker");
+        presenter.displayPrompt("9  = Message an attendee");
+        presenter.displayPrompt("6  = Message all speakers");
+        presenter.displayPrompt("8  = Message all attendees");
+        presenter.displayPrompt("14 = View your conversations");
 
         presenter.displayPrompt("\n[EVENT COMMANDS]");
         presenter.displayPrompt("1  = Register a new event room");
@@ -101,6 +100,8 @@ public class OrganizerController extends AccountController {
         String command = input.nextLine();
 
         while (loop_on) {
+
+            // TODO: 11/16/20 Fix scopes defined by {
             switch (command) {
                 case "0":
                     loop_on = false;
@@ -111,9 +112,9 @@ public class OrganizerController extends AccountController {
                     addNewLocation(location);
                     break;
                 case "2": {
-                    presenter.displayPrompt("Enter a username");
+                    presenter.displayPrompt("Enter a username:");
                     String username = input.nextLine();
-                    presenter.displayPrompt("Enter a password");
+                    presenter.displayPrompt("Enter a password:");
                     String password = input.nextLine();
                     presenter.displayPrompt("Enter the speaker's first name");
                     String firstName = input.nextLine();
@@ -139,7 +140,7 @@ public class OrganizerController extends AccountController {
                     }
                     break;
                 case "4":
-                    System.out.print("Please enter the ID of a talk you wish to cancel: ");
+                    presenter.displayPrompt("Please enter the ID of a talk you wish to cancel: ");
                     int id = input.nextInt();
                     input.nextLine();
                     this.cancelTalk(id);
@@ -162,7 +163,7 @@ public class OrganizerController extends AccountController {
                     break;
                 }
                 case "7": {
-                    System.out.print("Please enter the username of the speaker you wish to message: ");
+                    presenter.displayPrompt("Please enter the username of the speaker you wish to message: ");
                     String username = input.nextLine();
                     presenter.displayPrompt("Please enter the message you want to send to this speaker:");
                     String message = input.nextLine();
@@ -176,7 +177,7 @@ public class OrganizerController extends AccountController {
                     break;
                 }
                 case "9": {
-                    System.out.print("Please enter the username of the attendee you want to message: ");
+                    presenter.displayPrompt("Please enter the username of the attendee you want to message: ");
                     String username = input.nextLine();
                     presenter.displayPrompt("Please enter the message you want to send the attendee:");
                     String message = input.nextLine();
@@ -187,12 +188,12 @@ public class OrganizerController extends AccountController {
                     this.SeeTalkSchedule();
                     break;
                 case "11":
-                    System.out.print("Please enter the username of a contact to add: ");
+                    presenter.displayPrompt("Please enter the username of a contact to add: ");
                     String contactToAdd = input.nextLine();
                     friendController.addFriend(contactToAdd);
                     break;
                 case "12":
-                    System.out.print("Please enter the username of a contact to remove: ");
+                    presenter.displayPrompt("Please enter the username of a contact to remove: ");
                     String contactToRemove = input.nextLine();
                     friendController.removeFriend(contactToRemove);
                     break;
@@ -203,19 +204,18 @@ public class OrganizerController extends AccountController {
                     try {
                         Set<String> myConversations = conversationManager.getAllUserConversationRecipients(username);
                         if (myConversations.isEmpty()) {
-                            presenter.displayPrompt("(No conversations)");
+                            presenter.displayPrompt("You have no conversations.");
                         } else {
-                            presenter.displayPrompt("List of Conversation Recipients");
-                            presenter.displayPrompt("---------------------------------------------");
+                            presenter.displayPrompt("[CONVERSATION RECIPIENTS]");
+                            presenter.displayPrompt("----------------------------------------------------------------");
                             for (String recipient : myConversations) {
                                 presenter.displayPrompt(recipient);
                             }
-                            presenter.displayPrompt("---------------------------------------------\n");
-                            System.out.print("To access a conversation, please enter the recipient's username: ");
+                            presenter.displayPrompt("----------------------------------------------------------------");
+                            presenter.displayPrompt("To access a conversation, please enter the recipient's username:");
                             String user = input.nextLine();
                             presenter.displayPrompt("How many past messages would you like to see?");
-                            int pastMessages = input.nextInt();
-                            input.nextLine();
+                            int pastMessages = Integer.parseInt(input.nextLine());
                             this.viewMessagesFrom(user, pastMessages);
                         }
                     } catch (Exception e) {
