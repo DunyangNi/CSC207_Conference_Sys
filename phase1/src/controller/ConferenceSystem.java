@@ -11,7 +11,8 @@ public class ConferenceSystem {
 
     public void run() {
         // Deserialization
-        DataManager dataManager = new DataManager("AccountManager", "FriendManager", "ConversationManager", "EventManager", "SignupManager");
+        DataManager dataManager = new DataManager();
+
         AccountManager accountManager = dataManager.readAccountManager();
         FriendManager friendManager = dataManager.readFriendManager();
         ConversationManager conversationManager = dataManager.readConversationManager();
