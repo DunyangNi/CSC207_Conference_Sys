@@ -103,14 +103,7 @@ public class DataManager {
      */
     public ConversationManager readConversationManager() {
         try{
-            InputStream file = new FileInputStream(conversationPath);
-            InputStream buffer = new BufferedInputStream(file);
-            ObjectInput input = new ObjectInputStream(buffer);
-            ConversationManager cm = (ConversationManager) input.readObject();
-            input.close();
-            buffer.close();
-            file.close();
-            return cm;
+            return (ConversationManager) readManager(conversationPath);
         } catch (IOException e) {
             System.out.println("Cannot read the ConversationManager, creating a new ConversationManager");
             return new ConversationManager();
