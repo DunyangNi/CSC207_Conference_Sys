@@ -54,14 +54,7 @@ public class DataManager {
      */
     public AccountManager readAccountManager() {
         try{
-            InputStream file = new FileInputStream(accountPath);
-            InputStream buffer = new BufferedInputStream(file);
-            ObjectInput input = new ObjectInputStream(buffer);
-            AccountManager am = (AccountManager) input.readObject();
-            input.close();
-            buffer.close();
-            file.close();
-            return am;
+            return (AccountManager) readManager(accountPath);
         } catch (IOException e) {
             System.out.println("Cannot read the AccountManager, creating a new AccountManager");
             return new AccountManager();
@@ -77,14 +70,7 @@ public class DataManager {
      */
     public EventManager readEventManager() {
         try{
-            InputStream file = new FileInputStream(eventPath);
-            InputStream buffer = new BufferedInputStream(file);
-            ObjectInput input = new ObjectInputStream(buffer);
-            EventManager em = (EventManager) input.readObject();
-            input.close();
-            buffer.close();
-            file.close();
-            return em;
+            return (EventManager) readManager(eventPath);
         } catch (IOException e) {
             System.out.println("Cannot read the EventManager, creating a new EventManager");
             return new EventManager();
@@ -100,14 +86,7 @@ public class DataManager {
      */
     public ConversationManager readConversationManager() {
         try{
-            InputStream file = new FileInputStream(conversationPath);
-            InputStream buffer = new BufferedInputStream(file);
-            ObjectInput input = new ObjectInputStream(buffer);
-            ConversationManager cm = (ConversationManager) input.readObject();
-            input.close();
-            buffer.close();
-            file.close();
-            return cm;
+            return (ConversationManager) readManager(conversationPath);
         } catch (IOException e) {
             System.out.println("Cannot read the ConversationManager, creating a new ConversationManager");
             return new ConversationManager();
@@ -123,14 +102,7 @@ public class DataManager {
      */
     public FriendManager readFriendManager() {
         try {
-            InputStream file = new FileInputStream(friendPath);
-            InputStream buffer = new BufferedInputStream(file);
-            ObjectInput input = new ObjectInputStream(buffer);
-            FriendManager fm = (FriendManager) input.readObject();
-            input.close();
-            buffer.close();
-            file.close();
-            return fm;
+            return (FriendManager) readManager(friendPath);
         } catch (IOException e) {
             System.out.println("Cannot read the FriendManager, creating a new FriendManager");
             return new FriendManager();
@@ -146,14 +118,14 @@ public class DataManager {
      */
     public SignupManager readSignupManager() {
         try {
-            InputStream file = new FileInputStream(signupPath);
-            InputStream buffer = new BufferedInputStream(file);
-            ObjectInput input = new ObjectInputStream(buffer);
-            SignupManager sm = (SignupManager) input.readObject();
-            input.close();
-            buffer.close();
-            file.close();
-            return sm;
+//            InputStream file = new FileInputStream(signupPath);
+//            InputStream buffer = new BufferedInputStream(file);
+//            ObjectInput input = new ObjectInputStream(buffer);
+//            SignupManager sm = (SignupManager) input.readObject();
+//            input.close();
+//            buffer.close();
+//            file.close();
+            return (SignupManager) readManager(signupPath);
         } catch (IOException e) {
             System.out.println("Cannot read the SignupManager, creating a new SignupManager");
             return new SignupManager();
@@ -161,6 +133,17 @@ public class DataManager {
             System.out.println("There is no SignupManager in database, creating a new SignupManager");
             return new SignupManager();
         }
+    }
+
+    private Object readManager(String path) throws IOException, ClassNotFoundException {
+        InputStream file = new FileInputStream(path);
+        InputStream buffer = new BufferedInputStream(file);
+        ObjectInput input = new ObjectInputStream(buffer);
+        Object ob = input.readObject();
+        input.close();
+        buffer.close();
+        file.close();
+        return ob;
     }
 }
 
