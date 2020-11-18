@@ -3,6 +3,7 @@ package controller;
 import use_cases.ConversationManager;
 import use_cases.AccountManager;
 import use_cases.EventManager;
+import use_cases.SignupManager;
 
 import java.util.*;
 
@@ -11,13 +12,15 @@ public class MessageController {
     protected AccountManager accountManager;
     protected ConversationManager conversationManager;
     protected EventManager eventManager;
+    protected SignupManager signupManager;
 
     public MessageController(String username, AccountManager accountManager, ConversationManager conversationManager,
-                             EventManager eventManager){
+                             EventManager eventManager, SignupManager signupManager){
         this.username = username;
         this.accountManager = accountManager;
         this.conversationManager = conversationManager;
         this.eventManager = eventManager;
+        this.signupManager = signupManager;
     }
 
     public void messageAccount(String message, String account) {
@@ -58,8 +61,9 @@ public class MessageController {
     public void messageAllSpeakers(String message) {
         try{
             Iterator<String> speakerusernameiterator = this.accountManager.speakerUsernameIterator();
-            while(speakerusernameiterator.hasNext()){
-                conversationManager.sendMessage(this.username, speakerusernameiterator.next(), message);}
+            while(speakerusernameiterator.hasNext()) {
+                messageSpeaker(message, speakerusernameiterator.next());
+            }
         }
         catch(Exception e) {
             System.out.println(e.toString());
@@ -71,8 +75,9 @@ public class MessageController {
     public void messageAllAttendees(String message) {
         try{
             Iterator<String> attendeeusernameiterator = this.accountManager.attendeeUsernameIterator();
-            while(attendeeusernameiterator.hasNext()){
-                conversationManager.sendMessage(this.username, attendeeusernameiterator.next(), message);}
+            while(attendeeusernameiterator.hasNext()) {
+                messageAttendee(message, attendeeusernameiterator.next());
+            }
         }
         catch(Exception e) {
             System.out.println(e.toString());
@@ -85,12 +90,11 @@ public class MessageController {
         try {
             Set<String> selectedAttendeeUsernames = new HashSet<>();
             for (Integer id : selectedSpeakerTalks) {
-                if (eventManager.isTalk(id)) {
-                    selectedAttendeeUsernames.addAll(eventManager.fetchTalkAttendeeList(id));
-                }
+                if (eventManager.isTalk(id))
+                    selectedAttendeeUsernames.addAll(signupManager.fetchTalkAttendeeList(id));
             }
             for (String attendeeUsername : selectedAttendeeUsernames) {
-                conversationManager.sendMessage(this.username, attendeeUsername, message);
+                messageAttendee(message, attendeeUsername);
             }
         }
         catch(Exception e) {

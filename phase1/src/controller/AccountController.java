@@ -28,7 +28,7 @@ public abstract class AccountController {
         this.signupManager = signupManager;
         this.presenter = new Presenter(eventManager, friendManager, signupManager);
         this.friendController = new FriendController(username, friendManager, presenter);
-        this.messageController = new MessageController(username, accountManager, conversationManager, eventManager);
+        this.messageController = new MessageController(username, accountManager, conversationManager, eventManager, signupManager);
     }
 
     public void SeeTalkSchedule() {

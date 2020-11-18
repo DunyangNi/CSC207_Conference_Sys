@@ -71,6 +71,7 @@ public class SpeakerController extends AccountController {
                         }
                         System.out.println("Would you like to add another Talk? (1 = yes, 0 = no)");
                         int response = userInput.nextInt();
+                        userInput.nextLine();
                         doneAddingTalks = response == 0;
                     }
                     System.out.println("Please enter your message to send: ");

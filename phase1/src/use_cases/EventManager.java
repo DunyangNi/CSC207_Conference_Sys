@@ -67,13 +67,6 @@ public class EventManager implements Serializable {
         return talks;
     }
 
-    public ArrayList<String> fetchTalkAttendeeList(Integer id) throws ObjectNotFoundException {
-        if (!this.isTalk(id))
-            throw new ObjectNotFoundException("Talk");
-        Event selectedEvent = events.get(id);
-        return eventModifier.getAttendees(selectedEvent);
-    }
-
     public ArrayList<Talk> fetchSpeakerTalks(String speaker) {
         ArrayList<Talk> speakerTalks = new ArrayList<>();
         for (Talk e : fetchTalkList()) {

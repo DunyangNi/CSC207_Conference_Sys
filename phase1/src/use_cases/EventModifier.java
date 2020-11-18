@@ -2,7 +2,6 @@ package use_cases;
 
 import entities.Event;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Calendar;
 
 public class EventModifier implements Serializable {
@@ -20,10 +19,6 @@ public class EventModifier implements Serializable {
 
     public void ChangeOrganizer(Event eventToChange, String new_organizer){
         eventToChange.setOrganizer(new_organizer);
-    }
-
-    public ArrayList<String> getAttendees(Event event){
-        return event.getAttendees();
     }
 
 }

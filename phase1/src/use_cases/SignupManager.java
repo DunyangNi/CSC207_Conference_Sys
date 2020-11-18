@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import Throwables.ConflictException;
 import Throwables.ObjectNotFoundException;
+import entities.Event;
 
 /**
  * SignupManager adds given Attendee to a given Talk.
@@ -61,6 +62,12 @@ public class SignupManager implements Serializable {
         if (!isSignedUp(talk_id, attendee))
             throw new ObjectNotFoundException("User");
         signups.get(talk_id).remove(attendee);
+    }
+
+    public ArrayList<String> fetchTalkAttendeeList(Integer id) throws ObjectNotFoundException {
+        if (!signups.containsKey(id))
+            throw new ObjectNotFoundException("Talk");
+        return signups.get(id);
     }
 
     /**
