@@ -147,7 +147,7 @@ public class SpeakerController extends AccountController {
                 presenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
                 command = userInput.nextLine();
                 if (command.equals("*")) {
-                    presenter.displayOrganizerMenu();
+                    presenter.displaySpeakerMenu();
                 }
             }
         }
