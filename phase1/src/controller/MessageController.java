@@ -55,9 +55,9 @@ public class MessageController {
 
     public void messageAllSpeakers(String message) {
         try{
-            Iterator<String> speakerusernameiterator = this.accountManager.speakerUsernameIterator();
-            while(speakerusernameiterator.hasNext()) {
-                messageSpeaker(message, speakerusernameiterator.next());
+            Iterator<String> speakerUsernameIterator = this.accountManager.speakerUsernameIterator();
+            while(speakerUsernameIterator.hasNext()) {
+                messageSpeaker(message, speakerUsernameIterator.next());
             }
         }
         catch(Exception e) {
@@ -68,9 +68,9 @@ public class MessageController {
 
     public void messageAllAttendees(String message) {
         try{
-            Iterator<String> attendeeusernameiterator = this.accountManager.attendeeUsernameIterator();
-            while(attendeeusernameiterator.hasNext()) {
-                messageAttendee(message, attendeeusernameiterator.next());
+            Iterator<String> attendeeUsernameIterator = this.accountManager.attendeeUsernameIterator();
+            while(attendeeUsernameIterator.hasNext()) {
+                messageAttendee(message, attendeeUsernameIterator.next());
             }
         }
         catch(Exception e) {

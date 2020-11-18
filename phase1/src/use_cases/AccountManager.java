@@ -137,29 +137,32 @@ public class AccountManager implements Serializable {
     }
 
     public Iterator<String> speakerUsernameIterator() {
-        Iterator<Speaker> speakerIterator = this.speakerList.values().iterator();
-        ArrayList<String> usernames = new ArrayList<>();
-        while (speakerIterator.hasNext()) {
-            usernames.add(speakerIterator.next().getUsername());
-        }
-        return usernames.iterator();
+//        Iterator<Speaker> speakerIterator = this.speakerList.values().iterator();
+//        ArrayList<String> usernames = new ArrayList<>();
+//        while (speakerIterator.hasNext()) {
+//            usernames.add(speakerIterator.next().getUsername());
+//        }
+//        return usernames.iterator();
+        return speakerList.keySet().iterator();
     }
 
     public Iterator<String> attendeeUsernameIterator() {
-        Iterator<Attendee> speakerIterator = this.attendeeList.values().iterator();
-        ArrayList<String> usernames = new ArrayList<>();
-        while (speakerIterator.hasNext()) {
-            usernames.add(speakerIterator.next().getUsername());
-        }
-        return usernames.iterator();
+//        Iterator<Attendee> speakerIterator = this.attendeeList.values().iterator();
+//        ArrayList<String> usernames = new ArrayList<>();
+//        while (speakerIterator.hasNext()) {
+//            usernames.add(speakerIterator.next().getUsername());
+//        }
+//        return usernames.iterator();
+        return attendeeList.keySet().iterator();
     }
 
     public Iterator<String> organizerUsernameIterator() {
-        Iterator<Organizer> speakerIterator = this.organizerList.values().iterator();
-        ArrayList<String> usernames = new ArrayList<>();
-        while (speakerIterator.hasNext()) {
-            usernames.add(speakerIterator.next().getUsername());
-        }
-        return usernames.iterator();
+//        Iterator<Organizer> speakerIterator = this.organizerList.values().iterator();
+//        ArrayList<String> usernames = new ArrayList<>();
+//        while (speakerIterator.hasNext()) {
+//            usernames.add(speakerIterator.next().getUsername());
+//        }
+//        return usernames.iterator();
+        return organizerList.keySet().iterator();
     }
 }
