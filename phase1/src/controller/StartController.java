@@ -6,15 +6,13 @@ import use_cases.*;
 import java.util.Scanner;
 
 public class StartController {
-    private AccountManager accountManager;
-    private FriendManager friendManager;
-    private ConversationManager conversationManager;
-    private EventManager eventManager;
-    private SignupManager signupManager;
-    private Presenter presenter = new Presenter();
     private final Scanner input = new Scanner(System.in);
-    private LoginController loginController;
-    private RegistrationController registrationController;
+    private final AccountManager accountManager;
+    private final FriendManager friendManager;
+    private final ConversationManager conversationManager;
+    private final EventManager eventManager;
+    private final SignupManager signupManager;
+    private final Presenter presenter = new Presenter();
 
     StartController(AccountManager accountManager, FriendManager friendManager, ConversationManager conversationManager, EventManager eventManager, SignupManager signupManager) {
         this.accountManager = accountManager;
@@ -38,10 +36,10 @@ public class StartController {
 
         //Run attemptLogin or signup
         if (command.equals("1")) {
-            loginController = new LoginController(accountManager, friendManager, conversationManager, eventManager, signupManager);
+            LoginController loginController = new LoginController(accountManager, friendManager, conversationManager, eventManager, signupManager);
             loginController.attemptLogin();
         } else {
-            registrationController = new RegistrationController(accountManager, friendManager, conversationManager, eventManager, signupManager);
+            RegistrationController registrationController = new RegistrationController(accountManager, friendManager, conversationManager, eventManager, signupManager);
             registrationController.attemptRegister();
         }
     }
