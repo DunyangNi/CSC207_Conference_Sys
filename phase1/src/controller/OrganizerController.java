@@ -211,7 +211,7 @@ public class OrganizerController extends AccountController {
                     this.seeLocationList();
                     break;
                 case "16":
-                    presenter.displayPrompt(accountManager.getAccountList().keySet().toString());
+                    presenter.displayPrompt(accountManager.fetchAccountList().keySet().toString());
                     break;
                 default:
                     presenter.displayPrompt("Invalid input, please try again:\n");

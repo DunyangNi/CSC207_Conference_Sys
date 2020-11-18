@@ -81,7 +81,7 @@ public class SpeakerController extends AccountController {
                     this.SeeTalkSchedule();
                     break;
                 case "5":
-                    Set<String> allAccts = accountManager.getAccountList().keySet();
+                    Set<String> allAccts = accountManager.fetchAccountList().keySet();
                     if (!allAccts.isEmpty()) {
                         System.out.println("List of users");
                         System.out.println("---------------------------------------------");
@@ -103,7 +103,7 @@ public class SpeakerController extends AccountController {
                 case "6":
                     System.out.println("Specify username of contact to remove");
                     String removeContact = userInput.nextLine();
-                    Set<String> allAccounts = accountManager.getAccountList().keySet();
+                    Set<String> allAccounts = accountManager.fetchAccountList().keySet();
                     if (allAccounts.contains(removeContact)) {
                         friendController.removeFriend(removeContact);
                     } else {
@@ -137,7 +137,7 @@ public class SpeakerController extends AccountController {
                     }
                     break;
                 case "16":
-                    presenter.displayPrompt(accountManager.getAccountList().keySet().toString());
+                    presenter.displayPrompt(accountManager.fetchAccountList().keySet().toString());
                     break;
                 default:
                     presenter.displayPrompt("Invalid input, please try again:\n");
