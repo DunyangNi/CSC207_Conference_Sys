@@ -25,7 +25,7 @@ public class MessageController {
             conversationManager.sendMessage(this.username, account, message);
         }
         catch(Exception e){
-            System.out.println("");
+            System.out.println(e.toString());
             System.out.println("Something went wrong with messageAccount while messaging. Try again.");
             System.out.println("");
         }
@@ -62,7 +62,7 @@ public class MessageController {
                 conversationManager.sendMessage(this.username, speakerusernameiterator.next(), message);}
         }
         catch(Exception e) {
-            System.out.println("");
+            System.out.println(e.toString());
             System.out.println("Something went wrong. Please try again.");
             System.out.println("");
         }
@@ -75,7 +75,7 @@ public class MessageController {
                 conversationManager.sendMessage(this.username, attendeeusernameiterator.next(), message);}
         }
         catch(Exception e) {
-            System.out.println("");
+            System.out.println(e.toString());
             System.out.println("Something went wrong. Please try again.");
             System.out.println("");
         }
@@ -94,7 +94,7 @@ public class MessageController {
             }
         }
         catch(Exception e) {
-            System.out.println("\nSomething went wrong. Please enter valid input.\n");
+            System.out.println(e.toString() + "\nSomething went wrong. Please enter valid input.\n");
         }
     }
 }

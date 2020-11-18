@@ -123,7 +123,7 @@ public class AttendeeController extends AccountController {
                             this.viewMessagesFrom(user, pastMessages);
                         }
                     } catch (Exception e) {
-                        System.out.println("\nSomething went wrong. Please enter valid input.\n");
+                        System.out.println(e.toString() + "\nSomething went wrong. Please enter valid input.\n");
                     }
                     break;
             }

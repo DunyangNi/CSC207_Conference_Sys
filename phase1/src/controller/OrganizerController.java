@@ -26,7 +26,7 @@ public class OrganizerController extends AccountController {
         try {
             this.eventManager.addNewLocation(location);
         } catch (ConflictException e) {
-            presenter.displayPrompt("\nSomething went wrong. Please enter valid input.\n");
+            presenter.displayPrompt(e.toString() + "\nSomething went wrong. Please enter valid input.\n");
         }
     }
 
@@ -35,7 +35,7 @@ public class OrganizerController extends AccountController {
             this.accountManager.AddNewSpeaker(username, password, firstname, lastname);
             addNewSpeakerKeys(username);
         } catch (ConflictException e) {
-            presenter.displayPrompt(e.toString()); // r
+            presenter.displayPrompt(e.toString() + "\nSomething went wrong. Please enter valid input.\n"); // r
         }
     }
 
@@ -44,7 +44,7 @@ public class OrganizerController extends AccountController {
             Integer newTalkID = eventManager.addNewTalk(topic, time, location, username, speaker);
             signupManager.addEventKey(newTalkID);
         } catch (Exception e) {
-            presenter.displayPrompt("\nSomething went wrong. Please enter valid input.\n");
+            presenter.displayPrompt(e.toString() + "\nSomething went wrong. Please enter valid input.\n");
         }
     }
 
@@ -53,7 +53,7 @@ public class OrganizerController extends AccountController {
             this.eventManager.cancelTalk(id);
             signupManager.removeEventKey(id);
         } catch (Exception e) {
-            presenter.displayPrompt("\nSomething went wrong. Please enter valid input.\n");
+            presenter.displayPrompt(e.toString() + "\nSomething went wrong. Please enter valid input.\n");
         }
     }
 
@@ -61,7 +61,7 @@ public class OrganizerController extends AccountController {
         try {
             this.eventManager.changeTime(id, newTime);
         } catch (Exception e) {
-            presenter.displayPrompt("\nSomething went wrong. Please enter valid input.\n");
+            presenter.displayPrompt(e.toString() + "\nSomething went wrong. Please enter valid input.\n");
         }
     }
 
@@ -121,7 +121,7 @@ public class OrganizerController extends AccountController {
                         Integer newTalkID = eventManager.addNewTalk(topic, time, location, this.username, username);
                         signupManager.addEventKey(newTalkID);
                     } catch (Exception e) {
-                        presenter.displayPrompt(e.toString());
+                        presenter.displayPrompt(e.toString() + "\nSomething went wrong. Please enter valid input.\n");
                     }
                     break;
                 case "4":
@@ -138,7 +138,7 @@ public class OrganizerController extends AccountController {
                         Calendar newTime = this.collectTimeInfo();
                         this.rescheduleTalk(id, newTime);
                     } catch (Exception e) {
-                        presenter.displayPrompt("\nSomething went wrong. Please enter valid input.\n");
+                        presenter.displayPrompt(e.toString() + "\nSomething went wrong. Please enter valid input.\n");
                     }
                     break;
                 case "6": {
@@ -204,7 +204,7 @@ public class OrganizerController extends AccountController {
                             this.viewMessagesFrom(user, pastMessages);
                         }
                     } catch (Exception e) {
-                        presenter.displayPrompt("\nSomething went wrong. Please enter valid input.");
+                        presenter.displayPrompt(e.toString() + "\nSomething went wrong. Please enter valid input.");
                     }
                     break;
                 case "15":

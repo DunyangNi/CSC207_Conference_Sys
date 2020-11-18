@@ -56,7 +56,7 @@ public abstract class AccountController {
                 }
             }
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println(e.toString() + "\nSomething went wrong in collectTimeInfo. Please enter valid input.\n");
         }
     }
 
@@ -82,7 +82,7 @@ public abstract class AccountController {
 
             return time;
         } catch (Exception e) {
-            System.out.println("\nSomething went wrong in collectTimeInfo. Please enter valid input.\n");
+            System.out.println(e.toString() + "\nSomething went wrong in collectTimeInfo. Please enter valid input.\n");
             throw new InstantiationException();
         }
     }
