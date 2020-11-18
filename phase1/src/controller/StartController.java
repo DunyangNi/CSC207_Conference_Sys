@@ -1,5 +1,6 @@
 package controller;
 
+import gateway.DataManager;
 import presenter.Presenter;
 import use_cases.*;
 
@@ -37,11 +38,24 @@ public class StartController {
         else if (command.equals("1")) {
             LoginController loginController = new LoginController(accountManager, friendManager, conversationManager, eventManager, signupManager);
             programEnd = loginController.attemptLogin();
+            DataManager dataManager = new DataManager();
+            dataManager.saveManager("EventManager", "EventManager", eventManager);
+            dataManager.saveManager("AccountManager", "AccountManager", accountManager);
+            dataManager.saveManager("ConversationManager", "ConversationManager", conversationManager);
+            dataManager.saveManager("FriendManager", "FriendManager", friendManager);
+            dataManager.saveManager("SignupManager", "SignupManager", signupManager);
         }
         else {
             RegistrationController registrationController = new RegistrationController(accountManager, friendManager, conversationManager, eventManager, signupManager);
             programEnd = registrationController.attemptRegister();
+            DataManager dataManager = new DataManager();
+            dataManager.saveManager("EventManager", "EventManager", eventManager);
+            dataManager.saveManager("AccountManager", "AccountManager", accountManager);
+            dataManager.saveManager("ConversationManager", "ConversationManager", conversationManager);
+            dataManager.saveManager("FriendManager", "FriendManager", friendManager);
+            dataManager.saveManager("SignupManager", "SignupManager", signupManager);
         }
+
         return programEnd;
     }
 }

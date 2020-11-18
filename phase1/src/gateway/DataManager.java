@@ -3,6 +3,7 @@ package gateway;
 import use_cases.*;
 
 import java.io.*;
+import java.sql.SQLOutput;
 
 /**
  * The gateway class that can save and read data from files
@@ -56,6 +57,7 @@ public class DataManager {
     public void saveManager(String managerName, String filePath, Serializable manager) {
         try {
             saveSerializable(filePath, manager);
+            System.out.println("Saved " + managerName);
         } catch (IOException e) {
             System.out.printf("Failed to save the %s.%n", managerName);
         }
@@ -75,6 +77,7 @@ public class DataManager {
             input.close();
             buffer.close();
             file.close();
+            System.out.println("Loaded " + accountPath);
             return am;
         } catch (IOException e) {
             System.out.println("Cannot read the AccountManager, creating a new AccountManager");
@@ -99,6 +102,7 @@ public class DataManager {
             input.close();
             buffer.close();
             file.close();
+            System.out.println("Loaded " + eventPath);
             return em;
         } catch (IOException e) {
             System.out.println("Cannot read the EventManager, creating a new EventManager");
@@ -123,6 +127,7 @@ public class DataManager {
             input.close();
             buffer.close();
             file.close();
+            System.out.println("Loaded " + conversationPath);
             return cm;
         } catch (IOException e) {
             System.out.println("Cannot read the ConversationManager, creating a new ConversationManager");
@@ -147,6 +152,7 @@ public class DataManager {
             input.close();
             buffer.close();
             file.close();
+            System.out.println("Loaded " + friendPath);
             return fm;
         } catch (IOException e) {
             System.out.println("Cannot read the FriendManager, creating a new FriendManager");
@@ -171,6 +177,7 @@ public class DataManager {
             input.close();
             buffer.close();
             file.close();
+            System.out.println("Loaded " + signupPath);
             return sm;
         } catch (IOException e) {
             System.out.println("Cannot read the SignupManager, creating a new SignupManager");

@@ -20,11 +20,6 @@ public class ConferenceSystem {
         while (!programEnd) {
             StartController startController = new StartController(accountManager, friendManager, conversationManager, eventManager, signupManager);
             programEnd = startController.runStartMenu();
-            dataManager.saveManager("EventManager", "EventManager", eventManager);
-            dataManager.saveManager("AccountManager", "AccountManager", accountManager);
-            dataManager.saveManager("ConversationManager", "ConversationManager", conversationManager);
-            dataManager.saveManager("FriendManager", "FriendManager", friendManager);
-            dataManager.saveManager("SignupManager", "SignupManager", signupManager);
         }
     }
 }
