@@ -13,6 +13,13 @@ public class OrganizerController extends AccountController {
         super(username, accountManager, friendManager, conversationManager, eventmanager, signupManager);
     }
 
+    // (NEW!) (Helper)
+    private void addNewSpeakerKeys(String username) {
+        conversationManager.addAccountKey(username);
+        friendManager.addAccountKey(username);
+        eventManager.addSpeakerKey(username);
+    }
+
     public void addNewLocation(String location) {
         try {
             this.eventManager.addNewLocation(location);
@@ -24,8 +31,7 @@ public class OrganizerController extends AccountController {
     public void createSpeakerAccount(String username, String password, String firstname, String lastname) {
         try {
             this.accountManager.AddNewSpeaker(username, password, firstname, lastname);
-            conversationManager.addAccountKey(username);
-            friendManager.addAccountKey(username);
+            addNewSpeakerKeys(username);
         } catch (ConflictException e) {
             presenter.displayPrompt(e.toString()); // r
         }

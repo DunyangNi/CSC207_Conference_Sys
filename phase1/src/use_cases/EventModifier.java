@@ -1,62 +1,25 @@
 package use_cases;
 
-import Throwables.ConflictException;
 import entities.Event;
-import entities.Talk;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 public class EventModifier implements Serializable {
-    public boolean ChangeLocation(Event event_to_change, String new_location,
-                                  ArrayList<String> locations, ArrayList<Event> events) {
-        if(!locations.contains(new_location)) {
-            return false;
-        }
-
-        Calendar time2 = event_to_change.getTime();
-        for(Event event: events) {
-            Calendar time1 = event.getTime();
-            String location1 = event.getLocation();
-            if (event.equals(event_to_change) && location1.equals(new_location) &&
-                    (time1.compareTo(time2) == 0)) {
-                return false;
-            }
-        }
-        event_to_change.setLocation(new_location);
-        return true;
+    public void ChangeLocation(Event eventToChange, String newLocation) {
+        eventToChange.setLocation(newLocation);
     }
 
-    public void ChangeTime(Event selectedEvent, Calendar newTime, ArrayList<Event> events) throws ConflictException{
-        Calendar curr_time = Calendar.getInstance();
-        if (curr_time.compareTo(selectedEvent.getTime()) >= 0 || curr_time.compareTo(newTime) >= 0) {
-            throw new ConflictException("Event to be reschedules takes place in the past");
-        }
-
-        if (!(9 <= newTime.get(Calendar.HOUR_OF_DAY) && newTime.get(Calendar.HOUR_OF_DAY) <= 16)) {
-            throw new ConflictException("Rescheduled time must start between 9am and 5pm");
-        }
-
-        for (Event event: events) {
-            String eventLocation = event.getLocation(); Calendar eventTime = event.getTime();
-            if (!event.equals(selectedEvent) && eventLocation.equals(selectedEvent.getLocation()) &&
-                    (eventTime.compareTo(newTime) == 0)) {
-                throw new ConflictException("Conflicts with event at location");
-            }
-            if (!event.equals(selectedEvent) && (event instanceof Talk) && (selectedEvent instanceof Talk) && ((Talk) event).getSpeaker().equals(((Talk) selectedEvent).getSpeaker()) && (eventTime.compareTo(newTime) == 0)) {
-                throw new ConflictException("Speaker scheduled at 2 places at the same time");
-            }
-        }
+    public void ChangeTime(Event selectedEvent, Calendar newTime) {
         selectedEvent.setTime(newTime);
     }
 
-    public void ChangeTopic(Event event_to_change, String new_topic){
-        event_to_change.setTopic(new_topic);
+    public void ChangeTopic(Event eventToChange, String new_topic){
+        eventToChange.setTopic(new_topic);
     }
 
-    public void ChangeOrganizer(Event event_to_change, String new_organizer){
-        event_to_change.setOrganizer(new_organizer);
+    public void ChangeOrganizer(Event eventToChange, String new_organizer){
+        eventToChange.setOrganizer(new_organizer);
     }
 
     public ArrayList<String> getAttendees(Event event){

@@ -40,9 +40,7 @@ public class RegistrationController {
     private void registerNewAttendee() {
         String[] accountInfo = getNewAccountInfo();
         accountManager.AddNewAttendee(accountInfo[0], accountInfo[1], accountInfo[2], accountInfo[3]);
-        conversationManager.addAccountKey(accountInfo[0]);
-        friendManager.addAccountKey(accountInfo[0]);
-
+        addNewAccountKeys(accountInfo[0]);
         AttendeeController ac = new AttendeeController(accountInfo[0], eventManager, conversationManager, friendManager, signupManager, accountManager);
         ac.runInteraction();
     }
@@ -58,9 +56,7 @@ public class RegistrationController {
 
         String[] accountInfo = getNewAccountInfo();
         accountManager.AddNewOrganizer(accountInfo[0], accountInfo[1], accountInfo[2], accountInfo[3]);
-        conversationManager.addAccountKey(accountInfo[0]);
-        friendManager.addAccountKey(accountInfo[0]);
-
+        addNewAccountKeys(accountInfo[0]);
         OrganizerController oc = new OrganizerController(accountInfo[0], accountManager, friendManager, conversationManager, eventManager, signupManager);
         oc.runInteraction();
     }
@@ -83,5 +79,11 @@ public class RegistrationController {
         String lastname = input.nextLine();
 
         return new String[]{username, password, firstname, lastname};
+    }
+
+    // (NEW!) (Helper)
+    private void addNewAccountKeys(String username) {
+        conversationManager.addAccountKey(username);
+        friendManager.addAccountKey(username);
     }
 }
