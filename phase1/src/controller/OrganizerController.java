@@ -9,7 +9,9 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class OrganizerController extends AccountController {
-    public OrganizerController(String username, AccountManager accountManager, FriendManager friendManager, ConversationManager conversationManager, EventManager eventmanager, SignupManager signupManager) {
+    public OrganizerController(String username, AccountManager accountManager, FriendManager friendManager,
+                               ConversationManager conversationManager, EventManager eventmanager,
+                               SignupManager signupManager) {
         super(username, accountManager, friendManager, conversationManager, eventmanager, signupManager);
     }
 
@@ -73,10 +75,10 @@ public class OrganizerController extends AccountController {
 
     @Override
     public void runInteraction() {
-        presenter.displayOrganizerMenu();
-        Scanner input = new Scanner(System.in);
-        String command = input.nextLine();
         boolean loggedIn = true;
+        presenter.displayOrganizerMenu();
+        Scanner userInput = new Scanner(System.in);
+        String command = userInput.nextLine();
 
         while (loggedIn) {
 
@@ -91,29 +93,29 @@ public class OrganizerController extends AccountController {
                     break;
                 case "1":
                     presenter.displayPrompt("Enter a name for the new room:");
-                    String location = input.nextLine();
+                    String location = userInput.nextLine();
                     addNewLocation(location);
                     break;
                 case "2": {
                     presenter.displayPrompt("Enter a username:");
-                    String username = input.nextLine();
+                    String username = userInput.nextLine();
                     presenter.displayPrompt("Enter a password:");
-                    String password = input.nextLine();
+                    String password = userInput.nextLine();
                     presenter.displayPrompt("Enter the speaker's first name");
-                    String firstName = input.nextLine();
+                    String firstName = userInput.nextLine();
                     presenter.displayPrompt("Enter the speaker's last name");
-                    String lastName = input.nextLine();
+                    String lastName = userInput.nextLine();
                     createSpeakerAccount(username, password, firstName, lastName);
                     break;
                 }
                 case "3":
                     try {
                         presenter.displayPrompt("Enter the speaker's username:");
-                        String username = input.nextLine();
+                        String username = userInput.nextLine();
                         presenter.displayPrompt("Enter the event room:");
-                        location = input.nextLine();
+                        location = userInput.nextLine();
                         presenter.displayPrompt("Enter the event topic:");
-                        String topic = input.nextLine();
+                        String topic = userInput.nextLine();
                         presenter.displayPrompt("Enter the event time:");
                         Calendar time = this.collectTimeInfo();
                         Integer newTalkID = eventManager.addNewTalk(topic, time, location, this.username, username);
@@ -124,15 +126,15 @@ public class OrganizerController extends AccountController {
                     break;
                 case "4":
                     presenter.displayPrompt("Please enter the ID of a talk you wish to cancel: ");
-                    int id = input.nextInt();
-                    input.nextLine();
+                    int id = userInput.nextInt();
+                    userInput.nextLine();
                     this.cancelTalk(id);
                     break;
                 case "5":
                     try {
                         presenter.displayPrompt("Please enter the ID of a talk you wish to reschedule: ");
-                        id = input.nextInt();
-                        input.nextLine();
+                        id = userInput.nextInt();
+                        userInput.nextLine();
                         Calendar newTime = this.collectTimeInfo();
                         this.rescheduleTalk(id, newTime);
                     } catch (Exception e) {
@@ -141,29 +143,29 @@ public class OrganizerController extends AccountController {
                     break;
                 case "6": {
                     presenter.displayPrompt("Please enter the message that you want to send to all speakers:");
-                    String message = input.nextLine();
+                    String message = userInput.nextLine();
                     messageController.messageAllSpeakers(message);
                     break;
                 }
                 case "7": {
                     presenter.displayPrompt("Please enter the username of the speaker you wish to message: ");
-                    String username = input.nextLine();
+                    String username = userInput.nextLine();
                     presenter.displayPrompt("Please enter the message you want to send to this speaker:");
-                    String message = input.nextLine();
+                    String message = userInput.nextLine();
                     messageController.messageSpeaker(message, username);
                     break;
                 }
                 case "8": {
                     presenter.displayPrompt("Please enter the message that you want to send to all attendees:");
-                    String message = input.nextLine();
+                    String message = userInput.nextLine();
                     messageController.messageAllAttendees(message);
                     break;
                 }
                 case "9": {
                     presenter.displayPrompt("Please enter the username of the attendee you want to message: ");
-                    String username = input.nextLine();
+                    String username = userInput.nextLine();
                     presenter.displayPrompt("Please enter the message you want to send the attendee:");
-                    String message = input.nextLine();
+                    String message = userInput.nextLine();
                     messageController.messageAttendee(message, username);
                     break;
                 }
@@ -172,12 +174,12 @@ public class OrganizerController extends AccountController {
                     break;
                 case "11":
                     presenter.displayPrompt("Please enter the username of a contact to add: ");
-                    String contactToAdd = input.nextLine();
+                    String contactToAdd = userInput.nextLine();
                     friendController.addFriend(contactToAdd);
                     break;
                 case "12":
                     presenter.displayPrompt("Please enter the username of a contact to remove: ");
-                    String contactToRemove = input.nextLine();
+                    String contactToRemove = userInput.nextLine();
                     friendController.removeFriend(contactToRemove);
                     break;
                 case "13":
@@ -196,9 +198,9 @@ public class OrganizerController extends AccountController {
                             }
                             presenter.displayPrompt("----------------------------------------------------------------");
                             presenter.displayPrompt("To access a conversation, please enter the recipient's username:");
-                            String user = input.nextLine();
+                            String user = userInput.nextLine();
                             presenter.displayPrompt("How many past messages would you like to see?");
-                            int pastMessages = Integer.parseInt(input.nextLine());
+                            int pastMessages = Integer.parseInt(userInput.nextLine());
                             this.viewMessagesFrom(user, pastMessages);
                         }
                     } catch (Exception e) {
@@ -216,7 +218,7 @@ public class OrganizerController extends AccountController {
             }
             if (!command.equals("0")) {
                 presenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
-                command = input.nextLine();
+                command = userInput.nextLine();
                 if (command.equals("*")) {
                     presenter.displayOrganizerMenu();
                 }

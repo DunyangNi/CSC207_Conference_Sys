@@ -59,7 +59,7 @@ public class LoginController {
             oc.runInteraction();
         }
         if (accountManager.containsSpeaker(username)) {
-            SpeakerController sc = new SpeakerController(username, eventManager, accountManager, conversationManager, signupManager, friendManager);
+            SpeakerController sc = new SpeakerController(username, accountManager, friendManager, conversationManager, eventManager, signupManager);
             sc.runInteraction();
         }
     }
