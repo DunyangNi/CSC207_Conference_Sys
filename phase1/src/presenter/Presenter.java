@@ -31,6 +31,7 @@ public class Presenter {
         System.out.println("00  = Logout and exit program");
         System.out.println("0  = Logout");
         System.out.println("2  = Register a new speaker account");
+        System.out.println("17 = [FOR TESTING PURPOSES] Delete an account");
         System.out.println("16 = View list of all accounts");
 
         System.out.println("\n[CONTACTS");
