@@ -65,46 +65,19 @@ public class OrganizerController extends AccountController {
         }
     }
 
-    public void displayCommandMenu() {
-        presenter.displayPrompt("[ACCOUNT COMMANDS]");
-        presenter.displayPrompt("0  = Logout");
-        presenter.displayPrompt("2  = Register a new speaker account");
-        presenter.displayPrompt("16 = View list of all accounts");
-
-        presenter.displayPrompt("\n[CONTACT COMMANDS]");
-        presenter.displayPrompt("11 = Add a contact");
-        presenter.displayPrompt("12 = Remove a contact");
-        presenter.displayPrompt("13 = View list of all contacts");
-
-        presenter.displayPrompt("\n[CONVERSATION COMMANDS]");
-        presenter.displayPrompt("7  = Message a speaker");
-        presenter.displayPrompt("9  = Message an attendee");
-        presenter.displayPrompt("6  = Message all speakers");
-        presenter.displayPrompt("8  = Message all attendees");
-        presenter.displayPrompt("14 = View your conversations");
-
-        presenter.displayPrompt("\n[EVENT COMMANDS]");
-        presenter.displayPrompt("1  = Register a new event room");
-        presenter.displayPrompt("15 = View list of all rooms");
-        presenter.displayPrompt("3  = Register a new event");
-        presenter.displayPrompt("4  = Cancel an event");
-        presenter.displayPrompt("5  = Reschedule an event");
-        presenter.displayPrompt("10 = View talk schedule");
-    }
-
     @Override
     public void runInteraction() {
+        presenter.displayOrganizerMenu();
         Scanner input = new Scanner(System.in);
-        boolean loop_on = true;
-        displayCommandMenu();
         String command = input.nextLine();
+        boolean loggedIn = true;
 
-        while (loop_on) {
+        while (loggedIn) {
 
             // TODO: 11/16/20 Fix scopes defined by {
             switch (command) {
                 case "0":
-                    loop_on = false;
+                    loggedIn = false;
                     break;
                 case "1":
                     presenter.displayPrompt("Enter a name for the new room:");
@@ -235,7 +208,7 @@ public class OrganizerController extends AccountController {
                 presenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
                 command = input.nextLine();
                 if (command.equals("*")) {
-                    displayCommandMenu();
+                    presenter.displayOrganizerMenu();
                 }
             }
         }
