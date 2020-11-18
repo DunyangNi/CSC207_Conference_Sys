@@ -21,15 +21,12 @@ public class FriendManager implements Serializable {
      * Add friend IF APPLICABLE (THEY AREN'T ALREADY FRIENDS). OTHERWISE DO NOTHING
      */
     public void AddFriend(String user, String friendToAdd) throws ObjectNotFoundException, ConflictException {
-        if(!friends.containsKey(user)) {
-            throw new ObjectNotFoundException();
-        }
-        if(!friends.containsKey(friendToAdd)) {
-            throw new ObjectNotFoundException();
-        }
-        if (friends.get(user).contains(friendToAdd)) {
-            throw new ConflictException("This user is already in your contacts. Please try again");
-        }
+        if (!friends.containsKey(user))
+            throw new ObjectNotFoundException("User");
+        if (!friends.containsKey(friendToAdd))
+            throw new ObjectNotFoundException("Friend");
+        if (friends.get(user).contains(friendToAdd))
+            throw new ConflictException("This friend is already in your contacts.");
         friends.get(user).add(friendToAdd);
     }
 
@@ -37,13 +34,11 @@ public class FriendManager implements Serializable {
      * Remove friend IF APPLICABLE (THEY ARE ACTUALLY FRIENDS). OTHERWISE DO NOTHING
      */
     public void RemoveFriend(String user, String friendToRemove) throws ObjectNotFoundException{
-        if(!friends.containsKey(user)) {
-            throw new ObjectNotFoundException();
-        }
-        if(!friends.containsKey(friendToRemove)) {
-            throw new ObjectNotFoundException();
-        }
-        else { friends.get(user).remove(friendToRemove); }
+        if (!friends.containsKey(user))
+            throw new ObjectNotFoundException("User");
+        if (!friends.containsKey(friendToRemove))
+            throw new ObjectNotFoundException("Friend");
+        friends.get(user).remove(friendToRemove);
     }
 
     public ArrayList<String> getFriendList(String user) { return friends.get(user); }

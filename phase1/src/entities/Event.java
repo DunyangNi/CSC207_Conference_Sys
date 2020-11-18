@@ -117,10 +117,6 @@ public class Event implements Serializable, Comparable<Event> {
         return organizer;
     }
 
-    public ArrayList<String> getAttendees() {
-        return attendees;
-    }
-
     public int getId() {
         return id;
     }
@@ -149,10 +145,6 @@ public class Event implements Serializable, Comparable<Event> {
 
     public void setOrganizer(String organizer) {
         this.organizer = organizer;
-    }
-
-    public void setAttendees(ArrayList<String> attendees) {
-        this.attendees = attendees;
     }
 
     public void setId(int id) {

@@ -1,25 +1,35 @@
 package gateway;
 
 import use_cases.*;
+
 import java.io.*;
+import java.sql.SQLOutput;
 
 /**
  * The gateway class that can save and read data from files
  */
 
 public class DataManager {
-    private String accountPath;
-    private String eventPath;
-    private String conversationPath;
-    private String friendPath;
-    private String signupPath;
+    private final String accountPath;
+    private final String eventPath;
+    private final String conversationPath;
+    private final String friendPath;
+    private final String signupPath;
 
     /**
      * The constructor of DataManager
-     * @param accountPath address of account database
-     * @param eventPath address of event database
      */
-    public DataManager(String accountPath, String friendPath, String conversationPath, String eventPath, String signupPath){
+    public DataManager() {
+        this("AccountManager", "FriendManager", "ConversationManager", "EventManager", "SignupManager");
+    }
+
+    /**
+     * The constructor of DataManager
+     *
+     * @param accountPath address of account database
+     * @param eventPath   address of event database
+     */
+    public DataManager(String accountPath, String friendPath, String conversationPath, String eventPath, String signupPath) {
         this.accountPath = accountPath;
         this.eventPath = eventPath;
         this.conversationPath = conversationPath;
@@ -30,7 +40,7 @@ public class DataManager {
     /**
      * The helper function that saves a particular Serializable.
      * @param filePath The address of the database
-     * @param ser The Serializable we are saving
+     * @param ser      The Serializable we are saving
      * @throws IOException Throw exception when failed to save.
      */
     private void saveSerializable(String filePath, Serializable ser) throws IOException {
@@ -44,12 +54,17 @@ public class DataManager {
     }
 
     public void saveManager(String managerName, String filePath, Serializable manager) {
-        try { saveSerializable(filePath, manager); }
-        catch (IOException e) { System.out.printf("Failed to save the %s.%n", managerName); }
+        try {
+            saveSerializable(filePath, manager);
+            System.out.println("Saved " + managerName);
+        } catch (IOException e) {
+            System.out.printf("Failed to save the %s.%n", managerName);
+        }
     }
 
     /**
      * Read the AccountManager from database.
+     *
      * @return The AccountManager from the file
      */
     public AccountManager readAccountManager() {
@@ -66,6 +81,7 @@ public class DataManager {
 
     /**
      * Read the EventManager from database.
+     *
      * @return The EventManager from the file
      */
     public EventManager readEventManager() {
@@ -82,11 +98,19 @@ public class DataManager {
 
     /**
      * Read the ConversationManager from database.
+     *
      * @return The ConversationManager from the file
      */
     public ConversationManager readConversationManager() {
         try{
-            return (ConversationManager) readManager(conversationPath);
+            InputStream file = new FileInputStream(conversationPath);
+            InputStream buffer = new BufferedInputStream(file);
+            ObjectInput input = new ObjectInputStream(buffer);
+            ConversationManager cm = (ConversationManager) input.readObject();
+            input.close();
+            buffer.close();
+            file.close();
+            return cm;
         } catch (IOException e) {
             System.out.println("Cannot read the ConversationManager, creating a new ConversationManager");
             return new ConversationManager();
@@ -98,6 +122,7 @@ public class DataManager {
 
     /**
      * Read the FriendManager from database.
+     *
      * @return The FriendManager from the file
      */
     public FriendManager readFriendManager() {
@@ -114,6 +139,7 @@ public class DataManager {
 
     /**
      * Read the SignupManager from database.
+     *
      * @return The SignupManager from the file
      */
     public SignupManager readSignupManager() {
@@ -125,6 +151,7 @@ public class DataManager {
 //            input.close();
 //            buffer.close();
 //            file.close();
+            System.out.println("Loaded " + signupPath);
             return (SignupManager) readManager(signupPath);
         } catch (IOException e) {
             System.out.println("Cannot read the SignupManager, creating a new SignupManager");

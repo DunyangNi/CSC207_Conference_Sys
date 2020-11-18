@@ -6,12 +6,12 @@ import java.util.*;
 import java.util.Calendar;
 
 public class Presenter {
-
+    // TODO: 11/17/20 Consider whether these fields are necessary or what other fields might be required
     private EventManager eventmanager;
     private SignupManager signupManager;
     private FriendManager friendManager;
 
-    // TODO: 11/16/20 Find a better way to do this
+    // TODO: 11/16/20 Find a better way to do this?
     public Presenter() {
     }
 
@@ -23,6 +23,88 @@ public class Presenter {
 
     public void displayPrompt(String output) {
         System.out.println(output);
+    }
+
+    public void displayOrganizerMenu() {
+        System.out.println("=====[ORGANIZER MENU]=====");
+        System.out.println("[ACCOUNT]");
+        System.out.println("00  = Logout and exit program");
+        System.out.println("0  = Logout");
+        System.out.println("2  = Register a new speaker account");
+        System.out.println("17 = [FOR TESTING PURPOSES] Delete an account");
+        System.out.println("16 = View list of all accounts");
+
+        System.out.println("\n[CONTACTS");
+        System.out.println("11 = Add a contact");
+        System.out.println("12 = Remove a contact");
+        System.out.println("13 = View list of all contacts");
+
+        System.out.println("\n[CONVERSATIONS]");
+        System.out.println("7  = Message a speaker");
+        System.out.println("9  = Message an attendee");
+        System.out.println("6  = Message all speakers");
+        System.out.println("8  = Message all attendees");
+        System.out.println("14 = View your conversations");
+
+        System.out.println("\n[EVENTS]");
+        System.out.println("1  = Register a new event room");
+        System.out.println("15 = View list of all rooms");
+        System.out.println("3  = Register a new event");
+        System.out.println("4  = Cancel an event");
+        System.out.println("5  = Reschedule an event");
+        System.out.println("10 = View talk schedule");
+        System.out.println("==========================");
+        System.out.println("Enter a command (1-16):");
+    }
+
+    public void displaySpeakerMenu() {
+        System.out.println("=====[SPEAKER MENU]=====");
+        System.out.println("[ACCOUNT]");
+        System.out.println("00  = Logout and exit program");
+        System.out.println("0  = Logout");
+        System.out.println("16 = View list of all accounts");
+
+        System.out.println("\n[CONTACTS");
+        System.out.println("5 = add a new contact");
+        System.out.println("6 = remove a contact");
+        System.out.println("7 = view contacts list");
+
+        System.out.println("\n[CONVERSATIONS]");
+        System.out.println("2 = message an attendee");
+        System.out.println("3 = message all attendees for one or multiple talks you're giving");
+        System.out.println("8 = view your conversation with someone");
+
+        System.out.println("\n[EVENTS]");
+        System.out.println("1 = see a schedule of talks you're giving");
+        System.out.println("4 = see a schedule of all talks");
+        System.out.println("==========================");
+        System.out.println("Enter a command (1-16):");
+    }
+
+    public void displayAttendeeMenu() {
+        System.out.println("=====[ATTENDEE MENU]=====");
+        System.out.println("[ACCOUNT]");
+        System.out.println("What would you like to do?");
+        System.out.println("00  = Logout and exit program");
+        System.out.println("0  = Logout");
+
+        System.out.println("\n[CONTACTS");
+        System.out.println("7 = add a new contact");
+        System.out.println("8 = remove a contact");
+        System.out.println("9 = see contacts list");
+
+        System.out.println("\n[CONVERSATIONS]");
+        System.out.println("5 = message another attendee");
+        System.out.println("6 = message a speaker");
+        System.out.println("10 = view your conversation with someone");
+
+        System.out.println("\n[EVENTS]");
+        System.out.println("1 = see talk schedule");
+        System.out.println("2 = sign up for a talk");
+        System.out.println("3 = cancel enrolment for a talk");
+        System.out.println("4 = see a schedule of talks you're attending");
+        System.out.println("==========================");
+        System.out.println("Enter a command (1-16):");
     }
 
     public void displayTalkSchedule() {

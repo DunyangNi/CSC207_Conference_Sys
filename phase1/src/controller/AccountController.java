@@ -28,7 +28,7 @@ public abstract class AccountController {
         this.signupManager = signupManager;
         this.presenter = new Presenter(eventManager, friendManager, signupManager);
         this.friendController = new FriendController(username, friendManager, presenter);
-        this.messageController = new MessageController(username, accountManager, conversationManager, eventManager);
+        this.messageController = new MessageController(username, accountManager, conversationManager, eventManager, signupManager);
     }
 
     public void SeeTalkSchedule() {
@@ -49,15 +49,14 @@ public abstract class AccountController {
                 System.out.println("Your recent " + numMessagesRequested + " messages with " + recipient + ":");
                 System.out.println();
                 int numMessagesRetrieved = Math.min(numMessagesRequested, convo.size());
-                for (int i = 0; i < numMessagesRetrieved; i++) {
-                    // TODO: 11/16/20 Message sIds are not being stored properly so this doesn't work
-                    msgToPrint = conversationManager.messageToString(convo.get(numMessagesRetrieved - 1 + i));
+                for (int i = numMessagesRetrieved; i > 0; i--) {
+                    msgToPrint = conversationManager.messageToString(convo.get(convo.size() - i)); // implemented fix
                     System.out.println(msgToPrint);
                     System.out.println();
                 }
             }
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println(e.toString() + "\nSomething went wrong in collectTimeInfo. Please enter valid input.\n");
         }
     }
 
@@ -79,13 +78,14 @@ public abstract class AccountController {
 
             Calendar time = Calendar.getInstance();
             time.set(year, month, dayOfMonth, hourOfDay, 0, 0);
+            time.clear(Calendar.MILLISECOND);
 
             return time;
         } catch (Exception e) {
-            System.out.println("\nSomething went wrong in collectTimeInfo. Please enter valid input.\n");
+            System.out.println(e.toString() + "\nSomething went wrong in collectTimeInfo. Please enter valid input.\n");
             throw new InstantiationException();
         }
     }
 
-    public abstract void runInteraction() throws InstantiationException;
+    public abstract boolean runInteraction() throws InstantiationException;
 }

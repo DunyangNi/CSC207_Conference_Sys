@@ -1,5 +1,8 @@
 package entities;
 
+import javax.naming.directory.SearchResult;
+import java.io.Serializable;
+
 /**
  * Message represents a message which can be exchanged between Accounts.
  *
@@ -16,11 +19,11 @@ package entities;
  *     Account, Message
  * </pre>
  */
-public class Message {
+public class Message implements Serializable {
     private String sender;
     private String receiver;
     private String content;
-    private Integer msgToReply; // changed by Lucas~
+    private Integer msgToReply;
     private static int sid = 0;
     private final int id;
 

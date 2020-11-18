@@ -14,15 +14,22 @@ import java.util.HashMap;
 public class EventManager implements Serializable {
     private HashMap<Integer, Event> events;
     private ArrayList<String> locations;
+    private ArrayList<String> speakers;
     private EventModifier eventModifier = new EventModifier();
+    private EventChecker eventChecker = new EventChecker();
 
     public EventManager() {
-        this(new HashMap<>(), new ArrayList<>());
+        this(new HashMap<>(), new ArrayList<>(), new ArrayList<>());
     }
 
-    public EventManager(HashMap<Integer, Event> events, ArrayList<String> locations) {
+    public EventManager(HashMap<Integer, Event> events, ArrayList<String> locations, ArrayList<String> speakers) {
         this.events = events;
         this.locations = locations;
+        this.speakers = speakers;
+    }
+
+    public void addSpeakerKey(String speaker) {
+        speakers.add(speaker);
     }
 
     public HashMap<Integer, Event> getEvents() {
@@ -60,29 +67,18 @@ public class EventManager implements Serializable {
         return talks;
     }
 
-    public ArrayList<String> fetchTalkAttendeeList(Integer id) throws ObjectNotFoundException {
-        if (!this.isTalk(id)) {
-            throw new ObjectNotFoundException();
-        }
-        Event selectedEvent = events.get(id);
-        return eventModifier.getAttendees(selectedEvent);
-    }
-
     public ArrayList<Talk> fetchSpeakerTalks(String speaker) {
         ArrayList<Talk> speakerTalks = new ArrayList<>();
         for (Talk e : fetchTalkList()) {
-            if (e.getSpeaker().equals(speaker)) {
+            if (e.getSpeaker().equals(speaker))
                 speakerTalks.add(e);
-            }
         }
         return speakerTalks;
     }
 
     public HashMap<String[], Calendar> fetchSortedTalks(ArrayList<Talk> selectedTalks) {
-        // Convert to sorted array
         Talk[] selectedTalksToSort = selectedTalks.toArray(new Talk[0]);
         Arrays.sort(selectedTalksToSort);
-        // Assemble Tuples of Information
         HashMap<String[], Calendar> sortedSelectedTalks = new HashMap<>();
         String[] eventInfo;
         for (Talk e : selectedTalksToSort) {
@@ -106,88 +102,80 @@ public class EventManager implements Serializable {
     }
 
     public void addNewLocation(String location) throws ConflictException {
-        if (!this.locations.contains(location)) {
-            this.locations.add(location);
-        } else {
-            throw new ConflictException("Location already exists");
-        }
+        if (this.locations.contains(location))
+            throw new ConflictException("Location " + location + " already exists.");
+        this.locations.add(location);
     }
 
-    public Integer addNewEvent(String topic, Calendar time, String location, String organizer) throws ConflictException {
-        if (isValidEvent(time, location, locations, fetchEventList())) {
-            Event eventToAdd = new Event(topic, time, location, organizer);
-            events.put(eventToAdd.getId(), eventToAdd);
-            return eventToAdd.getId();
-        }
-        throw new ConflictException("Event conflicts with another");
+    public Integer addNewEvent(String topic, Calendar time, String location, String organizer) throws ConflictException, ObjectNotFoundException {
+        checkValidEvent(time, location);
+        Event eventToAdd = new Event(topic, time, location, organizer);
+        events.put(eventToAdd.getId(), eventToAdd);
+        return eventToAdd.getId();
+
     }
 
-    public Integer addNewTalk(String topic, Calendar time, String location, String organizer, String speaker) throws ConflictException {
-        if (isValidTalk(time, location, locations, speaker, fetchTalkList(), fetchEventList())) {
-            // create a new event and add it to events
-            Talk eventToAdd = new Talk(topic, time, location, organizer, speaker);
-            events.put(eventToAdd.getId(), eventToAdd);
-            return eventToAdd.getId();
-        }
-        throw new ConflictException("addNewTalk");
+    public Integer addNewTalk(String topic, Calendar time, String location, String organizer, String speaker) throws ConflictException, ObjectNotFoundException {
+        if (!speakers.contains(speaker))
+            throw new ObjectNotFoundException("Speaker " + speaker);
+        checkValidTalk(time, location, speaker);
+        Talk eventToAdd = new Talk(topic, time, location, organizer, speaker);
+        events.put(eventToAdd.getId(), eventToAdd);
+        return eventToAdd.getId();
     }
 
     public void cancelTalk(Integer id) throws ObjectNotFoundException {
-        if (!events.containsKey(id)) {
-            throw new ObjectNotFoundException();
-        }
-        if (!(events.get(id) instanceof Talk)) {
-            throw new ObjectNotFoundException();
-        }
+        if (!events.containsKey(id))
+            throw new ObjectNotFoundException("Talk");
+        if (!(events.get(id) instanceof Talk))
+            throw new ObjectNotFoundException("Talk");
         Event talkToCancel = events.get(id);
-        if (talkToCancel instanceof Talk && !(Calendar.getInstance().compareTo(talkToCancel.getTime()) >= 0))
+        if (!(Calendar.getInstance().compareTo(talkToCancel.getTime()) >= 0))
             events.remove(id);
     }
 
-    public void changeTopic(Integer id, String new_topic) {
+    // is it used?
+    public void changeTopic(Integer id, String new_topic) throws ObjectNotFoundException {
+        if (!events.containsKey(id))
+            throw new ObjectNotFoundException("Event");
         eventModifier.ChangeTopic(events.get(id), new_topic);
     }
 
     public void changeTime(Integer id, Calendar newTime) throws ObjectNotFoundException, ConflictException {
-        try {
-            if (!events.containsKey(id)) {
-                throw new ObjectNotFoundException();
-            }
-            eventModifier.ChangeTime(events.get(id), newTime, fetchEventList());
-        } catch (Exception e) {
-            throw e;
-        }
+        if (!events.containsKey(id))
+            throw new ObjectNotFoundException("Event");
+        Event selectedEvent = events.get(id);
+        if (selectedEvent instanceof Talk)
+            checkValidTalk(newTime, selectedEvent.getLocation(), ((Talk) selectedEvent).getSpeaker());
+        else
+            checkValidEvent(newTime, selectedEvent.getLocation());
+        eventModifier.ChangeTime(events.get(id), newTime);
     }
 
-    public boolean changeLocation(Integer id, String new_location) {
-        return eventModifier.ChangeLocation(events.get(id), new_location, this.locations, fetchEventList());
+    public void changeLocation(Integer id, String newLocation) throws ObjectNotFoundException, ConflictException {
+        if (!events.containsKey(id))
+            throw new ObjectNotFoundException("Event");
+        Event selectedEvent = events.get(id);
+        if (selectedEvent instanceof Talk)
+            checkValidTalk(selectedEvent.getTime(), newLocation, ((Talk) selectedEvent).getSpeaker());
+        else
+            checkValidEvent(selectedEvent.getTime(), newLocation);
+        eventModifier.ChangeLocation(events.get(id), newLocation);
     }
 
-    public void changeOrganizer(Integer id, String new_organizer) {
+    // is it used?
+    public void changeOrganizer(Integer id, String new_organizer) throws ObjectNotFoundException{
+        if (!events.containsKey(id))
+            throw new ObjectNotFoundException("Event");
         eventModifier.ChangeOrganizer(events.get(id), new_organizer);
     }
 
-    public boolean isValidEvent(Calendar time, String location, ArrayList<String> locations, ArrayList<Event> events) throws ConflictException {
-        // check if location is valid
-        if (!locations.contains(location)) {
-            throw new ConflictException("Location");
-        }
-        // check if time is valid
-        if (!(9 <= time.get(Calendar.HOUR_OF_DAY) && time.get(Calendar.HOUR_OF_DAY) <= 16)) {
-            throw new ConflictException("Time");
-        }
-        // check if any conflicting events or events already existing
-        for (Event event : events) {
-            if (event.getLocation().equals(location) && event.getTime().equals(time)) {
-                throw new ConflictException("Location + Time");
-            }
-        }
-        return true;
+    public void checkValidEvent(Calendar time, String location) throws ConflictException, ObjectNotFoundException {
+        eventChecker.checkValidEvent(time, location, locations, fetchEventList());
     }
 
-    public boolean isValidTalk(Calendar time, String location, ArrayList<String> locations, String speaker, ArrayList<Talk> talks, ArrayList<Event> events) throws ConflictException {
-        // TODO: 11/17/20 Prevent double booking a speaker
-        return isValidEvent(time, location, locations, events);
+    public void checkValidTalk(Calendar time, String location, String speaker) throws ConflictException, ObjectNotFoundException {
+        eventChecker.checkValidTalk(time, location, speaker, locations, fetchTalkList(), fetchEventList());
     }
 
     public boolean isTalk(Integer id) {

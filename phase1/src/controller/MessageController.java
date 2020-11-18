@@ -3,6 +3,7 @@ package controller;
 import use_cases.ConversationManager;
 import use_cases.AccountManager;
 import use_cases.EventManager;
+import use_cases.SignupManager;
 
 import java.util.*;
 
@@ -11,13 +12,15 @@ public class MessageController {
     protected AccountManager accountManager;
     protected ConversationManager conversationManager;
     protected EventManager eventManager;
+    protected SignupManager signupManager;
 
     public MessageController(String username, AccountManager accountManager, ConversationManager conversationManager,
-                             EventManager eventManager){
+                             EventManager eventManager, SignupManager signupManager){
         this.username = username;
         this.accountManager = accountManager;
         this.conversationManager = conversationManager;
         this.eventManager = eventManager;
+        this.signupManager = signupManager;
     }
 
     public void messageAccount(String message, String account) {
@@ -25,9 +28,8 @@ public class MessageController {
             conversationManager.sendMessage(this.username, account, message);
         }
         catch(Exception e){
-            System.out.println("");
+            System.out.println(e.toString());
             System.out.println("Something went wrong with messageAccount while messaging. Try again.");
-            System.out.println("");
         }
     }
 
@@ -36,9 +38,7 @@ public class MessageController {
             messageAccount(message, speaker);
         }
         else {
-            System.out.println("");
-            System.out.println("This recipient is not a speaker. Try again.");
-            System.out.println("");
+            System.out.println("This speaker does not exist.");
         }
 
     }
@@ -48,36 +48,38 @@ public class MessageController {
             messageAccount(message, attendeeUsername);
         }
         else {
-            System.out.println("");
-            System.out.println("This recipient is not an attendee. Try again.");
-            System.out.println("");
+            System.out.println("This attendee does not exist.");
         }
     }
 
 
     public void messageAllSpeakers(String message) {
-        try{
-            Iterator<String> speakerusernameiterator = this.accountManager.speakerUsernameIterator();
-            while(speakerusernameiterator.hasNext()){
-                conversationManager.sendMessage(this.username, speakerusernameiterator.next(), message);}
+        try {
+            Iterator<String> speakerUsernameIterator = this.accountManager.speakerUsernameIterator();
+            if (!speakerUsernameIterator.hasNext())
+                System.out.println("There are no speakers to message."); // f
+            while(speakerUsernameIterator.hasNext()) {
+                messageSpeaker(message, speakerUsernameIterator.next());
+            }
         }
         catch(Exception e) {
-            System.out.println("");
+            System.out.println(e.toString());
             System.out.println("Something went wrong. Please try again.");
-            System.out.println("");
         }
     }
 
     public void messageAllAttendees(String message) {
-        try{
-            Iterator<String> attendeeusernameiterator = this.accountManager.attendeeUsernameIterator();
-            while(attendeeusernameiterator.hasNext()){
-                conversationManager.sendMessage(this.username, attendeeusernameiterator.next(), message);}
+        try {
+            Iterator<String> attendeeUsernameIterator = this.accountManager.attendeeUsernameIterator();
+            if (!attendeeUsernameIterator.hasNext())
+                System.out.println("There are no attendees to message."); // f
+            while (attendeeUsernameIterator.hasNext()) {
+                messageAttendee(message, attendeeUsernameIterator.next());
+            }
         }
         catch(Exception e) {
-            System.out.println("");
+            System.out.println(e.toString());
             System.out.println("Something went wrong. Please try again.");
-            System.out.println("");
         }
     }
 
@@ -85,16 +87,17 @@ public class MessageController {
         try {
             Set<String> selectedAttendeeUsernames = new HashSet<>();
             for (Integer id : selectedSpeakerTalks) {
-                if (eventManager.isTalk(id)) {
-                    selectedAttendeeUsernames.addAll(eventManager.fetchTalkAttendeeList(id));
-                }
+                if (eventManager.isTalk(id))
+                    selectedAttendeeUsernames.addAll(signupManager.fetchTalkAttendeeList(id));
             }
+            if (selectedAttendeeUsernames.isEmpty())
+                System.out.println("There are no attendees to message."); // f
             for (String attendeeUsername : selectedAttendeeUsernames) {
-                conversationManager.sendMessage(this.username, attendeeUsername, message);
+                messageAttendee(message, attendeeUsername);
             }
         }
         catch(Exception e) {
-            System.out.println("\nSomething went wrong. Please enter valid input.\n");
+            System.out.println(e.toString() + "\nSomething went wrong. Please enter valid input.\n");
         }
     }
 }
