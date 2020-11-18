@@ -45,18 +45,22 @@ public class SignupManager implements Serializable {
      * @param talk_id given Talk id
      * @param attendee given Attendee id
      */
-    public void addAttendee(Integer talk_id, String attendee) throws ConflictException{
-        if (!isFull(talk_id) && !isSignedUp(talk_id, attendee)) { signups.get(talk_id).add(attendee); }
-        else{
-            throw new ConflictException("Cannot sign attendee up");
-        }
+    public void addAttendee(Integer talk_id, String attendee) throws ConflictException, ObjectNotFoundException {
+        if (!signups.containsKey(talk_id))
+            throw new ObjectNotFoundException("Talk");
+        if (isFull(talk_id))
+            throw new ConflictException("Talk is full.");
+        if (isSignedUp(talk_id, attendee))
+            throw new ConflictException("You are already signed up for this Talk.");
+        signups.get(talk_id).add(attendee);
     }
 
-    public void removeAttendee(Integer talk_id, String attendee) throws ObjectNotFoundException{
-        if (isSignedUp(talk_id, attendee)) { signups.get(talk_id).remove(attendee); }
-        else{
-            throw new ObjectNotFoundException();
-        }
+    public void removeAttendee(Integer talk_id, String attendee) throws ObjectNotFoundException {
+        if (!signups.containsKey(talk_id))
+            throw new ObjectNotFoundException("Talk");
+        if (!isSignedUp(talk_id, attendee))
+            throw new ObjectNotFoundException("User");
+        signups.get(talk_id).remove(attendee);
     }
 
     /**

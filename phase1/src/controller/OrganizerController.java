@@ -112,8 +112,8 @@ public class OrganizerController extends AccountController {
                         String topic = input.nextLine();
                         presenter.displayPrompt("Enter the event time:");
                         Calendar time = this.collectTimeInfo();
-                        eventManager.addNewTalk(topic, time, location, this.username, username);
-
+                        Integer newTalkID = eventManager.addNewTalk(topic, time, location, this.username, username);
+                        signupManager.addEventKey(newTalkID);
                     } catch (Exception e) {
                         presenter.displayPrompt(e.toString());
                     }

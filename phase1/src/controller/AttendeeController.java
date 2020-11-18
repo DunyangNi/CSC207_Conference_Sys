@@ -11,34 +11,19 @@ public class AttendeeController extends AccountController {
         super(username, accountManager, friendManager, conversationManager, eventmanager, signupManager);
     }
 
-    // subject to change, error handling
     public void signupForTalk(Integer id) {
         try {
-            if (this.eventManager.isTalk(id)) {
-                // addAttendee does not throw an error on an invalid username.
-                // However, in this case we know the username is valid
-                signupManager.addAttendee(id, username);
-            } else {
-                System.out.println("\nSomething went wrong. Please enter valid input.\n");
-            }
-        }
-        catch(Exception e){
-            System.out.println("\nSomething went wrong. Please enter valid input.\n");
+            signupManager.addAttendee(id, username);
+        } catch (Exception e) {
+            presenter.displayPrompt(e.toString());
         }
     }
 
-    // subject to change, error handling
     public void cancelSignupForTalk(Integer id) {
         try {
-            if (this.eventManager.isTalk(id)) {
-                //Same story, we know username is valid in this case
-                signupManager.removeAttendee(id, username);
-            } else {
-                System.out.println("\nSomething went wrong. Please enter valid input.\n");
-            }
-        }
-        catch(Exception e) {
-            System.out.println("\nSomething went wrong. Please enter valid input.\n");
+            signupManager.removeAttendee(id, username);
+        } catch (Exception e) {
+            presenter.displayPrompt(e.toString());
         }
     }
 
@@ -72,14 +57,12 @@ public class AttendeeController extends AccountController {
             }
             else if(choice == 2) {
                 System.out.print("Please enter the ID of the Talk you wish to attend: ");
-                // Grab ID number and attempt to sign up (error handling?)
                 Integer id = Integer.parseInt(sc.nextLine());
                 this.signupForTalk(id);
 
             }
             else if(choice == 3) {
                 System.out.print("Please enter the ID of the Talk you wish to cancel: ");
-                // Grab ID number and attempt to cancel (error handling?)
                 Integer id = Integer.parseInt(sc.nextLine());
                 this.cancelSignupForTalk(id);
             }
