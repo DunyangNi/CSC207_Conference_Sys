@@ -54,8 +54,10 @@ public class MessageController {
 
 
     public void messageAllSpeakers(String message) {
-        try{
+        try {
             Iterator<String> speakerUsernameIterator = this.accountManager.speakerUsernameIterator();
+            if (!speakerUsernameIterator.hasNext())
+                System.out.println("There are no speakers to message."); // f
             while(speakerUsernameIterator.hasNext()) {
                 messageSpeaker(message, speakerUsernameIterator.next());
             }
@@ -67,9 +69,11 @@ public class MessageController {
     }
 
     public void messageAllAttendees(String message) {
-        try{
+        try {
             Iterator<String> attendeeUsernameIterator = this.accountManager.attendeeUsernameIterator();
-            while(attendeeUsernameIterator.hasNext()) {
+            if (!attendeeUsernameIterator.hasNext())
+                System.out.println("There are no attendees to message."); // f
+            while (attendeeUsernameIterator.hasNext()) {
                 messageAttendee(message, attendeeUsernameIterator.next());
             }
         }
@@ -86,6 +90,8 @@ public class MessageController {
                 if (eventManager.isTalk(id))
                     selectedAttendeeUsernames.addAll(signupManager.fetchTalkAttendeeList(id));
             }
+            if (selectedAttendeeUsernames.isEmpty())
+                System.out.println("There are no attendees to message."); // f
             for (String attendeeUsername : selectedAttendeeUsernames) {
                 messageAttendee(message, attendeeUsername);
             }
