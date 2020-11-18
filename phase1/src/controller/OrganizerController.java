@@ -212,6 +212,12 @@ public class OrganizerController extends AccountController {
                 case "16":
                     presenter.displayPrompt(accountManager.fetchAccountList().keySet().toString());
                     break;
+                case "17":
+                    try {
+                        accountManager.deleteAccount(userInput.nextLine());
+                    } catch (Exception e) {
+                        presenter.displayPrompt(e.toString() + "\nSomething went wrong. Please enter valid input.");
+                    }
                 default:
                     presenter.displayPrompt("Invalid input, please try again:\n");
             }

@@ -1,13 +1,12 @@
 package use_cases;
 
 import Throwables.ConflictException;
-import entities.Account;
-import entities.Attendee;
-import entities.Organizer;
-import entities.Speaker;
+import Throwables.ObjectNotFoundException;
+import entities.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -130,6 +129,13 @@ public class AccountManager implements Serializable {
 
     public void ChangePassword(Account ChangePasswordAccount, String NewPassword) {
         ChangePasswordAccount.setPassword(NewPassword);
+    }
+
+    public void deleteAccount(String username) throws ObjectNotFoundException {
+        if (!(attendeeList.containsKey(username) || speakerList.containsKey(username)))
+            throw new ObjectNotFoundException("Account");
+        attendeeList.remove(username);
+        speakerList.remove(username);
     }
 
     public boolean verifyPassword(String username, String password) {
