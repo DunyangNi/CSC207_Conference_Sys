@@ -25,11 +25,11 @@ public class StartController {
     public void runStartMenu() {
         //Prompt attemptLogin or signup
         presenter.displayPrompt("[START MENU]");
-        presenter.displayPrompt("1 = login to your account:\n2 = to register a new account:");
+        presenter.displayPrompt("0 = Exit program:\n1 = Login to your account:\n2 = Register a new account:");
         String command = input.nextLine();
 
         //Invalid input prompt
-        while (!(command.equals("1") || (command.equals("2")))) {
+        while (!(command.equals("0") ||command.equals("1") || (command.equals("2")))) {
             presenter.displayPrompt("Invalid input, please try again.");
             command = input.nextLine();
         }
@@ -38,7 +38,8 @@ public class StartController {
         if (command.equals("1")) {
             LoginController loginController = new LoginController(accountManager, friendManager, conversationManager, eventManager, signupManager);
             loginController.attemptLogin();
-        } else {
+        }
+        if (command.equals("2")) {
             RegistrationController registrationController = new RegistrationController(accountManager, friendManager, conversationManager, eventManager, signupManager);
             registrationController.attemptRegister();
         }

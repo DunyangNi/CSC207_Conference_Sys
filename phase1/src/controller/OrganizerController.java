@@ -82,8 +82,12 @@ public class OrganizerController extends AccountController {
 
             // TODO: 11/16/20 Fix scopes defined by {
             switch (command) {
+                case "00":
+                    return;
                 case "0":
                     loggedIn = false;
+                    StartController startController = new StartController(accountManager, friendManager, conversationManager, eventManager, signupManager);
+                    startController.runStartMenu();
                     break;
                 case "1":
                     presenter.displayPrompt("Enter a name for the new room:");

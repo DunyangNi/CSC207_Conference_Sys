@@ -28,6 +28,7 @@ public class Presenter {
     public void displayOrganizerMenu() {
         System.out.println("=====[ORGANIZER MENU]=====");
         System.out.println("[ACCOUNT COMMANDS]");
+        System.out.println("00  = Logout and exit program");
         System.out.println("0  = Logout");
         System.out.println("2  = Register a new speaker account");
         System.out.println("16 = View list of all accounts");
