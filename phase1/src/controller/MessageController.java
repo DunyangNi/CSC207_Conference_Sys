@@ -38,7 +38,7 @@ public class MessageController {
             messageAccount(message, speaker);
         }
         else {
-            System.out.println("This speaker does not exist");
+            System.out.println("This speaker does not exist.");
         }
 
     }
@@ -48,7 +48,7 @@ public class MessageController {
             messageAccount(message, attendeeUsername);
         }
         else {
-            System.out.println("This attendee does not exist");
+            System.out.println("This attendee does not exist.");
         }
     }
 
