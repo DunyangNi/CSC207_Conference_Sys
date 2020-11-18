@@ -74,22 +74,21 @@ public class OrganizerController extends AccountController {
     }
 
     @Override
-    public void runInteraction() {
+    public boolean runInteraction() {
+        boolean programEnd = false;
         boolean loggedIn = true;
         presenter.displayOrganizerMenu();
         Scanner userInput = new Scanner(System.in);
         String command = userInput.nextLine();
-
         while (loggedIn) {
-
             // TODO: 11/16/20 Fix scopes defined by {
             switch (command) {
                 case "00":
-                    return;
+                    loggedIn = false;
+                    programEnd = true;
+                    break;
                 case "0":
                     loggedIn = false;
-                    StartController startController = new StartController(accountManager, friendManager, conversationManager, eventManager, signupManager);
-                    startController.runStartMenu();
                     break;
                 case "1":
                     presenter.displayPrompt("Enter a name for the new room:");
@@ -216,7 +215,7 @@ public class OrganizerController extends AccountController {
                 default:
                     presenter.displayPrompt("Invalid input, please try again:\n");
             }
-            if (!command.equals("0")) {
+            if (loggedIn) {
                 presenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
                 command = userInput.nextLine();
                 if (command.equals("*")) {
@@ -224,6 +223,7 @@ public class OrganizerController extends AccountController {
                 }
             }
         }
+        return programEnd;
     }
 }
 

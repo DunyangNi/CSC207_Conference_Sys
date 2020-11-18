@@ -87,5 +87,5 @@ public abstract class AccountController {
         }
     }
 
-    public abstract void runInteraction() throws InstantiationException;
+    public abstract boolean runInteraction() throws InstantiationException;
 }

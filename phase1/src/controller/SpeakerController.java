@@ -17,20 +17,20 @@ public class SpeakerController extends AccountController {
     }
 
     @Override
-    public void runInteraction() {
+    public boolean runInteraction() {
+        boolean programEnd = false;
         boolean loggedIn = true;
         presenter.displaySpeakerMenu();
         Scanner userInput = new Scanner(System.in);
         String command = userInput.nextLine();
-
         while(loggedIn){
             switch (command) {
                 case "00":
+                    loggedIn = false;
+                    programEnd = true;
                     break;
                 case "0":
                     loggedIn = false;
-                    StartController startController = new StartController(accountManager, friendManager, conversationManager, eventManager, signupManager);
-                    startController.runStartMenu();
                     break;
                 case "1":
                     this.SeeSpeakerTalkSchedule();
@@ -142,7 +142,7 @@ public class SpeakerController extends AccountController {
                 default:
                     presenter.displayPrompt("Invalid input, please try again:\n");
             }
-            if (!command.equals("0")) {
+            if (loggedIn) {
                 presenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
                 command = userInput.nextLine();
                 if (command.equals("*")) {
@@ -150,5 +150,6 @@ public class SpeakerController extends AccountController {
                 }
             }
         }
+        return programEnd;
     }
 }

@@ -21,44 +21,46 @@ public class RegistrationController {
         this.signupManager = sm;
     }
 
-    public void attemptRegister() {
+    public boolean attemptRegister() {
         System.out.println("Enter '1' to register an Attendee account.\nEnter '2' to register an Organizer account.");
         String command = input.nextLine();
-
+        boolean programEnd;
         while (!(command.equals("1") || (command.equals("2")))) {
             System.out.println("Invalid input, please try again.");
             command = input.nextLine();
         }
-
         if (command.equals("1")) {
-            registerNewAttendee();
+            programEnd = registerNewAttendee();
         } else {
-            registerNewOrganizer();
+            programEnd = registerNewOrganizer();
         }
+        return programEnd;
     }
 
-    private void registerNewAttendee() {
+    private boolean registerNewAttendee() {
+        boolean programEnd;
         String[] accountInfo = getNewAccountInfo();
         accountManager.AddNewAttendee(accountInfo[0], accountInfo[1], accountInfo[2], accountInfo[3]);
         addNewAccountKeys(accountInfo[0]);
         AttendeeController ac = new AttendeeController(accountInfo[0], eventManager, conversationManager, friendManager, signupManager, accountManager);
-        ac.runInteraction();
+        programEnd = ac.runInteraction();
+        return programEnd;
     }
 
-    private void registerNewOrganizer() {
+    private boolean registerNewOrganizer() {
         System.out.println("Enter the Organizer account registration code:");
         String code = input.nextLine();
-
         while (!code.equals(ORGANIZER_PASSWORD)) {
             System.out.println("Invalid input, please try again.");
             code = input.nextLine();
         }
-
+        boolean programEnd;
         String[] accountInfo = getNewAccountInfo();
         accountManager.AddNewOrganizer(accountInfo[0], accountInfo[1], accountInfo[2], accountInfo[3]);
         addNewAccountKeys(accountInfo[0]);
         OrganizerController oc = new OrganizerController(accountInfo[0], accountManager, friendManager, conversationManager, eventManager, signupManager);
-        oc.runInteraction();
+        programEnd = oc.runInteraction();
+        return programEnd;
     }
 
     private String[] getNewAccountInfo() {

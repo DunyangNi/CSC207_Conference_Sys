@@ -32,20 +32,20 @@ public class AttendeeController extends AccountController {
     }
 
     @Override
-    public void runInteraction() {
+    public boolean runInteraction() {
         boolean loggedIn = true;
+        boolean programEnd = false;
         presenter.displayAttendeeMenu();
         Scanner userInput = new Scanner(System.in);
         String command = userInput.nextLine();
-
         while(loggedIn){
             switch (command) {
                 case "00":
-                    return;
+                    loggedIn = false;
+                    programEnd = true;
+                    break;
                 case "0":
                     loggedIn = false;
-                    StartController startController = new StartController(accountManager, friendManager, conversationManager, eventManager, signupManager);
-                    startController.runStartMenu();
                     break;
                 case "1":
                     this.SeeTalkSchedule();
@@ -84,7 +84,7 @@ public class AttendeeController extends AccountController {
                     System.out.println("Specify the message you're sending");
                     //line1 = sc.nextLine();
                     String message = userInput.nextLine();
-                    messageController.messageAttendee(message, speakerUsername);
+                    messageController.messageSpeaker(message, speakerUsername);
                     break;
                 }
                 case "7":
@@ -127,14 +127,13 @@ public class AttendeeController extends AccountController {
                     }
                     break;
             }
-//            if (!command.equals("0")) {
+            if (loggedIn) {
                 presenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
                 command = userInput.nextLine();
-                if (command.equals("*")) {
+                if (command.equals("*"))
                     presenter.displayOrganizerMenu();
-                }
-//            }
+            }
         }
-
+        return programEnd;
     }
 }

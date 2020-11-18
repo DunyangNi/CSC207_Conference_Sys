@@ -22,26 +22,26 @@ public class StartController {
         this.signupManager = signupManager;
     }
 
-    public void runStartMenu() {
-        //Prompt attemptLogin or signup
+    public boolean runStartMenu() {
         presenter.displayPrompt("[START MENU]");
         presenter.displayPrompt("0 = Exit program:\n1 = Login to your account:\n2 = Register a new account:");
         String command = input.nextLine();
-
-        //Invalid input prompt
-        while (!(command.equals("0") ||command.equals("1") || (command.equals("2")))) {
+        boolean programEnd = false;
+        while (!(command.equals("0") || command.equals("1") || (command.equals("2")))) {
             presenter.displayPrompt("Invalid input, please try again.");
             command = input.nextLine();
         }
-
-        //Run attemptLogin or signup
-        if (command.equals("1")) {
+        if (command.equals("0")) {
+            programEnd = true;
+        }
+        else if (command.equals("1")) {
             LoginController loginController = new LoginController(accountManager, friendManager, conversationManager, eventManager, signupManager);
-            loginController.attemptLogin();
+            programEnd = loginController.attemptLogin();
         }
-        if (command.equals("2")) {
+        else {
             RegistrationController registrationController = new RegistrationController(accountManager, friendManager, conversationManager, eventManager, signupManager);
-            registrationController.attemptRegister();
+            programEnd = registrationController.attemptRegister();
         }
+        return programEnd;
     }
 }
