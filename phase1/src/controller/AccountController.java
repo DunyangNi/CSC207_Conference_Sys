@@ -78,6 +78,7 @@ public abstract class AccountController {
 
             Calendar time = Calendar.getInstance();
             time.set(year, month, dayOfMonth, hourOfDay, 0, 0);
+            time.clear(Calendar.MILLISECOND);
 
             return time;
         } catch (Exception e) {
