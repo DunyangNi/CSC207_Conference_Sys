@@ -217,6 +217,7 @@ public class OrganizerController extends AccountController {
                         presenter.displayPrompt(e.toString());
                     }
                 case "*":
+                    presenter.displayOrganizerMenu();
                     break;
                 default:
                     presenter.displayPrompt("Invalid input, please try again:\n");
@@ -224,9 +225,6 @@ public class OrganizerController extends AccountController {
             if (loggedIn) {
                 presenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
                 command = userInput.nextLine();
-                if (command.equals("*")) {
-                    presenter.displayOrganizerMenu();
-                }
             }
         }
         return programEnd;

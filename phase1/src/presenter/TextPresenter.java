@@ -79,7 +79,6 @@ public class TextPresenter extends Presenter{
         System.out.println("5  = Reschedule an event");
         System.out.println("10 = View talk schedule");
         System.out.println("==========================");
-        System.out.println("Enter a command (1-16):");
     }
 
     @Override
