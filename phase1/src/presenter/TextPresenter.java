@@ -196,19 +196,33 @@ public class TextPresenter extends Presenter{
     }
 
     @Override
-    public void displayConversations(Set<String> recipients) {
-            if (recipients.isEmpty()) {
-                System.out.println("You have no conversations.");
-            } else {
-                System.out.println("[CONVERSATION RECIPIENTS]");
-                for (String recipient : recipients) {
-                    System.out.println(recipient);
-                }
-                System.out.println();
-                System.out.println("Enter the following information on separate lines:");
-                System.out.println("To access a conversation, please enter the recipient's username:");
-                System.out.println("How many past messages would you like to see?");
+    public void displayConversations(String condition, Set<String> recipients) {
+            switch (condition){
+                case "empty":
+                    System.out.println("You have no conversations.");
+                    break;
+                case "non_empty":
+                    System.out.println("[CONVERSATION RECIPIENTS]");
+                    for (String recipient : recipients) {
+                        System.out.println(recipient);
+                    }
+                    System.out.println();
+                    System.out.println("Enter the following information on separate lines:");
+                    System.out.println("To access a conversation, please enter the recipient's username:");
+                    System.out.println("How many past messages would you like to see?");
+                    break;
             }
+    }
+
+    public void displayConversationsErrors(String condition){
+        switch (condition){
+            case "mismatch":
+                System.out.println("Invalid input");break;
+            case "no_conversation":
+                System.out.println("You don't have conversation with this person.");break;
+            case "no_user":
+                System.out.println("This user do not exits");break;
+        }
     }
     //Speaker methods
 

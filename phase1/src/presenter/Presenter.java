@@ -37,7 +37,9 @@ public abstract class Presenter {
 
     public abstract void displayContactsPrompt(String action);
 
-    public abstract void displayConversations(Set<String> recipients);
+    public abstract void displayConversations(String empty, Set<String> recipients);
+
+    public abstract void displayConversationsErrors(String condition);
 
     public abstract void displaySpeakerMenu();
 
