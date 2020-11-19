@@ -59,7 +59,7 @@ public class TextPresenter extends Presenter{
         System.out.println("17 = [FOR TESTING PURPOSES] Delete an account");
         System.out.println("16 = View list of all accounts");
 
-        System.out.println("\n[CONTACTS");
+        System.out.println("\n[CONTACTS]");
         System.out.println("11 = Add a contact");
         System.out.println("12 = Remove a contact");
         System.out.println("13 = View list of all contacts");
