@@ -113,6 +113,7 @@ public class TextPresenter extends Presenter{
 
     @Override
     public void displayUserPassPrompt() {
+        System.out.println("Enter the following information on separate lines:");
         System.out.println("Enter a username:");
         System.out.println("Enter a password:");
     }
@@ -128,10 +129,12 @@ public class TextPresenter extends Presenter{
                 System.out.println("Please enter the message that you want to send to all attendees:");
                 break;
             case "aSpeaker":
+                System.out.println("Enter the following information on separate lines:");
                 System.out.println("Please enter the username of the speaker you wish to message: ");
                 System.out.println("Please enter the message you want to send to this speaker:");
                 break;
             case "anAttendee":
+                System.out.println("Enter the following information on separate lines:");
                 System.out.println("Please enter the username of the attendee you want to message: ");
                 System.out.println("Please enter the message you want to send the attendee:");
                 break;
@@ -160,6 +163,7 @@ public class TextPresenter extends Presenter{
                     System.out.println(recipient);
                 }
                 System.out.println();
+                System.out.println("Enter the following information on separate lines:");
                 System.out.println("To access a conversation, please enter the recipient's username:");
                 System.out.println("How many past messages would you like to see?");
             }
