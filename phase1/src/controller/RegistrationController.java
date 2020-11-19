@@ -1,5 +1,6 @@
 package controller;
 
+import presenter.TextPresenter;
 import use_cases.*;
 
 import java.util.Scanner;
@@ -42,7 +43,8 @@ public class RegistrationController {
         String[] accountInfo = getNewAccountInfo();
         accountManager.AddNewAttendee(accountInfo[0], accountInfo[1], accountInfo[2], accountInfo[3]);
         addNewAccountKeys(accountInfo[0]);
-        AttendeeController ac = new AttendeeController(accountInfo[0], eventManager, conversationManager, friendManager, signupManager, accountManager);
+        TextPresenter textpresenter = new TextPresenter(eventManager, friendManager, signupManager);
+        AttendeeController ac = new AttendeeController(accountInfo[0], eventManager, conversationManager, friendManager, signupManager, accountManager, textpresenter);
         programEnd = ac.runInteraction();
         return programEnd;
     }
@@ -58,7 +60,8 @@ public class RegistrationController {
         String[] accountInfo = getNewAccountInfo();
         accountManager.AddNewOrganizer(accountInfo[0], accountInfo[1], accountInfo[2], accountInfo[3]);
         addNewAccountKeys(accountInfo[0]);
-        OrganizerController oc = new OrganizerController(accountInfo[0], accountManager, friendManager, conversationManager, eventManager, signupManager);
+        TextPresenter textpresenter = new TextPresenter(eventManager, friendManager, signupManager);
+        OrganizerController oc = new OrganizerController(accountInfo[0], accountManager, friendManager, conversationManager, eventManager, signupManager, textpresenter);
         programEnd = oc.runInteraction();
         return programEnd;
     }

@@ -1,7 +1,7 @@
 package controller;
 
 import gateway.DataManager;
-import presenter.Presenter;
+import presenter.*;
 import use_cases.*;
 
 import java.util.Scanner;
@@ -13,7 +13,7 @@ public class StartController {
     private final ConversationManager conversationManager;
     private final EventManager eventManager;
     private final SignupManager signupManager;
-    private final Presenter presenter = new Presenter();
+    private final Presenter presenter = new TextPresenter();
 
     StartController(AccountManager accountManager, FriendManager friendManager, ConversationManager conversationManager, EventManager eventManager, SignupManager signupManager) {
         this.accountManager = accountManager;

@@ -3,12 +3,13 @@ package controller;
 import use_cases.*;
 import java.util.*;
 import java.lang.*;
+import presenter.*;
 
 public class AttendeeController extends AccountController {
 
     public AttendeeController(String username, EventManager eventmanager, ConversationManager conversationManager,
-                              FriendManager friendManager, SignupManager signupManager, AccountManager accountManager) {
-        super(username, accountManager, friendManager, conversationManager, eventmanager, signupManager);
+                              FriendManager friendManager, SignupManager signupManager, AccountManager accountManager, Presenter presenter) {
+        super(username, accountManager, friendManager, conversationManager, eventmanager, signupManager, presenter);
     }
 
     public void signupForTalk(Integer id) {

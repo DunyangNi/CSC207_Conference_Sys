@@ -7,12 +7,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
 import java.util.Set;
+import presenter.*;
 
 public class OrganizerController extends AccountController {
     public OrganizerController(String username, AccountManager accountManager, FriendManager friendManager,
                                ConversationManager conversationManager, EventManager eventmanager,
-                               SignupManager signupManager) {
-        super(username, accountManager, friendManager, conversationManager, eventmanager, signupManager);
+                               SignupManager signupManager, Presenter presenter) {
+        super(username, accountManager, friendManager, conversationManager, eventmanager, signupManager, presenter);
     }
 
     // (NEW!) (Helper)

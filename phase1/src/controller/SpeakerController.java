@@ -3,13 +3,14 @@ package controller;
 import use_cases.*;
 import java.util.*;
 import java.lang.*;
+import presenter.*;
 
 public class SpeakerController extends AccountController {
 
     public SpeakerController(String username, AccountManager accountmanager, FriendManager friendManager,
                              ConversationManager conversationManager, EventManager eventmanager,
-                             SignupManager signupManager) {
-        super(username, accountmanager, friendManager, conversationManager, eventmanager, signupManager);
+                             SignupManager signupManager, Presenter presenter) {
+        super(username, accountmanager, friendManager, conversationManager, eventmanager, signupManager, presenter);
     }
 
     public void SeeSpeakerTalkSchedule() {

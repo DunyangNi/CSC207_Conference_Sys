@@ -19,14 +19,14 @@ public abstract class AccountController {
     protected FriendController friendController;
     protected MessageController messageController;
 
-    public AccountController(String username, AccountManager accountManager, FriendManager friendManager, ConversationManager conversationManager, EventManager eventManager, SignupManager signupManager) {
+    public AccountController(String username, AccountManager accountManager, FriendManager friendManager, ConversationManager conversationManager, EventManager eventManager, SignupManager signupManager, Presenter presenter) {
         this.username = username;
         this.accountManager = accountManager;
         this.friendManager = friendManager;
         this.conversationManager = conversationManager;
         this.eventManager = eventManager;
         this.signupManager = signupManager;
-        this.presenter = new Presenter(eventManager, friendManager, signupManager);
+        this.presenter = presenter;
         this.friendController = new FriendController(username, friendManager, presenter);
         this.messageController = new MessageController(username, accountManager, conversationManager, eventManager, signupManager);
     }

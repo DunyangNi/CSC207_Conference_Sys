@@ -1,7 +1,9 @@
 package controller;
 
 import use_cases.*;
-import presenter.Presenter;
+import presenter.*;
+
+import javax.xml.soap.Text;
 import java.util.Scanner;
 
 public class LoginController {
@@ -10,7 +12,8 @@ public class LoginController {
     private ConversationManager conversationManager;
     private FriendManager friendManager;
     private SignupManager signupManager;
-    private Presenter presenter = new Presenter();
+    // fields for presenter should be filled out
+    private Presenter presenter = new TextPresenter();
 
     public LoginController(AccountManager am, FriendManager fm, ConversationManager cm, EventManager em, SignupManager sm) {
         this.accountManager = am;
@@ -48,15 +51,18 @@ public class LoginController {
     private boolean login(String username) {
         boolean programEnd = false;
         if (accountManager.containsAttendee(username)) {
-            AttendeeController ac = new AttendeeController(username, eventManager, conversationManager, friendManager, signupManager, accountManager);
+            TextPresenter textpresenter = new TextPresenter(eventManager, friendManager, signupManager);
+            AttendeeController ac = new AttendeeController(username, eventManager, conversationManager, friendManager, signupManager, accountManager, textpresenter);
             programEnd = ac.runInteraction();
         }
         if (accountManager.containsOrganizer(username)) {
-            OrganizerController oc = new OrganizerController(username, accountManager, friendManager, conversationManager, eventManager, signupManager);
+            TextPresenter textpresenter = new TextPresenter(eventManager, friendManager, signupManager);
+            OrganizerController oc = new OrganizerController(username, accountManager, friendManager, conversationManager, eventManager, signupManager, textpresenter);
             programEnd = oc.runInteraction();
         }
         if (accountManager.containsSpeaker(username)) {
-            SpeakerController sc = new SpeakerController(username, accountManager, friendManager, conversationManager, eventManager, signupManager);
+            TextPresenter textpresenter = new TextPresenter(eventManager, friendManager, signupManager);
+            SpeakerController sc = new SpeakerController(username, accountManager, friendManager, conversationManager, eventManager, signupManager, textpresenter);
             programEnd = sc.runInteraction();
         }
         return programEnd;
