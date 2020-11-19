@@ -137,12 +137,15 @@ public class AttendeeController extends AccountController {
                         this.presenter.displayPrompt(e.toString() + "\nSomething went wrong. Please enter valid input.\n");
                     }
                     break;
+                case "*":
+                    presenter.displayOrganizerMenu();
+                    break;
+                default:
+                    presenter.displayPrompt("Invalid input, please try again:\n");
             }
             if (loggedIn) {
-                presenter.displayPrompt("Enter another command (1-10). Enter '*' to view the command menu again.");
+                presenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
                 command = userInput.nextLine();
-                if (command.equals("*"))
-                    presenter.displayAttendeeMenu();
             }
         }
         return programEnd;

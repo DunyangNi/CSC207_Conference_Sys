@@ -141,15 +141,15 @@ public class SpeakerController extends AccountController {
                 case "16":
                     presenter.displayPrompt(accountManager.fetchAccountList().keySet().toString());
                     break;
+                case "*":
+                    presenter.displayOrganizerMenu();
+                    break;
                 default:
                     presenter.displayPrompt("Invalid input, please try again:\n");
             }
             if (loggedIn) {
                 presenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
                 command = userInput.nextLine();
-                if (command.equals("*")) {
-                    presenter.displaySpeakerMenu();
-                }
             }
         }
         return programEnd;
