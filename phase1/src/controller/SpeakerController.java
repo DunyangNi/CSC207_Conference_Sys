@@ -37,41 +37,21 @@ public class SpeakerController extends AccountController {
                     Set<String> allAccts = accountManager.fetchAccountList().keySet();
                     presenter.displayAccountList(allAccts);
                     break;
-
                 case "2":
-//                    if (!allAccts.isEmpty()) {
-//                        this.presenter.displayPrompt("List of users");
-//                        this.presenter.displayPrompt("---------------------------------------------");
-//                        for (String acct : allAccts) {
-//                            this.presenter.displayPrompt(acct);
-//                        }
-//                        this.presenter.displayPrompt("---------------------------------------------\n");
-//                        this.presenter.displayPrompt("Specify username of contact to add");
-//                    presenter.displayContactsPrompt("add");
-//                        String newContact = userInput.nextLine();
-//                        if (allAccts.contains(newContact)) {
-//                            friendController.addFriend(newContact);
-//                        } else {
-//                            this.presenter.displayPrompt("The entered contact username is invalid.");
-//                        }
-//                    } else {
-//                        this.presenter.displayPrompt("(No users)");
-//                    }
+                    allAccts = accountManager.fetchAccountList().keySet();
+                    presenter.displayAccountList(allAccts);
+                    presenter.displayContactsPrompt("add");
                     String contactToAdd = userInput.nextLine();
                     friendController.addFriend(contactToAdd);
                     break;
                 case "3":
-                    this.presenter.displayPrompt("Specify username of contact to remove");
+                    presenter.displayContactList(username);
+                    presenter.displayContactsPrompt("remove");
                     String removeContact = userInput.nextLine();
-                    Set<String> allAccounts = accountManager.fetchAccountList().keySet();
-                    if (allAccounts.contains(removeContact)) {
-                        friendController.removeFriend(removeContact);
-                    } else {
-                        this.presenter.displayPrompt("The entered contact username is invalid.");
-                    }
+                    friendController.removeFriend(removeContact);
                     break;
                 case "4":
-                    this.viewContactList();
+                    presenter.displayContactList(username);
                     break;
                 case "5":
                     Set<String> allAttendees = accountManager.getAttendeeList().keySet();

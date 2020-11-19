@@ -70,7 +70,43 @@ public class TextPresenter extends Presenter{
         }
     }
 
+    public void displayAttendeeList(Set<String> allAttendees) {
+        if (!allAttendees.isEmpty()) {
+            System.out.println("List of attendees");
+            System.out.println("---------------------------------------------");
+            for (String attendeeUsername : allAttendees) {
+                System.out.println(attendeeUsername);
+            }
+            System.out.println("---------------------------------------------\n");
+            System.out.println("Specify the attendee's username");
+        }
+    }
+
+    @Override
+    public void displayMessagingPrompt(String action) {
+        switch (action) {
+            case "allSpeakers":
+                System.out.println("Please enter the message that you want to send to all speakers:");
+                break;
+
+            case "allAttendees":
+                System.out.println("Please enter the message that you want to send to all attendees:");
+                break;
+            case "aSpeaker":
+                System.out.println("Enter the following information on separate lines:");
+                System.out.println("Please enter the username of the speaker you wish to message: ");
+                System.out.println("Please enter the message you want to send to this speaker:");
+                break;
+            case "anAttendee":
+                System.out.println("Enter the following information on separate lines:");
+                System.out.println("Please enter the username of the attendee you want to message: ");
+                System.out.println("Please enter the message you want to send the attendee:");
+                break;
+        }
+    }
+
     //Organizer methods
+
     @Override
     public void displayOrganizerMenu() {
         System.out.println("=====[ORGANIZER MENU]=====");
@@ -130,29 +166,6 @@ public class TextPresenter extends Presenter{
         System.out.println("Enter the following information on separate lines:");
         System.out.println("Enter a username:");
         System.out.println("Enter a password:");
-    }
-
-    @Override
-    public void displayMessagingPrompt(String action) {
-        switch (action) {
-            case "allSpeakers":
-                System.out.println("Please enter the message that you want to send to all speakers:");
-                break;
-
-            case "allAttendees":
-                System.out.println("Please enter the message that you want to send to all attendees:");
-                break;
-            case "aSpeaker":
-                System.out.println("Enter the following information on separate lines:");
-                System.out.println("Please enter the username of the speaker you wish to message: ");
-                System.out.println("Please enter the message you want to send to this speaker:");
-                break;
-            case "anAttendee":
-                System.out.println("Enter the following information on separate lines:");
-                System.out.println("Please enter the username of the attendee you want to message: ");
-                System.out.println("Please enter the message you want to send the attendee:");
-                break;
-        }
     }
 
     @Override
