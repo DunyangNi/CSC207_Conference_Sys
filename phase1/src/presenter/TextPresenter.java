@@ -48,7 +48,6 @@ public class TextPresenter extends Presenter{
         }
     }
 
-
     //Organizer methods
     @Override
     public void displayOrganizerMenu() {
