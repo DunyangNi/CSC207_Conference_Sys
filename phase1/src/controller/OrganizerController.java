@@ -113,7 +113,7 @@ public class OrganizerController extends AccountController {
                     friendController.removeFriend(contactToRemove);
                     break;
                 case "5":
-                    this.seeFriendList();
+                    this.viewContactList();
                     break;
                 case "6": {
                     presenter.displayMessagingPrompt("aSpeaker");

@@ -34,7 +34,7 @@ public abstract class AccountController {
         this.presenter.displayTalkSchedule();
     }
 
-    public void seeFriendList() {
+    public void viewContactList() {
         this.presenter.displayFriendList(this.username);
     }
 

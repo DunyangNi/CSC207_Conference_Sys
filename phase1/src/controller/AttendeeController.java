@@ -111,7 +111,7 @@ public class AttendeeController extends AccountController {
 
                     break;
                 case "9":
-                    this.seeFriendList();
+                    this.viewContactList();
 
                     break;
                 case "10":

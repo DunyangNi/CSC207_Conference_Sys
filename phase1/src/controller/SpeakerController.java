@@ -113,7 +113,7 @@ public class SpeakerController extends AccountController {
                     }
                     break;
                 case "7":
-                    this.seeFriendList();
+                    this.viewContactList();
                     break;
                 case "8":
                     try {
