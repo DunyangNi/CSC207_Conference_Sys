@@ -24,7 +24,6 @@ public class Message implements Serializable {
     private String receiver;
     private String content;
     private Integer msgToReply;
-    private static int sid = 0;
     private final int id;
 
     /**
@@ -35,13 +34,12 @@ public class Message implements Serializable {
      * @param content a message content
      * @param msgToReply a message being replied to
      */
-    public Message(String sender, String receiver, String content, Integer msgToReply) {
+    public Message(int id, String sender, String receiver, String content, Integer msgToReply) {
         this.sender = sender;
         this.receiver = receiver;
         this.content = content;
         this.msgToReply = msgToReply;
-        id = sid;
-        sid++;
+        this.id = id;
     }
 
     /**
@@ -50,12 +48,9 @@ public class Message implements Serializable {
      * @param sender a message sender
      * @param content a message content
      */
-    public Message(String sender, String receiver, String content) {
-        // call other constructor but with default value
-        this(sender, receiver, content, null);
+    public Message(int id, String sender, String receiver, String content) {
+        this(id, sender, receiver, content, null);
     }
-
-    // toString() has now been moved to ConversationManager. Just letting you know~
 
     /**
      * @return hash code
@@ -84,13 +79,6 @@ public class Message implements Serializable {
             }
         }
         return false;
-    }
-
-    /**
-     * Reset the ID counter for testing purpose.
-     */
-    public static void resetSid(){
-        sid = 0;
     }
 
     /**
@@ -130,10 +118,6 @@ public class Message implements Serializable {
         return id;
     }
 
-    public static int getSid() {
-        return sid;
-    }
-
     /**
      * @param content content to set.
      */
@@ -155,8 +139,4 @@ public class Message implements Serializable {
     public void setReceiver(String receiver) {
         this.receiver = receiver;
     } // changed by Lucas
-
-    public static void setSid(int sid) {
-        Message.sid = sid;
-    }
 }

@@ -25,6 +25,7 @@ import Throwables.*;
 public class ConversationManager implements Serializable {
     private HashMap<String, HashMap<String, Conversation>> conversations = new HashMap<>();
     private HashMap<Integer, Message> messages = new HashMap<>();
+    private int assignMessageID;
 
     //------------------------------------------------------------
     // Methods
@@ -32,7 +33,7 @@ public class ConversationManager implements Serializable {
 
     public String messageToString(Integer id) throws ObjectNotFoundException{
         if (!this.messages.containsKey(id)) {
-            throw new ObjectNotFoundException(); // Change Exception to say "Message not found" or something
+            throw new ObjectNotFoundException("Message");
         }
         Message selectedMsg = messages.get(id);
         String sender = selectedMsg.getSender();
@@ -44,10 +45,10 @@ public class ConversationManager implements Serializable {
 
     public ArrayList<Integer> getConversationMessages(String sender, String recipient) throws ObjectNotFoundException{
         if (!conversations.containsKey(sender)) {
-            throw new ObjectNotFoundException(); // change the Exception to say "sender not found" or something
+            throw new ObjectNotFoundException("Sender");
         }
         if (!conversations.containsKey(recipient)) {
-            throw new ObjectNotFoundException(); // change the Exception to say "recipient not found" or something
+            throw new ObjectNotFoundException("Recipient");
         }
         return conversations.get(sender).get(recipient).getMessages();
     }
@@ -74,15 +75,15 @@ public class ConversationManager implements Serializable {
      */
     public void sendMessage(String sender, String recipient, String message) throws ObjectNotFoundException {
         if (!conversations.containsKey(sender)) {
-            throw new ObjectNotFoundException(); // change the Exception to say "sender not found" or something
+            throw new ObjectNotFoundException("Sender");
         }
         if (!conversations.containsKey(recipient)) {
-            throw new ObjectNotFoundException(); // change the Exception to say "recipient not found" or something
+            throw new ObjectNotFoundException("Recipient");
         }
         HashMap<String, Conversation> senderConversations = conversations.get(sender);
         HashMap<String, Conversation> recipientConversations = conversations.get(recipient);
         Conversation givenConversation = senderConversations.get(recipient);
-        Message newMessage = new Message(sender, recipient, message);
+        Message newMessage = new Message(assignMessageID++, sender, recipient, message);
         if (givenConversation == null) {
             ArrayList<String> participants = new ArrayList<>(Arrays.asList(sender, recipient));
             givenConversation = new Conversation(participants, newMessage.getId());

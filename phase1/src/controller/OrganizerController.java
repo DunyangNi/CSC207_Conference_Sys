@@ -92,96 +92,56 @@ public class OrganizerController extends AccountController {
                 case "0":
                     loggedIn = false;
                     break;
-                case "1":
-                    presenter.displayRoomRegistration();
-                    String location = userInput.nextLine();
-                    addNewLocation(location);
-                    break;
-                case "2": {
+                case "1": {
                     presenter.displayAccountRegistration();
                     String username = userInput.nextLine();
                     String password = userInput.nextLine();
                     createSpeakerAccount(username, password, "", "");
                     break;
                 }
+                case "2":
+                    presenter.displayPrompt(accountManager.fetchAccountList().keySet().toString());
+                    break;
                 case "3":
-                    try {
-                        presenter.displayEventPrompt("register");
-                        String username = userInput.nextLine();
-                        location = userInput.nextLine();
-                        String topic = userInput.nextLine();
-                        Calendar time = this.collectTimeInfo();
-                        Integer newTalkID = eventManager.addNewTalk(topic, time, location, this.username, username);
-                        signupManager.addEventKey(newTalkID);
-                    } catch (Exception e) {
-                        presenter.displayPrompt(e.toString());
-                    }
+                    presenter.displayContactsPrompt("add");
+                    String contactToAdd = userInput.nextLine();
+                    friendController.addFriend(contactToAdd);
                     break;
                 case "4":
-                    try {
-                        presenter.displayEventPrompt("cancel");
-                        int id = userInput.nextInt();
-                        userInput.nextLine();
-                        this.cancelTalk(id);
-                    }
-                    catch(Exception e) {
-                        presenter.displayPrompt(e.toString());
-                    }
+                    presenter.displayContactsPrompt("remove");
+                    String contactToRemove = userInput.nextLine();
+                    friendController.removeFriend(contactToRemove);
                     break;
                 case "5":
-                    try {
-                        presenter.displayEventPrompt("reschedule");
-                        int id = userInput.nextInt();
-                        userInput.nextLine();
-                        Calendar newTime = this.collectTimeInfo();
-                        this.rescheduleTalk(id, newTime);
-                    } catch (Exception e) {
-                        presenter.displayPrompt(e.toString());
-                    }
+                    this.viewContactList();
                     break;
                 case "6": {
-                    presenter.displayMessagingPrompt("allSpeakers");
-                    String message = userInput.nextLine();
-                    messageController.messageAllSpeakers(message);
-                    break;
-                }
-                case "7": {
                     presenter.displayMessagingPrompt("aSpeaker");
                     String username = userInput.nextLine();
                     String message = userInput.nextLine();
                     messageController.messageSpeaker(message, username);
                     break;
                 }
-                case "8": {
-                    presenter.displayMessagingPrompt("allAttendees");
-                    String message = userInput.nextLine();
-                    messageController.messageAllAttendees(message);
-                    break;
-                }
-                case "9": {
+                case "7": {
                     presenter.displayMessagingPrompt("anAttendee");
                     String username = userInput.nextLine();
                     String message = userInput.nextLine();
                     messageController.messageAttendee(message, username);
                     break;
                 }
+                case "8": {
+                    presenter.displayMessagingPrompt("allSpeakers");
+                    String message = userInput.nextLine();
+                    messageController.messageAllSpeakers(message);
+                    break;
+                }
+                case "9": {
+                    presenter.displayMessagingPrompt("allAttendees");
+                    String message = userInput.nextLine();
+                    messageController.messageAllAttendees(message);
+                    break;
+                }
                 case "10":
-                    this.SeeTalkSchedule();
-                    break;
-                case "11":
-                    presenter.displayContactsPrompt("add");
-                    String contactToAdd = userInput.nextLine();
-                    friendController.addFriend(contactToAdd);
-                    break;
-                case "12":
-                    presenter.displayContactsPrompt("remove");
-                    String contactToRemove = userInput.nextLine();
-                    friendController.removeFriend(contactToRemove);
-                    break;
-                case "13":
-                    this.seeFriendList();
-                    break;
-                case "14":
                     try {
                         Set<String> recipients = conversationManager.getAllUserConversationRecipients(username);
                         presenter.displayConversations(recipients);
@@ -195,27 +155,61 @@ public class OrganizerController extends AccountController {
 //                            }
 //                            presenter.displayPrompt("----------------------------------------------------------------");
 //                            presenter.displayPrompt("To access a conversation, please enter the recipient's username:");
-                            String recipient = userInput.nextLine();
+                        String recipient = userInput.nextLine();
 //                            presenter.displayPrompt("How many past messages would you like to see?");
-                            int pastMessages = Integer.parseInt(userInput.nextLine());
-                            this.viewMessagesFrom(recipient, pastMessages);
+                        int pastMessages = Integer.parseInt(userInput.nextLine());
+                        this.viewMessagesFrom(recipient, pastMessages);
 //                        }
                     } catch (Exception e) {
                         presenter.displayPrompt(e.toString());
                     }
                     break;
-                case "15":
+                case "11":
+                    presenter.displayRoomRegistration();
+                    String location = userInput.nextLine();
+                    addNewLocation(location);
+                    break;
+                case "12":
                     this.seeLocationList();
                     break;
-                case "16":
-                    presenter.displayPrompt(accountManager.fetchAccountList().keySet().toString());
-                    break;
-                case "17":
+                case "13":
                     try {
-                        accountManager.deleteAccount(userInput.nextLine());
+                        presenter.displayEventPrompt("register");
+                        String username = userInput.nextLine();
+                        location = userInput.nextLine();
+                        String topic = userInput.nextLine();
+                        Calendar time = this.collectTimeInfo();
+                        Integer newTalkID = eventManager.addNewTalk(topic, time, location, this.username, username);
+                        signupManager.addEventKey(newTalkID);
                     } catch (Exception e) {
                         presenter.displayPrompt(e.toString());
                     }
+                    break;
+                case "14":
+                    try {
+                        presenter.displayEventPrompt("cancel");
+                        int id = userInput.nextInt();
+                        userInput.nextLine();
+                        this.cancelTalk(id);
+                    }
+                    catch(Exception e) {
+                        presenter.displayPrompt(e.toString());
+                    }
+                    break;
+                case "15":
+                    try {
+                        presenter.displayEventPrompt("reschedule");
+                        int id = userInput.nextInt();
+                        userInput.nextLine();
+                        Calendar newTime = this.collectTimeInfo();
+                        this.rescheduleTalk(id, newTime);
+                    } catch (Exception e) {
+                        presenter.displayPrompt(e.toString());
+                    }
+                    break;
+                case "16":
+                    this.SeeTalkSchedule();
+                    break;
                 case "*":
                     presenter.displayOrganizerMenu();
                     break;
