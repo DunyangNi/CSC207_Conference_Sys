@@ -216,6 +216,8 @@ public class OrganizerController extends AccountController {
                     } catch (Exception e) {
                         presenter.displayPrompt(e.toString());
                     }
+                case "*":
+                    break;
                 default:
                     presenter.displayPrompt("Invalid input, please try again:\n");
             }
