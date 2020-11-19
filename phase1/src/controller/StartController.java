@@ -1,6 +1,7 @@
 package controller;
 
-import presenter.*;
+import presenter.Presenter;
+import presenter.TextPresenter;
 import use_cases.*;
 
 import java.util.Scanner;
@@ -33,12 +34,10 @@ public class StartController {
         }
         if (command.equals("0")) {
             programEnd = true;
-        }
-        else if (command.equals("1")) {
+        } else if (command.equals("1")) {
             LoginController loginController = new LoginController(accountManager, friendManager, conversationManager, eventManager, signupManager);
             programEnd = loginController.attemptLogin();
-        }
-        else {
+        } else {
             RegistrationController registrationController = new RegistrationController(accountManager, friendManager, conversationManager);
             programEnd = registrationController.attemptRegister();
         }
