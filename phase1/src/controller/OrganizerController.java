@@ -118,15 +118,20 @@ public class OrganizerController extends AccountController {
                     }
                     break;
                 case "4":
-                    presenter.displayEventPrompt("cancel");
-                    int id = userInput.nextInt();
-                    userInput.nextLine();
-                    this.cancelTalk(id);
+                    try {
+                        presenter.displayEventPrompt("cancel");
+                        int id = userInput.nextInt();
+                        userInput.nextLine();
+                        this.cancelTalk(id);
+                    }
+                    catch(Exception e) {
+                        presenter.displayPrompt(e.toString());
+                    }
                     break;
                 case "5":
                     try {
                         presenter.displayEventPrompt("reschedule");
-                        id = userInput.nextInt();
+                        int id = userInput.nextInt();
                         userInput.nextLine();
                         Calendar newTime = this.collectTimeInfo();
                         this.rescheduleTalk(id, newTime);
