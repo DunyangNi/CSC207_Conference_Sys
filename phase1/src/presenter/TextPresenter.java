@@ -1,6 +1,6 @@
 package presenter;
 import use_cases.*;
-import entities.*;
+
 import java.util.*;
 
 import java.util.Calendar;
@@ -60,6 +60,83 @@ public class TextPresenter extends Presenter{
         System.out.println("10 = View talk schedule");
         System.out.println("==========================");
         System.out.println("Enter a command (1-16):");
+    }
+
+    @Override
+    public void displayRoomRegistration() {
+        System.out.println("Enter a name for the new room:");
+    }
+
+    @Override
+    public void displayEventPrompt(String action) {
+        switch (action) {
+            case "register":
+                System.out.println("Enter the speaker's username:");
+                System.out.println("Enter the event room:");
+                System.out.println("Enter the event topic:");
+                System.out.println("Enter the event time:");
+                break;
+            case "cancel":
+                System.out.println("Please enter the ID of a talk you wish to cancel: ");
+                break;
+            case "reschedule":
+                System.out.println("Please enter the ID of a talk you wish to reschedule: ");
+                break;
+        }
+    }
+
+    @Override
+    public void displayAccountRegistration() {
+        System.out.println("Enter a username:");
+        System.out.println("Enter a password:");
+    }
+
+    @Override
+    public void displayMessagingPrompt(String action) {
+        switch (action) {
+            case "allSpeakers":
+                System.out.println("Please enter the message that you want to send to all speakers:");
+                break;
+
+            case "allAttendees":
+                System.out.println("Please enter the message that you want to send to all attendees:");
+                break;
+            case "aSpeaker":
+                System.out.println("Please enter the username of the speaker you wish to message: ");
+                System.out.println("Please enter the message you want to send to this speaker:");
+                break;
+            case "anAttendee":
+                System.out.println("Please enter the username of the attendee you want to message: ");
+                System.out.println("Please enter the message you want to send the attendee:");
+                break;
+        }
+    }
+
+    @Override
+    public void displayContactsPrompt(String action) {
+        switch (action) {
+            case "add":
+                System.out.println("Please enter the username of a contact to add: ");
+                break;
+            case "remove":
+                System.out.println("Please enter the username of a contact to remove: ");
+                break;
+        }
+    }
+
+    @Override
+    public void displayConversations(Set<String> recipients) {
+            if (recipients.isEmpty()) {
+                System.out.println("You have no conversations.");
+            } else {
+                System.out.println("[CONVERSATION RECIPIENTS]");
+                for (String recipient : recipients) {
+                    System.out.println(recipient);
+                }
+                System.out.println();
+                System.out.println("To access a conversation, please enter the recipient's username:");
+                System.out.println("How many past messages would you like to see?");
+            }
     }
 
     @Override

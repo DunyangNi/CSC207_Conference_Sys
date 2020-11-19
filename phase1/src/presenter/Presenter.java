@@ -25,6 +25,18 @@ public abstract class Presenter {
 
     public abstract void displayOrganizerMenu();
 
+    public abstract void displayRoomRegistration();
+
+    public abstract void displayEventPrompt(String action);
+
+    public abstract void displayAccountRegistration();
+
+    public abstract void displayMessagingPrompt(String action);
+
+    public abstract void displayContactsPrompt(String action);
+
+    public abstract void displayConversations(Set<String> recipients);
+
     public abstract void displaySpeakerMenu();
 
     public abstract void displayAttendeeMenu();
