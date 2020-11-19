@@ -49,4 +49,6 @@ public abstract class Presenter {
 
     public abstract void displayContactList(String user);
 
+    public abstract void displayTalkPrompt(String action);
+
 }

@@ -153,6 +153,20 @@ public class TextPresenter extends Presenter{
         }
     }
 
+    public void displayTalkPrompt(String action){
+        switch (action) {
+            case "attend":
+                System.out.println("Please enter the ID of the Talk you wish to attend: ");
+                break;
+            case "cancel":
+                System.out.println("Please enter the ID of the Talk you wish to cancel: ");
+                break;
+            case "invalid":
+                System.out.println("Invalid Talk ID.");
+                break;
+        }
+    }
+
     @Override
     public void displayConversations(Set<String> recipients) {
             if (recipients.isEmpty()) {
