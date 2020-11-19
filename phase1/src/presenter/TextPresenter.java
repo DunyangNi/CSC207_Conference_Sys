@@ -53,7 +53,7 @@ public class TextPresenter extends Presenter{
     public void displayOrganizerMenu() {
         System.out.println("=====[ORGANIZER MENU]=====");
         System.out.println("[ACCOUNT]");
-        System.out.println("00  = Logout and exit program");
+        System.out.println("00 = Logout and exit program");
         System.out.println("0  = Logout");
         System.out.println("1  = Register a new speaker account");
         System.out.println("2 = View list of all accounts");
@@ -73,9 +73,9 @@ public class TextPresenter extends Presenter{
         System.out.println("\n[EVENTS]");
         System.out.println("11 = Register a new event room");
         System.out.println("12 = View list of all rooms");
-        System.out.println("13  = Register a new event");
-        System.out.println("14  = Cancel an event");
-        System.out.println("15  = Reschedule an event");
+        System.out.println("13 = Register a new event");
+        System.out.println("14 = Cancel an event");
+        System.out.println("15 = Reschedule an event");
         System.out.println("16 = View talk schedule");
         System.out.println("==========================");
     }
