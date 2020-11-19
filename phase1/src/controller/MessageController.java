@@ -4,6 +4,7 @@ import use_cases.ConversationManager;
 import use_cases.AccountManager;
 import use_cases.EventManager;
 import use_cases.SignupManager;
+import presenter.*;
 
 import java.util.*;
 
@@ -13,6 +14,7 @@ public class MessageController {
     protected ConversationManager conversationManager;
     protected EventManager eventManager;
     protected SignupManager signupManager;
+    protected Presenter presenter = new TextPresenter();
 
     public MessageController(String username, AccountManager accountManager, ConversationManager conversationManager,
                              EventManager eventManager, SignupManager signupManager){
@@ -28,8 +30,8 @@ public class MessageController {
             conversationManager.sendMessage(this.username, account, message);
         }
         catch(Exception e){
-            System.out.println(e.toString());
-            System.out.println("Something went wrong with messageAccount while messaging. Try again.");
+            this.presenter.displayPrompt(e.toString());
+            this.presenter.displayPrompt("Something went wrong with messageAccount while messaging. Try again.");
         }
     }
 
@@ -38,7 +40,7 @@ public class MessageController {
             messageAccount(message, speaker);
         }
         else {
-            System.out.println("This speaker does not exist.");
+            this.presenter.displayPrompt("This speaker does not exist.");
         }
 
     }
@@ -48,7 +50,7 @@ public class MessageController {
             messageAccount(message, attendeeUsername);
         }
         else {
-            System.out.println("This attendee does not exist.");
+            this.presenter.displayPrompt("This attendee does not exist.");
         }
     }
 
@@ -57,14 +59,14 @@ public class MessageController {
         try {
             Iterator<String> speakerUsernameIterator = this.accountManager.speakerUsernameIterator();
             if (!speakerUsernameIterator.hasNext())
-                System.out.println("There are no speakers to message."); // f
+                this.presenter.displayPrompt("There are no speakers to message."); // f
             while(speakerUsernameIterator.hasNext()) {
                 messageSpeaker(message, speakerUsernameIterator.next());
             }
         }
         catch(Exception e) {
-            System.out.println(e.toString());
-            System.out.println("Something went wrong. Please try again.");
+            this.presenter.displayPrompt(e.toString());
+            this.presenter.displayPrompt("Something went wrong. Please try again.");
         }
     }
 
@@ -72,14 +74,14 @@ public class MessageController {
         try {
             Iterator<String> attendeeUsernameIterator = this.accountManager.attendeeUsernameIterator();
             if (!attendeeUsernameIterator.hasNext())
-                System.out.println("There are no attendees to message."); // f
+                this.presenter.displayPrompt("There are no attendees to message."); // f
             while (attendeeUsernameIterator.hasNext()) {
                 messageAttendee(message, attendeeUsernameIterator.next());
             }
         }
         catch(Exception e) {
-            System.out.println(e.toString());
-            System.out.println("Something went wrong. Please try again.");
+            this.presenter.displayPrompt(e.toString());
+            this.presenter.displayPrompt("Something went wrong. Please try again.");
         }
     }
 
@@ -91,13 +93,13 @@ public class MessageController {
                     selectedAttendeeUsernames.addAll(signupManager.fetchTalkAttendeeList(id));
             }
             if (selectedAttendeeUsernames.isEmpty())
-                System.out.println("There are no attendees to message."); // f
+                this.presenter.displayPrompt("There are no attendees to message."); // f
             for (String attendeeUsername : selectedAttendeeUsernames) {
                 messageAttendee(message, attendeeUsername);
             }
         }
         catch(Exception e) {
-            System.out.println(e.toString() + "\nSomething went wrong. Please enter valid input.\n");
+            this.presenter.displayPrompt(e.toString() + "\nSomething went wrong. Please enter valid input.\n");
         }
     }
 }

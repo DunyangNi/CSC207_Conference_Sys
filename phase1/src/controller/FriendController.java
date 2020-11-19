@@ -21,14 +21,14 @@ public class FriendController {
             friendManager.AddFriend(this.username, friendToAdd);
         }
         catch(ObjectNotFoundException e) {
-            System.out.println(e.toString());
-            System.out.println("We could not find an account with this username. Please try again.");
-            System.out.println("");
+            this.presenter.displayPrompt(e.toString());
+            this.presenter.displayPrompt("We could not find an account with this username. Please try again.");
+            this.presenter.displayPrompt("");
         }
         catch(ConflictException e) {
-            System.out.println(e.toString());
-            System.out.println("This account is already on your contact list.");
-            System.out.println("");
+            this.presenter.displayPrompt(e.toString());
+            this.presenter.displayPrompt("This account is already on your contact list.");
+            this.presenter.displayPrompt("");
         }
     }
 
@@ -37,10 +37,10 @@ public class FriendController {
             friendManager.RemoveFriend(this.username, friendToRemove);
         }
         catch(Exception e) {
-            System.out.println(e.toString());
-            System.out.println("We could not find an account with this username on your contact list. " +
+            this.presenter.displayPrompt(e.toString());
+            this.presenter.displayPrompt("We could not find an account with this username on your contact list. " +
                     "Please try again.");
-            System.out.println("");
+            this.presenter.displayPrompt("");
         }
     }
 

@@ -1,6 +1,6 @@
 package controller;
 
-import presenter.TextPresenter;
+import presenter.*;
 import use_cases.*;
 
 import java.util.Scanner;
@@ -13,6 +13,7 @@ public class RegistrationController {
     private ConversationManager conversationManager;
     private FriendManager friendManager;
     private SignupManager signupManager;
+    private Presenter presenter = new TextPresenter();
 
     public RegistrationController(AccountManager am, FriendManager fm, ConversationManager cm, EventManager em, SignupManager sm) {
         this.accountManager = am;
@@ -23,11 +24,11 @@ public class RegistrationController {
     }
 
     public boolean attemptRegister() {
-        System.out.println("Enter '1' to register an Attendee account.\nEnter '2' to register an Organizer account.");
+        this.presenter.displayPrompt("Enter '1' to register an Attendee account.\nEnter '2' to register an Organizer account.");
         String command = input.nextLine();
         boolean programEnd;
         while (!(command.equals("1") || (command.equals("2")))) {
-            System.out.println("Invalid input, please try again.");
+            this.presenter.displayPrompt("Invalid input, please try again.");
             command = input.nextLine();
         }
         if (command.equals("1")) {
@@ -50,10 +51,10 @@ public class RegistrationController {
     }
 
     private boolean registerNewOrganizer() {
-        System.out.println("Enter the Organizer account registration code:");
+        this.presenter.displayPrompt("Enter the Organizer account registration code:");
         String code = input.nextLine();
         while (!code.equals(ORGANIZER_PASSWORD)) {
-            System.out.println("Invalid input, please try again.");
+            this.presenter.displayPrompt("Invalid input, please try again.");
             code = input.nextLine();
         }
         boolean programEnd;
@@ -67,20 +68,20 @@ public class RegistrationController {
     }
 
     private String[] getNewAccountInfo() {
-        System.out.println("Enter a username:");
+        this.presenter.displayPrompt("Enter a username:");
         String username = input.nextLine();
 
         while ((accountManager.containsAccount(username))) {
-            System.out.println("This username is already taken, please try again:");
+            this.presenter.displayPrompt("This username is already taken, please try again:");
             username = input.nextLine();
         }
 
         // Obtain rest of information and bundle into Tuple of 4
-        System.out.println("Enter a password:");
+        this.presenter.displayPrompt("Enter a password:");
         String password = input.nextLine();
-        System.out.println("Enter your first name:");
+        this.presenter.displayPrompt("Enter your first name:");
         String firstname = input.nextLine();
-        System.out.println("Enter your last name:");
+        this.presenter.displayPrompt("Enter your last name:");
         String lastname = input.nextLine();
 
         return new String[]{username, password, firstname, lastname};

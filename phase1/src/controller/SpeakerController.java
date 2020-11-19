@@ -39,43 +39,43 @@ public class SpeakerController extends AccountController {
                 case "2":
                     Set<String> allAttendees = accountManager.getAttendeeList().keySet();
                     if (!allAttendees.isEmpty()) {
-                        System.out.println("List of attendees");
-                        System.out.println("---------------------------------------------");
+                        this.presenter.displayPrompt("List of attendees");
+                        this.presenter.displayPrompt("---------------------------------------------");
                         for (String attendeeUsername : allAttendees) {
-                            System.out.println(attendeeUsername);
+                            this.presenter.displayPrompt(attendeeUsername);
                         }
-                        System.out.println("---------------------------------------------\n");
-                        System.out.println("Specify the attendee's username");
+                        this.presenter.displayPrompt("---------------------------------------------\n");
+                        this.presenter.displayPrompt("Specify the attendee's username");
                         String attendee = userInput.nextLine();
-                        System.out.println("Please enter your message to send: ");
+                        this.presenter.displayPrompt("Please enter your message to send: ");
                         String message = userInput.nextLine();
                         if (allAttendees.contains(attendee)) {
                             messageController.messageAttendee(message, attendee);
                         } else {
-                            System.out.println("The entered recipient username is invalid.");
+                            this.presenter.displayPrompt("The entered recipient username is invalid.");
                         }
                     } else {
-                        System.out.println("(No attendees)");
+                        this.presenter.displayPrompt("(No attendees)");
                     }
                     break;
                 case "3":
                     ArrayList<Integer> selectedSpeakerTalks = new ArrayList<>();
                     boolean doneAddingTalks = false;
                     while (!doneAddingTalks) {
-                        System.out.print("Please enter the ID of a Talk you are giving: ");
+                        this.presenter.displayPrompt("Please enter the ID of a Talk you are giving: ");
                         Integer id = Integer.parseInt(userInput.nextLine());
                         if (eventManager.isSpeakerOfTalk(id, username)) {
                             selectedSpeakerTalks.add(id);
                         } else {
-                            System.out.println("Invalid ID. You are not speaking at this talk.");
+                            this.presenter.displayPrompt("Invalid ID. You are not speaking at this talk.");
                             continue;
                         }
-                        System.out.println("Would you like to add another Talk? (1 = yes, 0 = no)");
+                        this.presenter.displayPrompt("Would you like to add another Talk? (1 = yes, 0 = no)");
                         int response = userInput.nextInt();
                         userInput.nextLine();
                         doneAddingTalks = response == 0;
                     }
-                    System.out.println("Please enter your message to send: ");
+                    this.presenter.displayPrompt("Please enter your message to send: ");
                     String message = userInput.nextLine();
                     messageController.messageAttendeesAtTalks(selectedSpeakerTalks, message);
                     break;
@@ -85,31 +85,31 @@ public class SpeakerController extends AccountController {
                 case "5":
                     Set<String> allAccts = accountManager.fetchAccountList().keySet();
                     if (!allAccts.isEmpty()) {
-                        System.out.println("List of users");
-                        System.out.println("---------------------------------------------");
+                        this.presenter.displayPrompt("List of users");
+                        this.presenter.displayPrompt("---------------------------------------------");
                         for (String acct : allAccts) {
-                            System.out.println(acct);
+                            this.presenter.displayPrompt(acct);
                         }
-                        System.out.println("---------------------------------------------\n");
-                        System.out.println("Specify username of contact to add");
+                        this.presenter.displayPrompt("---------------------------------------------\n");
+                        this.presenter.displayPrompt("Specify username of contact to add");
                         String newContact = userInput.nextLine();
                         if (allAccts.contains(newContact)) {
                             friendController.addFriend(newContact);
                         } else {
-                            System.out.println("The entered contact username is invalid.");
+                            this.presenter.displayPrompt("The entered contact username is invalid.");
                         }
                     } else {
-                        System.out.println("(No users)");
+                        this.presenter.displayPrompt("(No users)");
                     }
                     break;
                 case "6":
-                    System.out.println("Specify username of contact to remove");
+                    this.presenter.displayPrompt("Specify username of contact to remove");
                     String removeContact = userInput.nextLine();
                     Set<String> allAccounts = accountManager.fetchAccountList().keySet();
                     if (allAccounts.contains(removeContact)) {
                         friendController.removeFriend(removeContact);
                     } else {
-                        System.out.println("The entered contact username is invalid.");
+                        this.presenter.displayPrompt("The entered contact username is invalid.");
                     }
                     break;
                 case "7":
@@ -119,23 +119,23 @@ public class SpeakerController extends AccountController {
                     try {
                         Set<String> myConversations = conversationManager.getAllUserConversationRecipients(username);
                         if (myConversations.isEmpty()) {
-                            System.out.println("(No conversations)");
+                            this.presenter.displayPrompt("(No conversations)");
                         } else {
-                            System.out.println("List of Conversation Recipients");
-                            System.out.println("---------------------------------------------");
+                            this.presenter.displayPrompt("List of Conversation Recipients");
+                            this.presenter.displayPrompt("---------------------------------------------");
                             for (String recipient : myConversations) {
-                                System.out.println(recipient);
+                                this.presenter.displayPrompt(recipient);
                             }
-                            System.out.println("---------------------------------------------\n");
-                            System.out.print("To access a conversation, please enter the recipient's username: ");
+                            this.presenter.displayPrompt("---------------------------------------------\n");
+                            this.presenter.displayPrompt("To access a conversation, please enter the recipient's username: ");
                             String user = userInput.nextLine();
-                            System.out.println("How many past messages would you like to see?");
+                            this.presenter.displayPrompt("How many past messages would you like to see?");
                             int pastMessages = userInput.nextInt();
                             userInput.nextLine();
                             this.viewMessagesFrom(user, pastMessages);
                         }
                     } catch (Exception e) {
-                        System.out.println(e.toString() + "\nSomething went wrong. Please enter valid input.\n");
+                        this.presenter.displayPrompt(e.toString() + "\nSomething went wrong. Please enter valid input.\n");
                     }
                     break;
                 case "16":
