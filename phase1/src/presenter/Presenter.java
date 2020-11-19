@@ -23,6 +23,8 @@ public abstract class Presenter {
 
     public abstract void displayPrompt(String output);
 
+    public abstract void displayAccountList(Set<String> allAccts);
+
     public abstract void displayOrganizerMenu();
 
     public abstract void displayRoomRegistration();

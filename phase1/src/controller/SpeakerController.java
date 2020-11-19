@@ -34,27 +34,31 @@ public class SpeakerController extends AccountController {
                     loggedIn = false;
                     break;
                 case "1":
-                    presenter.displayPrompt(accountManager.fetchAccountList().keySet().toString());
-                    break;
-                case "2":
                     Set<String> allAccts = accountManager.fetchAccountList().keySet();
-                    if (!allAccts.isEmpty()) {
-                        this.presenter.displayPrompt("List of users");
-                        this.presenter.displayPrompt("---------------------------------------------");
-                        for (String acct : allAccts) {
-                            this.presenter.displayPrompt(acct);
-                        }
-                        this.presenter.displayPrompt("---------------------------------------------\n");
-                        this.presenter.displayPrompt("Specify username of contact to add");
-                        String newContact = userInput.nextLine();
-                        if (allAccts.contains(newContact)) {
-                            friendController.addFriend(newContact);
-                        } else {
-                            this.presenter.displayPrompt("The entered contact username is invalid.");
-                        }
-                    } else {
-                        this.presenter.displayPrompt("(No users)");
-                    }
+                    presenter.displayAccountList(allAccts);
+                    break;
+
+                case "2":
+//                    if (!allAccts.isEmpty()) {
+//                        this.presenter.displayPrompt("List of users");
+//                        this.presenter.displayPrompt("---------------------------------------------");
+//                        for (String acct : allAccts) {
+//                            this.presenter.displayPrompt(acct);
+//                        }
+//                        this.presenter.displayPrompt("---------------------------------------------\n");
+//                        this.presenter.displayPrompt("Specify username of contact to add");
+//                    presenter.displayContactsPrompt("add");
+//                        String newContact = userInput.nextLine();
+//                        if (allAccts.contains(newContact)) {
+//                            friendController.addFriend(newContact);
+//                        } else {
+//                            this.presenter.displayPrompt("The entered contact username is invalid.");
+//                        }
+//                    } else {
+//                        this.presenter.displayPrompt("(No users)");
+//                    }
+                    String contactToAdd = userInput.nextLine();
+                    friendController.addFriend(contactToAdd);
                     break;
                 case "3":
                     this.presenter.displayPrompt("Specify username of contact to remove");

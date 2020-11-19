@@ -56,6 +56,20 @@ public class TextPresenter extends Presenter{
         else { for (String friend : selectedFriends) { System.out.println(friend); } }
     }
 
+    @Override
+    public void displayAccountList(Set<String> allAccts) {
+        if (!allAccts.isEmpty()) {
+            System.out.println("List of users");
+            System.out.println("---------------------------------------------");
+            for (String acct : allAccts) {
+                System.out.println(acct);
+            }
+            System.out.println("---------------------------------------------\n");
+        } else {
+            System.out.println("(No users)");
+        }
+    }
+
     //Organizer methods
     @Override
     public void displayOrganizerMenu() {
