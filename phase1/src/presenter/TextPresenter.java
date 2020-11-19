@@ -159,7 +159,7 @@ public class TextPresenter extends Presenter{
 
     @Override
     public void displaySpeakerMenu() {
-        System.out.println("=====[SPEAKER MENU]=====");
+        System.out.println("======[SPEAKER MENU]======");
         System.out.println("[ACCOUNT]");
         System.out.println("00 = Logout and exit program");
         System.out.println("0  = Logout");
@@ -186,26 +186,25 @@ public class TextPresenter extends Presenter{
         System.out.println("=====[ATTENDEE MENU]=====");
         System.out.println("[ACCOUNT]");
         System.out.println("What would you like to do?");
-        System.out.println("00  = Logout and exit program");
+        System.out.println("00 = Logout and exit program");
         System.out.println("0  = Logout");
 
         System.out.println("\n[CONTACTS]");
-        System.out.println("1 = add a new contact");
-        System.out.println("2 = remove a contact");
-        System.out.println("3 = see contacts list");
+        System.out.println("1  = add a new contact");
+        System.out.println("2  = remove a contact");
+        System.out.println("3  = see contacts list");
 
         System.out.println("\n[CONVERSATIONS]");
-        System.out.println("4 = message another attendee");
-        System.out.println("5 = message a speaker");
-        System.out.println("6 = view your conversation with someone");
+        System.out.println("4  = message another attendee");
+        System.out.println("5  = message a speaker");
+        System.out.println("6  = view your conversation with someone");
 
         System.out.println("\n[EVENTS]");
-        System.out.println("7 = see talk schedule");
-        System.out.println("8 = sign up for a talk");
-        System.out.println("9 = cancel enrolment for a talk");
+        System.out.println("7  = see talk schedule");
+        System.out.println("8  = sign up for a talk");
+        System.out.println("9  = cancel enrolment for a talk");
         System.out.println("10 = see a schedule of talks you're attending");
-        System.out.println("==========================");
-        System.out.println("Enter a command (1-16):");
+        System.out.println("=========================");
     }
 
     @Override
