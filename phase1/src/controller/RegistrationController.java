@@ -1,5 +1,6 @@
 package controller;
 
+import gateway.DataManager;
 import presenter.*;
 import use_cases.*;
 
@@ -36,6 +37,12 @@ public class RegistrationController {
         } else {
             programEnd = registerNewOrganizer();
         }
+        DataManager dataManager = new DataManager();
+        dataManager.saveManager("EventManager", "EventManager", eventManager);
+        dataManager.saveManager("AccountManager", "AccountManager", accountManager);
+        dataManager.saveManager("ConversationManager", "ConversationManager", conversationManager);
+        dataManager.saveManager("FriendManager", "FriendManager", friendManager);
+        dataManager.saveManager("SignupManager", "SignupManager", signupManager);
         return programEnd;
     }
 
