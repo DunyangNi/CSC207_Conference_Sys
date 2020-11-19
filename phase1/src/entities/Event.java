@@ -24,7 +24,6 @@ public class Event implements Serializable, Comparable<Event> {
     private Calendar time;
     private String organizer;
     private ArrayList<String> attendees = new ArrayList<>();
-    private static int sid = 0;
     private int id;
 
     //------------------------------------------------------------
@@ -36,13 +35,12 @@ public class Event implements Serializable, Comparable<Event> {
      * @param topic event topic.
      * @param time event time.
      */
-    public Event(String topic, Calendar time, String location, String organizer) {
+    public Event(Integer id, String topic, Calendar time, String location, String organizer) {
         this.topic = topic;
         this.time = time;
         this.location = location;
         this.organizer = organizer;
-        id = sid;
-        sid++;
+        this.id = id;
     }
 
     //------------------------------------------------------------
@@ -56,13 +54,6 @@ public class Event implements Serializable, Comparable<Event> {
 
     public int compareTo(Event event) {
         return this.time.compareTo(event.time);
-    }
-
-    /**
-     * Reset the ID counter for testing purpose.
-     */
-    public static void resetSid(){
-        sid = 0;
     }
 
     /**
@@ -121,10 +112,6 @@ public class Event implements Serializable, Comparable<Event> {
         return id;
     }
 
-    public static int getSid() {
-        return sid;
-    }
-
     /**
      * @param topic event topic
      */
@@ -149,10 +136,6 @@ public class Event implements Serializable, Comparable<Event> {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public static void setSid(int sid) {
-        Event.sid = sid;
     }
 }
 

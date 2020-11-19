@@ -17,6 +17,7 @@ public class EventManager implements Serializable {
     private ArrayList<String> speakers;
     private EventModifier eventModifier = new EventModifier();
     private EventChecker eventChecker = new EventChecker();
+    private int assignEventID;
 
     public EventManager() {
         this(new HashMap<>(), new ArrayList<>(), new ArrayList<>());
@@ -109,7 +110,7 @@ public class EventManager implements Serializable {
 
     public Integer addNewEvent(String topic, Calendar time, String location, String organizer) throws ConflictException, ObjectNotFoundException {
         checkValidEvent(time, location);
-        Event eventToAdd = new Event(topic, time, location, organizer);
+        Event eventToAdd = new Event(assignEventID++, topic, time, location, organizer);
         events.put(eventToAdd.getId(), eventToAdd);
         return eventToAdd.getId();
 
@@ -119,7 +120,7 @@ public class EventManager implements Serializable {
         if (!speakers.contains(speaker))
             throw new ObjectNotFoundException("Speaker " + speaker);
         checkValidTalk(time, location, speaker);
-        Talk eventToAdd = new Talk(topic, time, location, organizer, speaker);
+        Talk eventToAdd = new Talk(assignEventID++, topic, time, location, organizer, speaker);
         events.put(eventToAdd.getId(), eventToAdd);
         return eventToAdd.getId();
     }

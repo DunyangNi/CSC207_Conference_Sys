@@ -50,8 +50,8 @@ public class Talk extends Event implements Serializable {
      * @param speaker speaker for the talk
      * @param organizer organizer for the talk
      */
-    public Talk(String topic, Calendar time, String location, String organizer, String speaker) {
-        super(topic, time, location, organizer);
+    public Talk(Integer id, String topic, Calendar time, String location, String organizer, String speaker) {
+        super(id, topic, time, location, organizer);
         this.speaker = speaker;
     }
 
