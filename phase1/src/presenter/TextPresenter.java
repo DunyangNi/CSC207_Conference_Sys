@@ -24,11 +24,32 @@ public class TextPresenter extends Presenter{
         this.friendManager = friendManager;
     }
 
+    //Shared methods
     @Override
     public void displayPrompt(String output) {
         System.out.println(output);
     }
 
+    @Override
+    public void displayTalkSchedule() {
+        HashMap<String[], Calendar> allTalks = eventmanager.fetchSortedTalks();
+        System.out.println("Schedule for all talks:\n");
+        if (allTalks.keySet().isEmpty()) System.out.println("Nothing!");
+        Calendar timeNow = Calendar.getInstance();
+        for(String[] eventInfo : allTalks.keySet()) {
+            if(timeNow.compareTo(allTalks.get(eventInfo)) < 0) {
+                System.out.println("ID: " + eventInfo[4]);
+                System.out.println("Topic: " + eventInfo[0]);
+                System.out.println("Speaker: " + eventInfo[1]);
+                System.out.println("Location: " + eventInfo[2]);
+                System.out.println("Time: " + eventInfo[3]);
+                System.out.println();
+            }
+        }
+    }
+
+
+    //Organizer methods
     @Override
     public void displayOrganizerMenu() {
         System.out.println("=====[ORGANIZER MENU]=====");
@@ -189,24 +210,6 @@ public class TextPresenter extends Presenter{
         System.out.println("4 = see a schedule of talks you're attending");
         System.out.println("==========================");
         System.out.println("Enter a command (1-16):");
-    }
-
-    @Override
-    public void displayTalkSchedule() {
-        HashMap<String[], Calendar> allTalks = eventmanager.fetchSortedTalks();
-        System.out.println("Schedule for all talks:\n");
-        if (allTalks.keySet().isEmpty()) System.out.println("Nothing!");
-        Calendar timeNow = Calendar.getInstance();
-        for(String[] eventInfo : allTalks.keySet()) {
-            if(timeNow.compareTo(allTalks.get(eventInfo)) < 0) {
-                System.out.println("ID: " + eventInfo[4]);
-                System.out.println("Topic: " + eventInfo[0]);
-                System.out.println("Speaker: " + eventInfo[1]);
-                System.out.println("Location: " + eventInfo[2]);
-                System.out.println("Time: " + eventInfo[3]);
-                System.out.println();
-            }
-        }
     }
 
     @Override

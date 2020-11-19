@@ -1,20 +1,20 @@
 package controller;
 
 import gateway.DataManager;
+import presenter.Presenter;
+import presenter.TextPresenter;
 import use_cases.*;
-import presenter.*;
 
-import javax.xml.soap.Text;
 import java.util.Scanner;
 
 public class LoginController {
-    private AccountManager accountManager;
-    private EventManager eventManager;
-    private ConversationManager conversationManager;
-    private FriendManager friendManager;
-    private SignupManager signupManager;
+    private final AccountManager accountManager;
+    private final EventManager eventManager;
+    private final ConversationManager conversationManager;
+    private final FriendManager friendManager;
+    private final SignupManager signupManager;
     // fields for presenter should be filled out
-    private Presenter presenter = new TextPresenter();
+    private final Presenter presenter = new TextPresenter();
 
     public LoginController(AccountManager am, FriendManager fm, ConversationManager cm, EventManager em, SignupManager sm) {
         this.accountManager = am;
@@ -23,7 +23,7 @@ public class LoginController {
         this.eventManager = em;
         this.signupManager = sm;
     }
-    
+
     public boolean attemptLogin() {
         presenter.displayPrompt("[LOGIN MENU]");
         Scanner input = new Scanner(System.in);
