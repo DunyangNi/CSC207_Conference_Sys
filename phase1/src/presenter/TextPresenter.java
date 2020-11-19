@@ -167,7 +167,7 @@ public class TextPresenter extends Presenter{
         System.out.println("0  = Logout");
         System.out.println("16 = View list of all accounts");
 
-        System.out.println("\n[CONTACTS");
+        System.out.println("\n[CONTACTS]");
         System.out.println("5 = add a new contact");
         System.out.println("6 = remove a contact");
         System.out.println("7 = view contacts list");
@@ -192,7 +192,7 @@ public class TextPresenter extends Presenter{
         System.out.println("00  = Logout and exit program");
         System.out.println("0  = Logout");
 
-        System.out.println("\n[CONTACTS");
+        System.out.println("\n[CONTACTS]");
         System.out.println("7 = add a new contact");
         System.out.println("8 = remove a contact");
         System.out.println("9 = see contacts list");
