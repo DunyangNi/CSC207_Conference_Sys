@@ -48,10 +48,10 @@ public class AttendeeController extends AccountController {
                 case "0":
                     loggedIn = false;
                     break;
-                case "1":
+                case "7":
                     this.SeeTalkSchedule();
                     break;
-                case "2": {
+                case "8": {
                     this.presenter.displayPrompt("Please enter the ID of the Talk you wish to attend: ");
                     String input = userInput.nextLine();
                     if(isNumeric(input)){
@@ -62,7 +62,7 @@ public class AttendeeController extends AccountController {
                     }
                     break;
                 }
-                case "3": {
+                case "9": {
                     this.presenter.displayPrompt("Please enter the ID of the Talk you wish to cancel: ");
                     String input = userInput.nextLine();
                     if(isNumeric(input)){
@@ -73,10 +73,10 @@ public class AttendeeController extends AccountController {
                     }
                     break;
                 }
-                case "4":
+                case "10":
                     this.seeAttendeeTalkSchedule();
                     break;
-                case "5": {
+                case "4": {
                     //messageAttendee(String message, String attendeeUsername)
                     this.presenter.displayPrompt("Specify the username of the attendee you're messaging");
                     //String line1 = sc.nextLine();
@@ -87,7 +87,7 @@ public class AttendeeController extends AccountController {
                     messageController.messageAttendee(message, attendeeUsername);
                     break;
                 }
-                case "6": {
+                case "5": {
                     //messageSpeaker(String message, String speakerusername)
                     this.presenter.displayPrompt("Specify the username of the speaker you're messaging");
                     //String line1 = sc.nextLine();
@@ -98,23 +98,23 @@ public class AttendeeController extends AccountController {
                     messageController.messageSpeaker(message, speakerUsername);
                     break;
                 }
-                case "7":
+                case "1":
                     this.presenter.displayPrompt("Please enter the username of a contact to add: ");
                     String contactToAdd = userInput.nextLine();
                     friendController.addFriend(contactToAdd);
 
                     break;
-                case "8":
+                case "2":
                     this.presenter.displayPrompt("Please enter the username of a contact to remove: ");
                     String contactToRemove = userInput.nextLine();
                     friendController.removeFriend(contactToRemove);
 
                     break;
-                case "9":
+                case "3":
                     this.viewContactList();
 
                     break;
-                case "10":
+                case "6":
                     try {
                         Set<String> myConversations = conversationManager.getAllUserConversationRecipients(username);
                         if (myConversations.isEmpty()) {
