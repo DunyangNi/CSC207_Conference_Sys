@@ -88,4 +88,13 @@ public abstract class AccountController {
     }
 
     public abstract boolean runInteraction() throws InstantiationException;
+
+    public boolean isNumeric(String s){
+        for (char c: s.toCharArray()){
+            if (!Character.isDigit(c)){
+                return false;
+            }
+        }
+        return true;
+    }
 }

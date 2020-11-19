@@ -52,14 +52,24 @@ public class AttendeeController extends AccountController {
                     break;
                 case "2": {
                     System.out.print("Please enter the ID of the Talk you wish to attend: ");
-                    Integer id = Integer.parseInt(userInput.nextLine());
-                    this.signupForTalk(id);
+                    String input = userInput.nextLine();
+                    if(isNumeric(input)){
+                        Integer id = Integer.parseInt(input);
+                        this.signupForTalk(id);}
+                    else{
+                        System.out.println("Invalid Talk ID.");
+                    }
                     break;
                 }
                 case "3": {
                     System.out.print("Please enter the ID of the Talk you wish to cancel: ");
-                    Integer id = Integer.parseInt(userInput.nextLine());
-                    this.cancelSignupForTalk(id);
+                    String input = userInput.nextLine();
+                    if(isNumeric(input)){
+                        Integer id = Integer.parseInt(input);
+                        this.cancelSignupForTalk(id);}
+                    else{
+                        System.out.println("Invalid Talk ID.");
+                    }
                     break;
                 }
                 case "4":
@@ -128,10 +138,10 @@ public class AttendeeController extends AccountController {
                     break;
             }
             if (loggedIn) {
-                presenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
+                presenter.displayPrompt("Enter another command (1-10). Enter '*' to view the command menu again.");
                 command = userInput.nextLine();
                 if (command.equals("*"))
-                    presenter.displayOrganizerMenu();
+                    presenter.displayAttendeeMenu();
             }
         }
         return programEnd;
