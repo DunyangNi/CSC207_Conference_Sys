@@ -48,6 +48,14 @@ public class TextPresenter extends Presenter{
         }
     }
 
+    @Override
+    public void displayContactList(String user) {
+        ArrayList<String> selectedFriends = friendManager.getFriendList(user);
+        System.out.println("Your Contacts List:\n");
+        if (selectedFriends.isEmpty()) { System.out.println("No one!"); }
+        else { for (String friend : selectedFriends) { System.out.println(friend); } }
+    }
+
     //Organizer methods
     @Override
     public void displayOrganizerMenu() {
@@ -104,7 +112,7 @@ public class TextPresenter extends Presenter{
     }
 
     @Override
-    public void displayAccountRegistration() {
+    public void displayUserPassPrompt() {
         System.out.println("Enter a username:");
         System.out.println("Enter a password:");
     }
@@ -156,6 +164,7 @@ public class TextPresenter extends Presenter{
                 System.out.println("How many past messages would you like to see?");
             }
     }
+    //Speaker methods
 
     @Override
     public void displaySpeakerMenu() {
@@ -179,6 +188,30 @@ public class TextPresenter extends Presenter{
         System.out.println("8  = see a schedule of talks you're giving");
         System.out.println("9  = see a schedule of all talks");
         System.out.println("==========================");
+    }
+
+
+
+
+
+    //Attendee methods
+
+    @Override
+    public void displaySpeakerTalksSchedule(String speaker) {
+        HashMap<String[], Calendar> speakerTalks = eventmanager.fetchSortedTalks(speaker);
+        System.out.println("Schedule for talks you're speaking at:\n");
+        if (speakerTalks.keySet().isEmpty()) System.out.println("Nothing!");
+        Calendar timeNow = Calendar.getInstance();
+        for(String[] eventInfo : speakerTalks.keySet()) {
+            if(timeNow.compareTo(speakerTalks.get(eventInfo)) < 0) {
+                System.out.println("ID: " + eventInfo[4]);
+                System.out.println("Topic: " + eventInfo[0]);
+                System.out.println("Speaker: " + eventInfo[1]);
+                System.out.println("Location: " + eventInfo[2]);
+                System.out.println("Time: " + eventInfo[3]);
+                System.out.println();
+            }
+        }
     }
 
     @Override
@@ -224,31 +257,5 @@ public class TextPresenter extends Presenter{
                 System.out.println();
             }
         }
-    }
-
-    @Override
-    public void displaySpeakerTalksSchedule(String speaker) {
-        HashMap<String[], Calendar> speakerTalks = eventmanager.fetchSortedTalks(speaker);
-        System.out.println("Schedule for talks you're speaking at:\n");
-        if (speakerTalks.keySet().isEmpty()) System.out.println("Nothing!");
-        Calendar timeNow = Calendar.getInstance();
-        for(String[] eventInfo : speakerTalks.keySet()) {
-            if(timeNow.compareTo(speakerTalks.get(eventInfo)) < 0) {
-                System.out.println("ID: " + eventInfo[4]);
-                System.out.println("Topic: " + eventInfo[0]);
-                System.out.println("Speaker: " + eventInfo[1]);
-                System.out.println("Location: " + eventInfo[2]);
-                System.out.println("Time: " + eventInfo[3]);
-                System.out.println();
-            }
-        }
-    }
-
-    @Override
-    public void displayFriendList(String user) {
-        ArrayList<String> selectedFriends = friendManager.getFriendList(user);
-        System.out.println("Your Contacts List:\n");
-        if (selectedFriends.isEmpty()) { System.out.println("No one!"); }
-        else { for (String friend : selectedFriends) { System.out.println(friend); } }
     }
 }

@@ -93,7 +93,7 @@ public class OrganizerController extends AccountController {
                     loggedIn = false;
                     break;
                 case "1": {
-                    presenter.displayAccountRegistration();
+                    presenter.displayUserPassPrompt();
                     String username = userInput.nextLine();
                     String password = userInput.nextLine();
                     createSpeakerAccount(username, password, "", "");

@@ -45,6 +45,6 @@ public class FriendController {
     }
 
     public void seeFriendList() {
-        this.presenter.displayFriendList(this.username);
+        this.presenter.displayContactList(this.username);
     }
 }

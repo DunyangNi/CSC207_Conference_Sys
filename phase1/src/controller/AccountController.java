@@ -35,7 +35,7 @@ public abstract class AccountController {
     }
 
     public void viewContactList() {
-        this.presenter.displayFriendList(this.username);
+        this.presenter.displayContactList(this.username);
     }
 
     public void viewMessagesFrom(String recipient, int numMessagesRequested) {

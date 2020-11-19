@@ -29,7 +29,7 @@ public abstract class Presenter {
 
     public abstract void displayEventPrompt(String action);
 
-    public abstract void displayAccountRegistration();
+    public abstract void displayUserPassPrompt();
 
     public abstract void displayMessagingPrompt(String action);
 
@@ -47,6 +47,6 @@ public abstract class Presenter {
 
     public abstract void displaySpeakerTalksSchedule(String speaker);
 
-    public abstract void displayFriendList(String user);
+    public abstract void displayContactList(String user);
 
 }
