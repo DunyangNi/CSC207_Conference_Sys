@@ -42,37 +42,37 @@ public abstract class AccountController {
     public void viewMessagesFrom(String recipient, int numMessagesRequested) {
         try {
             if (numMessagesRequested < 0) {
-                System.out.println("You have requested an invalid number");
+                this.presenter.displayPrompt("You have requested an invalid number");
             } else {
                 String msgToPrint;
                 ArrayList<Integer> convo = conversationManager.getConversationMessages(this.username, recipient);
-                System.out.println("Your recent " + numMessagesRequested + " messages with " + recipient + ":");
-                System.out.println();
+                this.presenter.displayPrompt("Your recent " + numMessagesRequested + " messages with " + recipient + ":");
+                this.presenter.displayPrompt("");
                 int numMessagesRetrieved = Math.min(numMessagesRequested, convo.size());
                 for (int i = numMessagesRetrieved; i > 0; i--) {
                     msgToPrint = conversationManager.messageToString(convo.get(convo.size() - i)); // implemented fix
-                    System.out.println(msgToPrint);
-                    System.out.println();
+                    this.presenter.displayPrompt(msgToPrint);
+                    this.presenter.displayPrompt("");
                 }
             }
         } catch (Exception e) {
-            System.out.println(e.toString() + "\nSomething went wrong in collectTimeInfo. Please enter valid input.\n");
+            this.presenter.displayPrompt(e.toString() + "\nSomething went wrong in collectTimeInfo. Please enter valid input.\n");
         }
     }
 
     protected Calendar collectTimeInfo() throws InstantiationException {
         try {
             Scanner sc = new Scanner(System.in);
-            System.out.println("Day of the month (1-31)");
+            this.presenter.displayPrompt("Day of the month (1-31)");
             int dayOfMonth = sc.nextInt();
             sc.nextLine();
-            System.out.println("Month (1-12)");
+            this.presenter.displayPrompt("Month (1-12)");
             int month = sc.nextInt()-1;
             sc.nextLine();
-            System.out.println("Year (YYYY)");
+            this.presenter.displayPrompt("Year (YYYY)");
             int year = sc.nextInt();
             sc.nextLine();
-            System.out.println("Hour of the day (9-16)");
+            this.presenter.displayPrompt("Hour of the day (9-16)");
             int hourOfDay = sc.nextInt();
             sc.nextLine();
 
@@ -82,7 +82,7 @@ public abstract class AccountController {
 
             return time;
         } catch (Exception e) {
-            System.out.println(e.toString() + "\nSomething went wrong in collectTimeInfo. Please enter valid input.\n");
+            this.presenter.displayPrompt(e.toString() + "\nSomething went wrong in collectTimeInfo. Please enter valid input.\n");
             throw new InstantiationException();
         }
     }
@@ -98,3 +98,4 @@ public abstract class AccountController {
         return true;
     }
 }
+

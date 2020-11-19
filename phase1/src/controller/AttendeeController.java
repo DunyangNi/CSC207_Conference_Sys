@@ -52,24 +52,24 @@ public class AttendeeController extends AccountController {
                     this.SeeTalkSchedule();
                     break;
                 case "2": {
-                    System.out.print("Please enter the ID of the Talk you wish to attend: ");
+                    this.presenter.displayPrompt("Please enter the ID of the Talk you wish to attend: ");
                     String input = userInput.nextLine();
                     if(isNumeric(input)){
                         Integer id = Integer.parseInt(input);
                         this.signupForTalk(id);}
                     else{
-                        System.out.println("Invalid Talk ID.");
+                        this.presenter.displayPrompt("Invalid Talk ID.");
                     }
                     break;
                 }
                 case "3": {
-                    System.out.print("Please enter the ID of the Talk you wish to cancel: ");
+                    this.presenter.displayPrompt("Please enter the ID of the Talk you wish to cancel: ");
                     String input = userInput.nextLine();
                     if(isNumeric(input)){
                         Integer id = Integer.parseInt(input);
                         this.cancelSignupForTalk(id);}
                     else{
-                        System.out.println("Invalid Talk ID.");
+                        this.presenter.displayPrompt("Invalid Talk ID.");
                     }
                     break;
                 }
@@ -78,10 +78,10 @@ public class AttendeeController extends AccountController {
                     break;
                 case "5": {
                     //messageAttendee(String message, String attendeeUsername)
-                    System.out.println("Specify the username of the attendee you're messaging");
+                    this.presenter.displayPrompt("Specify the username of the attendee you're messaging");
                     //String line1 = sc.nextLine();
                     String attendeeUsername = userInput.nextLine();
-                    System.out.println("Specify the message you're sending");
+                    this.presenter.displayPrompt("Specify the message you're sending");
                     //line1 = sc.nextLine();
                     String message = userInput.nextLine();
                     messageController.messageAttendee(message, attendeeUsername);
@@ -89,23 +89,23 @@ public class AttendeeController extends AccountController {
                 }
                 case "6": {
                     //messageSpeaker(String message, String speakerusername)
-                    System.out.println("Specify the username of the speaker you're messaging");
+                    this.presenter.displayPrompt("Specify the username of the speaker you're messaging");
                     //String line1 = sc.nextLine();
                     String speakerUsername = userInput.nextLine();
-                    System.out.println("Specify the message you're sending");
+                    this.presenter.displayPrompt("Specify the message you're sending");
                     //line1 = sc.nextLine();
                     String message = userInput.nextLine();
                     messageController.messageSpeaker(message, speakerUsername);
                     break;
                 }
                 case "7":
-                    System.out.print("Please enter the username of a contact to add: ");
+                    this.presenter.displayPrompt("Please enter the username of a contact to add: ");
                     String contactToAdd = userInput.nextLine();
                     friendController.addFriend(contactToAdd);
 
                     break;
                 case "8":
-                    System.out.print("Please enter the username of a contact to remove: ");
+                    this.presenter.displayPrompt("Please enter the username of a contact to remove: ");
                     String contactToRemove = userInput.nextLine();
                     friendController.removeFriend(contactToRemove);
 
@@ -118,23 +118,23 @@ public class AttendeeController extends AccountController {
                     try {
                         Set<String> myConversations = conversationManager.getAllUserConversationRecipients(username);
                         if (myConversations.isEmpty()) {
-                            System.out.println("(No conversations)");
+                            this.presenter.displayPrompt("(No conversations)");
                         } else {
-                            System.out.println("List of Conversation Recipients");
-                            System.out.println("---------------------------------------------");
+                            this.presenter.displayPrompt("List of Conversation Recipients");
+                            this.presenter.displayPrompt("---------------------------------------------");
                             for (String recipient : myConversations) {
-                                System.out.println(recipient);
+                                this.presenter.displayPrompt(recipient);
                             }
-                            System.out.println("---------------------------------------------\n");
-                            System.out.print("To access a conversation, please enter the recipient's username: ");
+                            this.presenter.displayPrompt("---------------------------------------------\n");
+                            this.presenter.displayPrompt("To access a conversation, please enter the recipient's username: ");
                             String user = userInput.nextLine();
-                            System.out.println("How many past messages would you like to see?");
+                            this.presenter.displayPrompt("How many past messages would you like to see?");
                             int pastMessages = userInput.nextInt();
                             userInput.nextLine();
                             this.viewMessagesFrom(user, pastMessages);
                         }
                     } catch (Exception e) {
-                        System.out.println(e.toString() + "\nSomething went wrong. Please enter valid input.\n");
+                        this.presenter.displayPrompt(e.toString() + "\nSomething went wrong. Please enter valid input.\n");
                     }
                     break;
             }
