@@ -42,7 +42,7 @@ public class LoginController {
         while (!accountManager.verifyPassword(username, password)) {
             presenter.displayPrompt("Incorrect password, please try again. Enter '*' to return to the start menu.");
             password = input.nextLine();
-            if (username.equals("*")) {
+            if (password.equals("*")) {
                 return false;
             }
         }

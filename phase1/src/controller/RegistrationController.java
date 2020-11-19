@@ -25,56 +25,38 @@ public class RegistrationController {
     }
 
     public boolean attemptRegister() {
+        boolean programEnd;
         this.presenter.displayPrompt("Enter '1' to register an Attendee account.\nEnter '2' to register an Organizer account.");
-        String command = input.nextLine();
-        boolean programEnd;
-        while (!(command.equals("1") || (command.equals("2")))) {
+        String accountType = input.nextLine();
+
+        while (!(accountType.equals("1") || (accountType.equals("2")))) {
             this.presenter.displayPrompt("Invalid input, please try again.");
-            command = input.nextLine();
+            accountType = input.nextLine();
         }
-        if (command.equals("1")) {
-            programEnd = registerNewAttendee();
+
+        String[] accountInfo = getNewAccountInfo(accountType);
+        if (accountType.equals("1")) {
+            accountManager.AddNewAttendee(accountInfo[0], accountInfo[1], accountInfo[2], accountInfo[3]);
         } else {
-            programEnd = registerNewOrganizer();
+            accountManager.AddNewOrganizer(accountInfo[0], accountInfo[1], accountInfo[2], accountInfo[3]);
         }
-        DataManager dataManager = new DataManager();
-        dataManager.saveManager("EventManager", "EventManager", eventManager);
-        dataManager.saveManager("AccountManager", "AccountManager", accountManager);
-        dataManager.saveManager("ConversationManager", "ConversationManager", conversationManager);
-        dataManager.saveManager("FriendManager", "FriendManager", friendManager);
-        dataManager.saveManager("SignupManager", "SignupManager", signupManager);
-        return programEnd;
-    }
-
-    private boolean registerNewAttendee() {
-        boolean programEnd;
-        String[] accountInfo = getNewAccountInfo();
-        accountManager.AddNewAttendee(accountInfo[0], accountInfo[1], accountInfo[2], accountInfo[3]);
         addNewAccountKeys(accountInfo[0]);
-        TextPresenter textpresenter = new TextPresenter(eventManager, friendManager, signupManager);
-        AttendeeController ac = new AttendeeController(accountInfo[0], eventManager, conversationManager, friendManager, signupManager, accountManager, textpresenter);
-        programEnd = ac.runInteraction();
-        return programEnd;
+        return false;
     }
 
-    private boolean registerNewOrganizer() {
+    private void requireOrganizerPassword() {
         this.presenter.displayPrompt("Enter the Organizer account registration code:");
         String code = input.nextLine();
         while (!code.equals(ORGANIZER_PASSWORD)) {
             this.presenter.displayPrompt("Invalid input, please try again.");
             code = input.nextLine();
         }
-        boolean programEnd;
-        String[] accountInfo = getNewAccountInfo();
-        accountManager.AddNewOrganizer(accountInfo[0], accountInfo[1], accountInfo[2], accountInfo[3]);
-        addNewAccountKeys(accountInfo[0]);
-        TextPresenter textpresenter = new TextPresenter(eventManager, friendManager, signupManager);
-        OrganizerController oc = new OrganizerController(accountInfo[0], accountManager, friendManager, conversationManager, eventManager, signupManager, textpresenter);
-        programEnd = oc.runInteraction();
-        return programEnd;
     }
 
-    private String[] getNewAccountInfo() {
+    private String[] getNewAccountInfo(String type) {
+        if (type.equals("2")) {
+            requireOrganizerPassword();
+        }
         this.presenter.displayPrompt("Enter a username:");
         String username = input.nextLine();
 
@@ -86,15 +68,10 @@ public class RegistrationController {
         // Obtain rest of information and bundle into Tuple of 4
         this.presenter.displayPrompt("Enter a password:");
         String password = input.nextLine();
-        this.presenter.displayPrompt("Enter your first name:");
-        String firstname = input.nextLine();
-        this.presenter.displayPrompt("Enter your last name:");
-        String lastname = input.nextLine();
 
-        return new String[]{username, password, firstname, lastname};
+        return new String[]{username, password, "", ""};
     }
 
-    // (NEW!) (Helper)
     private void addNewAccountKeys(String username) {
         conversationManager.addAccountKey(username);
         friendManager.addAccountKey(username);
