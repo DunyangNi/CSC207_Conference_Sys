@@ -56,12 +56,12 @@ public class TextPresenter extends Presenter{
         System.out.println("00 = Logout and exit program");
         System.out.println("0  = Logout");
         System.out.println("1  = Register a new speaker account");
-        System.out.println("2 = View list of all accounts");
+        System.out.println("2  = View list of all accounts");
 
         System.out.println("\n[CONTACTS]");
-        System.out.println("3 = Add a contact");
-        System.out.println("4 = Remove a contact");
-        System.out.println("5 = View list of all contacts");
+        System.out.println("3  = Add a contact");
+        System.out.println("4  = Remove a contact");
+        System.out.println("5  = View list of all contacts");
 
         System.out.println("\n[CONVERSATIONS]");
         System.out.println("6  = Message a speaker");
