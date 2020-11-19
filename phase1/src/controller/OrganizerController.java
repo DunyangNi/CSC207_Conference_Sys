@@ -1,12 +1,11 @@
 package controller;
 
 import Throwables.ConflictException;
+import Throwables.ObjectNotFoundException;
 import use_cases.*;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
+
 import presenter.*;
 
 public class OrganizerController extends AccountController {
@@ -144,24 +143,21 @@ public class OrganizerController extends AccountController {
                 case "10":
                     try {
                         Set<String> recipients = conversationManager.getAllUserConversationRecipients(username);
-                        presenter.displayConversations(recipients);
-//                        if (recipients.isEmpty()) {
-//                            presenter.displayPrompt("You have no conversations.");
-//                        } else {
-//                            presenter.displayPrompt("[CONVERSATION RECIPIENTS]");
-//                            presenter.displayPrompt("----------------------------------------------------------------");
-//                            for (String recipient : recipients) {
-//                                presenter.displayPrompt(recipient);
-//                            }
-//                            presenter.displayPrompt("----------------------------------------------------------------");
-//                            presenter.displayPrompt("To access a conversation, please enter the recipient's username:");
-                        String recipient = userInput.nextLine();
-//                            presenter.displayPrompt("How many past messages would you like to see?");
-                        int pastMessages = Integer.parseInt(userInput.nextLine());
-                        this.viewMessagesFrom(recipient, pastMessages);
-//                        }
-                    } catch (Exception e) {
-                        presenter.displayPrompt(e.toString());
+
+                        if (recipients.isEmpty()) {
+                            presenter.displayConversations("empty", recipients);
+                        } else {
+                            presenter.displayConversations("non_empty", recipients);
+                            String recipient = userInput.nextLine();
+                            int pastMessages = Integer.parseInt(userInput.nextLine());
+                            this.viewMessagesFrom(recipient, pastMessages);
+                        }
+                    } catch (InputMismatchException e) {
+                        this.presenter.displayConversationsErrors("mismatch");
+                    } catch (ObjectNotFoundException e) {
+                        this.presenter.displayConversationsErrors("no_user");
+                    } catch (NullPointerException e) {
+                        this.presenter.displayConversationsErrors("no_conversation");
                     }
                     break;
                 case "11":
