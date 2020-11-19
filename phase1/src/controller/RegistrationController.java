@@ -1,31 +1,25 @@
 package controller;
 
-import gateway.DataManager;
-import presenter.*;
+import presenter.Presenter;
+import presenter.TextPresenter;
 import use_cases.*;
 
 import java.util.Scanner;
 
 public class RegistrationController {
-    private final String ORGANIZER_PASSWORD = "123456";
     private final Scanner input = new Scanner(System.in);
-    private AccountManager accountManager;
-    private EventManager eventManager;
-    private ConversationManager conversationManager;
-    private FriendManager friendManager;
-    private SignupManager signupManager;
-    private Presenter presenter = new TextPresenter();
+    private final AccountManager accountManager;
+    private final ConversationManager conversationManager;
+    private final FriendManager friendManager;
+    private final Presenter presenter = new TextPresenter();
 
-    public RegistrationController(AccountManager am, FriendManager fm, ConversationManager cm, EventManager em, SignupManager sm) {
+    public RegistrationController(AccountManager am, FriendManager fm, ConversationManager cm) {
         this.accountManager = am;
-        this.eventManager = em;
         this.conversationManager = cm;
         this.friendManager = fm;
-        this.signupManager = sm;
     }
 
     public boolean attemptRegister() {
-        boolean programEnd;
         this.presenter.displayPrompt("Enter '1' to register an Attendee account.\nEnter '2' to register an Organizer account.");
         String accountType = input.nextLine();
 
@@ -45,9 +39,11 @@ public class RegistrationController {
     }
 
     private void requireOrganizerPassword() {
+        String ORGANIZER_REGISTRATION_CODE = "123456";
+
         this.presenter.displayPrompt("Enter the Organizer account registration code:");
         String code = input.nextLine();
-        while (!code.equals(ORGANIZER_PASSWORD)) {
+        while (!code.equals(ORGANIZER_REGISTRATION_CODE)) {
             this.presenter.displayPrompt("Invalid input, please try again.");
             code = input.nextLine();
         }
