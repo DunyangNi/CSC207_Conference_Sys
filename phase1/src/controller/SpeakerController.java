@@ -35,11 +35,11 @@ public class SpeakerController extends AccountController {
                     loggedIn = false;
                     break;
                 case "1":
-                    Set<String> allAccts = accountManager.fetchAccountList().keySet();
+                    Set<String> allAccts = accountManager.getAccountHashMap().keySet();
                     presenter.displayAccountList(allAccts);
                     break;
                 case "2":
-                    allAccts = accountManager.fetchAccountList().keySet();
+                    allAccts = accountManager.getAccountHashMap().keySet();
                     presenter.displayAccountList(allAccts);
                     presenter.displayContactsPrompt("add");
                     String contactToAdd = userInput.nextLine();
@@ -55,7 +55,7 @@ public class SpeakerController extends AccountController {
                     presenter.displayContactList(username);
                     break;
                 case "5":
-                    Set<String> allAttendees = accountManager.getAttendeeList().keySet();
+                    Set<String> allAttendees = accountManager.getAttendeeHashMap().keySet();
                     if (!allAttendees.isEmpty()) {
                         this.presenter.displayPrompt("List of attendees");
                         this.presenter.displayPrompt("---------------------------------------------");

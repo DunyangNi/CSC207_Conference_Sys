@@ -39,7 +39,7 @@ public class LoginController {
         }
         presenter.displayPrompt("Enter your password:");
         String password = input.nextLine();
-        while (!accountManager.verifyPassword(username, password)) {
+        while (!accountManager.isCorrectPassword(username, password)) {
             presenter.displayPrompt("Incorrect password, please try again. Enter '*' to return to the start menu.");
             password = input.nextLine();
             if (password.equals("*")) {

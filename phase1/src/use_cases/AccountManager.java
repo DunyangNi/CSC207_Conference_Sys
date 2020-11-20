@@ -1,174 +1,178 @@
 package use_cases;
 
-import Throwables.ConflictException;
-import Throwables.ObjectNotFoundException;
+import Throwables.*;
 import entities.*;
-
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 
+/**
+ * Represents the entire system of Accounts and their categorizations.
+ */
 public class AccountManager implements Serializable {
+    private final HashMap<String, Attendee> attendeeHashMap;
+    private final HashMap<String, Organizer> organizerHashMap;
+    private final HashMap<String, Speaker> speakerHashMap;
 
-    private HashMap<String, Attendee> attendeeList;
-    private HashMap<String, Organizer> organizerList;
-    private HashMap<String, Speaker> speakerList;
-
+    /**
+     * Creates a empty <code>AccountManager</code> with empty attendee, organizer, and speaker hashmaps.
+     */
     public AccountManager() {
         this(new HashMap<>(), new HashMap<>(), new HashMap<>());
     }
 
-    public AccountManager(HashMap<String, Attendee> attendeeList, HashMap<String, Organizer> organizerList, HashMap<String, Speaker> speakerList) {
-        this.attendeeList = attendeeList;
-        this.organizerList = organizerList;
-        this.speakerList = speakerList;
+    /**
+     * Creates a <code>AccountManager</code> with given hashmaps of attendees, organizers, and speakers.
+     *
+     * @param attendeeHashMap given <code>Attendee HashMap</code>
+     * @param organizerHashMap given <code>Organizer HashMap</code>
+     * @param speakerHashMap given <code>Speaker HashMap</code>
+     */
+    public AccountManager(HashMap<String, Attendee> attendeeHashMap, HashMap<String, Organizer> organizerHashMap, HashMap<String, Speaker> speakerHashMap) {
+        this.attendeeHashMap = attendeeHashMap;
+        this.organizerHashMap = organizerHashMap;
+        this.speakerHashMap = speakerHashMap;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        return (obj instanceof AccountManager && (this.fetchAccountList().equals(((AccountManager) obj).fetchAccountList())));
+    /**
+     * @return <code>speakerHashMap</code>
+     */
+    public HashMap<String, Speaker> getSpeakerHashMap() {
+        return this.speakerHashMap;
     }
 
-    public HashMap<String, Speaker> getSpeakerList() {
-        return this.speakerList;
+    /**
+     * @return <code>attendeeHashMap</code>
+     */
+    public HashMap<String, Attendee> getAttendeeHashMap() {
+        return this.attendeeHashMap;
     }
 
-    public void setSpeakerList(HashMap<String, Speaker> speakerList) {
-        this.speakerList = speakerList;
+    /**
+     * @return <code>organizerHashMap</code>
+     */
+    public HashMap<String, Organizer> getOrganizerHashMap() {
+        return this.organizerHashMap;
     }
 
-    public HashMap<String, Attendee> getAttendeeList() {
-        return this.attendeeList;
+    /**
+     * @return combined HashMaps of attendee, organizer, and speaker
+     */
+    public HashMap<String, Account> getAccountHashMap() {
+        HashMap<String, Account> accountHashMap = new HashMap<>();
+        accountHashMap.putAll(this.getAttendeeHashMap());
+        accountHashMap.putAll(this.getSpeakerHashMap());
+        accountHashMap.putAll(this.getOrganizerHashMap());
+        return accountHashMap;
     }
 
-    public void setAttendeeList(HashMap<String, Attendee> attendeeList) {
-        this.attendeeList = attendeeList;
+    /**
+     * @return a <code>Iterator</code> object containing all speaker usernames.
+     */
+    public Iterator<String> speakerUsernameIterator() {
+        return speakerHashMap.keySet().iterator();
     }
 
-    public HashMap<String, Organizer> getOrganizerList() {
-        return this.organizerList;
+    /**
+     * @return a <code>Iterator</code> object containing all attendee usernames.
+     */
+    public Iterator<String> attendeeUsernameIterator() {
+        return attendeeHashMap.keySet().iterator();
     }
 
-    public void setOrganizerList(HashMap<String, Organizer> organizerList) {
-        this.organizerList = organizerList;
+    /**
+     * Returns true iff password of an associated <code>Account</code> matches given password.
+     *
+     * @param username given username of associated <code>Account</code>
+     * @param password given password to match
+     * @return given password matches associated <code>Account</code> password
+     */
+    public boolean isCorrectPassword(String username, String password) {
+        return password.equals(getAccountHashMap().get(username).getPassword());
     }
 
-    public HashMap<String, Account> fetchAccountList() {
-        HashMap<String, Account> accountList = new HashMap<>();
-        accountList.putAll(this.getAttendeeList());
-        accountList.putAll(this.getSpeakerList());
-        accountList.putAll(this.getOrganizerList());
-        return accountList;
-    }
-
-    public Organizer fetchOrganizer(String username) {
-        return organizerList.get(username);
-    }
-
-    public Speaker fetchSpeaker(String username) {
-        return speakerList.get(username);
-    }
-
-    public Attendee fetchAttendee(String username) {
-        return attendeeList.get(username);
-    }
-
-    public Account fetchAccount(String username) {
-        return this.fetchAccountList().get(username);
-    }
-
+    /**
+     * Returns true iff username is associated with a <code>Attendee Account</code>.
+     *
+     * @param username given username
+     * @return username is associated with a <code>Attendee Account</code>.
+     */
     public boolean containsAttendee(String username) {
-        return attendeeList.containsKey(username);
+        return attendeeHashMap.containsKey(username);
     }
 
+    /**
+     * Returns true iff username is associated with a <code>Speaker Account</code>.
+     *
+     * @param username given username
+     * @return username is associated with a <code>Speaker Account</code>.
+     */
     public boolean containsSpeaker(String username) {
-        return speakerList.containsKey(username);
+        return speakerHashMap.containsKey(username);
     }
 
+    /**
+     * Returns true iff username is associated with a <code>Organizer Account</code>.
+     *
+     * @param username given username
+     * @return username is associated with a <code>Organizer Account</code>.
+     */
     public boolean containsOrganizer(String username) {
-        return organizerList.containsKey(username);
+        return organizerHashMap.containsKey(username);
     }
 
+    /**
+     * Returns true iff username is associated with a <code>Account</code>.
+     *
+     * @param username given username
+     * @return username is associated with a <code>Account</code>.
+     */
     public boolean containsAccount(String username) {
-        return fetchAccountList().containsKey(username);
+        return getAccountHashMap().containsKey(username);
     }
 
-    public void AddNewAttendee(String username, String password, String firstName, String lastName) {
-        if (fetchAccountList().containsKey(username)) {
-            return;
-        }
+    /**
+     * Creates a new <code>Attendee Account</code> with given information
+     * and stores it in <code>attendeeHashMap</code>.
+     *
+     * @param username given username
+     * @param password given password
+     * @param firstName given first name
+     * @param lastName given last name
+     */
+    public void addNewAttendee(String username, String password, String firstName, String lastName) {
         Attendee newAttendee = new Attendee(username, password, firstName, lastName);
-        attendeeList.put(username, newAttendee);
+        attendeeHashMap.put(username, newAttendee);
     }
 
-    public void AddNewSpeaker(String username, String password, String firstName, String lastName) throws ConflictException {
-        if (fetchAccountList().containsKey(username)) {
-            throw new ConflictException("Username already exists");
+    /**
+     * Attempts to create a new <code>Speaker Account</code> with given information
+     * and store it in <code>speakerHashMap</code>.
+     * @param username given username
+     * @param password given password
+     * @param firstName given first name
+     * @param lastName given last name
+     * @throws ConflictException upon finding an existing Speaker with the same username
+     */
+    public void addNewSpeaker(String username, String password, String firstName, String lastName) throws ConflictException {
+        if (getAccountHashMap().containsKey(username)) {
+            throw new ConflictException("Username already exists.");
         }
         Speaker newSpeaker = new Speaker(username, password, firstName, lastName);
-        speakerList.put(username, newSpeaker);
+        speakerHashMap.put(username, newSpeaker);
     }
 
-    public void AddNewOrganizer(String username, String password, String firstName, String lastName) {
-        if (fetchAccountList().containsKey(username)) {
-            return;
-        }
+    /**
+     * Creates a new <code>Organizer Account</code> with given information
+     * and stores it in <code>organizerHashmap</code>.
+     *
+     * @param username given username
+     * @param password given password
+     * @param firstName given first name
+     * @param lastName given last name
+     */
+    public void addNewOrganizer(String username, String password, String firstName, String lastName) {
         Organizer newOrganizer = new Organizer(username, password, firstName, lastName);
-        organizerList.put(username, newOrganizer);
-    }
-
-    public void ChangeFirstName(Account ChangeNameAccount, String NewFirstName) {
-        ChangeNameAccount.setFirstName(NewFirstName);
-    }
-
-    public void ChangeLastName(Account ChangeNameAccount, String NewLastName) {
-        ChangeNameAccount.setLastName(NewLastName);
-    }
-
-    public void ChangePassword(Account ChangePasswordAccount, String NewPassword) {
-        ChangePasswordAccount.setPassword(NewPassword);
-    }
-
-    public void deleteAccount(String username) throws ObjectNotFoundException {
-        if (!(attendeeList.containsKey(username) || speakerList.containsKey(username)))
-            throw new ObjectNotFoundException("Account");
-        attendeeList.remove(username);
-        speakerList.remove(username);
-    }
-
-    public boolean verifyPassword(String username, String password) {
-        return password.equals(fetchAccount(username).getPassword());
-    }
-
-    public Iterator<String> speakerUsernameIterator() {
-//        Iterator<Speaker> speakerIterator = this.speakerList.values().iterator();
-//        ArrayList<String> usernames = new ArrayList<>();
-//        while (speakerIterator.hasNext()) {
-//            usernames.add(speakerIterator.next().getUsername());
-//        }
-//        return usernames.iterator();
-        return speakerList.keySet().iterator();
-    }
-
-    public Iterator<String> attendeeUsernameIterator() {
-//        Iterator<Attendee> speakerIterator = this.attendeeList.values().iterator();
-//        ArrayList<String> usernames = new ArrayList<>();
-//        while (speakerIterator.hasNext()) {
-//            usernames.add(speakerIterator.next().getUsername());
-//        }
-//        return usernames.iterator();
-        return attendeeList.keySet().iterator();
-    }
-
-    public Iterator<String> organizerUsernameIterator() {
-//        Iterator<Organizer> speakerIterator = this.organizerList.values().iterator();
-//        ArrayList<String> usernames = new ArrayList<>();
-//        while (speakerIterator.hasNext()) {
-//            usernames.add(speakerIterator.next().getUsername());
-//        }
-//        return usernames.iterator();
-        return organizerList.keySet().iterator();
+        organizerHashMap.put(username, newOrganizer);
     }
 }

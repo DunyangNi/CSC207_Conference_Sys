@@ -32,7 +32,7 @@ public class OrganizerController extends AccountController {
 
     public void createSpeakerAccount(String username, String password, String firstname, String lastname) {
         try {
-            this.accountManager.AddNewSpeaker(username, password, firstname, lastname);
+            this.accountManager.addNewSpeaker(username, password, firstname, lastname);
             addNewSpeakerKeys(username);
         } catch (ConflictException e) {
             presenter.displayPrompt(e.toString()); //
@@ -99,7 +99,7 @@ public class OrganizerController extends AccountController {
                     break;
                 }
                 case "2":
-                    presenter.displayPrompt(accountManager.fetchAccountList().keySet().toString());
+                    presenter.displayPrompt(accountManager.getAccountHashMap().keySet().toString());
                     break;
                 case "3":
                     presenter.displayContactsPrompt("add");
