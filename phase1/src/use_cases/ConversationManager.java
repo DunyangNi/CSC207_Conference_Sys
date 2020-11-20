@@ -6,31 +6,21 @@ import entities.*;
 import Throwables.*;
 
 /**
- * ConversationManager manages a given Conversation between a sender Account and a recipient Account.
- *
- * <pre>
- * Use Case ConversationManager
- * Responsibilities:
- *      Stores a HashMap of every Account's Hashmap of Conversations with a recipient
- *      Stores a Hashmap of every Message sent by its ID
- *      Returns an ArrayList of all Messages in a Conversation by its ID
- *      Returns a Set of all existing recipients of a given Account
- *      Can send a message from a sender Account to a recipient Account
- *      Can add a given Message to a given Conversation
- *
- * Collaborators:
- *      Conversation, Message
- * </pre>
+ * Represents the entire system of Conversations and Messages.
  */
 public class ConversationManager implements Serializable {
-    private HashMap<String, HashMap<String, Conversation>> conversations = new HashMap<>();
-    private HashMap<Integer, Message> messages = new HashMap<>();
+    private final HashMap<String, HashMap<String, Conversation>> conversations = new HashMap<>();
+    private final HashMap<Integer, Message> messages = new HashMap<>();
     private int assignMessageID;
 
-    //------------------------------------------------------------
-    // Methods
-    //------------------------------------------------------------
-
+    /**
+     * Attempts to represent a <code>Message</code> of a given id
+     * as a String containing the sender and the content.
+     *
+     * @param id given id
+     * @return sender and content
+     * @throws ObjectNotFoundException upon <code>Message</code> not being found.
+     */
     public String messageToString(Integer id) throws ObjectNotFoundException{
         if (!this.messages.containsKey(id)) {
             throw new ObjectNotFoundException("Message");
@@ -41,8 +31,15 @@ public class ConversationManager implements Serializable {
         return "(" + sender + ") : " + content;
     }
 
-    public void addAccountKey(String username) { conversations.put(username, new HashMap<>()); }
-
+    /**
+     * Attempts to return an <code>ArrayList</code> of <code>Message</code> IDs for a given sender and recipient
+     * of an associated <code>Conversation</code>.
+     *
+     * @param sender given sender username
+     * @param recipient given recipient username
+     * @return an <code>ArrayList</code> of integers
+     * @throws ObjectNotFoundException upon sender or recipient Account not being found
+     */
     public ArrayList<Integer> getConversationMessages(String sender, String recipient) throws ObjectNotFoundException{
         if (!conversations.containsKey(sender)) {
             throw new ObjectNotFoundException("Sender");
@@ -54,24 +51,37 @@ public class ConversationManager implements Serializable {
     }
 
     /**
-     * Returns all Accounts who have had Conversations with the given Account.
-     *  If given Account has no Conversations, returns the empty set.
-     * @param user username of given Account
+     * Attempts to return all Accounts who have had Conversations with the given Account.
+     *
+     * @param user given username
      * @return Set of usernames associated with recipient Accounts
+     * @throws ObjectNotFoundException upon User not being found.
      */
     public Set<String> getAllUserConversationRecipients(String user) throws ObjectNotFoundException{
         if (!conversations.containsKey(user)) {
-            throw new ObjectNotFoundException();
+            throw new ObjectNotFoundException("User");
         }
         Set<String> recipients = this.conversations.get(user).keySet();
         return recipients.isEmpty() ? Collections.emptySet() : recipients;
     }
 
     /**
-     * Sends a message from a sender Account to a recipient Account
-     * @param sender given sender Account
-     * @param recipient given recipient Account
+     * Adds a new key a username of an associated <code>Account</code>.
+     *
+     * @param username given username of associated Account
+     */
+    public void addAccountKey(String username) { conversations.put(username, new HashMap<>()); }
+
+
+    /**
+     * Creates a new message from a given sender Account to a given recipient Account
+     * with given content, adding it to their associated <code>Conversation</code>. If
+     * no existing <code>Conversation</code> is found, creates a new one.
+     *
+     * @param sender given sender username
+     * @param recipient given recipient username
      * @param message given String content for message
+     * @throws ObjectNotFoundException upon sender or recipient Account not being found
      */
     public void sendMessage(String sender, String recipient, String message) throws ObjectNotFoundException {
         if (!conversations.containsKey(sender)) {
@@ -94,11 +104,6 @@ public class ConversationManager implements Serializable {
         recipientConversations.put(sender, givenConversation);
     }
 
-    /**
-     * (Helper) Adds given Message to given Conversation, assigning msgToReply if needed.
-     * @param conversation given Conversation
-     * @param message given Message
-     */
     private void addMessageToConversation(Conversation conversation, Message message) {
         ArrayList<Integer> existingMessages = conversation.getMessages();
         if (existingMessages.size() != 0)
