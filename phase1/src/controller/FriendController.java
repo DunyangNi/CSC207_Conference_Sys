@@ -20,15 +20,8 @@ public class FriendController {
         try {
             friendManager.AddFriend(this.username, friendToAdd);
         }
-        catch(ObjectNotFoundException e) {
+        catch(Exception e) {
             this.presenter.displayPrompt(e.toString());
-            this.presenter.displayPrompt("We could not find an account with this username. Please try again.");
-            this.presenter.displayPrompt("");
-        }
-        catch(ConflictException e) {
-            this.presenter.displayPrompt(e.toString());
-            this.presenter.displayPrompt("This account is already on your contact list.");
-            this.presenter.displayPrompt("");
         }
     }
 
@@ -38,9 +31,6 @@ public class FriendController {
         }
         catch(Exception e) {
             this.presenter.displayPrompt(e.toString());
-            this.presenter.displayPrompt("We could not find an account with this username on your contact list. " +
-                    "Please try again.");
-            this.presenter.displayPrompt("");
         }
     }
 
