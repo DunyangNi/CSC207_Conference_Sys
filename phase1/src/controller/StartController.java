@@ -18,7 +18,7 @@ public class StartController {
     /**
      * Manages the home screen
      * @param accountManager manages account data
-     * @param friendManager manages friendlist functionality
+     * @param friendManager manages friendList functionality
      * @param conversationManager manages messaging functionality
      * @param eventManager manages event data
      * @param signupManager manages event signup functionality
