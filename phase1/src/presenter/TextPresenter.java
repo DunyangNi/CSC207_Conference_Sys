@@ -147,6 +147,7 @@ public class TextPresenter extends Presenter{
     public void displayEventPrompt(String action) {
         switch (action) {
             case "register":
+                System.out.println("Enter the following information on separate lines:");
                 System.out.println("Enter the speaker's username:");
                 System.out.println("Enter the event room:");
                 System.out.println("Enter the event topic:");
