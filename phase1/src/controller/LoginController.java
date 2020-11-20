@@ -85,11 +85,7 @@ public class LoginController {
             programEnd = sc.runInteraction();
         }
         DataManager dataManager = new DataManager();
-        dataManager.saveManager("EventManager", "EventManager", eventManager);
-        dataManager.saveManager("AccountManager", "AccountManager", accountManager);
-        dataManager.saveManager("ConversationManager", "ConversationManager", conversationManager);
-        dataManager.saveManager("FriendManager", "FriendManager", friendManager);
-        dataManager.saveManager("SignupManager", "SignupManager", signupManager);
+        dataManager.saveAllManagers(eventManager, accountManager, conversationManager, friendManager, signupManager);
         return programEnd;
     }
 }

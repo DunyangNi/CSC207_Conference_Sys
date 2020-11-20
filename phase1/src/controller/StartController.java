@@ -54,7 +54,7 @@ public class StartController {
             LoginController loginController = new LoginController(accountManager, friendManager, conversationManager, eventManager, signupManager);
             programEnd = loginController.attemptLogin();
         } else {
-            RegistrationController registrationController = new RegistrationController(accountManager, friendManager, conversationManager);
+            RegistrationController registrationController = new RegistrationController(accountManager, friendManager, conversationManager, eventManager, signupManager);
             programEnd = registrationController.attemptRegister();
         }
         return programEnd;

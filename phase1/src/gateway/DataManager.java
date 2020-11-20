@@ -78,6 +78,25 @@ public class DataManager {
         }
     }
 
+
+    /**
+     * Calls <code>saveManager()</code> on each of the pre-specified Serializable classes used in this program.
+     *
+     * @param eventManager <code>EventManager</code> class
+     * @param accountManager <code>AccountManager</code> class
+     * @param conversationManager <code>ConversationManager</code> class
+     * @param friendManager <code>FriendManager</code> class
+     * @param signupManager <code>SignupManager</code> class
+     */
+    public void saveAllManagers(EventManager eventManager, AccountManager accountManager, ConversationManager conversationManager, FriendManager friendManager, SignupManager signupManager) {
+        DataManager dataManager = new DataManager();
+        dataManager.saveManager("EventManager", "EventManager", eventManager);
+        dataManager.saveManager("AccountManager", "AccountManager", accountManager);
+        dataManager.saveManager("ConversationManager", "ConversationManager", conversationManager);
+        dataManager.saveManager("FriendManager", "FriendManager", friendManager);
+        dataManager.saveManager("SignupManager", "SignupManager", signupManager);
+    }
+
     /**
      * Attempts to read and return a <code>Object</code> stored in a .ser file.
      *

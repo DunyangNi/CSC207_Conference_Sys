@@ -6,19 +6,11 @@ import java.util.*;
 import java.util.Calendar;
 
 public abstract class Presenter {
-    // TODO: 11/17/20 Consider whether these fields are necessary or what other fields might be required
-    private EventManager eventmanager;
-    private SignupManager signupManager;
-    private FriendManager friendManager;
 
-    // TODO: 11/16/20 Find a better way to do this?
     public Presenter() {
     }
 
     public Presenter(EventManager eventManager, FriendManager friendManager, SignupManager signupManager) {
-        this.eventmanager = eventManager;
-        this.signupManager = signupManager;
-        this.friendManager = friendManager;
     }
 
     public abstract void displayPrompt(String output);
@@ -54,5 +46,4 @@ public abstract class Presenter {
     public abstract void displayContactList(String user);
 
     public abstract void displayTalkPrompt(String action);
-
 }
