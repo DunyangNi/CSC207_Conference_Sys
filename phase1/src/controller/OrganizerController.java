@@ -13,16 +13,16 @@ public class OrganizerController extends AccountController {
      * facilitates interaction with organizer upon login
      * @param username organizer username
      * @param accountManager manages data of all accounts in program
-     * @param friendManager manages friendlist functionality
+     * @param friendManager manages friendList functionality
      * @param conversationManager manages messaging functionality
-     * @param eventmanager manages event data
+     * @param eventManager manages event data
      * @param signupManager manages event signup functionality
      * @param presenter specifies the UI
      */
     public OrganizerController(String username, AccountManager accountManager, FriendManager friendManager,
-                               ConversationManager conversationManager, EventManager eventmanager,
+                               ConversationManager conversationManager, EventManager eventManager,
                                SignupManager signupManager, Presenter presenter) {
-        super(username, accountManager, friendManager, conversationManager, eventmanager, signupManager, presenter);
+        super(username, accountManager, friendManager, conversationManager, eventManager, signupManager, presenter);
     }
 
     /**
@@ -148,7 +148,8 @@ public class OrganizerController extends AccountController {
                     break;
                 }
                 case "2":
-                    presenter.displayPrompt(accountManager.getAccountHashMap().keySet().toString());
+                    Set<String> accounts = accountManager.getAccountHashMap().keySet();
+                    presenter.displayAccountList(accounts);
                     break;
                 case "3":
                     presenter.displayContactsPrompt("add");

@@ -51,12 +51,12 @@ public class SpeakerController extends AccountController {
                     loggedIn = false;
                     break;
                 case "1":
-                    Set<String> allAccts = accountManager.getAccountHashMap().keySet();
-                    presenter.displayAccountList(allAccts);
+                    Set<String> accounts = accountManager.getAccountHashMap().keySet();
+                    presenter.displayAccountList(accounts);
                     break;
                 case "2":
-                    allAccts = accountManager.getAccountHashMap().keySet();
-                    presenter.displayAccountList(allAccts);
+                    accounts = accountManager.getAccountHashMap().keySet();
+                    presenter.displayAccountList(accounts);
                     presenter.displayContactsPrompt("add");
                     String contactToAdd = userInput.nextLine();
                     friendController.addFriend(contactToAdd);

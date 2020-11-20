@@ -1,5 +1,6 @@
 package controller;
 
+import gateway.DataManager;
 import presenter.Presenter;
 import presenter.TextPresenter;
 import use_cases.*;
@@ -9,8 +10,10 @@ import java.util.Scanner;
 public class RegistrationController {
     private final Scanner input = new Scanner(System.in);
     private final AccountManager accountManager;
-    private final ConversationManager conversationManager;
     private final FriendManager friendManager;
+    private final ConversationManager conversationManager;
+    private final EventManager eventManager;
+    private final SignupManager signupManager;
     private final Presenter presenter = new TextPresenter();
 
     /**
@@ -18,11 +21,15 @@ public class RegistrationController {
      * @param am manages data of all accounts in the program
      * @param fm manages friendlist functionality
      * @param cm manages messaging functionality
+     * @param em
+     * @param sm
      */
-    public RegistrationController(AccountManager am, FriendManager fm, ConversationManager cm) {
+    public RegistrationController(AccountManager am, FriendManager fm, ConversationManager cm, EventManager em, SignupManager sm) {
         this.accountManager = am;
         this.conversationManager = cm;
         this.friendManager = fm;
+        this.eventManager = em;
+        this.signupManager = sm;
     }
 
     /**
@@ -46,8 +53,12 @@ public class RegistrationController {
             accountManager.addNewOrganizer(accountInfo[0], accountInfo[1], accountInfo[2], accountInfo[3]);
         }
         addNewAccountKeys(accountInfo[0]);
+        DataManager dataManager = new DataManager();
+        dataManager.saveAllManagers(eventManager, accountManager, conversationManager, friendManager, signupManager);
         return false;
     }
+
+
 
     /**
      * Prompts the user for the organizer account registration code

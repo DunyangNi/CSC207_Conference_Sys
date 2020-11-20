@@ -18,7 +18,7 @@ public class StartController {
     /**
      * Manages the home screen
      * @param accountManager manages account data
-     * @param friendManager manages friendlist functionality
+     * @param friendManager manages friendList functionality
      * @param conversationManager manages messaging functionality
      * @param eventManager manages event data
      * @param signupManager manages event signup functionality
@@ -54,7 +54,7 @@ public class StartController {
             LoginController loginController = new LoginController(accountManager, friendManager, conversationManager, eventManager, signupManager);
             programEnd = loginController.attemptLogin();
         } else {
-            RegistrationController registrationController = new RegistrationController(accountManager, friendManager, conversationManager);
+            RegistrationController registrationController = new RegistrationController(accountManager, friendManager, conversationManager, eventManager, signupManager);
             programEnd = registrationController.attemptRegister();
         }
         return programEnd;
