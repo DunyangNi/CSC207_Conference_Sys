@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="298.0" y="2659.0">use_cases.ConversationManager</node>
+    <node x="0.0" y="456.0">presenter.TextPresenter</node>
+    <node x="1488.0" y="1565.0">controller.AttendeeController</node>
+    <node x="0.0" y="2294.0">controller.MessageController</node>
+    <node x="746.0" y="2659.0">use_cases.FriendManager</node>
+    <node x="2375.0" y="2294.0">controller.StartController</node>
+    <node x="2389.0" y="2659.0">Throwables.ObjectNotFoundException</node>
+    <node x="0.0" y="2659.0">entities.Conversation</node>
+    <node x="1128.0" y="2659.0">controller.FriendController</node>
+    <node x="661.0" y="2167.0">entities.Organizer</node>
+    <node x="2182.0" y="1797.0">entities.Message</node>
+    <node x="628.0" y="2294.0">controller.RegistrationController</node>
+    <node x="749.0" y="1587.0">controller.SpeakerController</node>
+    <node x="44.0" y="0.0">presenter.Presenter</node>
+    <node x="0.0" y="1797.0">use_cases.AccountManager</node>
+    <node x="934.0" y="2167.0">entities.Attendee</node>
+    <node x="0.0" y="2936.0">Throwables.ConflictException</node>
+    <node x="1491.0" y="2659.0">use_cases.EventModifier</node>
+    <node x="2273.5" y="1085.0">entities.Event</node>
+    <node x="0.0" y="1521.0">controller.OrganizerController</node>
+    <node x="2666.0" y="2659.0">controller.ConferenceSystem</node>
+    <node x="935.5" y="1797.0">entities.Account</node>
+    <node x="1204.0" y="2167.0">entities.Speaker</node>
+    <node x="1714.0" y="2294.0">controller.LoginController</node>
+    <node x="747.0" y="1085.0">controller.AccountController</node>
+    <node x="1492.0" y="1797.0">gateway.DataManager</node>
+    <node x="428.0" y="0.0">use_cases.EventManager</node>
+    <node x="1322.0" y="2294.0">use_cases.SignupManager</node>
+    <node x="2259.0" y="1565.0">entities.Talk</node>
+    <node x="1777.0" y="2659.0">use_cases.EventChecker</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="entities.Attendee" target="entities.Account">
+      <point x="0.0" y="-27.0" />
+      <point x="0.0" y="160.0" />
+    </edge>
+    <edge source="entities.Speaker" target="entities.Account">
+      <point x="0.0" y="-27.0" />
+      <point x="1325.5" y="2142.0" />
+      <point x="1141.3333333333333" y="2142.0" />
+      <point x="82.33333333333326" y="160.0" />
+    </edge>
+    <edge source="controller.OrganizerController" target="controller.AccountController">
+      <point x="0.0" y="-115.5" />
+      <point x="364.5" y="1496.0" />
+      <point x="867.5" y="1496.0" />
+      <point x="-241.0" y="193.0" />
+    </edge>
+    <edge source="controller.SpeakerController" target="controller.AccountController">
+      <point x="0.0" y="-49.5" />
+      <point x="0.0" y="193.0" />
+    </edge>
+    <edge source="entities.Organizer" target="entities.Account">
+      <point x="0.0" y="-27.0" />
+      <point x="787.5" y="2142.0" />
+      <point x="976.6666666666666" y="2142.0" />
+      <point x="-82.33333333333337" y="160.0" />
+    </edge>
+    <edge source="controller.AttendeeController" target="controller.AccountController">
+      <point x="0.0" y="-71.5" />
+      <point x="1851.0" y="1496.0" />
+      <point x="1349.5" y="1496.0" />
+      <point x="241.0" y="193.0" />
+    </edge>
+    <edge source="entities.Talk" target="entities.Event">
+      <point x="0.0" y="-72.0" />
+      <point x="0.0" y="215.0" />
+    </edge>
+    <edge source="presenter.TextPresenter" target="presenter.Presenter">
+      <point x="0.0" y="-292.0" />
+      <point x="0.0" y="203.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.4169435215946844" x="1492.5" y="1495.0" />
+  <SelectedNodes>
+    <node>Throwables.ObjectNotFoundException</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

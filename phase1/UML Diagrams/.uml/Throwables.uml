@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>Throwables</OriginalElement>
+  <nodes>
+    <node x="0.0" y="0.0">Throwables.ObjectNotFoundException</node>
+    <node x="0.0" y="121.0">Throwables.ConflictException</node>
+  </nodes>
+  <notes />
+  <edges />
+  <settings layout="Hierarchic Group" zoom="1.0" x="116.0" y="87.5" />
+  <SelectedNodes>
+    <node>Throwables.ObjectNotFoundException</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>use_cases</OriginalElement>
+  <nodes>
+    <node x="392.0" y="783.0">use_cases.ConversationManager</node>
+    <node x="0.0" y="1104.0">use_cases.EventModifier</node>
+    <node x="518.0" y="0.0">use_cases.AccountManager</node>
+    <node x="840.0" y="783.0">use_cases.FriendManager</node>
+    <node x="0.0" y="0.0">use_cases.EventManager</node>
+    <node x="0.0" y="783.0">use_cases.SignupManager</node>
+    <node x="286.0" y="1104.0">use_cases.EventChecker</node>
+  </nodes>
+  <notes />
+  <edges />
+  <settings layout="Hierarchic Group" zoom="1.0" x="588.5" y="612.0" />
+  <SelectedNodes>
+    <node>use_cases.ConversationManager</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
