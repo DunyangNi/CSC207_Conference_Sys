@@ -7,17 +7,33 @@ import java.lang.*;
 import presenter.*;
 
 public class SpeakerController extends AccountController {
-
+    /**
+     * facilitates interaction with speaker upon login
+     * @param username speaker username
+     * @param accountmanager manages data of all accounts in program
+     * @param friendManager manages friendlist functionality
+     * @param conversationManager manages messaging functionality
+     * @param eventmanager manages event data
+     * @param signupManager manages event signup functionality
+     * @param presenter specifies the UI
+     */
     public SpeakerController(String username, AccountManager accountmanager, FriendManager friendManager,
                              ConversationManager conversationManager, EventManager eventmanager,
                              SignupManager signupManager, Presenter presenter) {
         super(username, accountmanager, friendManager, conversationManager, eventmanager, signupManager, presenter);
     }
 
+    /**
+     * Displays all talks this speaker is giving in the future
+     */
     public void SeeSpeakerTalkSchedule() {
         this.presenter.displaySpeakerTalksSchedule(this.username);
     }
 
+    /**
+     * Interacts with speaker via menu of options
+     * @return True if the speaker wishes to terminate the program
+     */
     @Override
     public boolean runInteraction() {
         boolean programEnd = false;
