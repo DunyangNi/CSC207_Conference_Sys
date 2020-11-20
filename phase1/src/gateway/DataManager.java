@@ -80,7 +80,7 @@ public class DataManager {
 
 
     /**
-     * Calls <code>saveManager()</code> on each of the pre-specified Serializable classes used in this program.
+     * Calls <code>saveManager</code> on each of the pre-specified Serializable classes used in this program.
      *
      * @param eventManager <code>EventManager</code> class
      * @param accountManager <code>AccountManager</code> class
