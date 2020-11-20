@@ -67,6 +67,7 @@ public class AttendeeController extends AccountController {
         String command = userInput.nextLine();
         while(loggedIn){
             switch (command) {
+                // TODO: 11/20/20 Add view all accounts command
                 case "00":
                     loggedIn = false;
                     programEnd = true;

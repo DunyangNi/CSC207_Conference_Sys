@@ -1,49 +1,47 @@
 package presenter;
-import use_cases.*;
-import entities.*;
-import java.util.*;
 
-import java.util.Calendar;
+import java.util.Set;
 
-public abstract class Presenter {
+public interface Presenter {
 
-    public Presenter() {
-    }
+    //Account methods
+    void displayPrompt(String output);
 
-    public Presenter(EventManager eventManager, FriendManager friendManager, SignupManager signupManager) {
-    }
+    void displayUserPassPrompt();
 
-    public abstract void displayPrompt(String output);
+    void displayContactsPrompt(String action);
 
-    public abstract void displayAccountList(Set<String> allAccts);
+    void displayAccountList(Set<String> accounts);
 
-    public abstract void displayOrganizerMenu();
+    void displayContactList(String user);
 
-    public abstract void displayRoomRegistration();
+    void displayConversations(String empty, Set<String> recipients);
 
-    public abstract void displayEventPrompt(String action);
+    void displayConversationsErrors(String condition);
 
-    public abstract void displayUserPassPrompt();
+    void displayMessagingPrompt(String action);
 
-    public abstract void displayMessagingPrompt(String action);
 
-    public abstract void displayContactsPrompt(String action);
+    //Organizer methods
+    void displayOrganizerMenu();
 
-    public abstract void displayConversations(String empty, Set<String> recipients);
+    void displayRoomRegistration();
 
-    public abstract void displayConversationsErrors(String condition);
+    void displayEventPrompt(String action);
 
-    public abstract void displaySpeakerMenu();
 
-    public abstract void displayAttendeeMenu();
+    //Speaker methods
+    void displaySpeakerMenu();
 
-    public abstract void displayTalkSchedule();
+    void displayTalkSchedule();
 
-    public abstract void displayAttendeeTalkSchedule(String attendee);
+    void displaySpeakerTalksSchedule(String speaker);
 
-    public abstract void displaySpeakerTalksSchedule(String speaker);
 
-    public abstract void displayContactList(String user);
+    //Attendee methods
+    void displayAttendeeMenu();
 
-    public abstract void displayTalkPrompt(String action);
+    void displayAttendeeTalkSchedule(String attendee);
+
+    void displayTalkPrompt(String action);
 }

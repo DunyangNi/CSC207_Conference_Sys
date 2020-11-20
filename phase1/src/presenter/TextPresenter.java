@@ -5,13 +5,11 @@ import java.util.*;
 
 import java.util.Calendar;
 
-public class TextPresenter extends Presenter{
+public class TextPresenter implements Presenter {
     // TODO: 11/17/20 Consider whether these fields are necessary or what other fields might be required
     private EventManager eventmanager;
     private SignupManager signupManager;
     private FriendManager friendManager;
-
-    // TODO: 11/16/20 Find a better way to do this?
 
     public TextPresenter() {
         super();
@@ -31,37 +29,30 @@ public class TextPresenter extends Presenter{
     }
 
     @Override
-    public void displayTalkSchedule() {
-        HashMap<String[], Calendar> allTalks = eventmanager.fetchSortedTalks();
-        System.out.println("Schedule for all talks:\n");
-        if (allTalks.keySet().isEmpty()) System.out.println("Nothing!");
-        Calendar timeNow = Calendar.getInstance();
-        for(String[] eventInfo : allTalks.keySet()) {
-            if(timeNow.compareTo(allTalks.get(eventInfo)) < 0) {
-                System.out.println("ID: " + eventInfo[4]);
-                System.out.println("Topic: " + eventInfo[0]);
-                System.out.println("Speaker: " + eventInfo[1]);
-                System.out.println("Location: " + eventInfo[2]);
-                System.out.println("Time: " + eventInfo[3]);
-                System.out.println();
-            }
+    public void displayUserPassPrompt() {
+        System.out.println("Enter the following information on separate lines:");
+        System.out.println("Enter a username:");
+        System.out.println("Enter a password:");
+    }
+
+    @Override
+    public void displayContactsPrompt(String action) {
+        switch (action) {
+            case "add":
+                System.out.println("Please enter the username of a contact to add: ");
+                break;
+            case "remove":
+                System.out.println("Please enter the username of a contact to remove: ");
+                break;
         }
     }
 
     @Override
-    public void displayContactList(String user) {
-        ArrayList<String> selectedFriends = friendManager.getFriendList(user);
-        System.out.println("Your Contacts List:\n");
-        if (selectedFriends.isEmpty()) { System.out.println("No one!"); }
-        else { for (String friend : selectedFriends) { System.out.println(friend); } }
-    }
-
-    @Override
-    public void displayAccountList(Set<String> allAccts) {
-        if (!allAccts.isEmpty()) {
+    public void displayAccountList(Set<String> accounts) {
+        if (!accounts.isEmpty()) {
             System.out.println("List of users");
             System.out.println("---------------------------------------------");
-            for (String acct : allAccts) {
+            for (String acct : accounts) {
                 System.out.println(acct);
             }
             System.out.println("---------------------------------------------\n");
@@ -79,6 +70,44 @@ public class TextPresenter extends Presenter{
             }
             System.out.println("---------------------------------------------\n");
             System.out.println("Specify the attendee's username");
+        }
+    }
+
+    @Override
+    public void displayContactList(String user) {
+        ArrayList<String> selectedFriends = friendManager.getFriendList(user);
+        System.out.println("Your Contacts List:\n");
+        if (selectedFriends.isEmpty()) { System.out.println("No one!"); }
+        else { for (String friend : selectedFriends) { System.out.println(friend); } }
+    }
+
+    @Override
+    public void displayConversations(String condition, Set<String> recipients) {
+        switch (condition){
+            case "empty":
+                System.out.println("You have no conversations.");
+                break;
+            case "non_empty":
+                System.out.println("[CONVERSATION RECIPIENTS]");
+                for (String recipient : recipients) {
+                    System.out.println(recipient);
+                }
+                System.out.println();
+                System.out.println("Enter the following information on separate lines:");
+                System.out.println("To access a conversation, please enter the recipient's username:");
+                System.out.println("How many past messages would you like to see?");
+                break;
+        }
+    }
+
+    public void displayConversationsErrors(String condition){
+        switch (condition){
+            case "mismatch":
+                System.out.println("Invalid input");break;
+            case "no_conversation":
+                System.out.println("You don't have conversation with this person.");break;
+            case "no_user":
+                System.out.println("This user do not exits");break;
         }
     }
 
@@ -103,6 +132,32 @@ public class TextPresenter extends Presenter{
                 System.out.println("Please enter the message you want to send the attendee:");
                 break;
         }
+    }
+
+    private void displayTalkInfo(String[] eventInfo) {
+        System.out.println("ID: " + eventInfo[4]);
+        System.out.println("Topic: " + eventInfo[0]);
+        System.out.println("Speaker: " + eventInfo[1]);
+        System.out.println("Location: " + eventInfo[2]);
+        System.out.println("Time: " + eventInfo[3]);
+        System.out.println();
+    }
+
+    private void displayTalks(HashMap<String[], Calendar> allTalks) {
+        if (allTalks.keySet().isEmpty()) System.out.println("Nothing!");
+        Calendar timeNow = Calendar.getInstance();
+        for(String[] eventInfo : allTalks.keySet()) {
+            if(timeNow.compareTo(allTalks.get(eventInfo)) < 0) {
+                displayTalkInfo(eventInfo);
+            }
+        }
+    }
+
+    @Override
+    public void displayTalkSchedule() {
+        HashMap<String[], Calendar> allTalks = eventmanager.fetchSortedTalks();
+        System.out.println("Schedule for all talks:\n");
+        displayTalks(allTalks);
     }
 
     //Organizer methods
@@ -162,70 +217,7 @@ public class TextPresenter extends Presenter{
         }
     }
 
-    @Override
-    public void displayUserPassPrompt() {
-        System.out.println("Enter the following information on separate lines:");
-        System.out.println("Enter a username:");
-        System.out.println("Enter a password:");
-    }
-
-    @Override
-    public void displayContactsPrompt(String action) {
-        switch (action) {
-            case "add":
-                System.out.println("Please enter the username of a contact to add: ");
-                break;
-            case "remove":
-                System.out.println("Please enter the username of a contact to remove: ");
-                break;
-        }
-    }
-
-    public void displayTalkPrompt(String action){
-        switch (action) {
-            case "attend":
-                System.out.println("Please enter the ID of the Talk you wish to attend: ");
-                break;
-            case "cancel":
-                System.out.println("Please enter the ID of the Talk you wish to cancel: ");
-                break;
-            case "invalid":
-                System.out.println("Invalid Talk ID.");
-                break;
-        }
-    }
-
-    @Override
-    public void displayConversations(String condition, Set<String> recipients) {
-            switch (condition){
-                case "empty":
-                    System.out.println("You have no conversations.");
-                    break;
-                case "non_empty":
-                    System.out.println("[CONVERSATION RECIPIENTS]");
-                    for (String recipient : recipients) {
-                        System.out.println(recipient);
-                    }
-                    System.out.println();
-                    System.out.println("Enter the following information on separate lines:");
-                    System.out.println("To access a conversation, please enter the recipient's username:");
-                    System.out.println("How many past messages would you like to see?");
-                    break;
-            }
-    }
-
-    public void displayConversationsErrors(String condition){
-        switch (condition){
-            case "mismatch":
-                System.out.println("Invalid input");break;
-            case "no_conversation":
-                System.out.println("You don't have conversation with this person.");break;
-            case "no_user":
-                System.out.println("This user do not exits");break;
-        }
-    }
     //Speaker methods
-
     @Override
     public void displaySpeakerMenu() {
         System.out.println("======[SPEAKER MENU]======");
@@ -250,30 +242,15 @@ public class TextPresenter extends Presenter{
         System.out.println("==========================");
     }
 
-
-
-
-
-    //Attendee methods
-
     @Override
     public void displaySpeakerTalksSchedule(String speaker) {
         HashMap<String[], Calendar> speakerTalks = eventmanager.fetchSortedTalks(speaker);
         System.out.println("Schedule for talks you're speaking at:\n");
-        if (speakerTalks.keySet().isEmpty()) System.out.println("Nothing!");
-        Calendar timeNow = Calendar.getInstance();
-        for(String[] eventInfo : speakerTalks.keySet()) {
-            if(timeNow.compareTo(speakerTalks.get(eventInfo)) < 0) {
-                System.out.println("ID: " + eventInfo[4]);
-                System.out.println("Topic: " + eventInfo[0]);
-                System.out.println("Speaker: " + eventInfo[1]);
-                System.out.println("Location: " + eventInfo[2]);
-                System.out.println("Time: " + eventInfo[3]);
-                System.out.println();
-            }
-        }
+        displayTalks(speakerTalks);
     }
 
+
+    //Attendee methods
     @Override
     public void displayAttendeeMenu() {
         System.out.println("=====[ATTENDEE MENU]=====");
@@ -309,13 +286,22 @@ public class TextPresenter extends Presenter{
         for(String[] eventInfo : attendeeTalks.keySet()) {
             if(timeNow.compareTo(attendeeTalks.get(eventInfo)) < 0 &&
                     signupManager.isSignedUp(Integer.parseInt(eventInfo[4]), attendee)) {
-                System.out.println("ID: " + eventInfo[4]);
-                System.out.println("Topic: " + eventInfo[0]);
-                System.out.println("Speaker: " + eventInfo[1]);
-                System.out.println("Location: " + eventInfo[2]);
-                System.out.println("Time: " + eventInfo[3]);
-                System.out.println();
+                displayTalkInfo(eventInfo);
             }
+        }
+    }
+
+    public void displayTalkPrompt(String action){
+        switch (action) {
+            case "attend":
+                System.out.println("Please enter the ID of the Talk you wish to attend: ");
+                break;
+            case "cancel":
+                System.out.println("Please enter the ID of the Talk you wish to cancel: ");
+                break;
+            case "invalid":
+                System.out.println("Invalid Talk ID.");
+                break;
         }
     }
 }
