@@ -4,70 +4,54 @@ import java.io.Serializable;
 import java.util.Calendar;
 
 /**
- * Represents a talk at a conference. A talk is a kind of event.
- *
- * Fields:
- * speaker: the username of the speaker who is giving the talk. A talk must
- * only have one speaker
- *
- * Superclass: Event
+ * Represents any talk in the system, where a talk is a type of event.
  */
 public class Talk extends Event implements Serializable {
     private String speaker;
 
-    //------------------------------------------------------------
-    // Constructor
-    //------------------------------------------------------------
-
     /**
-     * Create an Talk with topic, time, speaker, and organizer.
-     * @param topic topic for the talk
-     * @param time time for the talk
-     * @param speaker speaker for the talk
-     * @param organizer organizer for the talk
+     * Creates an instance of <code>Talk</code> with an assigned integer ID and given information.
+     *
+     * @param id assigned ID
+     * @param topic given topic
+     * @param time given time
+     * @param location given location
+     * @param organizer given <code>Organizer</code> username
+     * @param speaker given <code>Speaker</code> username
      */
     public Talk(Integer id, String topic, Calendar time, String location, String organizer, String speaker) {
         super(id, topic, time, location, organizer);
         this.speaker = speaker;
     }
 
-    //------------------------------------------------------------
-    // Methods
-    //------------------------------------------------------------
-
     /**
-     * Compares for equality with another object.
+     * Compares a given <code>Object</code> with this <code>Talk</code>. Returns
+     * true iff the given <code>Object</code> matches this <code>Talk</code>.
      *
-     * @param other other object to compare
-     * @return True if other is a Talk and has the same Event and speaker are matched.
+     * @param other other <code>Object</code> presumed <code>Talk</code> to compare
+     * @return the given <code>Object</code> matches this <code>Talk</code>
      */
     @Override
     public boolean equals(Object other){
-        if (other instanceof Talk){
+        if (other instanceof Talk) {
             Talk o = (Talk)other;
-            return super.equals(other) &&
-                    getSpeaker().equals(o.getSpeaker());
+            return super.equals(other) && getSpeaker().equals(o.getSpeaker());
         }
         return false;
     }
 
-    //------------------------------------------------------------
-    // Getters and Setters
-    //------------------------------------------------------------
-
     /**
-     * @return speaker
+     * @return speaker of this <code>Talk</code>
      */
     public String getSpeaker() {
         return speaker;
     }
 
     /**
-     * Sets a new speaker for the talk.
+     * Sets a new speaker for this <code>Talk</code>.
      *
-     * @param speaker the intended new speaker for the talk
+     * @param speaker the username of new speaker for this <code>Talk</code>
      */
-
     public void setSpeaker(String speaker) {
         this.speaker = speaker;
     }

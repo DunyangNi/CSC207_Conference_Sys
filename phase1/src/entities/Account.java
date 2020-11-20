@@ -9,9 +9,8 @@ import java.io.Serializable;
  * username: represents the account's username, which cannot be changed.
  * password: represents the account's password.
  * lastName: represents the account's user's last name.
- * firstName: repsents the account's user's first name.
+ * firstName: represents the account's user's first name.
  */
-
 public class Account implements Serializable {
     private final String username;
     private String password;
@@ -21,7 +20,6 @@ public class Account implements Serializable {
     /**
      * Creates an account with the specified username, password, and first and last names.
      */
-
     public Account(String username, String password, String firstName, String lastName) {
         this.username = username;
         this.password = password;
@@ -47,7 +45,6 @@ public class Account implements Serializable {
     /**
      * @return username
      */
-
     public String getUsername() {
         return username;
     }
@@ -55,19 +52,16 @@ public class Account implements Serializable {
     /**
      * @return password
      */
-
     public String getPassword() { return password; }
 
     /**
      * @return lastName
      */
-
     public String getLastName() { return lastName; }
 
     /**
      * @return firstName
      */
-
     public String getFirstName() {
         return firstName;
     }
@@ -80,7 +74,6 @@ public class Account implements Serializable {
      * sets password
      * @param password the intended new password
      */
-
     public void setPassword(String password) {
         this.password = password;
     }
@@ -89,7 +82,6 @@ public class Account implements Serializable {
      * sets lastName
      * @param lastName the intended new last name
      */
-
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
@@ -98,7 +90,6 @@ public class Account implements Serializable {
      * sets firstName
      * @param firstName the intended new first name
      */
-
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
