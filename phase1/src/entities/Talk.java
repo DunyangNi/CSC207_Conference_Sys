@@ -4,47 +4,23 @@ import java.io.Serializable;
 import java.util.Calendar;
 
 /**
- * Talk represents Talk in an Event
- * <pre>
+ * Represents a talk at a conference. A talk is a kind of event.
  *
- * Entity Talk
+ * Fields:
+ * speaker: the username of the speaker who is giving the talk. A talk must
+ * only have one speaker
  *
- * Responsibilities:
- * Stores information about the Event.
- * Stores time of Event
- * Can return this information
- * Stores the SpeakerAccounts of the talk
- * Stores the AttendeeAccounts of the talk
- * Stores the OrganizerAccounts of the talk
- * Can return this information
- *
- * Collaborators:
- * Accounts
- * </pre>
+ * Superclass: Event
  */
 public class Talk extends Event implements Serializable {
     private String speaker;
 
     //------------------------------------------------------------
-    // Constructors
+    // Constructor
     //------------------------------------------------------------
 
     /**
      * Create an Talk with topic, time, speaker, and organizer.
-     *
-     * <pre>
-     * Example
-     *
-     * Calendar ev_date = Calendar.getInstance();
-     * ev_date.set(2020, 03, 23, 10, 12);
-     * Account organizer = new Account();
-     * Account speaker = new Account();
-     *
-     * // Create an event
-     * Talk event1 =
-     *         new Talk("topic1", ev_date,speaker,organizer);
-     * System.out.println(event1);
-     * </pre>
      * @param topic topic for the talk
      * @param time time for the talk
      * @param speaker speaker for the talk
@@ -60,10 +36,10 @@ public class Talk extends Event implements Serializable {
     //------------------------------------------------------------
 
     /**
-     * Compares for equality.
+     * Compares for equality with another object.
      *
-     * @param other other message to compare
-     * @return True if the same Event and speaker are matched.
+     * @param other other object to compare
+     * @return True if other is a Talk and has the same Event and speaker are matched.
      */
     @Override
     public boolean equals(Object other){
@@ -85,6 +61,12 @@ public class Talk extends Event implements Serializable {
     public String getSpeaker() {
         return speaker;
     }
+
+    /**
+     * Sets a new speaker for the talk.
+     *
+     * @param speaker the intended new speaker for the talk
+     */
 
     public void setSpeaker(String speaker) {
         this.speaker = speaker;
