@@ -5,16 +5,29 @@ import java.util.*;
 
 import java.util.Calendar;
 
+/**
+ * Presents program information to a text-based UI for display.
+ *
+ */
 public class TextPresenter implements Presenter {
     // TODO: 11/17/20 Consider whether these fields are necessary or what other fields might be required
     private EventManager eventmanager;
     private SignupManager signupManager;
     private FriendManager friendManager;
 
+    /**
+     * Creates a <code>TextPresenter</code> without any fields.
+     */
     public TextPresenter() {
         super();
     }
 
+    /**
+     * Creates a <code>TextPresenter</code> with access to information stored in Manager objects.
+     * @param eventManager The program's <code>EventManager</code> object
+     * @param friendManager The program's <code>FriendManager</code> object
+     * @param signupManager The program's <code>SignupManager</code> object
+     */
     public TextPresenter(EventManager eventManager, FriendManager friendManager, SignupManager signupManager) {
         super();
         this.eventmanager = eventManager;
@@ -23,31 +36,30 @@ public class TextPresenter implements Presenter {
     }
 
     //Shared methods
-    @Override
+
+    /**
+     * Prints a string prompt to the console UI.
+     *
+     * @param output The message to be displayed
+     */
     public void displayPrompt(String output) {
         System.out.println(output);
     }
 
-    @Override
+    /**
+     * Displays string prompt to the console UI requesting username and password.
+     */
     public void displayUserPassPrompt() {
         System.out.println("Enter the following information on separate lines:");
         System.out.println("Enter a username:");
         System.out.println("Enter a password:");
     }
 
-    @Override
-    public void displayContactsPrompt(String action) {
-        switch (action) {
-            case "add":
-                System.out.println("Please enter the username of a contact to add: ");
-                break;
-            case "remove":
-                System.out.println("Please enter the username of a contact to remove: ");
-                break;
-        }
-    }
-
-    @Override
+    /**
+     * Prints string represented collection of all <code>Account</code>s saved in the program to the console UI.
+     *
+     * @param accounts Collection of all account usernames
+     */
     public void displayAccountList(Set<String> accounts) {
         if (!accounts.isEmpty()) {
             System.out.println("List of users");
@@ -61,6 +73,11 @@ public class TextPresenter implements Presenter {
         }
     }
 
+    /**
+     * Prints string represented collection of all <code>Attendee</code>s saved in the program to the console UI.
+     *
+     * @param allAttendees Collection of all attendee usernames
+     */
     public void displayAttendeeList(Set<String> allAttendees) {
         if (!allAttendees.isEmpty()) {
             System.out.println("List of attendees");
@@ -73,7 +90,27 @@ public class TextPresenter implements Presenter {
         }
     }
 
-    @Override
+    /**
+     * Prints string prompts to the console UI for contact related user commands corresponding to the given action.
+     *
+     * @param action Type of contact related user command being issued
+     */
+    public void displayContactsPrompt(String action) {
+        switch (action) {
+            case "add":
+                System.out.println("Please enter the username of a contact to add: ");
+                break;
+            case "remove":
+                System.out.println("Please enter the username of a contact to remove: ");
+                break;
+        }
+    }
+
+    /**
+     * Prints a string represented collection of contacts added by the current user to the console UI.
+     *
+     * @param user The username of the current user.
+     */
     public void displayContactList(String user) {
         ArrayList<String> selectedFriends = friendManager.getFriendList(user);
         System.out.println("Your Contacts List:\n");
@@ -81,7 +118,12 @@ public class TextPresenter implements Presenter {
         else { for (String friend : selectedFriends) { System.out.println(friend); } }
     }
 
-    @Override
+    /**
+     * Prints a string represented list of usernames belonging to other users that the current user has a <code>Conversation</code> with to the console UI.
+     *
+     * @param condition The condition of the current user's conversation list, either empty or not
+     * @param recipients The other users that the current user has a conversation with
+     */
     public void displayConversations(String condition, Set<String> recipients) {
         switch (condition){
             case "empty":
@@ -100,6 +142,11 @@ public class TextPresenter implements Presenter {
         }
     }
 
+    /**
+     * Prints invalid input warning strings to the console UI when issuing <code>Conversation</code> related user commands.
+     *
+     * @param condition The type of invalid input
+     */
     public void displayConversationsErrors(String condition){
         switch (condition){
             case "mismatch":
@@ -111,7 +158,11 @@ public class TextPresenter implements Presenter {
         }
     }
 
-    @Override
+    /**
+     * Prints string prompts to the console UI for <code>Message</code> related user commands corresponding to the given action.
+     *
+     * @param action The type of messaging related user command being issued
+     */
     public void displayMessagingPrompt(String action) {
         switch (action) {
             case "allSpeakers":
@@ -134,6 +185,11 @@ public class TextPresenter implements Presenter {
         }
     }
 
+    /**
+     * Prints string represented information for a given <code>Talk</code> to the console UI.
+     *
+     * @param eventInfo The talk whose information will be displayed
+     */
     private void displayTalkInfo(String[] eventInfo) {
         System.out.println("ID: " + eventInfo[4]);
         System.out.println("Topic: " + eventInfo[0]);
@@ -143,6 +199,13 @@ public class TextPresenter implements Presenter {
         System.out.println();
     }
 
+    /**
+     * Prints string represented information for a given collection of <code>Talk</code>s to the console UI.
+     *
+     * Uses <code>displayTalkInfo</code> as a helper method.
+     *
+     * @param allTalks The collection of talks whose information will be displayed
+     */
     private void displayTalks(HashMap<String[], Calendar> allTalks) {
         if (allTalks.keySet().isEmpty()) System.out.println("Nothing!");
         Calendar timeNow = Calendar.getInstance();
@@ -153,7 +216,11 @@ public class TextPresenter implements Presenter {
         }
     }
 
-    @Override
+    /**
+     * Prints a string represented schedule of all <code>Talk</code>s saved in the program to the console UI.
+     *
+     * Uses <code>displayTalks</code> as a helper method.
+     */
     public void displayTalkSchedule() {
         HashMap<String[], Calendar> allTalks = eventmanager.fetchSortedTalks();
         System.out.println("Schedule for all talks:\n");
@@ -162,7 +229,9 @@ public class TextPresenter implements Presenter {
 
     //Organizer methods
 
-    @Override
+    /**
+     * Prints a string represented menu containing all the user commands available to <code>Organizer</code> accounts to the console UI.
+     */
     public void displayOrganizerMenu() {
         System.out.println("=====[ORGANIZER MENU]=====");
         System.out.println("[ACCOUNT]");
@@ -193,12 +262,18 @@ public class TextPresenter implements Presenter {
         System.out.println("==========================");
     }
 
-    @Override
+    /**
+     * Prints string prompt for room registration user command to the console UI.
+     */
     public void displayRoomRegistration() {
         System.out.println("Enter a name for the new room:");
     }
 
-    @Override
+    /**
+     * Prints string prompts to the console UI for <code>Event</code> registration related user commands.
+     *
+     * @param action The type of event related user command being issued
+     */
     public void displayEventPrompt(String action) {
         switch (action) {
             case "register":
@@ -218,7 +293,10 @@ public class TextPresenter implements Presenter {
     }
 
     //Speaker methods
-    @Override
+
+    /**
+     * Prints a string represented menu containing all the user commands available to <code>Speaker</code> accounts to the console UI.
+     */
     public void displaySpeakerMenu() {
         System.out.println("======[SPEAKER MENU]======");
         System.out.println("[ACCOUNT]");
@@ -242,16 +320,21 @@ public class TextPresenter implements Presenter {
         System.out.println("==========================");
     }
 
-    @Override
+    /**
+     * Prints a string represented schedule of all <code>Talk</code>s the current <code>Speaker</code>-user will be speaking in to the console UI.
+     * @param speaker The current speaker-user's username
+     */
     public void displaySpeakerTalksSchedule(String speaker) {
         HashMap<String[], Calendar> speakerTalks = eventmanager.fetchSortedTalks(speaker);
         System.out.println("Schedule for talks you're speaking at:\n");
         displayTalks(speakerTalks);
     }
 
-
     //Attendee methods
-    @Override
+
+    /**
+     * Prints a string represented menu containing all the user commands available to <code>Attendee</code> accounts to the console UI.
+     */
     public void displayAttendeeMenu() {
         System.out.println("=====[ATTENDEE MENU]=====");
         System.out.println("[ACCOUNT]");
@@ -277,20 +360,11 @@ public class TextPresenter implements Presenter {
         System.out.println("=========================");
     }
 
-    @Override
-    public void displayAttendeeTalkSchedule(String attendee) {
-        HashMap<String[], Calendar> attendeeTalks = eventmanager.fetchSortedTalks();
-        System.out.println("Talks you've signed up for:\n");
-        Calendar timeNow = Calendar.getInstance();
-        if (attendeeTalks.keySet().isEmpty()) System.out.println("Nothing!");
-        for(String[] eventInfo : attendeeTalks.keySet()) {
-            if(timeNow.compareTo(attendeeTalks.get(eventInfo)) < 0 &&
-                    signupManager.isSignedUp(Integer.parseInt(eventInfo[4]), attendee)) {
-                displayTalkInfo(eventInfo);
-            }
-        }
-    }
-
+    /**
+     * Displays string prompts to the console UI for <code>Talk</code> related user commands corresponding to the given action.
+     *
+     * @param action The type of talk related user command being issued
+     */
     public void displayTalkPrompt(String action){
         switch (action) {
             case "attend":
@@ -302,6 +376,23 @@ public class TextPresenter implements Presenter {
             case "invalid":
                 System.out.println("Invalid Talk ID.");
                 break;
+        }
+    }
+
+    /**
+     * Displays a string represented schedule of all <code>Talk</code>s the current <code>Attendee</code>-user is signed up for to the console UI.
+     * @param attendee The current attendee-user's username
+     */
+    public void displayAttendeeTalkSchedule(String attendee) {
+        HashMap<String[], Calendar> attendeeTalks = eventmanager.fetchSortedTalks();
+        System.out.println("Talks you've signed up for:\n");
+        Calendar timeNow = Calendar.getInstance();
+        if (attendeeTalks.keySet().isEmpty()) System.out.println("Nothing!");
+        for(String[] eventInfo : attendeeTalks.keySet()) {
+            if(timeNow.compareTo(attendeeTalks.get(eventInfo)) < 0 &&
+                    signupManager.isSignedUp(Integer.parseInt(eventInfo[4]), attendee)) {
+                displayTalkInfo(eventInfo);
+            }
         }
     }
 }
