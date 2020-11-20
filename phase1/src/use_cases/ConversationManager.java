@@ -68,7 +68,7 @@ public class ConversationManager implements Serializable {
     /**
      * Adds a new key a username of an associated <code>Account</code>.
      *
-     * @param username given username of associated Account
+     * @param username given username of associated <code>Account</code>
      */
     public void addAccountKey(String username) { conversations.put(username, new HashMap<>()); }
 
