@@ -1,10 +1,12 @@
 package controller;
 
+import Throwables.ObjectNotFoundException;
 import presenter.Presenter;
 import use_cases.*;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public abstract class AccountController {
@@ -54,8 +56,10 @@ public abstract class AccountController {
                     this.presenter.displayPrompt("");
                 }
             }
-        } catch (Exception e) {
-            this.presenter.displayPrompt(e.toString() + "\nSomething went wrong in collectTimeInfo. Please enter valid input.\n");
+        } catch (ObjectNotFoundException e) {
+                this.presenter.displayConversationsErrors("no_user");
+        } catch (InputMismatchException e) {
+            this.presenter.displayConversationsErrors("mismatch");
         }
     }
 
