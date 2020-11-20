@@ -20,6 +20,17 @@ public abstract class AccountController {
     protected FriendController friendController;
     protected MessageController messageController;
 
+    /**
+     * Facilitates interaction with the user (organizer/speaker/attendee) upon login
+     *
+     * @param username username of account user
+     * @param accountManager manages data of all accounts in program
+     * @param friendManager manages data of contacts lists
+     * @param conversationManager manages conversation data
+     * @param eventManager manages event data
+     * @param signupManager manages event signup and related information
+     * @param presenter defines the UI
+     */
     public AccountController(String username, AccountManager accountManager, FriendManager friendManager, ConversationManager conversationManager, EventManager eventManager, SignupManager signupManager, Presenter presenter) {
         this.username = username;
         this.accountManager = accountManager;
@@ -32,14 +43,26 @@ public abstract class AccountController {
         this.messageController = new MessageController(username, accountManager, conversationManager, eventManager, signupManager);
     }
 
+    /**
+     * Displays the talk schedule for talks that start past the current time
+     * in chronological order
+     */
     public void SeeTalkSchedule() {
         this.presenter.displayTalkSchedule();
     }
 
+    /**
+     * Displays the list of contacts for the current user
+     */
     public void viewContactList() {
         this.presenter.displayContactList(this.username);
     }
 
+    /**
+     * displays the numMessagesRequested most recent messages with the recipient
+     * @param recipient person whose conversation with the user is being requested
+     * @param numMessagesRequested an upper bound for the number of past messages requested to be seen
+     */
     public void viewMessagesFrom(String recipient, int numMessagesRequested) {
         try {
             if (numMessagesRequested < 0) {
@@ -63,6 +86,11 @@ public abstract class AccountController {
         }
     }
 
+    /**
+     * A helper method to collect standart time information
+     * @return returns the specified time
+     * @throws InstantiationException error instantiating the time
+     */
     protected Calendar collectTimeInfo() throws InstantiationException {
         try {
             Scanner sc = new Scanner(System.in);
@@ -90,8 +118,17 @@ public abstract class AccountController {
         }
     }
 
-    public abstract boolean runInteraction() throws InstantiationException;
+    /**
+     * Runs the menu of options that the user sees and interacts with
+     * @return returns a boolean which is True, indicating the user interaction ended
+     */
+    public abstract boolean runInteraction();
 
+    /**
+     * Returns whether or not the string s is numeric
+     * @param s string
+     * @return True if s is numeric
+     */
     public boolean isNumeric(String s){
         for (char c: s.toCharArray()){
             if (!Character.isDigit(c)){

@@ -4,11 +4,19 @@ import gateway.DataManager;
 import use_cases.*;
 
 public class ConferenceSystem {
+
+    /**
+     * Runs the entire conference program by calling the run method in this class
+     * @param args
+     */
     public static void main(String[] args) {
         ConferenceSystem conferenceSystem = new ConferenceSystem();
         conferenceSystem.run();
     }
 
+    /**
+     * Runs the entire conference program starting with the login screen
+     */
     public void run() {
         DataManager dataManager = new DataManager();
         AccountManager accountManager = dataManager.readAccountManager();

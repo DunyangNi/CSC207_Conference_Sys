@@ -13,12 +13,23 @@ public class RegistrationController {
     private final FriendManager friendManager;
     private final Presenter presenter = new TextPresenter();
 
+    /**
+     * handles the creation of new organizer and attendee accounts for registration
+     * @param am manages data of all accounts in the program
+     * @param fm manages friendlist functionality
+     * @param cm manages messaging functionality
+     */
     public RegistrationController(AccountManager am, FriendManager fm, ConversationManager cm) {
         this.accountManager = am;
         this.conversationManager = cm;
         this.friendManager = fm;
     }
 
+    /**
+     *  prompts user for which account they wish to create (attendee or organizer) and then attempts
+     *  to create a new account for them according to username/password specifications by the user
+     * @return false
+     */
     public boolean attemptRegister() {
         this.presenter.displayPrompt("Enter '1' to register an Attendee account.\nEnter '2' to register an Organizer account.");
         String accountType = input.nextLine();
@@ -38,6 +49,9 @@ public class RegistrationController {
         return false;
     }
 
+    /**
+     * Prompts the user for the organizer account registration code
+     */
     private void requireOrganizerPassword() {
         String ORGANIZER_REGISTRATION_CODE = "123456";
 
@@ -49,6 +63,11 @@ public class RegistrationController {
         }
     }
 
+    /**
+     * prompts user for username and password
+     * @param type 1 if account type is Attendee, 2 if account type is Organizer
+     * @return username and password info
+     */
     private String[] getNewAccountInfo(String type) {
         if (type.equals("2")) {
             requireOrganizerPassword();
@@ -68,6 +87,11 @@ public class RegistrationController {
         return new String[]{username, password, "", ""};
     }
 
+    /**
+     * helper method that adds the given username as a key to various
+     * hashmaps in the use cases
+     * @param username
+     */
     private void addNewAccountKeys(String username) {
         conversationManager.addAccountKey(username);
         friendManager.addAccountKey(username);

@@ -16,6 +16,14 @@ public class LoginController {
     // fields for presenter should be filled out
     private final Presenter presenter = new TextPresenter();
 
+    /**
+     * Manages login functionality for the program
+     * @param am stores data of all accounts
+     * @param fm manages friendlist functionality
+     * @param cm manages conversation/messaging functionality
+     * @param em manages event data
+     * @param sm manages event signup functionality
+     */
     public LoginController(AccountManager am, FriendManager fm, ConversationManager cm, EventManager em, SignupManager sm) {
         this.accountManager = am;
         this.conversationManager = cm;
@@ -24,6 +32,10 @@ public class LoginController {
         this.signupManager = sm;
     }
 
+    /**
+     * Attempts login on the user
+     * @return True if the user wishes to terminate the program
+     */
     public boolean attemptLogin() {
         presenter.displayPrompt("[LOGIN MENU]");
         Scanner input = new Scanner(System.in);
@@ -49,6 +61,12 @@ public class LoginController {
         return login(username);
     }
 
+    /**
+     * Directs user to their respective menu of options depending on their account type
+     * (Attendee, Organizer, or Speaker) and runs the menu interaction
+     * @param username user's username
+     * @return True if the user wishes to terminate the program
+     */
     private boolean login(String username) {
         boolean programEnd = false;
         if (accountManager.containsAttendee(username)) {

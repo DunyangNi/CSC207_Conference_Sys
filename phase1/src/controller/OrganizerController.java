@@ -9,12 +9,27 @@ import java.util.*;
 import presenter.*;
 
 public class OrganizerController extends AccountController {
+    /**
+     * facilitates interaction with organizer upon login
+     * @param username organizer username
+     * @param accountManager manages data of all accounts in program
+     * @param friendManager manages friendlist functionality
+     * @param conversationManager manages messaging functionality
+     * @param eventmanager manages event data
+     * @param signupManager manages event signup functionality
+     * @param presenter specifies the UI
+     */
     public OrganizerController(String username, AccountManager accountManager, FriendManager friendManager,
                                ConversationManager conversationManager, EventManager eventmanager,
                                SignupManager signupManager, Presenter presenter) {
         super(username, accountManager, friendManager, conversationManager, eventmanager, signupManager, presenter);
     }
 
+    /**
+     * helper function that adds a user's username as keys to certain
+     * hashmaps in the use cases
+     * @param username specified username
+     */
     // (NEW!) (Helper)
     private void addNewSpeakerKeys(String username) {
         conversationManager.addAccountKey(username);
@@ -22,6 +37,10 @@ public class OrganizerController extends AccountController {
         eventManager.addSpeakerKey(username);
     }
 
+    /**
+     * adds a new allowed location where events can take place to the database
+     * @param location location to be added
+     */
     public void addNewLocation(String location) {
         try {
             this.eventManager.addNewLocation(location);
@@ -30,6 +49,13 @@ public class OrganizerController extends AccountController {
         }
     }
 
+    /**
+     * creates a new speaker account with the given information fields
+     * @param username
+     * @param password
+     * @param firstname
+     * @param lastname
+     */
     public void createSpeakerAccount(String username, String password, String firstname, String lastname) {
         try {
             this.accountManager.addNewSpeaker(username, password, firstname, lastname);
@@ -39,6 +65,13 @@ public class OrganizerController extends AccountController {
         }
     }
 
+    /**
+     * Registers a new talk into the database with the given information fields
+     * @param time
+     * @param topic
+     * @param location
+     * @param speaker
+     */
     public void registerNewTalk(Calendar time, String topic, String location, String speaker) {
         try {
             Integer newTalkID = eventManager.addNewTalk(topic, time, location, username, speaker);
@@ -48,6 +81,10 @@ public class OrganizerController extends AccountController {
         }
     }
 
+    /**
+     * cancels a talk with the given id
+     * @param id id of talk to cancel
+     */
     public void cancelTalk(Integer id) {
         try {
             this.eventManager.cancelTalk(id);
@@ -57,6 +94,11 @@ public class OrganizerController extends AccountController {
         }
     }
 
+    /**
+     * reschedules a talk with the given id to time newTime
+     * @param id talk id
+     * @param newTime time to reschedule talk to
+     */
     public void rescheduleTalk(Integer id, Calendar newTime) {
         try {
             this.eventManager.changeTime(id, newTime);
@@ -65,6 +107,9 @@ public class OrganizerController extends AccountController {
         }
     }
 
+    /**
+     * displays the list of all locations currently in the database
+     */
     public void seeLocationList() {
         ArrayList<String> locations = this.eventManager.getLocations();
         presenter.displayPrompt("Locations:\n");
@@ -73,6 +118,10 @@ public class OrganizerController extends AccountController {
         }
     }
 
+    /**
+     * interacts with the organizer via a menu of options
+     * @return True if organizer wants to terminate the program
+     */
     @Override
     public boolean runInteraction() {
         boolean programEnd = false;

@@ -8,11 +8,25 @@ import presenter.*;
 
 public class AttendeeController extends AccountController {
 
+    /**
+     * facilitates interaction with attendee upon login
+     * @param username attendee username
+     * @param eventmanager event data
+     * @param conversationManager conversation data
+     * @param friendManager contact information
+     * @param signupManager event signup functionality
+     * @param accountManager data about all accounts in the program
+     * @param presenter specifies the UI
+     */
     public AttendeeController(String username, EventManager eventmanager, ConversationManager conversationManager,
                               FriendManager friendManager, SignupManager signupManager, AccountManager accountManager, Presenter presenter) {
         super(username, accountManager, friendManager, conversationManager, eventmanager, signupManager, presenter);
     }
 
+    /**
+     * Signs attendee up for a talk with the given id
+     * @param id talk id
+     */
     public void signupForTalk(Integer id) {
         try {
             signupManager.addAttendee(id, username);
@@ -21,6 +35,10 @@ public class AttendeeController extends AccountController {
         }
     }
 
+    /**
+     * Cancels talk with given id
+     * @param id talk id
+     */
     public void cancelSignupForTalk(Integer id) {
         try {
             signupManager.removeAttendee(id, username);
@@ -29,10 +47,17 @@ public class AttendeeController extends AccountController {
         }
     }
 
+    /**
+     * displays the schedule of talks that the attendee is attending
+     */
     public void seeAttendeeTalkSchedule() {
         this.presenter.displayAttendeeTalkSchedule(this.username);
     }
 
+    /**
+     * Interacts with attendee via a menu of options
+     * @return True if attendee wishes to terminate the program
+     */
     @Override
     public boolean runInteraction() {
         boolean loggedIn = true;

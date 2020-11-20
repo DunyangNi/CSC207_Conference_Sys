@@ -16,6 +16,14 @@ public class MessageController {
     protected SignupManager signupManager;
     protected Presenter presenter = new TextPresenter();
 
+    /**
+     * Manages generic messaging functionality for user with given username
+     * @param username user username
+     * @param accountManager manages data of all accounts in program
+     * @param conversationManager manages messaging functionality
+     * @param eventManager manages event data
+     * @param signupManager manages signupfunctionality
+     */
     public MessageController(String username, AccountManager accountManager, ConversationManager conversationManager,
                              EventManager eventManager, SignupManager signupManager){
         this.username = username;
@@ -25,6 +33,11 @@ public class MessageController {
         this.signupManager = signupManager;
     }
 
+    /**
+     * sends a message to account with specified username
+     * @param message the message to be sent
+     * @param account recipient account username
+     */
     public void messageAccount(String message, String account) {
         try{
             conversationManager.sendMessage(this.username, account, message);
@@ -35,6 +48,11 @@ public class MessageController {
         }
     }
 
+    /**
+     * sends a message to speaker with specified username
+     * @param message message to be sent
+     * @param speaker speaker username
+     */
     public void messageSpeaker(String message, String speaker) {
         if (accountManager.containsSpeaker(speaker)){
             messageAccount(message, speaker);
@@ -45,6 +63,11 @@ public class MessageController {
 
     }
 
+    /**
+     * sends a message to attendee with specified username
+     * @param message message to be send
+     * @param attendeeUsername attendee username
+     */
     public void messageAttendee(String message, String attendeeUsername) {
         if (accountManager.containsAttendee(attendeeUsername)){
             messageAccount(message, attendeeUsername);
@@ -54,7 +77,10 @@ public class MessageController {
         }
     }
 
-
+    /**
+     * sends a message to all registered speakers
+     * @param message message to be sent
+     */
     public void messageAllSpeakers(String message) {
         try {
             Iterator<String> speakerUsernameIterator = this.accountManager.speakerUsernameIterator();
@@ -70,6 +96,10 @@ public class MessageController {
         }
     }
 
+    /**
+     * sends a message to all registered attendees
+     * @param message message to be sent
+     */
     public void messageAllAttendees(String message) {
         try {
             Iterator<String> attendeeUsernameIterator = this.accountManager.attendeeUsernameIterator();
@@ -85,6 +115,12 @@ public class MessageController {
         }
     }
 
+    /**
+     * if the current user is a speaker, this method sends a given message to all attendees
+     * at selected talks the current user is giving
+     * @param selectedSpeakerTalks selected talks that the current user is speaking in
+     * @param message message to be sent to attendees attending these talks
+     */
     public void messageAttendeesAtTalks(ArrayList<Integer> selectedSpeakerTalks, String message) {
         try {
             Set<String> selectedAttendeeUsernames = new HashSet<>();

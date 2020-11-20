@@ -15,6 +15,14 @@ public class StartController {
     private final SignupManager signupManager;
     private final Presenter presenter = new TextPresenter();
 
+    /**
+     * Manages the home screen
+     * @param accountManager manages account data
+     * @param friendManager manages friendlist functionality
+     * @param conversationManager manages messaging functionality
+     * @param eventManager manages event data
+     * @param signupManager manages event signup functionality
+     */
     StartController(AccountManager accountManager, FriendManager friendManager, ConversationManager conversationManager, EventManager eventManager, SignupManager signupManager) {
         this.accountManager = accountManager;
         this.friendManager = friendManager;
@@ -23,6 +31,14 @@ public class StartController {
         this.signupManager = signupManager;
     }
 
+    /**
+     * Displays the home/start menu to the user when they start the program or return to
+     * home screen.
+     * The user has the option to exit the program, login to an account, or register a new account.
+     * Should the user access their account, they are directed to a menu of options depending on their
+     * account type (organizer, speaker, or attendee)
+     * @return True if the user wishes to terminate the program
+     */
     public boolean runStartMenu() {
         presenter.displayPrompt("[START MENU]");
         presenter.displayPrompt("0 = Exit program:\n1 = Login to your account:\n2 = Register a new account:");
