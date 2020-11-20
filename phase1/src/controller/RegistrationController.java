@@ -30,9 +30,9 @@ public class RegistrationController {
 
         String[] accountInfo = getNewAccountInfo(accountType);
         if (accountType.equals("1")) {
-            accountManager.AddNewAttendee(accountInfo[0], accountInfo[1], accountInfo[2], accountInfo[3]);
+            accountManager.addNewAttendee(accountInfo[0], accountInfo[1], accountInfo[2], accountInfo[3]);
         } else {
-            accountManager.AddNewOrganizer(accountInfo[0], accountInfo[1], accountInfo[2], accountInfo[3]);
+            accountManager.addNewOrganizer(accountInfo[0], accountInfo[1], accountInfo[2], accountInfo[3]);
         }
         addNewAccountKeys(accountInfo[0]);
         return false;
