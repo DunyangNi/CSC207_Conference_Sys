@@ -78,7 +78,6 @@ public class DataManager {
         }
     }
 
-
     /**
      * Calls <code>saveManager</code> on each of the pre-specified Serializable classes used in this program.
      *
