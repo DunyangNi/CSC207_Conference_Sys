@@ -18,7 +18,7 @@ public class FriendController {
 
     public void addFriend(String friendToAdd) {
         try {
-            friendManager.AddFriend(this.username, friendToAdd);
+            friendManager.addFriend(this.username, friendToAdd);
         }
         catch(ObjectNotFoundException e) {
             this.presenter.displayPrompt(e.toString());
@@ -34,7 +34,7 @@ public class FriendController {
 
     public void removeFriend(String friendToRemove) {
         try{
-            friendManager.RemoveFriend(this.username, friendToRemove);
+            friendManager.removeFriend(this.username, friendToRemove);
         }
         catch(Exception e) {
             this.presenter.displayPrompt(e.toString());
