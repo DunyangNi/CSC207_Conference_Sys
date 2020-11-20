@@ -1,5 +1,6 @@
 package controller;
 
+import Throwables.ObjectNotFoundException;
 import use_cases.*;
 import java.util.*;
 import java.lang.*;
@@ -100,23 +101,20 @@ public class SpeakerController extends AccountController {
                     try {
                         Set<String> myConversations = conversationManager.getAllUserConversationRecipients(username);
                         if (myConversations.isEmpty()) {
-                            this.presenter.displayPrompt("(No conversations)");
+                            this.presenter.displayConversations("empty", myConversations);
                         } else {
-                            this.presenter.displayPrompt("List of Conversation Recipients");
-                            this.presenter.displayPrompt("---------------------------------------------");
-                            for (String recipient : myConversations) {
-                                this.presenter.displayPrompt(recipient);
-                            }
-                            this.presenter.displayPrompt("---------------------------------------------\n");
-                            this.presenter.displayPrompt("To access a conversation, please enter the recipient's username: ");
+                            this.presenter.displayConversations("non_empty", myConversations);
                             String user = userInput.nextLine();
-                            this.presenter.displayPrompt("How many past messages would you like to see?");
                             int pastMessages = userInput.nextInt();
                             userInput.nextLine();
                             this.viewMessagesFrom(user, pastMessages);
                         }
-                    } catch (Exception e) {
-                        this.presenter.displayPrompt(e.toString() + "\nSomething went wrong. Please enter valid input.\n");
+                    } catch (InputMismatchException e) {
+                        this.presenter.displayConversationsErrors("mismatch");
+                    } catch (ObjectNotFoundException e) {
+                        this.presenter.displayConversationsErrors("no_user");
+                    } catch (NullPointerException e) {
+                        this.presenter.displayConversationsErrors("no_conversation");
                     }
                     break;
                 case "8":

@@ -35,7 +35,7 @@ public class OrganizerController extends AccountController {
             this.accountManager.addNewSpeaker(username, password, firstname, lastname);
             addNewSpeakerKeys(username);
         } catch (ConflictException e) {
-            presenter.displayPrompt(e.toString()); // r
+            presenter.displayPrompt(e.toString()); //
         }
     }
 
