@@ -21,8 +21,8 @@ public class RegistrationController {
      * @param am manages data of all accounts in the program
      * @param fm manages friendlist functionality
      * @param cm manages messaging functionality
-     * @param em
-     * @param sm
+     * @param em manages data of all events in the program
+     * @param sm manages sign-up relations between accounts and events
      */
     public RegistrationController(AccountManager am, FriendManager fm, ConversationManager cm, EventManager em, SignupManager sm) {
         this.accountManager = am;
@@ -101,7 +101,7 @@ public class RegistrationController {
     /**
      * helper method that adds the given username as a key to various
      * hashmaps in the use cases
-     * @param username
+     * @param username given username of associated <code>Account</code>
      */
     private void addNewAccountKeys(String username) {
         conversationManager.addAccountKey(username);

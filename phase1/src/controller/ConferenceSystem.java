@@ -7,7 +7,7 @@ public class ConferenceSystem {
 
     /**
      * Runs the entire conference program by calling the run method in this class
-     * @param args
+     * @param args command-line arguments
      */
     public static void main(String[] args) {
         ConferenceSystem conferenceSystem = new ConferenceSystem();

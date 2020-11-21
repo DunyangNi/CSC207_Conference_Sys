@@ -51,10 +51,10 @@ public class OrganizerController extends AccountController {
 
     /**
      * creates a new speaker account with the given information fields
-     * @param username
-     * @param password
-     * @param firstname
-     * @param lastname
+     * @param username given username
+     * @param password given password
+     * @param firstname given first name
+     * @param lastname given last name
      */
     public void createSpeakerAccount(String username, String password, String firstname, String lastname) {
         try {
@@ -67,10 +67,10 @@ public class OrganizerController extends AccountController {
 
     /**
      * Registers a new talk into the database with the given information fields
-     * @param time
-     * @param topic
-     * @param location
-     * @param speaker
+     * @param time given time
+     * @param topic given topic
+     * @param location given location
+     * @param speaker given speaker username
      */
     public void registerNewTalk(Calendar time, String topic, String location, String speaker) {
         try {

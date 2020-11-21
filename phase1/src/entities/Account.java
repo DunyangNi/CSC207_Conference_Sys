@@ -18,7 +18,12 @@ public class Account implements Serializable {
     private String firstName;
 
     /**
-     * Creates an account with the specified username, password, and first and last names.
+     * Creates an instance of <code>Account</code> with given String information.
+     *
+     * @param username given username
+     * @param password given password
+     * @param firstName given first name
+     * @param lastName given last name
      */
     public Account(String username, String password, String firstName, String lastName) {
         this.username = username;

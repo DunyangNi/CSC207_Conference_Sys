@@ -1,15 +1,10 @@
 package use_cases;
 
-import Throwables.ConflictException;
-import Throwables.ObjectNotFoundException;
+import Throwables.*;
 import entities.Event;
 import entities.Talk;
-
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * Represents the entire system of Events and their locations and speakers.
@@ -17,9 +12,9 @@ import java.util.HashMap;
 public class EventManager implements Serializable {
     private HashMap<Integer, Event> events;
     private ArrayList<String> locations;
-    private ArrayList<String> speakers;
-    private EventModifier eventModifier = new EventModifier();
-    private EventChecker eventChecker = new EventChecker();
+    private final ArrayList<String> speakers;
+    private final EventModifier eventModifier = new EventModifier();
+    private final EventChecker eventChecker = new EventChecker();
     private int assignEventID;
 
     //------------------------------------------------------------
@@ -34,7 +29,11 @@ public class EventManager implements Serializable {
     }
 
     /**
-     * Create a <code>EventManager</code> given a list of events, locations, and speakers
+     * Create a <code>EventManager</code> given a HashMap of events, ArrayList of locations and speakers
+     *
+     * @param events given <code>HashMap</code> of <code>Event</code> IDs to <code>Event</code> objects.
+     * @param locations given <code>ArrayList</code> of location Strings
+     * @param speakers given <code>ArrayList</code> of speaker usernames
      */
     public EventManager(HashMap<Integer, Event> events, ArrayList<String> locations, ArrayList<String> speakers) {
         this.events = events;

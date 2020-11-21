@@ -35,7 +35,7 @@ public class Event implements Serializable, Comparable<Event> {
      * Used to sort Array of <code>Event</code> by time.
      *
      * @param event given <code>Event</code>
-     * @return 0 iff times are the same; >0 iff this event is after the given; <0 iff this event is before the given
+     * @return 0 iff times are the same; positive iff this event is after the given; negative iff this event is before the given
      */
     public int compareTo(Event event) {
         return this.time.compareTo(event.time);
