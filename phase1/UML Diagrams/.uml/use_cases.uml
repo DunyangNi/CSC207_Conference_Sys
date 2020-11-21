@@ -3,10 +3,10 @@
   <ID>JAVA</ID>
   <OriginalElement>use_cases</OriginalElement>
   <nodes>
-    <node x="392.0" y="783.0">use_cases.ConversationManager</node>
     <node x="0.0" y="1104.0">use_cases.EventModifier</node>
-    <node x="518.0" y="0.0">use_cases.AccountManager</node>
+    <node x="392.0" y="783.0">use_cases.ConversationManager</node>
     <node x="840.0" y="783.0">use_cases.FriendManager</node>
+    <node x="518.0" y="0.0">use_cases.AccountManager</node>
     <node x="0.0" y="0.0">use_cases.EventManager</node>
     <node x="0.0" y="783.0">use_cases.SignupManager</node>
     <node x="286.0" y="1104.0">use_cases.EventChecker</node>

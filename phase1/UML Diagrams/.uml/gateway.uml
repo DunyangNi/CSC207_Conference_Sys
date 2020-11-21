@@ -8,9 +8,7 @@
   <notes />
   <edges />
   <settings layout="Hierarchic Group" zoom="1.0" x="322.5" y="193.0" />
-  <SelectedNodes>
-    <node>gateway.DataManager</node>
-  </SelectedNodes>
+  <SelectedNodes />
   <Categories>
     <Category>Fields</Category>
     <Category>Constructors</Category>
