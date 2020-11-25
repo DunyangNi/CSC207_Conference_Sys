@@ -70,4 +70,13 @@ public class Location {
     public void setFurtherNotes(String notes) {
         this.furtherNotes = notes;
     }
+    @Override
+    public boolean equals(Object o) {
+        if(o instanceof Location){
+            return ((Location) o).id == this.id;
+        }
+        else{
+            return false;
+        }
+    }
 }
