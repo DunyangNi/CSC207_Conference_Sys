@@ -157,7 +157,7 @@ public class AttendeeController extends AccountController {
                     this.seeAttendeeTalkSchedule();
                     break;
                 case "*":
-                    presenter.displayOrganizerMenu();
+                    presenter.displayAttendeeMenu();
                     break;
                 default:
                     presenter.displayPrompt("Invalid input, please try again:\n");

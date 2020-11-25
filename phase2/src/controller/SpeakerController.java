@@ -140,7 +140,7 @@ public class SpeakerController extends AccountController {
                     this.SeeTalkSchedule();
                     break;
                 case "*":
-                    presenter.displayOrganizerMenu();
+                    presenter.displaySpeakerMenu();
                     break;
                 default:
                     presenter.displayPrompt("Invalid input, please try again:\n");
