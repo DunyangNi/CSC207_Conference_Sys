@@ -1,6 +1,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -11,6 +12,7 @@ public class Event implements Serializable, Comparable<Event> {
     private String location;
     private Calendar time;
     private String organizer;
+    private final ArrayList<String> attendees = new ArrayList<>();
     private final int id;
 
     /**
@@ -102,6 +104,11 @@ public class Event implements Serializable, Comparable<Event> {
     public int getId() {
         return id;
     }
+
+    /**
+     * @return attendee usernames of this <code>Event</code>
+     */
+    public ArrayList<String> getAttendees() { return attendees; }
 
     /**
      * Sets a new topic for this <code>Event</code>.

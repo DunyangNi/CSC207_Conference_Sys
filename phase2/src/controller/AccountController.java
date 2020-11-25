@@ -15,7 +15,6 @@ public abstract class AccountController {
     protected FriendManager friendManager;
     protected ConversationManager conversationManager;
     protected EventManager eventManager;
-    protected SignupManager signupManager;
     protected Presenter presenter;
     protected FriendController friendController;
     protected MessageController messageController;
@@ -28,19 +27,17 @@ public abstract class AccountController {
      * @param friendManager manages data of contacts lists
      * @param conversationManager manages conversation data
      * @param eventManager manages event data
-     * @param signupManager manages event signup and related information
      * @param presenter defines the UI
      */
-    public AccountController(String username, AccountManager accountManager, FriendManager friendManager, ConversationManager conversationManager, EventManager eventManager, SignupManager signupManager, Presenter presenter) {
+    public AccountController(String username, AccountManager accountManager, FriendManager friendManager, ConversationManager conversationManager, EventManager eventManager, Presenter presenter) {
         this.username = username;
         this.accountManager = accountManager;
         this.friendManager = friendManager;
         this.conversationManager = conversationManager;
         this.eventManager = eventManager;
-        this.signupManager = signupManager;
         this.presenter = presenter;
         this.friendController = new FriendController(username, friendManager, presenter);
-        this.messageController = new MessageController(username, accountManager, conversationManager, eventManager, signupManager);
+        this.messageController = new MessageController(username, accountManager, conversationManager, eventManager);
     }
 
     /**

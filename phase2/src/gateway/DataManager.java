@@ -12,30 +12,26 @@ public class DataManager {
     private final String eventPath;
     private final String conversationPath;
     private final String friendPath;
-    private final String signupPath;
 
     /**
      * Creates a <code>DataManager</code> with default file paths to each Manager's .ser file.
      */
     public DataManager() {
-        this("AccountManager", "FriendManager", "ConversationManager", "EventManager", "SignupManager");
+        this("AccountManager", "FriendManager", "ConversationManager", "EventManager");
     }
 
     /**
      * Creates a <code>DataManager</code> with specified file paths for each Manager's .ser file.
-     *
      * @param accountPath given path to the AccountManager .ser file
      * @param friendPath given path to the FriendManager .ser file
      * @param conversationPath given path to the ConversationManager .ser file
      * @param eventPath given path to the EventManager .ser file
-     * @param signupPath given path to the SignupManager .ser file
      */
-    public DataManager(String accountPath, String friendPath, String conversationPath, String eventPath, String signupPath) {
+    public DataManager(String accountPath, String friendPath, String conversationPath, String eventPath) {
         this.accountPath = accountPath;
         this.eventPath = eventPath;
         this.conversationPath = conversationPath;
         this.friendPath = friendPath;
-        this.signupPath = signupPath;
     }
 
     /**
@@ -80,20 +76,16 @@ public class DataManager {
 
     /**
      * Calls <code>saveManager</code> on each of the pre-specified Serializable classes used in this program.
-     *
      * @param eventManager <code>EventManager</code> class
      * @param accountManager <code>AccountManager</code> class
      * @param conversationManager <code>ConversationManager</code> class
      * @param friendManager <code>FriendManager</code> class
-     * @param signupManager <code>SignupManager</code> class
      */
-    public void saveAllManagers(EventManager eventManager, AccountManager accountManager, ConversationManager conversationManager, FriendManager friendManager, SignupManager signupManager) {
-        DataManager dataManager = new DataManager();
-        dataManager.saveManager("EventManager", "EventManager", eventManager);
-        dataManager.saveManager("AccountManager", "AccountManager", accountManager);
-        dataManager.saveManager("ConversationManager", "ConversationManager", conversationManager);
-        dataManager.saveManager("FriendManager", "FriendManager", friendManager);
-        dataManager.saveManager("SignupManager", "SignupManager", signupManager);
+    public void saveAllManagers(EventManager eventManager, AccountManager accountManager, ConversationManager conversationManager, FriendManager friendManager) {
+        saveManager("EventManager", eventPath, eventManager);
+        saveManager("AccountManager", accountPath, accountManager);
+        saveManager("ConversationManager", conversationPath, conversationManager);
+        saveManager("FriendManager", friendPath, friendManager);
     }
 
     /**
@@ -184,24 +176,6 @@ public class DataManager {
         } catch (ClassNotFoundException e) {
             System.out.println("FriendManager not found, creating a new FriendManager.");
             return new FriendManager();
-        }
-    }
-
-    /**
-     * Reads and returns the <code>SignupManager</code> from the file path specified
-     * for its .ser file as an object. Otherwise, returns a new empty <code>SignupManager</code>.
-     *
-     * @return an <code>SignupManager</code> object
-     */
-    public SignupManager readSignupManager() {
-        try {
-            return (SignupManager) readObject(signupPath);
-        } catch (IOException e) {
-            System.out.println("Could not read SignupManager, creating a new SignupManager.");
-            return new SignupManager();
-        } catch (ClassNotFoundException e) {
-            System.out.println("SignupManager not found, creating a new SignupManager.");
-            return new SignupManager();
         }
     }
 }

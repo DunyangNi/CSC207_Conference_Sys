@@ -23,10 +23,9 @@ public class ConferenceSystem {
         FriendManager friendManager = dataManager.readFriendManager();
         ConversationManager conversationManager = dataManager.readConversationManager();
         EventManager eventManager = dataManager.readEventManager();
-        SignupManager signupManager = dataManager.readSignupManager();
         boolean programEnd = false;
         while (!programEnd) {
-            StartController startController = new StartController(accountManager, friendManager, conversationManager, eventManager, signupManager);
+            StartController startController = new StartController(accountManager, friendManager, conversationManager, eventManager);
             programEnd = startController.runStartMenu();
         }
     }

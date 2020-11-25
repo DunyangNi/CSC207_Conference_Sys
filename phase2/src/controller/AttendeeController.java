@@ -7,6 +7,7 @@ import java.lang.*;
 import presenter.*;
 
 public class AttendeeController extends AccountController {
+    private final SignupController signupController = new SignupController(username, accountManager, eventManager);
 
     /**
      * facilitates interaction with attendee upon login
@@ -14,37 +15,30 @@ public class AttendeeController extends AccountController {
      * @param eventmanager event data
      * @param conversationManager conversation data
      * @param friendManager contact information
-     * @param signupManager event signup functionality
      * @param accountManager data about all accounts in the program
      * @param presenter specifies the UI
      */
     public AttendeeController(String username, EventManager eventmanager, ConversationManager conversationManager,
-                              FriendManager friendManager, SignupManager signupManager, AccountManager accountManager, Presenter presenter) {
-        super(username, accountManager, friendManager, conversationManager, eventmanager, signupManager, presenter);
+                              FriendManager friendManager, AccountManager accountManager, Presenter presenter) {
+        super(username, accountManager, friendManager, conversationManager, eventmanager, presenter);
     }
 
     /**
-     * Signs attendee up for a talk with the given id
-     * @param id talk id
+     * Signs up <code>Attendee</code> user for a <code>Event</code> of a given ID.
+     *
+     * @param id given ID of <code>Event</code>
      */
     public void signupForTalk(Integer id) {
-        try {
-            signupManager.addAttendee(id, username);
-        } catch (Exception e) {
-            presenter.displayPrompt(e.toString());
-        }
+        signupController.signupForEvent(id);
     }
 
     /**
-     * Cancels talk with given id
-     * @param id talk id
+     * Cancels signing up <code>Attendee</code> user for a <code>Event</code> of a given ID.
+     *
+     * @param id given ID of <code>Event</code>
      */
     public void cancelSignupForTalk(Integer id) {
-        try {
-            signupManager.removeAttendee(id, username);
-        } catch (Exception e) {
-            presenter.displayPrompt(e.toString());
-        }
+        signupController.cancelSignupForEvent(id);
     }
 
     /**

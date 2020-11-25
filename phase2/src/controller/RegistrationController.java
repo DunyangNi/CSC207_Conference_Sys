@@ -13,7 +13,6 @@ public class RegistrationController {
     private final FriendManager friendManager;
     private final ConversationManager conversationManager;
     private final EventManager eventManager;
-    private final SignupManager signupManager;
     private final Presenter presenter = new TextPresenter();
 
     /**
@@ -22,14 +21,12 @@ public class RegistrationController {
      * @param fm manages friendlist functionality
      * @param cm manages messaging functionality
      * @param em manages data of all events in the program
-     * @param sm manages sign-up relations between accounts and events
      */
-    public RegistrationController(AccountManager am, FriendManager fm, ConversationManager cm, EventManager em, SignupManager sm) {
+    public RegistrationController(AccountManager am, FriendManager fm, ConversationManager cm, EventManager em) {
         this.accountManager = am;
         this.conversationManager = cm;
         this.friendManager = fm;
         this.eventManager = em;
-        this.signupManager = sm;
     }
 
     /**
@@ -54,7 +51,7 @@ public class RegistrationController {
         }
         addNewAccountKeys(accountInfo[0]);
         DataManager dataManager = new DataManager();
-        dataManager.saveAllManagers(eventManager, accountManager, conversationManager, friendManager, signupManager);
+        dataManager.saveAllManagers(eventManager, accountManager, conversationManager, friendManager);
         return false;
     }
 

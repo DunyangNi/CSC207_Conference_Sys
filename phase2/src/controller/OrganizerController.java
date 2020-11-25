@@ -16,13 +16,11 @@ public class OrganizerController extends AccountController {
      * @param friendManager manages friendList functionality
      * @param conversationManager manages messaging functionality
      * @param eventManager manages event data
-     * @param signupManager manages event signup functionality
      * @param presenter specifies the UI
      */
     public OrganizerController(String username, AccountManager accountManager, FriendManager friendManager,
-                               ConversationManager conversationManager, EventManager eventManager,
-                               SignupManager signupManager, Presenter presenter) {
-        super(username, accountManager, friendManager, conversationManager, eventManager, signupManager, presenter);
+                               ConversationManager conversationManager, EventManager eventManager, Presenter presenter) {
+        super(username, accountManager, friendManager, conversationManager, eventManager, presenter);
     }
 
     /**
@@ -75,7 +73,6 @@ public class OrganizerController extends AccountController {
     public void registerNewTalk(Calendar time, String topic, String location, String speaker) {
         try {
             Integer newTalkID = eventManager.addNewTalk(topic, time, location, username, speaker);
-            signupManager.addEventKey(newTalkID);
         } catch (Exception e) {
             presenter.displayPrompt(e.toString());
         }
@@ -88,7 +85,6 @@ public class OrganizerController extends AccountController {
     public void cancelTalk(Integer id) {
         try {
             this.eventManager.cancelTalk(id);
-            signupManager.removeEventKey(id);
         } catch (Exception e) {
             presenter.displayPrompt(e.toString());
         }
@@ -226,7 +222,6 @@ public class OrganizerController extends AccountController {
                         String topic = userInput.nextLine();
                         Calendar time = this.collectTimeInfo();
                         Integer newTalkID = eventManager.addNewTalk(topic, time, location, this.username, username);
-                        signupManager.addEventKey(newTalkID);
                     } catch (Exception e) {
                         presenter.displayPrompt(e.toString());
                     }

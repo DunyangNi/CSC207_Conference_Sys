@@ -1,7 +1,5 @@
 package controller;
 
-import Throwables.ConflictException;
-import Throwables.ObjectNotFoundException;
 import use_cases.FriendManager;
 import presenter.Presenter;
 

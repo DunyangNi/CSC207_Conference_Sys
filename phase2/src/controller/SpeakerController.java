@@ -14,13 +14,12 @@ public class SpeakerController extends AccountController {
      * @param friendManager manages friendlist functionality
      * @param conversationManager manages messaging functionality
      * @param eventmanager manages event data
-     * @param signupManager manages event signup functionality
      * @param presenter specifies the UI
      */
     public SpeakerController(String username, AccountManager accountmanager, FriendManager friendManager,
                              ConversationManager conversationManager, EventManager eventmanager,
-                             SignupManager signupManager, Presenter presenter) {
-        super(username, accountmanager, friendManager, conversationManager, eventmanager, signupManager, presenter);
+                             Presenter presenter) {
+        super(username, accountmanager, friendManager, conversationManager, eventmanager, presenter);
     }
 
     /**

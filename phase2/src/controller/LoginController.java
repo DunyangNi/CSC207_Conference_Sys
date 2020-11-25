@@ -12,7 +12,6 @@ public class LoginController {
     private final EventManager eventManager;
     private final ConversationManager conversationManager;
     private final FriendManager friendManager;
-    private final SignupManager signupManager;
     // fields for presenter should be filled out
     private final Presenter presenter = new TextPresenter();
 
@@ -22,14 +21,12 @@ public class LoginController {
      * @param fm manages friendlist functionality
      * @param cm manages conversation/messaging functionality
      * @param em manages event data
-     * @param sm manages event signup functionality
      */
-    public LoginController(AccountManager am, FriendManager fm, ConversationManager cm, EventManager em, SignupManager sm) {
+    public LoginController(AccountManager am, FriendManager fm, ConversationManager cm, EventManager em) {
         this.accountManager = am;
         this.conversationManager = cm;
         this.friendManager = fm;
         this.eventManager = em;
-        this.signupManager = sm;
     }
 
     /**
@@ -70,22 +67,22 @@ public class LoginController {
     private boolean login(String username) {
         boolean programEnd = false;
         if (accountManager.containsAttendee(username)) {
-            TextPresenter textpresenter = new TextPresenter(eventManager, friendManager, signupManager);
-            AttendeeController ac = new AttendeeController(username, eventManager, conversationManager, friendManager, signupManager, accountManager, textpresenter);
+            TextPresenter textpresenter = new TextPresenter(eventManager, friendManager);
+            AttendeeController ac = new AttendeeController(username, eventManager, conversationManager, friendManager, accountManager, textpresenter);
             programEnd = ac.runInteraction();
         }
         if (accountManager.containsOrganizer(username)) {
-            TextPresenter textpresenter = new TextPresenter(eventManager, friendManager, signupManager);
-            OrganizerController oc = new OrganizerController(username, accountManager, friendManager, conversationManager, eventManager, signupManager, textpresenter);
+            TextPresenter textpresenter = new TextPresenter(eventManager, friendManager);
+            OrganizerController oc = new OrganizerController(username, accountManager, friendManager, conversationManager, eventManager, textpresenter);
             programEnd = oc.runInteraction();
         }
         if (accountManager.containsSpeaker(username)) {
-            TextPresenter textpresenter = new TextPresenter(eventManager, friendManager, signupManager);
-            SpeakerController sc = new SpeakerController(username, accountManager, friendManager, conversationManager, eventManager, signupManager, textpresenter);
+            TextPresenter textpresenter = new TextPresenter(eventManager, friendManager);
+            SpeakerController sc = new SpeakerController(username, accountManager, friendManager, conversationManager, eventManager, textpresenter);
             programEnd = sc.runInteraction();
         }
         DataManager dataManager = new DataManager();
-        dataManager.saveAllManagers(eventManager, accountManager, conversationManager, friendManager, signupManager);
+        dataManager.saveAllManagers(eventManager, accountManager, conversationManager, friendManager);
         return programEnd;
     }
 }

@@ -175,4 +175,24 @@ public class AccountManager implements Serializable {
         Organizer newOrganizer = new Organizer(username, password, firstName, lastName);
         organizerHashMap.put(username, newOrganizer);
     }
+
+    /**
+     * Adds the <code>Event</code> of a given ID to the attending list of <code>Attendee</code> with a given username.
+     *
+     * @param id given ID of an associated <code>Event</code>
+     * @param attendee given username of <code>Attendee</code>
+     */
+    public void addEventToAttend(Integer id, String attendee) {
+        attendeeHashMap.get(attendee).getEventsAttending().add(id);
+    }
+
+    /**
+     * Removes the <code>Event</code> of a given ID from the attending list of <code>Attendee</code> with a given username.
+     *
+     * @param id given ID of an associated <code>Event</code>
+     * @param attendee given username of <code>Attendee</code>
+     */
+    public void removeEventToAttend(Integer id, String attendee) {
+        attendeeHashMap.get(attendee).getEventsAttending().remove(id);
+    }
 }

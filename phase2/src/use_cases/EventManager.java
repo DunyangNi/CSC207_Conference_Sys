@@ -22,14 +22,14 @@ public class EventManager implements Serializable {
     //------------------------------------------------------------
 
     /**
-     * Create an empty <code>EventManager</code>
+     * Create an instance of <code>EventManager</code> with empty parameters.
      */
     public EventManager() {
         this(new HashMap<>(), new ArrayList<>(), new ArrayList<>());
     }
 
     /**
-     * Create a <code>EventManager</code> given a HashMap of events, ArrayList of locations and speakers
+     * Create an instance of <code>EventManager</code> given a HashMap of events, ArrayList of locations and speakers.
      *
      * @param events given <code>HashMap</code> of <code>Event</code> IDs to <code>Event</code> objects.
      * @param locations given <code>ArrayList</code> of location Strings
@@ -44,6 +44,8 @@ public class EventManager implements Serializable {
     //------------------------------------------------------------
     // Methods
     //------------------------------------------------------------
+
+
 
     /**
      * @param speaker speaker to add
@@ -112,6 +114,18 @@ public class EventManager implements Serializable {
             }
         }
         return talks;
+    }
+
+    /**
+     * Attempts to return an <code>ArrayList</code> of usernames of Attendees associated with a <code>Event</code>.
+     * @param id given ID of a <code>Event</code>
+     * @return <code>ArrayList</code> of usernames of Attendees associated with a <code>Event</code>
+     * @throws ObjectNotFoundException upon <code>Event</code> not being found.
+     */
+    public ArrayList<String> fetchEventAttendeeList(Integer id) throws ObjectNotFoundException {
+        if (!events.containsKey(id))
+            throw new ObjectNotFoundException("Event");
+        return events.get(id).getAttendees();
     }
 
     /**
@@ -357,5 +371,53 @@ public class EventManager implements Serializable {
      */
     public boolean isSpeakerOfTalk(Integer id, String speaker) {
         return isTalk(id) && fetchTalk(id).getSpeaker().equals(speaker);
+    }
+
+    /**
+     * Returns true iff <code>Event</code> with given ID contains a given <code>Attendee</code> username.
+     *
+     * @param id given <code>Event</code> ID
+     * @param attendee given <code>Attendee</code> username
+     * @return <code>Event</code> contains a given <code>Attendee</code>
+     */
+    public boolean isSignedUp(Integer id, String attendee) {
+        return events.get(id).getAttendees().contains(attendee);
+    }
+
+    private boolean isFull(Integer id) { return getSeatLimit().equals(events.get(id).getAttendees().size()); }
+
+    private Integer getSeatLimit() { return 2; }
+
+    /**
+     * Attempts to add <code>Attendee</code> with given username to <code>Event</code> attendance with given ID.
+     *
+     * @param id given ID of an associated <code>Event</code>
+     * @param attendee given username of <code>Attendee</code>
+     * @throws ConflictException upon <code>Event</code> being full or <code>Attendee</code> is already signed up.
+     * @throws ObjectNotFoundException upon <code>Event</code> not being found
+     */
+    public void addAttendee(Integer id, String attendee) throws ConflictException, ObjectNotFoundException {
+        if (!events.containsKey(id))
+            throw new ObjectNotFoundException("Event");
+        if (isFull(id))
+            throw new ConflictException("Talk is full.");
+        if (isSignedUp(id, attendee))
+            throw new ConflictException("You are already signed up for this Talk.");
+        events.get(id).getAttendees().add(attendee);
+    }
+
+    /**
+     * Attempts to remove <code>Attendee</code> with given username from <code>Event</code> attendance with given ID.
+     *
+     * @param id given ID of an associated <code>Event</code>
+     * @param attendee given username of <code>Attendee</code>
+     * @throws ObjectNotFoundException upon <code>Event</code> or <code>Attendee</code> not being found
+     */
+    public void removeAttendee(Integer id, String attendee) throws ObjectNotFoundException {
+        if (!events.containsKey(id))
+            throw new ObjectNotFoundException("Event");
+        if (!isSignedUp(id, attendee))
+            throw new ObjectNotFoundException("Attendee");
+        events.get(id).getAttendees().remove(attendee);
     }
 }

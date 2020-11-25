@@ -12,7 +12,6 @@ public class StartController {
     private final FriendManager friendManager;
     private final ConversationManager conversationManager;
     private final EventManager eventManager;
-    private final SignupManager signupManager;
     private final Presenter presenter = new TextPresenter();
 
     /**
@@ -21,14 +20,12 @@ public class StartController {
      * @param friendManager manages friendList functionality
      * @param conversationManager manages messaging functionality
      * @param eventManager manages event data
-     * @param signupManager manages event signup functionality
      */
-    StartController(AccountManager accountManager, FriendManager friendManager, ConversationManager conversationManager, EventManager eventManager, SignupManager signupManager) {
+    StartController(AccountManager accountManager, FriendManager friendManager, ConversationManager conversationManager, EventManager eventManager) {
         this.accountManager = accountManager;
         this.friendManager = friendManager;
         this.conversationManager = conversationManager;
         this.eventManager = eventManager;
-        this.signupManager = signupManager;
     }
 
     /**
@@ -51,10 +48,10 @@ public class StartController {
         if (command.equals("0")) {
             programEnd = true;
         } else if (command.equals("1")) {
-            LoginController loginController = new LoginController(accountManager, friendManager, conversationManager, eventManager, signupManager);
+            LoginController loginController = new LoginController(accountManager, friendManager, conversationManager, eventManager);
             programEnd = loginController.attemptLogin();
         } else {
-            RegistrationController registrationController = new RegistrationController(accountManager, friendManager, conversationManager, eventManager, signupManager);
+            RegistrationController registrationController = new RegistrationController(accountManager, friendManager, conversationManager, eventManager);
             programEnd = registrationController.attemptRegister();
         }
         return programEnd;

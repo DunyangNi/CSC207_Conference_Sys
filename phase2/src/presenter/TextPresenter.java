@@ -12,7 +12,6 @@ import java.util.Calendar;
 public class TextPresenter implements Presenter {
     // TODO: 11/17/20 Consider whether these fields are necessary or what other fields might be required
     private EventManager eventmanager;
-    private SignupManager signupManager;
     private FriendManager friendManager;
 
     /**
@@ -26,12 +25,10 @@ public class TextPresenter implements Presenter {
      * Creates a <code>TextPresenter</code> with access to information stored in Manager objects.
      * @param eventManager The program's <code>EventManager</code> object
      * @param friendManager The program's <code>FriendManager</code> object
-     * @param signupManager The program's <code>SignupManager</code> object
      */
-    public TextPresenter(EventManager eventManager, FriendManager friendManager, SignupManager signupManager) {
+    public TextPresenter(EventManager eventManager, FriendManager friendManager) {
         super();
         this.eventmanager = eventManager;
-        this.signupManager = signupManager;
         this.friendManager = friendManager;
     }
 
@@ -390,7 +387,7 @@ public class TextPresenter implements Presenter {
         if (attendeeTalks.keySet().isEmpty()) System.out.println("Nothing!");
         for(String[] eventInfo : attendeeTalks.keySet()) {
             if(timeNow.compareTo(attendeeTalks.get(eventInfo)) < 0 &&
-                    signupManager.isSignedUp(Integer.parseInt(eventInfo[4]), attendee)) {
+                    eventmanager.isSignedUp(Integer.parseInt(eventInfo[4]), attendee)) {
                 displayTalkInfo(eventInfo);
             }
         }
