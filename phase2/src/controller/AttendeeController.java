@@ -5,6 +5,7 @@ import use_cases.*;
 import java.util.*;
 import java.lang.*;
 import presenter.*;
+import Enums.*;
 
 public class AttendeeController extends AccountController {
     private final SignupController signupController = new SignupController(username, accountManager, eventManager);
@@ -54,35 +55,55 @@ public class AttendeeController extends AccountController {
      */
     @Override
     public boolean runInteraction() {
-        boolean loggedIn = true;
         boolean programEnd = false;
+        boolean loggedIn = true;
         presenter.displayAttendeeMenu();
         Scanner userInput = new Scanner(System.in);
+        AttendeeCommand[] commandlist = AttendeeCommand.values();
         String command = userInput.nextLine();
+
+        boolean validinput = false;
+        AttendeeCommand enumRequest = AttendeeCommand.EXIT;
+
+        while (validinput == false) {
+            for(AttendeeCommand commandEnum: commandlist){
+                if (commandEnum.command.equals(command)) {
+                    validinput = true;
+                    enumRequest = commandEnum;
+                    break;
+                }
+            }
+            if(validinput == false){
+                presenter.displayPrompt("Invalid input, please try again:\n");
+                presenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
+                command = userInput.nextLine();
+            }
+        }
+
         while(loggedIn){
-            switch (command) {
+            switch (enumRequest) {
                 // TODO: 11/20/20 Add view all accounts command
-                case "00":
+                case EXIT:
                     loggedIn = false;
                     programEnd = true;
                     break;
-                case "0":
+                case LOGOUT:
                     loggedIn = false;
                     break;
-                case "1":
+                case ADDCONTACT:
                     this.presenter.displayContactsPrompt("add");
                     String contactToAdd = userInput.nextLine();
                     friendController.addFriend(contactToAdd);
                     break;
-                case "2":
+                case REMCONTACT:
                     this.presenter.displayContactsPrompt("remove");
                     String contactToRemove = userInput.nextLine();
                     friendController.removeFriend(contactToRemove);
                     break;
-                case "3":
+                case VIEWCONTACTS:
                     this.viewContactList();
                     break;
-                case "4": {
+                case MSGATT: {
                     //messageAttendee(String message, String attendeeUsername)
                     this.presenter.displayMessagingPrompt("anAttendee");
                     //String line1 = sc.nextLine();
@@ -92,7 +113,7 @@ public class AttendeeController extends AccountController {
                     messageController.messageAttendee(message, attendeeUsername);
                     break;
                 }
-                case "5": {
+                case MSGSPEAK: {
                     //messageSpeaker(String message, String speakerusername)
                     this.presenter.displayMessagingPrompt("aSpeaker");
                     //String line1 = sc.nextLine();
@@ -102,7 +123,7 @@ public class AttendeeController extends AccountController {
                     messageController.messageSpeaker(message, speakerUsername);
                     break;
                 }
-                case "6":
+                case VIEWCONVO:
                     try {
                         Set<String> myConversations = conversationManager.getAllUserConversationRecipients(username);
                         if (myConversations.isEmpty()) {
@@ -122,10 +143,10 @@ public class AttendeeController extends AccountController {
                         this.presenter.displayConversationsErrors("no_conversation");
                     }
                     break;
-                case "7":
+                case VIEWTALKSCHED:
                     this.SeeTalkSchedule();
                     break;
-                case "8": {
+                case TALKSIGNUP: {
                     this.presenter.displayTalkPrompt("attend");
                     String input = userInput.nextLine();
                     if(isNumeric(input)){
@@ -136,7 +157,7 @@ public class AttendeeController extends AccountController {
                     }
                     break;
                 }
-                case "9": {
+                case LEAVEEVENT: {
                     this.presenter.displayTalkPrompt("cancel");
                     String input = userInput.nextLine();
                     if(isNumeric(input)){
@@ -147,10 +168,10 @@ public class AttendeeController extends AccountController {
                     }
                     break;
                 }
-                case "10":
+                case MYTALKS:
                     this.seeAttendeeTalkSchedule();
                     break;
-                case "*":
+                case VIEWMENU:
                     presenter.displayAttendeeMenu();
                     break;
                 default:
@@ -159,6 +180,22 @@ public class AttendeeController extends AccountController {
             if (loggedIn) {
                 presenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
                 command = userInput.nextLine();
+
+                validinput = false;
+                while (validinput == false) {
+                    for(AttendeeCommand commandEnum: commandlist){
+                        if (commandEnum.command.equals(command)) {
+                            validinput = true;
+                            enumRequest = commandEnum;
+                            break;
+                        }
+                    }
+                    if(validinput == false){
+                        presenter.displayPrompt("Invalid input, please try again:\n");
+                        presenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
+                        command = userInput.nextLine();
+                    }
+                }
             }
         }
         return programEnd;

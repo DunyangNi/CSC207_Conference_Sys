@@ -7,6 +7,7 @@ import use_cases.*;
 import java.util.*;
 
 import presenter.*;
+import Enums.*;
 
 public class OrganizerController extends AccountController {
     /**
@@ -124,69 +125,88 @@ public class OrganizerController extends AccountController {
         boolean loggedIn = true;
         presenter.displayOrganizerMenu();
         Scanner userInput = new Scanner(System.in);
+        OrganizerCommand[] commandlist = OrganizerCommand.values();
         String command = userInput.nextLine();
+
+        boolean validinput = false;
+        OrganizerCommand enumRequest = OrganizerCommand.EXIT;
+
+        while (validinput == false) {
+            for(OrganizerCommand commandEnum: commandlist){
+                if (commandEnum.command.equals(command)) {
+                    validinput = true;
+                    enumRequest = commandEnum;
+                    break;
+                }
+            }
+            if(validinput == false){
+                presenter.displayPrompt("Invalid input, please try again:\n");
+                presenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
+                command = userInput.nextLine();
+            }
+        }
 
         while (loggedIn) {
             // TODO: 11/16/20 Fix scopes defined by {
-            switch (command) {
-                case "00":
+            switch (enumRequest) {
+                case EXIT:
                     programEnd = true;
                     loggedIn = false;
                     break;
-                case "0":
+                case LOGOUT:
                     loggedIn = false;
                     break;
-                case "1": {
+                case NEWSPK: {
                     presenter.displayUserPassPrompt();
                     String username = userInput.nextLine();
                     String password = userInput.nextLine();
                     createSpeakerAccount(username, password, "", "");
                     break;
                 }
-                case "2":
+                case VIEWALLACC:
                     Set<String> accounts = accountManager.getAccountHashMap().keySet();
                     presenter.displayAccountList(accounts);
                     break;
-                case "3":
+                case ADDCONTACT:
                     presenter.displayContactsPrompt("add");
                     String contactToAdd = userInput.nextLine();
                     friendController.addFriend(contactToAdd);
                     break;
-                case "4":
+                case REMCONTACT:
                     presenter.displayContactsPrompt("remove");
                     String contactToRemove = userInput.nextLine();
                     friendController.removeFriend(contactToRemove);
                     break;
-                case "5":
+                case VIEWCONTACTS:
                     this.viewContactList();
                     break;
-                case "6": {
+                case MSGSPEAK: {
                     presenter.displayMessagingPrompt("aSpeaker");
                     String username = userInput.nextLine();
                     String message = userInput.nextLine();
                     messageController.messageSpeaker(message, username);
                     break;
                 }
-                case "7": {
+                case MSGATT: {
                     presenter.displayMessagingPrompt("anAttendee");
                     String username = userInput.nextLine();
                     String message = userInput.nextLine();
                     messageController.messageAttendee(message, username);
                     break;
                 }
-                case "8": {
+                case MSGALLSPEAK: {
                     presenter.displayMessagingPrompt("allSpeakers");
                     String message = userInput.nextLine();
                     messageController.messageAllSpeakers(message);
                     break;
                 }
-                case "9": {
+                case MSGALLATT: {
                     presenter.displayMessagingPrompt("allAttendees");
                     String message = userInput.nextLine();
                     messageController.messageAllAttendees(message);
                     break;
                 }
-                case "10":
+                case VIEWCONVO:
                     try {
                         Set<String> recipients = conversationManager.getAllUserConversationRecipients(username);
 
@@ -206,15 +226,15 @@ public class OrganizerController extends AccountController {
                         this.presenter.displayConversationsErrors("no_conversation");
                     }
                     break;
-                case "11":
+                case ADDROOM:
                     presenter.displayRoomRegistration();
                     String location = userInput.nextLine();
                     addNewLocation(location);
                     break;
-                case "12":
+                case VIEWROOMS:
                     this.seeLocationList();
                     break;
-                case "13":
+                case ADDEVENT:
                     try {
                         presenter.displayEventPrompt("register");
                         String username = userInput.nextLine();
@@ -226,7 +246,7 @@ public class OrganizerController extends AccountController {
                         presenter.displayPrompt(e.toString());
                     }
                     break;
-                case "14":
+                case CANCELEVENT:
                     try {
                         presenter.displayEventPrompt("cancel");
                         int id = userInput.nextInt();
@@ -237,7 +257,7 @@ public class OrganizerController extends AccountController {
                         presenter.displayPrompt(e.toString());
                     }
                     break;
-                case "15":
+                case RESCHED:
                     try {
                         presenter.displayEventPrompt("reschedule");
                         int id = userInput.nextInt();
@@ -248,10 +268,10 @@ public class OrganizerController extends AccountController {
                         presenter.displayPrompt(e.toString());
                     }
                     break;
-                case "16":
+                case VIEWTALKSCHED:
                     this.SeeTalkSchedule();
                     break;
-                case "*":
+                case VIEWMENU:
                     presenter.displayOrganizerMenu();
                     break;
                 default:
@@ -260,6 +280,22 @@ public class OrganizerController extends AccountController {
             if (loggedIn) {
                 presenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
                 command = userInput.nextLine();
+
+                validinput = false;
+                while (validinput == false) {
+                    for(OrganizerCommand commandEnum: commandlist){
+                        if (commandEnum.command.equals(command)) {
+                            validinput = true;
+                            enumRequest = commandEnum;
+                            break;
+                        }
+                    }
+                    if(validinput == false){
+                        presenter.displayPrompt("Invalid input, please try again:\n");
+                        presenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
+                        command = userInput.nextLine();
+                    }
+                }
             }
         }
         return programEnd;

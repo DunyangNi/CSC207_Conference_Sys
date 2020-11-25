@@ -5,6 +5,7 @@ import use_cases.*;
 import java.util.*;
 import java.lang.*;
 import presenter.*;
+import Enums.*;
 
 public class SpeakerController extends AccountController {
     /**
@@ -39,37 +40,57 @@ public class SpeakerController extends AccountController {
         boolean loggedIn = true;
         presenter.displaySpeakerMenu();
         Scanner userInput = new Scanner(System.in);
+        SpeakerCommand[] commandlist = SpeakerCommand.values();
         String command = userInput.nextLine();
+
+        boolean validinput = false;
+        SpeakerCommand enumRequest = SpeakerCommand.EXIT;
+
+        while (validinput == false) {
+            for(SpeakerCommand commandEnum: commandlist){
+                if (commandEnum.command.equals(command)) {
+                    validinput = true;
+                    enumRequest = commandEnum;
+                    break;
+                }
+            }
+            if(validinput == false){
+                presenter.displayPrompt("Invalid input, please try again:\n");
+                presenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
+                command = userInput.nextLine();
+            }
+        }
+
         while(loggedIn){
-            switch (command) {
-                case "00":
+            switch (enumRequest) {
+                case EXIT:
                     loggedIn = false;
                     programEnd = true;
                     break;
-                case "0":
+                case LOGOUT:
                     loggedIn = false;
                     break;
-                case "1":
+                case VIEWALLACC:
                     Set<String> accounts = accountManager.getAccountHashMap().keySet();
                     presenter.displayAccountList(accounts);
                     break;
-                case "2":
+                case ADDCONTACT:
                     accounts = accountManager.getAccountHashMap().keySet();
                     presenter.displayAccountList(accounts);
                     presenter.displayContactsPrompt("add");
                     String contactToAdd = userInput.nextLine();
                     friendController.addFriend(contactToAdd);
                     break;
-                case "3":
+                case REMCONTACT:
                     presenter.displayContactList(username);
                     presenter.displayContactsPrompt("remove");
                     String removeContact = userInput.nextLine();
                     friendController.removeFriend(removeContact);
                     break;
-                case "4":
+                case VIEWCONTACTS:
                     presenter.displayContactList(username);
                     break;
-                case "5":
+                case MSGATT:
                     Set<String> allAttendees = accountManager.getAttendeeHashMap().keySet();
                     if (!allAttendees.isEmpty()) {
                         this.presenter.displayPrompt("List of attendees");
@@ -91,7 +112,7 @@ public class SpeakerController extends AccountController {
                         this.presenter.displayPrompt("(No attendees)");
                     }
                     break;
-                case "6":
+                case MSGTALKS:
                     ArrayList<Integer> selectedSpeakerTalks = new ArrayList<>();
                     boolean doneAddingTalks = false;
                     while (!doneAddingTalks) {
@@ -112,7 +133,7 @@ public class SpeakerController extends AccountController {
                     String message = userInput.nextLine();
                     messageController.messageAttendeesAtTalks(selectedSpeakerTalks, message);
                     break;
-                case "7":
+                case VIEWCONVO:
                     try {
                         Set<String> myConversations = conversationManager.getAllUserConversationRecipients(username);
                         if (myConversations.isEmpty()) {
@@ -132,13 +153,13 @@ public class SpeakerController extends AccountController {
                         this.presenter.displayConversationsErrors("no_conversation");
                     }
                     break;
-                case "8":
+                case MYTALKSCHED:
                     this.SeeSpeakerTalkSchedule();
                     break;
-                case "9":
+                case VIEWTALKSCHED:
                     this.SeeTalkSchedule();
                     break;
-                case "*":
+                case VIEWMENU:
                     presenter.displaySpeakerMenu();
                     break;
                 default:
@@ -147,6 +168,22 @@ public class SpeakerController extends AccountController {
             if (loggedIn) {
                 presenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
                 command = userInput.nextLine();
+
+                validinput = false;
+                while (validinput == false) {
+                    for(SpeakerCommand commandEnum: commandlist){
+                        if (commandEnum.command.equals(command)) {
+                            validinput = true;
+                            enumRequest = commandEnum;
+                            break;
+                        }
+                    }
+                    if(validinput == false){
+                        presenter.displayPrompt("Invalid input, please try again:\n");
+                        presenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
+                        command = userInput.nextLine();
+                    }
+                }
             }
         }
         return programEnd;
