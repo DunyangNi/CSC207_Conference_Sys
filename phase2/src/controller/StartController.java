@@ -1,7 +1,7 @@
 package controller;
 
-import presenter.Presenter;
-import presenter.TextPresenter;
+import presenter.ConsolePresenter;
+import presenter.StartPresenter;
 import use_cases.*;
 
 import java.util.Scanner;
@@ -12,7 +12,7 @@ public class StartController {
     private final FriendManager friendManager;
     private final ConversationManager conversationManager;
     private final EventManager eventManager;
-    private final Presenter presenter = new TextPresenter();
+    private final ConsolePresenter presenter = new StartPresenter();
 
     /**
      * Manages the home screen
@@ -37,12 +37,11 @@ public class StartController {
      * @return True if the user wishes to terminate the program
      */
     public boolean runStartMenu() {
-        presenter.displayPrompt("[START MENU]");
-        presenter.displayPrompt("0 = Exit program:\n1 = Login to your account:\n2 = Register a new account:");
+        presenter.preUserInput();
         String command = input.nextLine();
         boolean programEnd;
         while (!(command.equals("0") || command.equals("1") || (command.equals("2")))) {
-            presenter.displayPrompt("Invalid input, please try again.");
+            presenter.postUserInput();
             command = input.nextLine();
         }
         if (command.equals("0")) {

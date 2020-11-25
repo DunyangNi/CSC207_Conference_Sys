@@ -1,8 +1,7 @@
 package controller;
 
 import gateway.DataManager;
-import presenter.Presenter;
-import presenter.TextPresenter;
+import presenter.*;
 import use_cases.*;
 
 import java.util.Scanner;
@@ -13,7 +12,7 @@ public class LoginController {
     private final ConversationManager conversationManager;
     private final FriendManager friendManager;
     // fields for presenter should be filled out
-    private final Presenter presenter = new TextPresenter();
+    private final ConsolePresenter presenter = new LoginPresenter();
 
     /**
      * Manages login functionality for the program
@@ -34,27 +33,27 @@ public class LoginController {
      * @return True if the user wishes to terminate the program
      */
     public boolean attemptLogin() {
-        presenter.displayPrompt("[LOGIN MENU]");
         Scanner input = new Scanner(System.in);
 
-        presenter.displayPrompt("Enter your username:");
+        presenter.preUserInput("username");
         String username = input.nextLine();
         while (!accountManager.containsAccount(username)) {
-            presenter.displayPrompt("This username does not exist, please try again. Enter '*' to return to the start menu.");
+            presenter.postUserInput("username");
             username = input.nextLine();
             if (username.equals("*")) {
                 return false;
             }
         }
-        presenter.displayPrompt("Enter your password:");
+        presenter.preUserInput("password");
         String password = input.nextLine();
         while (!accountManager.isCorrectPassword(username, password)) {
-            presenter.displayPrompt("Incorrect password, please try again. Enter '*' to return to the start menu.");
+            presenter.postUserInput("password");
             password = input.nextLine();
             if (password.equals("*")) {
                 return false;
             }
         }
+        presenter.postUserInput("login");
         return login(username);
     }
 

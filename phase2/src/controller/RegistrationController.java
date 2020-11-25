@@ -1,9 +1,12 @@
 package controller;
 
 import gateway.DataManager;
-import presenter.Presenter;
-import presenter.TextPresenter;
-import use_cases.*;
+import presenter.ConsolePresenter;
+import presenter.RegistrationPresenter;
+import use_cases.AccountManager;
+import use_cases.ConversationManager;
+import use_cases.EventManager;
+import use_cases.FriendManager;
 
 import java.util.Scanner;
 
@@ -13,10 +16,11 @@ public class RegistrationController {
     private final FriendManager friendManager;
     private final ConversationManager conversationManager;
     private final EventManager eventManager;
-    private final Presenter presenter = new TextPresenter();
+    private final ConsolePresenter presenter = new RegistrationPresenter();
 
     /**
      * handles the creation of new organizer and attendee accounts for registration
+     *
      * @param am manages data of all accounts in the program
      * @param fm manages friendlist functionality
      * @param cm manages messaging functionality
@@ -30,16 +34,17 @@ public class RegistrationController {
     }
 
     /**
-     *  prompts user for which account they wish to create (attendee or organizer) and then attempts
-     *  to create a new account for them according to username/password specifications by the user
+     * prompts user for which account they wish to create (attendee or organizer) and then attempts
+     * to create a new account for them according to username/password specifications by the user
+     *
      * @return false
      */
     public boolean attemptRegister() {
-        this.presenter.displayPrompt("Enter '1' to register an Attendee account.\nEnter '2' to register an Organizer account.");
+        presenter.preUserInput("accountType");
         String accountType = input.nextLine();
 
         while (!(accountType.equals("1") || (accountType.equals("2")))) {
-            this.presenter.displayPrompt("Invalid input, please try again.");
+            presenter.postUserInput("accountType");
             accountType = input.nextLine();
         }
 
@@ -56,23 +61,23 @@ public class RegistrationController {
     }
 
 
-
     /**
      * Prompts the user for the organizer account registration code
      */
     private void requireOrganizerPassword() {
         String ORGANIZER_REGISTRATION_CODE = "123456";
 
-        this.presenter.displayPrompt("Enter the Organizer account registration code:");
+        presenter.preUserInput("code");
         String code = input.nextLine();
         while (!code.equals(ORGANIZER_REGISTRATION_CODE)) {
-            this.presenter.displayPrompt("Invalid input, please try again.");
+            presenter.postUserInput("code");
             code = input.nextLine();
         }
     }
 
     /**
      * prompts user for username and password
+     *
      * @param type 1 if account type is Attendee, 2 if account type is Organizer
      * @return username and password info
      */
@@ -80,16 +85,16 @@ public class RegistrationController {
         if (type.equals("2")) {
             requireOrganizerPassword();
         }
-        this.presenter.displayPrompt("Enter a username:");
+        presenter.preUserInput("username");
         String username = input.nextLine();
 
         while ((accountManager.containsAccount(username))) {
-            this.presenter.displayPrompt("This username is already taken, please try again:");
+            presenter.postUserInput("username");
             username = input.nextLine();
         }
 
         // Obtain rest of information and bundle into Tuple of 4
-        this.presenter.displayPrompt("Enter a password:");
+        presenter.preUserInput("password");
         String password = input.nextLine();
 
         return new String[]{username, password, "", ""};
@@ -98,6 +103,7 @@ public class RegistrationController {
     /**
      * helper method that adds the given username as a key to various
      * hashmaps in the use cases
+     *
      * @param username given username of associated <code>Account</code>
      */
     private void addNewAccountKeys(String username) {

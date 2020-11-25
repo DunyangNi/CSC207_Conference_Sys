@@ -77,10 +77,8 @@
       <point x="0.0" y="203.0" />
     </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="0.4169435215946844" x="1492.5" y="1495.0" />
-  <SelectedNodes>
-    <node>Throwables.ObjectNotFoundException</node>
-  </SelectedNodes>
+  <settings layout="Hierarchic Group" zoom="0.7169435215946843" x="890.3166000510615" y="1176.1972894635787" />
+  <SelectedNodes />
   <Categories>
     <Category>Fields</Category>
     <Category>Constructors</Category>
