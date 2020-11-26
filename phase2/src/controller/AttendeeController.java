@@ -65,7 +65,7 @@ public class AttendeeController extends AccountController {
         boolean validinput = false;
         AttendeeCommand enumRequest = AttendeeCommand.EXIT;
 
-        while (validinput == false) {
+        while (!validinput) {
             for(AttendeeCommand commandEnum: commandlist){
                 if (commandEnum.command.equals(command)) {
                     validinput = true;
@@ -73,7 +73,7 @@ public class AttendeeController extends AccountController {
                     break;
                 }
             }
-            if(validinput == false){
+            if(!validinput){
                 presenter.displayPrompt("Invalid input, please try again:\n");
                 presenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
                 command = userInput.nextLine();
@@ -90,20 +90,20 @@ public class AttendeeController extends AccountController {
                 case LOGOUT:
                     loggedIn = false;
                     break;
-                case ADDCONTACT:
+                case ADD_CONTACT:
                     this.presenter.displayContactsPrompt("add");
                     String contactToAdd = userInput.nextLine();
                     friendController.addFriend(contactToAdd);
                     break;
-                case REMCONTACT:
+                case REMOVE_CONTACT:
                     this.presenter.displayContactsPrompt("remove");
                     String contactToRemove = userInput.nextLine();
                     friendController.removeFriend(contactToRemove);
                     break;
-                case VIEWCONTACTS:
+                case VIEW_CONTACTS:
                     this.viewContactList();
                     break;
-                case MSGATT: {
+                case MESSAGE_ATTENDEE: {
                     //messageAttendee(String message, String attendeeUsername)
                     this.presenter.displayMessagingPrompt("anAttendee");
                     //String line1 = sc.nextLine();
@@ -113,7 +113,7 @@ public class AttendeeController extends AccountController {
                     messageController.messageAttendee(message, attendeeUsername);
                     break;
                 }
-                case MSGSPEAK: {
+                case MESSAGE_SPEAKER: {
                     //messageSpeaker(String message, String speakerusername)
                     this.presenter.displayMessagingPrompt("aSpeaker");
                     //String line1 = sc.nextLine();
@@ -123,7 +123,7 @@ public class AttendeeController extends AccountController {
                     messageController.messageSpeaker(message, speakerUsername);
                     break;
                 }
-                case VIEWCONVO:
+                case VIEW_CONVERSATION:
                     try {
                         Set<String> myConversations = conversationManager.getAllUserConversationRecipients(username);
                         if (myConversations.isEmpty()) {
@@ -143,10 +143,10 @@ public class AttendeeController extends AccountController {
                         this.presenter.displayConversationsErrors("no_conversation");
                     }
                     break;
-                case VIEWTALKSCHED:
+                case VIEW_SCHEDULE:
                     this.SeeTalkSchedule();
                     break;
-                case TALKSIGNUP: {
+                case SIGNUP_EVENT: {
                     this.presenter.displayTalkPrompt("attend");
                     String input = userInput.nextLine();
                     if(isNumeric(input)){
@@ -157,7 +157,7 @@ public class AttendeeController extends AccountController {
                     }
                     break;
                 }
-                case LEAVEEVENT: {
+                case LEAVE_EVENT: {
                     this.presenter.displayTalkPrompt("cancel");
                     String input = userInput.nextLine();
                     if(isNumeric(input)){
@@ -168,10 +168,10 @@ public class AttendeeController extends AccountController {
                     }
                     break;
                 }
-                case MYTALKS:
+                case VIEW_MY_SCHEDULE:
                     this.seeAttendeeTalkSchedule();
                     break;
-                case VIEWMENU:
+                case VIEW_MENU:
                     presenter.displayAttendeeMenu();
                     break;
                 default:
@@ -182,7 +182,7 @@ public class AttendeeController extends AccountController {
                 command = userInput.nextLine();
 
                 validinput = false;
-                while (validinput == false) {
+                while (!validinput) {
                     for(AttendeeCommand commandEnum: commandlist){
                         if (commandEnum.command.equals(command)) {
                             validinput = true;
@@ -190,7 +190,7 @@ public class AttendeeController extends AccountController {
                             break;
                         }
                     }
-                    if(validinput == false){
+                    if(!validinput){
                         presenter.displayPrompt("Invalid input, please try again:\n");
                         presenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
                         command = userInput.nextLine();

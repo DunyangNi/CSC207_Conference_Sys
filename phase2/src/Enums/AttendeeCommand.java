@@ -3,21 +3,21 @@ package Enums;
 public enum AttendeeCommand {
     EXIT("00"),
     LOGOUT("0"),
-    ADDCONTACT("1"),
-    REMCONTACT("2"),
-    VIEWCONTACTS("3"),
-    MSGATT("4"),
-    MSGSPEAK("5"),
-    VIEWCONVO("6"),
-    VIEWTALKSCHED("7"),
-    TALKSIGNUP("8"),
-    LEAVEEVENT("9"),
-    MYTALKS("10"),
-    VIEWMENU("*");
+    ADD_CONTACT("1"),
+    REMOVE_CONTACT("2"),
+    VIEW_CONTACTS("3"),
+    MESSAGE_ATTENDEE("4"),
+    MESSAGE_SPEAKER("5"),
+    VIEW_CONVERSATION("6"),
+    VIEW_SCHEDULE("7"),
+    SIGNUP_EVENT("8"),
+    LEAVE_EVENT("9"),
+    VIEW_MY_SCHEDULE("10"),
+    VIEW_MENU("*");
 
     public final String command;
 
-    private AttendeeCommand(String command) {
+    AttendeeCommand(String command) {
         this.command = command;
     }
 }

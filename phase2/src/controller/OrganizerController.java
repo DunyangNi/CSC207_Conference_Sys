@@ -156,57 +156,57 @@ public class OrganizerController extends AccountController {
                 case LOGOUT:
                     loggedIn = false;
                     break;
-                case NEWSPK: {
+                case NEW_SPEAKER: {
                     presenter.displayUserPassPrompt();
                     String username = userInput.nextLine();
                     String password = userInput.nextLine();
                     createSpeakerAccount(username, password, "", "");
                     break;
                 }
-                case VIEWALLACC:
+                case VIEW_ALL_ACCOUNTS:
                     Set<String> accounts = accountManager.getAccountHashMap().keySet();
                     presenter.displayAccountList(accounts);
                     break;
-                case ADDCONTACT:
+                case ADD_CONTACT:
                     presenter.displayContactsPrompt("add");
                     String contactToAdd = userInput.nextLine();
                     friendController.addFriend(contactToAdd);
                     break;
-                case REMCONTACT:
+                case REMOVE_CONTACT:
                     presenter.displayContactsPrompt("remove");
                     String contactToRemove = userInput.nextLine();
                     friendController.removeFriend(contactToRemove);
                     break;
-                case VIEWCONTACTS:
+                case VIEW_CONTACTS:
                     this.viewContactList();
                     break;
-                case MSGSPEAK: {
+                case MESSAGE_SPEAKER: {
                     presenter.displayMessagingPrompt("aSpeaker");
                     String username = userInput.nextLine();
                     String message = userInput.nextLine();
                     messageController.messageSpeaker(message, username);
                     break;
                 }
-                case MSGATT: {
+                case MESSAGE_ATTENDEE: {
                     presenter.displayMessagingPrompt("anAttendee");
                     String username = userInput.nextLine();
                     String message = userInput.nextLine();
                     messageController.messageAttendee(message, username);
                     break;
                 }
-                case MSGALLSPEAK: {
+                case MESSAGE_ALL_SPEAKERS: {
                     presenter.displayMessagingPrompt("allSpeakers");
                     String message = userInput.nextLine();
                     messageController.messageAllSpeakers(message);
                     break;
                 }
-                case MSGALLATT: {
+                case MESSAGE_ALL_ATTENDEES: {
                     presenter.displayMessagingPrompt("allAttendees");
                     String message = userInput.nextLine();
                     messageController.messageAllAttendees(message);
                     break;
                 }
-                case VIEWCONVO:
+                case VIEW_CONVERSATION:
                     try {
                         Set<String> recipients = conversationManager.getAllUserConversationRecipients(username);
 
@@ -226,15 +226,15 @@ public class OrganizerController extends AccountController {
                         this.presenter.displayConversationsErrors("no_conversation");
                     }
                     break;
-                case ADDROOM:
+                case ADD_ROOM:
                     presenter.displayRoomRegistration();
                     String location = userInput.nextLine();
                     addNewLocation(location);
                     break;
-                case VIEWROOMS:
+                case VIEW_ROOMS:
                     this.seeLocationList();
                     break;
-                case ADDEVENT:
+                case ADD_EVENT:
                     try {
                         presenter.displayEventPrompt("register");
                         String username = userInput.nextLine();
@@ -246,7 +246,7 @@ public class OrganizerController extends AccountController {
                         presenter.displayPrompt(e.toString());
                     }
                     break;
-                case CANCELEVENT:
+                case CANCEL_EVENT:
                     try {
                         presenter.displayEventPrompt("cancel");
                         int id = userInput.nextInt();
@@ -257,7 +257,7 @@ public class OrganizerController extends AccountController {
                         presenter.displayPrompt(e.toString());
                     }
                     break;
-                case RESCHED:
+                case RESCHEDULE_EVENT:
                     try {
                         presenter.displayEventPrompt("reschedule");
                         int id = userInput.nextInt();
@@ -268,10 +268,10 @@ public class OrganizerController extends AccountController {
                         presenter.displayPrompt(e.toString());
                     }
                     break;
-                case VIEWTALKSCHED:
+                case VIEW_SCHEDULE:
                     this.SeeTalkSchedule();
                     break;
-                case VIEWMENU:
+                case VIEW_MENU:
                     presenter.displayOrganizerMenu();
                     break;
                 default:

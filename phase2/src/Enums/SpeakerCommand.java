@@ -3,20 +3,20 @@ package Enums;
 public enum SpeakerCommand {
     EXIT("00"),
     LOGOUT("0"),
-    VIEWALLACC("1"),
-    ADDCONTACT("2"),
-    REMCONTACT("3"),
-    VIEWCONTACTS("4"),
-    MSGATT("5"),
-    MSGTALKS("6"),
-    VIEWCONVO("7"),
-    MYTALKSCHED("8"),
-    VIEWTALKSCHED("9"),
-    VIEWMENU("*");
+    VIEW_ALL_ACCOUNTS("1"),
+    ADD_CONTACT("2"),
+    REMOVE_CONTACT("3"),
+    VIEW_CONTACTS("4"),
+    MESSAGE_ATTENDEE("5"),
+    MESSAGE_ALL_AT_TALKS("6"),
+    VIEW_CONVERSATION("7"),
+    MY_TALK_SCHEDULE("8"),
+    VIEW_SCHEDULE("9"),
+    VIEW_MENU("*");
 
     public final String command;
 
-    private SpeakerCommand(String command) {
+    SpeakerCommand(String command) {
         this.command = command;
     }
 }

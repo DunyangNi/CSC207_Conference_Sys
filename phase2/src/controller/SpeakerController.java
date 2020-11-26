@@ -70,27 +70,27 @@ public class SpeakerController extends AccountController {
                 case LOGOUT:
                     loggedIn = false;
                     break;
-                case VIEWALLACC:
+                case VIEW_ALL_ACCOUNTS:
                     Set<String> accounts = accountManager.getAccountHashMap().keySet();
                     presenter.displayAccountList(accounts);
                     break;
-                case ADDCONTACT:
+                case ADD_CONTACT:
                     accounts = accountManager.getAccountHashMap().keySet();
                     presenter.displayAccountList(accounts);
                     presenter.displayContactsPrompt("add");
                     String contactToAdd = userInput.nextLine();
                     friendController.addFriend(contactToAdd);
                     break;
-                case REMCONTACT:
+                case REMOVE_CONTACT:
                     presenter.displayContactList(username);
                     presenter.displayContactsPrompt("remove");
                     String removeContact = userInput.nextLine();
                     friendController.removeFriend(removeContact);
                     break;
-                case VIEWCONTACTS:
+                case VIEW_CONTACTS:
                     presenter.displayContactList(username);
                     break;
-                case MSGATT:
+                case MESSAGE_ATTENDEE:
                     Set<String> allAttendees = accountManager.getAttendeeHashMap().keySet();
                     if (!allAttendees.isEmpty()) {
                         this.presenter.displayPrompt("List of attendees");
@@ -112,7 +112,7 @@ public class SpeakerController extends AccountController {
                         this.presenter.displayPrompt("(No attendees)");
                     }
                     break;
-                case MSGTALKS:
+                case MESSAGE_ALL_AT_TALKS:
                     ArrayList<Integer> selectedSpeakerTalks = new ArrayList<>();
                     boolean doneAddingTalks = false;
                     while (!doneAddingTalks) {
@@ -133,7 +133,7 @@ public class SpeakerController extends AccountController {
                     String message = userInput.nextLine();
                     messageController.messageAttendeesAtTalks(selectedSpeakerTalks, message);
                     break;
-                case VIEWCONVO:
+                case VIEW_CONVERSATION:
                     try {
                         Set<String> myConversations = conversationManager.getAllUserConversationRecipients(username);
                         if (myConversations.isEmpty()) {
@@ -153,13 +153,13 @@ public class SpeakerController extends AccountController {
                         this.presenter.displayConversationsErrors("no_conversation");
                     }
                     break;
-                case MYTALKSCHED:
+                case MY_TALK_SCHEDULE:
                     this.SeeSpeakerTalkSchedule();
                     break;
-                case VIEWTALKSCHED:
+                case VIEW_SCHEDULE:
                     this.SeeTalkSchedule();
                     break;
-                case VIEWMENU:
+                case VIEW_MENU:
                     presenter.displaySpeakerMenu();
                     break;
                 default:
