@@ -131,6 +131,10 @@ public class AccountManager implements Serializable {
         return getAccountHashMap().containsKey(username);
     }
 
+    public boolean getVipStatus(String username) {
+        return getAccountHashMap().get(username) instanceof VipAttendee;
+    }
+
     /**
      * Creates a new <code>Attendee Account</code> with given information
      * and stores it in <code>attendeeHashMap</code>.

@@ -25,5 +25,4 @@ public class Attendee extends Account {
      */
     public ArrayList<Integer> getEventsAttending() { return eventsAttending; }
 
-    public Boolean isVip() { return false; }
 }

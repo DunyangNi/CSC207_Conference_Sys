@@ -370,7 +370,7 @@ public class EventManager implements Serializable {
      */
     public void addAttendee(Integer id, String attendee) throws ConflictException, ObjectNotFoundException {
         if (!events.containsKey(id))
-            throw new ObjectNotFoundException("Event");
+            throw new ObjectNotFoundException("Event not found.");
         if (isFull(id))
             throw new ConflictException("Talk is full.");
         if (isSignedUp(id, attendee))
@@ -391,5 +391,9 @@ public class EventManager implements Serializable {
         if (!isSignedUp(id, attendee))
             throw new ObjectNotFoundException("Attendee");
         events.get(id).getAttendees().remove(attendee);
+    }
+
+    public boolean getVipRestriction(Integer id){
+        return events.get(id).getVipOnly();
     }
 }

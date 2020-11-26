@@ -31,12 +31,15 @@ public class SignupController {
      * @param id given ID of <code>Event</code>
      */
     public void signupForEvent(Integer id) {
-        try {
-            eventManager.addAttendee(id, username);
-            accountManager.addEventToAttend(id, username);
-        } catch (Exception e) {
-            System.out.println(e.getMessage()); // to be replaced
+        if (!accountManager.getVipStatus(username) || !eventManager.getVipRestriction(id)){
+            try {
+                eventManager.addAttendee(id, username);
+                accountManager.addEventToAttend(id, username);
+            } catch (Exception e) {
+                System.out.println(e.getMessage()); // to be replaced
+            }
         }
+        System.out.println("This event is restricted to VIPs.");
     }
 
     /**
