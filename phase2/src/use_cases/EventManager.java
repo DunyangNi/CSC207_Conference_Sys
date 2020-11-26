@@ -11,22 +11,15 @@ import java.util.*;
  */
 public class EventManager implements Serializable {
     private HashMap<Integer, Event> events;
-    private ArrayList<String> locations;
     private final ArrayList<String> speakers;
     private final EventModifier eventModifier = new EventModifier();
     private final EventChecker eventChecker = new EventChecker();
     private int assignEventID;
+    private final EventLocationManager eventLocationManager;
 
     //------------------------------------------------------------
     // Constructors
     //------------------------------------------------------------
-
-    /**
-     * Create an instance of <code>EventManager</code> with empty parameters.
-     */
-    public EventManager() {
-        this(new HashMap<>(), new ArrayList<>(), new ArrayList<>());
-    }
 
     /**
      * Create an instance of <code>EventManager</code> given a HashMap of events, ArrayList of locations and speakers.
@@ -35,9 +28,9 @@ public class EventManager implements Serializable {
      * @param locations given <code>ArrayList</code> of location Strings
      * @param speakers given <code>ArrayList</code> of speaker usernames
      */
-    public EventManager(HashMap<Integer, Event> events, ArrayList<String> locations, ArrayList<String> speakers) {
+    public EventManager(HashMap<Integer, Event> events, ArrayList<String> locations, ArrayList<String> speakers, EventLocationManager eventLocationManager) {
         this.events = events;
-        this.locations = locations;
+        this.eventLocationManager = eventLocationManager;
         this.speakers = speakers;
     }
 
@@ -68,19 +61,8 @@ public class EventManager implements Serializable {
         this.events = events;
     }
 
-    /**
-     * @return <code>ArrayList</code> for locations
-     */
-    public ArrayList<String> getLocations() {
-        return locations;
-    }
 
-    /**
-     * @param locations a list of locations to add
-     */
-    public void setLocations(ArrayList<String> locations) {
-        this.locations = locations;
-    }
+
 
     /**
      * Gets a list of events without their ids.
@@ -162,7 +144,7 @@ public class EventManager implements Serializable {
             eventInfo = new String[5];
             eventInfo[0] = e.getTopic();
             eventInfo[1] = e.getSpeaker();
-            eventInfo[2] = e.getLocation();
+            eventInfo[2] = e.getLocationName();
             eventInfo[3] = e.getTime().getTime().toString();
             eventInfo[4] = String.valueOf(e.getId());
             sortedSelectedTalks.put(eventInfo, e.getTime());
@@ -187,18 +169,6 @@ public class EventManager implements Serializable {
      */
     public HashMap<String[], Calendar> fetchSortedTalks(String speaker) {
         return fetchSortedTalks(fetchSpeakerTalks(speaker));
-    }
-
-    /**
-     * Adds a new location if valid
-     *
-     * @param location a new location to add
-     * @throws ConflictException if a new location is invalid
-     */
-    public void addNewLocation(String location) throws ConflictException {
-        if (this.locations.contains(location))
-            throw new ConflictException("Location " + location + " already exists.");
-        this.locations.add(location);
     }
 
     /**
@@ -286,9 +256,9 @@ public class EventManager implements Serializable {
         // Validation
         Event selectedEvent = events.get(id);
         if (selectedEvent instanceof Talk)
-            checkValidTalk(newTime, selectedEvent.getLocation(), ((Talk) selectedEvent).getSpeaker());
+            checkValidTalk(newTime, selectedEvent.getLocationName(), ((Talk) selectedEvent).getSpeaker());
         else
-            checkValidEvent(newTime, selectedEvent.getLocation());
+            checkValidEvent(newTime, selectedEvent.getLocationName());
         eventModifier.ChangeTime(events.get(id), newTime);
     }
 
@@ -336,6 +306,7 @@ public class EventManager implements Serializable {
      * @throws ObjectNotFoundException if <code>checkValidEnt</code> throws
      */
     public void checkValidEvent(Calendar time, String location) throws ConflictException, ObjectNotFoundException {
+        ArrayList<String> locations = this.eventLocationManager.getNameList();
         eventChecker.checkValidEvent(time, location, locations, fetchEventList());
     }
 
@@ -349,6 +320,7 @@ public class EventManager implements Serializable {
      * @throws ObjectNotFoundException if <code>checkValidEnt</code> throws
      */
     public void checkValidTalk(Calendar time, String location, String speaker) throws ConflictException, ObjectNotFoundException {
+        ArrayList<String> locations = this.eventLocationManager.getNameList();
         eventChecker.checkValidTalk(time, location, speaker, locations, fetchTalkList(), fetchEventList());
     }
 

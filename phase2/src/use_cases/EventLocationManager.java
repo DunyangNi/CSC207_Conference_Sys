@@ -131,6 +131,14 @@ public class EventLocationManager {
         return idList;
     }
 
+    public ArrayList<String> getNameList(){
+        ArrayList<String> nameList = new ArrayList<>();
+        for(Integer i: this.locations.keySet()) {
+            nameList.add(this.locations.get(i).getName());
+        }
+        return nameList;
+    }
+
     public String getLocationStringDescription(int id) throws ObjectNotFoundException{
         try{
             return this.locations.get(id).toString();
@@ -158,7 +166,6 @@ public class EventLocationManager {
         catch(Exception e) {
             throw new ObjectNotFoundException("Location");
         }
-
     }
 
 
