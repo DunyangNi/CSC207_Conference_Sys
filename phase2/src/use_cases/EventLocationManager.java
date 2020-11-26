@@ -113,7 +113,22 @@ public class EventLocationManager {
         this.locations.put(id, newLocation);
         this.curID += 1;
     }
+    public String getNameAtID(int id) throws ObjectNotFoundException {
+        try{
+            return this.locations.get(id).getName();
+        } catch(Exception e){
+            throw new ObjectNotFoundException("Location");
+        }
+    }
 
+    public Integer getIDAtName(String locationName) throws ObjectNotFoundException {
+        for(Integer i: this.locations.keySet()) {
+            if(this.locations.get(i).getName().equals(locationName)) {
+                return new Integer(i);
+            }
+        }
+        throw new ObjectNotFoundException("Location");
+    }
     public Location getLocationAtID(int id) throws ObjectNotFoundException{
         try{
             return this.locations.get(id);
