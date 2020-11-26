@@ -25,25 +25,25 @@ public class Location {
     public String getName(){
         return this.name;
     }
-    public int getId(){
+    public Integer getId(){
         return this.id;
     }
-    public int getMaxOccupancy(){
+    public Integer getMaxOccupancy(){
         return this.maxOccupancy;
     }
-    public int numTables(){
+    public Integer numTables(){
         return this.numTables;
     }
-    public int numChairs(){
+    public Integer numChairs(){
         return this.numChairs;
     }
-    public boolean hasInternet(){
+    public Boolean hasInternet(){
         return this.hasInternet;
     }
-    public boolean hasSoundSystem(){
+    public Boolean hasSoundSystem(){
         return this.hasSoundSystem;
     }
-    public boolean hasPresentationScreen(){
+    public Boolean hasPresentationScreen(){
         return this.hasPresentationScreen;
     }
     public String furtherNotes() {
