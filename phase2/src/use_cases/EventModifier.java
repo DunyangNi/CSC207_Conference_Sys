@@ -19,7 +19,7 @@ public class EventModifier implements Serializable {
      * @param newLocation a new location for the event
      */
     public void ChangeLocation(Event eventToChange, String newLocation) {
-        eventToChange.setLocation(newLocation);
+        eventToChange.setLocationName(newLocation);
     }
 
     /**
