@@ -12,6 +12,79 @@ public class LocationManager {
     private HashMap<Integer, Location> locations = new HashMap<>();
     private int curID = 0; //the id of the next location to be added
 
+    public void updateMaxOccupancy(int id, int status) throws IntegerOutOfBoundsException, ObjectNotFoundException{
+        if(status < 0) {
+            throw new IntegerOutOfBoundsException("Too few occupants");
+        }
+        else{
+            try{
+                this.locations.get(id).setMaxOccupancy(status);
+            } catch(Exception e) {
+                throw new ObjectNotFoundException("Location");
+            }
+
+        }
+    }
+
+    public void updateNumTables(int id, int status) throws ObjectNotFoundException, IntegerOutOfBoundsException{
+        if(status < 0) {
+            throw new IntegerOutOfBoundsException("Too few tables");
+        }
+        else{
+            try{
+                this.locations.get(id).setNumTables(status);
+            } catch(Exception e) {
+                throw new ObjectNotFoundException("Location");
+            }
+
+        }
+    }
+
+    public void updateNumChairs(int id, int status) throws ObjectNotFoundException, IntegerOutOfBoundsException{
+        if(status < 0) {
+            throw new IntegerOutOfBoundsException("Too few chairs");
+        }
+        else{
+            try{
+                this.locations.get(id).setNumChairs(status);
+            } catch(Exception e) {
+                throw new ObjectNotFoundException("Location");
+            }
+
+        }
+    }
+
+    public void updateHasInternet(int id, boolean status) throws ObjectNotFoundException{
+        try{
+            this.locations.get(id).setHasInternet(status);
+        } catch(Exception e) {
+            throw new ObjectNotFoundException("Location");
+        }
+    }
+
+    public void updateHasSoundSystem(int id, boolean status) throws ObjectNotFoundException{
+        try{
+            this.locations.get(id).setHasSoundSystem(status);
+        } catch(Exception e) {
+            throw new ObjectNotFoundException("Location");
+        }
+    }
+
+    public void updateHasPresentationSystem(int id, boolean status) throws ObjectNotFoundException{
+        try{
+            this.locations.get(id).setHasPresentationScreen(status);
+        } catch(Exception e) {
+            throw new ObjectNotFoundException("Location");
+        }
+    }
+
+    public void updateFurtherNotes(int id, String notes) throws ObjectNotFoundException{
+        try{
+            this.locations.get(id).setFurtherNotes(notes);
+        } catch(Exception e) {
+            throw new ObjectNotFoundException("Location");
+        }
+    }
 
     public void removeLocation(Integer id) {
         this.locations.remove(id);
