@@ -182,9 +182,9 @@ public class EventManager implements Serializable {
      * @throws ConflictException if <code>checkValidEvent</code> throws
      * @throws ObjectNotFoundException if <code>checkValidEvent</code> throws
      */
-    public Integer addNewEvent(String topic, Calendar time, String location, String organizer) throws ConflictException, ObjectNotFoundException {
+    public Integer addNewEvent(String topic, Calendar time, String location, String organizer, Boolean vipOnly) throws ConflictException, ObjectNotFoundException {
         checkValidEvent(time, location);
-        Event eventToAdd = new Event(assignEventID++, topic, time, location, organizer);
+        Event eventToAdd = new Event(assignEventID++, topic, time, location, organizer, vipOnly);
         events.put(eventToAdd.getId(), eventToAdd);
         return eventToAdd.getId();
 

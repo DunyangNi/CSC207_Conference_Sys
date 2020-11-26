@@ -24,4 +24,6 @@ public class Attendee extends Account {
      * @return IDs of events this <code>Attendee</code> is attending
      */
     public ArrayList<Integer> getEventsAttending() { return eventsAttending; }
+
+    public Boolean isVip() { return false; }
 }

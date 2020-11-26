@@ -25,12 +25,13 @@ public class Event implements Serializable, Comparable<Event> {
      * @param locationName id of event location
      * @param organizer given <code>Organizer</code> username
      */
-    public Event(Integer id, String topic, Calendar time, String locationName, String organizer) {
+    public Event(Integer id, String topic, Calendar time, String locationName, String organizer, Boolean vipOnly) {
         this.topic = topic;
         this.time = time;
         this.locationName = locationName;
         this.organizer = organizer;
         this.id = id;
+        this.vipOnly = vipOnly;
     }
 
     /**
