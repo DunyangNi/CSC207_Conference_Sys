@@ -9,8 +9,13 @@ import java.util.*;
 import java.util.HashMap;
 
 public class LocationManager {
-    private HashMap<Integer, Location> locations;
+    private HashMap<Integer, Location> locations = new HashMap<>();
     private int curID = 0; //the id of the next location to be added
+
+
+    public void removeLocation(Integer id) {
+        this.locations.remove(id);
+    }
 
     public void addNewLocation(String name, int maxOccupancy, int numTables, int numChairs, boolean hasInternet, boolean hasSoundSystem, boolean hasPresentationScreen, String furtherNotes) throws ConflictException,IntegerOutOfBoundsException{
         if(maxOccupancy < 0){
@@ -53,13 +58,34 @@ public class LocationManager {
         return idList;
     }
 
-    public String getLocationDescription(int id) throws ObjectNotFoundException{
+    public String getLocationStringDescription(int id) throws ObjectNotFoundException{
         try{
             return this.locations.get(id).toString();
         }
         catch(Exception e){
             throw new ObjectNotFoundException("Invalid id");
         }
+    }
+    // returns [name,id,maxOccupancy,numTables,numChairs,hasInternet,hasSoundSystem,hasPresentationScreen,furtherNotes]
+    public String[] getLocationCompactDescription(int id) throws ObjectNotFoundException{
+        try{
+            String[] desc = new String[9];
+            Location location = this.locations.get(id);
+            desc[0] = location.getName();
+            desc[1] = location.getId().toString();
+            desc[2] = location.getMaxOccupancy().toString();
+            desc[3] = location.numTables().toString();
+            desc[4] = location.numChairs().toString();
+            desc[5] = location.hasInternet().toString();
+            desc[6] = location.hasSoundSystem().toString();
+            desc[7] = location.hasPresentationScreen().toString();
+            desc[8] = location.furtherNotes();
+            return desc;
+        }
+        catch(Exception e) {
+            throw new ObjectNotFoundException("Location");
+        }
+
     }
 
 
