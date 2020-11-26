@@ -14,7 +14,7 @@ public class ConversationDataManager implements DataReader, DataSaver{
         this.conversationPath = conversationPath;
     }
 
-    public ConversationManager readConversationManager() {
+    public ConversationManager readManager() {
         try{
             return (ConversationManager) readObject(conversationPath);
         } catch (IOException e) {

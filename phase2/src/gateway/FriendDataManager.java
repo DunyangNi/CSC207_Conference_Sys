@@ -14,7 +14,7 @@ public class FriendDataManager implements DataReader, DataSaver{
         this.friendPath = friendPath;
     }
 
-    public FriendManager readFriendManager() {
+    public FriendManager readManager() {
         try{
             return (FriendManager) readObject(friendPath);
         } catch (IOException e) {

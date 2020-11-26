@@ -14,7 +14,7 @@ public class AccountDataManager implements DataReader, DataSaver{
         this.accountPath = accountPath;
     }
 
-    public AccountManager readAccountManager() {
+    public AccountManager readManager() {
         try{
             return (AccountManager) readObject(accountPath);
         } catch (IOException e) {

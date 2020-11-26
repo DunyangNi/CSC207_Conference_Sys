@@ -22,10 +22,11 @@ public class ConferenceSystem {
         ConversationDataManager conversationDataManager = new ConversationDataManager();
         FriendDataManager friendDataManager = new FriendDataManager();
 
-        AccountManager accountManager = accountDataManager.readAccountManager();
-        FriendManager friendManager = friendDataManager.readFriendManager();
-        ConversationManager conversationManager = conversationDataManager.readConversationManager();
-        EventManager eventManager = eventDataManager.readEventManager();
+        AccountManager accountManager = accountDataManager.readManager();
+        FriendManager friendManager = friendDataManager.readManager();
+        ConversationManager conversationManager = conversationDataManager.readManager();
+        EventManager eventManager = eventDataManager.readManager();
+
         boolean programEnd = false;
         while (!programEnd) {
             StartController startController = new StartController(accountManager, friendManager, conversationManager, eventManager);

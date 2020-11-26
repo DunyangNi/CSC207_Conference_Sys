@@ -13,4 +13,6 @@ public interface DataReader {
         file.close();
         return ob;
     }
+
+    Object readManager();
 }
