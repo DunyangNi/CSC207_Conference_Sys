@@ -2,13 +2,13 @@ package entities;
 
 public class Location {
     private final String name;
-    private final int id;
-    private int maxOccupancy;
-    private int numTables;
-    private int numChairs;
-    private boolean hasInternet;
-    private boolean hasSoundSystem;
-    private boolean hasPresentationScreen; //for projectors/movie screens etc.
+    private final Integer id; //unique identifier
+    private Integer maxOccupancy;
+    private Integer numTables;
+    private Integer numChairs;
+    private Boolean hasInternet;
+    private Boolean hasSoundSystem;
+    private Boolean hasPresentationScreen; //for projectors/movie screens etc.
     private String furtherNotes; //further notes the Organizer would like to add
 
     public Location(String name, int id, int maxOccupancy, int numTables, int numChairs, boolean hasInternet, boolean hasSoundSystem, boolean hasPresentationScreen, String furtherNotes) {
@@ -78,5 +78,33 @@ public class Location {
         else{
             return false;
         }
+    }
+
+    /**
+     * private int maxOccupancy;
+     *     private int numTables;
+     *     private int numChairs;
+     *     private boolean hasInternet;
+     *     private boolean hasSoundSystem;
+     *     private boolean hasPresentationScreen; //for projectors/movie screens etc.
+     *     private String furtherNotes; //further notes the Organizer would like to add
+     * @return
+     */
+    @Override
+    public String toString(){
+        StringBuilder stringRep = new StringBuilder();
+        stringRep.append("Name: " + this.name + "\n");
+        stringRep.append("Location ID: " + this.id.toString() + "\n");
+        stringRep.append("Maximum Occupancy: " + this.maxOccupancy.toString() + "\n");
+        stringRep.append("Number of tables: " + this.numTables.toString() + "\n");
+        stringRep.append("Number of chairs: " + this.numChairs.toString() + "\n");
+        stringRep.append("Has internet?: " + this.hasInternet.toString() + "\n");
+        stringRep.append("Has sound system?: " + this.hasSoundSystem.toString() + "\n");
+        stringRep.append("Has a screen for presentations?: " + this.hasPresentationScreen + "\n");
+        stringRep.append("Further notes:" + "\n");
+        stringRep.append(this.furtherNotes);
+
+        String StringRep = stringRep.toString();
+        return StringRep;
     }
 }
