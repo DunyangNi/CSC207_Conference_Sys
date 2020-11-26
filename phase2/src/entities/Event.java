@@ -12,6 +12,7 @@ public class Event implements Serializable, Comparable<Event> {
     private String locationName;
     private Calendar time;
     private String organizer;
+    private Boolean vipOnly;
     private final ArrayList<String> attendees = new ArrayList<>();
     private final int id;
 
@@ -110,6 +111,8 @@ public class Event implements Serializable, Comparable<Event> {
      */
     public ArrayList<String> getAttendees() { return attendees; }
 
+    public Boolean getVipOnly() { return vipOnly; }
+
     /**
      * Sets a new topic for this <code>Event</code>.
      *
@@ -141,5 +144,7 @@ public class Event implements Serializable, Comparable<Event> {
     public void setOrganizer(String organizer) {
         this.organizer = organizer;
     }
+
+    public void setVipOnly(Boolean newBoolean) { this.vipOnly = newBoolean; }
 }
 
