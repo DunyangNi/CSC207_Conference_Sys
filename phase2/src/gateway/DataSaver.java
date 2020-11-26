@@ -21,6 +21,4 @@ public interface DataSaver {
             System.out.printf("Failed to save the %s.%n", managerName);
         }
     }
-
-
 }
