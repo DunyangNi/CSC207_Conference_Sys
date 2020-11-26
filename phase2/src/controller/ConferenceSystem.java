@@ -1,6 +1,5 @@
 package controller;
-
-import gateway.DataManager;
+import gateway.*;
 import use_cases.*;
 
 public class ConferenceSystem {
@@ -18,11 +17,15 @@ public class ConferenceSystem {
      * Runs the entire conference program starting with the login screen
      */
     public void run() {
-        DataManager dataManager = new DataManager();
-        AccountManager accountManager = dataManager.readAccountManager();
-        FriendManager friendManager = dataManager.readFriendManager();
-        ConversationManager conversationManager = dataManager.readConversationManager();
-        EventManager eventManager = dataManager.readEventManager();
+        AccountDataManager accountDataManager = new AccountDataManager();
+        EventDataManager eventDataManager = new EventDataManager();
+        ConversationDataManager conversationDataManager = new ConversationDataManager();
+        FriendDataManager friendDataManager = new FriendDataManager();
+
+        AccountManager accountManager = accountDataManager.readAccountManager();
+        FriendManager friendManager = friendDataManager.readFriendManager();
+        ConversationManager conversationManager = conversationDataManager.readConversationManager();
+        EventManager eventManager = eventDataManager.readEventManager();
         boolean programEnd = false;
         while (!programEnd) {
             StartController startController = new StartController(accountManager, friendManager, conversationManager, eventManager);
