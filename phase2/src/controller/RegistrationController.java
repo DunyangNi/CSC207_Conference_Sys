@@ -1,6 +1,9 @@
 package controller;
 
-import gateway.DataManager;
+import gateway.AccountDataManager;
+import gateway.ConversationDataManager;
+import gateway.EventDataManager;
+import gateway.FriendDataManager;
 import presenter.ConsolePresenter;
 import presenter.RegistrationPresenter;
 import use_cases.AccountManager;
@@ -55,8 +58,17 @@ public class RegistrationController {
             accountManager.addNewOrganizer(accountInfo[0], accountInfo[1], accountInfo[2], accountInfo[3]);
         }
         addNewAccountKeys(accountInfo[0]);
-        DataManager dataManager = new DataManager();
-        dataManager.saveAllManagers(eventManager, accountManager, conversationManager, friendManager);
+
+        AccountDataManager accountDataManager = new AccountDataManager();
+        EventDataManager eventDataManager = new EventDataManager();
+        ConversationDataManager conversationDataManager = new ConversationDataManager();
+        FriendDataManager friendDataManager = new FriendDataManager();
+
+        accountDataManager.saveManager("AccountManager", "AccountManager", accountManager);
+        eventDataManager.saveManager("EventManager", "EventManager", eventManager);
+        conversationDataManager.saveManager("ConversationManager", "ConversationnManager", conversationManager);
+        friendDataManager.saveManager("FriendManager", "FriendManager", friendManager);
+
         return false;
     }
 

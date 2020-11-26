@@ -1,6 +1,9 @@
 package controller;
 
-import gateway.DataManager;
+import gateway.AccountDataManager;
+import gateway.ConversationDataManager;
+import gateway.EventDataManager;
+import gateway.FriendDataManager;
 import presenter.*;
 import use_cases.*;
 
@@ -80,8 +83,17 @@ public class LoginController {
             SpeakerController sc = new SpeakerController(username, accountManager, friendManager, conversationManager, eventManager, textpresenter);
             programEnd = sc.runInteraction();
         }
-        DataManager dataManager = new DataManager();
-        dataManager.saveAllManagers(eventManager, accountManager, conversationManager, friendManager);
+
+        AccountDataManager accountDataManager = new AccountDataManager();
+        EventDataManager eventDataManager = new EventDataManager();
+        ConversationDataManager conversationDataManager = new ConversationDataManager();
+        FriendDataManager friendDataManager = new FriendDataManager();
+
+        accountDataManager.saveManager("AccountManager", "AccountManager", accountManager);
+        eventDataManager.saveManager("EventManager", "EventManager", eventManager);
+        conversationDataManager.saveManager("ConversationManager", "ConversationnManager", conversationManager);
+        friendDataManager.saveManager("FriendManager", "FriendManager", friendManager);
+
         return programEnd;
     }
 }
