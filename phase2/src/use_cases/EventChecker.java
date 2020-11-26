@@ -43,7 +43,7 @@ public class EventChecker implements Serializable {
             throw new ConflictException("Time must start between 9 AM and 5 PM.");
 
         for (Event event : events) {    // is the same event already scheduled?
-            if (event.getLocation().equals(location) && event.getTime().equals(time))
+            if (event.getLocationName().equals(location) && event.getTime().equals(time))
                 throw new ConflictException("Location " + location + " is busy at scheduled time.");
         }
     }
