@@ -8,7 +8,7 @@ import java.util.*;
 
 import java.util.HashMap;
 
-public class LocationManager {
+public class EventLocationManager {
     private HashMap<Integer, Location> locations = new HashMap<>();
     private int curID = 0; //the id of the next location to be added
 

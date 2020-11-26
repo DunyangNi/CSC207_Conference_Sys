@@ -9,18 +9,9 @@ import java.util.Calendar;
 public class Talk extends Event implements Serializable {
     private String speaker;
 
-    /**
-     * Creates an instance of <code>Talk</code> with an assigned integer ID and given information.
-     *
-     * @param id assigned ID
-     * @param topic given topic
-     * @param time given time
-     * @param locationID given location id
-     * @param organizer given <code>Organizer</code> username
-     * @param speaker given <code>Speaker</code> username
-     */
-    public Talk(Integer id, String topic, Calendar time, int locationID, String organizer, String speaker) {
-        super(id, topic, time, locationID, organizer);
+
+    public Talk(Integer id, String topic, Calendar time, String locationName, String organizer, String speaker) {
+        super(id, topic, time, locationName, organizer);
         this.speaker = speaker;
     }
 

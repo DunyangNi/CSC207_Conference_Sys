@@ -9,7 +9,7 @@ import java.util.Calendar;
  */
 public class Event implements Serializable, Comparable<Event> {
     private String topic;
-    private int locationID;
+    private String locationName;
     private Calendar time;
     private String organizer;
     private final ArrayList<String> attendees = new ArrayList<>();
@@ -21,13 +21,13 @@ public class Event implements Serializable, Comparable<Event> {
      * @param id assigned ID
      * @param topic given topic
      * @param time given time
-     * @param locationID id of event location
+     * @param locationName id of event location
      * @param organizer given <code>Organizer</code> username
      */
-    public Event(Integer id, String topic, Calendar time, int locationID, String organizer) {
+    public Event(Integer id, String topic, Calendar time, String locationName, String organizer) {
         this.topic = topic;
         this.time = time;
-        this.locationID = locationID;
+        this.locationName = locationName;
         this.organizer = organizer;
         this.id = id;
     }
@@ -56,7 +56,7 @@ public class Event implements Serializable, Comparable<Event> {
             Event o = (Event) other;
             return getTopic().equals(o.getTopic()) &&
                     getTime().getTimeInMillis() == o.getTime().getTimeInMillis() &&
-                    (getLocationID() == o.getLocationID()) &&
+                    (getLocationName() == o.getLocationName()) &&
                     getOrganizer().equals(o.getOrganizer());
         }
         return false;
@@ -87,8 +87,8 @@ public class Event implements Serializable, Comparable<Event> {
     /**
      * @return locationID of this <code>Event</code>
      */
-    public int getLocationID() {
-        return locationID;
+    public String getLocationName() {
+        return locationName;
     }
 
     /**
@@ -128,13 +128,9 @@ public class Event implements Serializable, Comparable<Event> {
         this.time = time;
     }
 
-    /**
-     * Sets a new location id for this <code>Event</code>.
-     *
-     * @param locationID new location id of <code>Event</code>
-     */
-    public void setLocationID(int locationID) {
-        this.locationID = locationID;
+
+    public void setLocationName(String locationName) {
+        this.locationName = locationName;
     }
 
     /**
