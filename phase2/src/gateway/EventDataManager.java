@@ -14,7 +14,7 @@ public class EventDataManager implements DataReader, DataSaver{
         this.eventPath = eventPath;
     }
 
-    public EventManager readConversationManager() {
+    public EventManager readEventManager() {
         try{
             return (EventManager) readObject(eventPath);
         } catch (IOException e) {
