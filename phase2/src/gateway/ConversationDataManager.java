@@ -2,7 +2,7 @@ package gateway;
 
 import java.io.*;
 
-public class EventDataManager {
+public class ConversationDataManager {
     private final String eventPath;
 
     /**
