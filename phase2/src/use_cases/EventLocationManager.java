@@ -1,8 +1,8 @@
 package use_cases;
 
-import Throwables.ConflictException;
-import Throwables.IntegerOutOfBoundsException;
-import Throwables.ObjectNotFoundException;
+import exceptions.ConflictException;
+import exceptions.IntegerOutOfBoundsException;
+import exceptions.ObjectNotFoundException;
 import entities.Location;
 import java.util.*;
 

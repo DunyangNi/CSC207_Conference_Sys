@@ -1,4 +1,4 @@
-package Enums;
+package enums;
 
 public enum SpeakerCommand {
     EXIT("00"),

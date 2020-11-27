@@ -1,7 +1,7 @@
 package use_cases;
 
-import Throwables.ConflictException;
-import Throwables.ObjectNotFoundException;
+import exceptions.ConflictException;
+import exceptions.ObjectNotFoundException;
 import entities.Event;
 import entities.Talk;
 

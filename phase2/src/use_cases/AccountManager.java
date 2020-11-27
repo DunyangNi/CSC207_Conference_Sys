@@ -1,6 +1,6 @@
 package use_cases;
 
-import Throwables.*;
+import exceptions.*;
 import entities.*;
 import java.io.Serializable;
 import java.util.HashMap;
