@@ -3,7 +3,7 @@ package use_cases;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import Throwables.*;
+import exceptions.*;
 
 /**
  * Represents the entire system of Friend relationships between <code>Accounts</code>.

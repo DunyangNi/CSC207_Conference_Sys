@@ -1,6 +1,6 @@
 package use_cases;
 
-import Throwables.*;
+import exceptions.*;
 import entities.Event;
 import entities.Talk;
 import java.io.Serializable;

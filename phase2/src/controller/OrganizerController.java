@@ -1,13 +1,13 @@
 package controller;
 
-import Throwables.ConflictException;
-import Throwables.ObjectNotFoundException;
+import exceptions.ConflictException;
+import exceptions.ObjectNotFoundException;
 import use_cases.*;
 
 import java.util.*;
 
 import presenter.*;
-import Enums.*;
+import enums.*;
 
 public class OrganizerController extends AccountController {
     /**

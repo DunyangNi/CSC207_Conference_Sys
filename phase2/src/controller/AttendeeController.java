@@ -1,11 +1,11 @@
 package controller;
 
-import Throwables.ObjectNotFoundException;
+import exceptions.ObjectNotFoundException;
 import use_cases.*;
 import java.util.*;
 import java.lang.*;
 import presenter.*;
-import Enums.*;
+import enums.*;
 
 public class AttendeeController extends AccountController {
     private final SignupController signupController = new SignupController(username, accountManager, eventManager);

@@ -3,7 +3,7 @@ package use_cases;
 import java.io.Serializable;
 import java.util.*;
 import entities.*;
-import Throwables.*;
+import exceptions.*;
 
 /**
  * Represents the entire system of Conversations and Messages.

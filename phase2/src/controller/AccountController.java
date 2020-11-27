@@ -1,6 +1,6 @@
 package controller;
 
-import Throwables.ObjectNotFoundException;
+import exceptions.ObjectNotFoundException;
 import presenter.Presenter;
 import use_cases.*;
 
