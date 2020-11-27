@@ -15,7 +15,7 @@ public class LoginController {
     private final ConversationManager conversationManager;
     private final FriendManager friendManager;
     // fields for presenter should be filled out
-    private final ConsolePresenter presenter = new LoginPresenter();
+    private final LoginPresenter presenter = new LoginPresenter();
 
     /**
      * Manages login functionality for the program
@@ -31,6 +31,21 @@ public class LoginController {
         this.eventManager = em;
     }
 
+//    public boolean tryUsername(String username) {
+//         return accountManager.containsAccount(username);
+//    }
+//
+//    public boolean tryPassword(String username, String password) {
+//        return accountManager.isCorrectPassword(username, password);
+//    }
+//
+//    public boolean attemptLogin(String username, String password) {
+//        if (!accountManager.containsAccount(username) || !accountManager.isCorrectPassword(username, password) || username.equals("*") || password.equals("*")) {
+//            return false;
+//            }
+//        return login(username);
+//    }
+
     /**
      * Attempts login on the user
      * @return True if the user wishes to terminate the program
@@ -38,25 +53,25 @@ public class LoginController {
     public boolean attemptLogin() {
         Scanner input = new Scanner(System.in);
 
-        presenter.preUserInput("username");
+        presenter.preUserInput();
         String username = input.nextLine();
         while (!accountManager.containsAccount(username)) {
-            presenter.postUserInput("username");
+            presenter.postUsernameInput();
             username = input.nextLine();
             if (username.equals("*")) {
                 return false;
             }
         }
-        presenter.preUserInput("password");
+        presenter.prePasswordInput();
         String password = input.nextLine();
         while (!accountManager.isCorrectPassword(username, password)) {
-            presenter.postUserInput("password");
+            presenter.postPasswordInput();
             password = input.nextLine();
             if (password.equals("*")) {
                 return false;
             }
         }
-        presenter.postUserInput("login");
+        presenter.postUserInput();
         return login(username);
     }
 

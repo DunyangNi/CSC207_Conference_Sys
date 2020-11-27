@@ -11,12 +11,4 @@ public class StartPresenter implements ConsolePresenter {
     public void postUserInput() {
         System.out.println("Invalid input, please try again.");
     }
-
-    @Override
-    public void preUserInput(String input) {
-    }
-
-    @Override
-    public void postUserInput(String input) {
-    }
 }

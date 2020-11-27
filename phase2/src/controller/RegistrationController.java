@@ -43,11 +43,11 @@ public class RegistrationController {
      * @return false
      */
     public boolean attemptRegister() {
-        presenter.preUserInput("accountType");
+//        presenter.preUserInput("accountType");
         String accountType = input.nextLine();
 
         while (!(accountType.equals("1") || (accountType.equals("2")))) {
-            presenter.postUserInput("accountType");
+//            presenter.postUserInput("accountType");
             accountType = input.nextLine();
         }
 
@@ -79,10 +79,10 @@ public class RegistrationController {
     private void requireOrganizerPassword() {
         String ORGANIZER_REGISTRATION_CODE = "123456";
 
-        presenter.preUserInput("code");
+//        presenter.preUserInput("code");
         String code = input.nextLine();
         while (!code.equals(ORGANIZER_REGISTRATION_CODE)) {
-            presenter.postUserInput("code");
+//            presenter.postUserInput("code");
             code = input.nextLine();
         }
     }
@@ -97,16 +97,16 @@ public class RegistrationController {
         if (type.equals("2")) {
             requireOrganizerPassword();
         }
-        presenter.preUserInput("username");
+//        presenter.preUserInput("username");
         String username = input.nextLine();
 
         while ((accountManager.containsAccount(username))) {
-            presenter.postUserInput("username");
+//            presenter.postUserInput("username");
             username = input.nextLine();
         }
 
         // Obtain rest of information and bundle into Tuple of 4
-        presenter.preUserInput("password");
+//        presenter.preUserInput("password");
         String password = input.nextLine();
 
         return new String[]{username, password, "", ""};

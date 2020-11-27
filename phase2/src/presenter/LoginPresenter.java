@@ -1,38 +1,36 @@
 package presenter;
 
 public class LoginPresenter implements ConsolePresenter {
-    @Override
+    public LoginPresenter() {
+    }
+
     public void preUserInput() {
+        System.out.println("[LOGIN MENU]");
+
+    }
+
+    public void preUsernameInput() {
+        System.out.println("Enter '*' to return to the start menu.\nEnter your username:");
+    }
+
+    public void postUsernameInput() {
+        System.out.println("This username does not exist, please try again. Enter '*' to return to the start menu.");
+    }
+
+    public void prePasswordInput() {
+        System.out.println("Enter your password:");
+    }
+
+    public void postPasswordInput() {
+        System.out.println("Incorrect password, please try again. Enter '*' to return to the start menu.");
+    }
+
+    public void postLoginInputs() {
+        System.out.println("Incorrect username or password, please try again. Enter '*' to return to the start menu instead:");
     }
 
     @Override
     public void postUserInput() {
-    }
-
-    @Override
-    public void preUserInput(String input){
-        switch (input) {
-            case "username":
-                System.out.println("[LOGIN MENU]");
-                System.out.println("Enter your username:");
-                break;
-            case "password":
-                System.out.println("Enter your password:");
-                break;
-        }
-    }
-
-    @Override
-    public void postUserInput(String input) {
-        switch (input) {
-            case "username":
-                System.out.println("This username does not exist, please try again. Enter '*' to return to the start menu.");
-                break;
-            case "password":
-                System.out.println("Incorrect password, please try again. Enter '*' to return to the start menu.");
-                break;
-            case "login":
-                System.out.println("Logging in...\n");
-        }
+        System.out.println("Logging in...\n");
     }
 }

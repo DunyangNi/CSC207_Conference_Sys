@@ -1,6 +1,7 @@
 package controller;
 import gateway.*;
 import use_cases.*;
+import views.StartView;
 
 public class ConferenceSystem {
 
@@ -29,8 +30,10 @@ public class ConferenceSystem {
 
         boolean programEnd = false;
         while (!programEnd) {
-            StartController startController = new StartController(accountManager, friendManager, conversationManager, eventManager);
-            programEnd = startController.runStartMenu();
+//            StartController startController = new StartController(accountManager, friendManager, conversationManager, eventManager);
+//            programEnd = startController.runStartMenu();
+            StartView view = new StartView(accountManager, friendManager, conversationManager, eventManager);
+            programEnd = view.viewStartMenu();
         }
     }
 }

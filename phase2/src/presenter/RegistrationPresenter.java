@@ -9,7 +9,6 @@ public class RegistrationPresenter implements ConsolePresenter {
     public void postUserInput() {
     }
 
-    @Override
     public void preUserInput(String input) {
         switch (input) {
             case "accountType":
@@ -27,7 +26,6 @@ public class RegistrationPresenter implements ConsolePresenter {
         }
     }
 
-    @Override
     public void postUserInput(String input) {
         switch (input) {
             case "accountType":
