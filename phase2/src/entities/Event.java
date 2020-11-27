@@ -9,29 +9,32 @@ import java.util.Calendar;
  */
 public class Event implements Serializable, Comparable<Event> {
     private String topic;
-    private String locationName;
+    private String location;
     private Calendar time;
     private String organizer;
     private Boolean vipOnly;
+    private Integer capacity;
     private final ArrayList<String> attendees = new ArrayList<>();
     private final int id;
 
     /**
      * Creates an instance of <code>Event</code> with an assigned integer ID and given information.
-     *
      * @param id assigned ID
      * @param topic given topic
      * @param time given time
-     * @param locationName id of event location
+     * @param location id of event location
      * @param organizer given <code>Organizer</code> username
+     * @param capacity given max number of Attendees that can attend
+     * @param vipOnly whether <code>Event</code> is only accessible to VIPs
      */
-    public Event(Integer id, String topic, Calendar time, String locationName, String organizer, Boolean vipOnly) {
+    public Event(Integer id, String topic, Calendar time, String location, String organizer, Integer capacity, Boolean vipOnly) {
         this.topic = topic;
         this.time = time;
-        this.locationName = locationName;
+        this.location = location;
         this.organizer = organizer;
         this.id = id;
         this.vipOnly = vipOnly;
+        this.capacity = capacity;
     }
 
     /**
@@ -58,7 +61,7 @@ public class Event implements Serializable, Comparable<Event> {
             Event o = (Event) other;
             return getTopic().equals(o.getTopic()) &&
                     getTime().getTimeInMillis() == o.getTime().getTimeInMillis() &&
-                    (getLocationName() == o.getLocationName()) &&
+                    (getLocation().equals(o.getLocation())) &&
                     getOrganizer().equals(o.getOrganizer());
         }
         return false;
@@ -89,8 +92,8 @@ public class Event implements Serializable, Comparable<Event> {
     /**
      * @return locationID of this <code>Event</code>
      */
-    public String getLocationName() {
-        return locationName;
+    public String getLocation() {
+        return location;
     }
 
     /**
@@ -114,6 +117,8 @@ public class Event implements Serializable, Comparable<Event> {
 
     public Boolean getVipOnly() { return vipOnly; }
 
+    public Integer getCapacity() { return capacity; }
+
     /**
      * Sets a new topic for this <code>Event</code>.
      *
@@ -133,8 +138,8 @@ public class Event implements Serializable, Comparable<Event> {
     }
 
 
-    public void setLocationName(String locationName) {
-        this.locationName = locationName;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     /**
@@ -147,5 +152,7 @@ public class Event implements Serializable, Comparable<Event> {
     }
 
     public void setVipOnly(Boolean newBoolean) { this.vipOnly = newBoolean; }
+
+    public void setCapacity(Integer newCapacity) { this.capacity = newCapacity; }
 }
 

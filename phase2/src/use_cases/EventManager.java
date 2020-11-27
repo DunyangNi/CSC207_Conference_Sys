@@ -38,7 +38,10 @@ public class EventManager implements Serializable {
     // Methods
     //------------------------------------------------------------
 
-
+    private boolean isFull(Integer id) {
+        Event selectedEvent = events.get(id);
+        return selectedEvent.getCapacity() == selectedEvent.getAttendees().size();
+    }
 
     /**
      * @param speaker speaker to add
@@ -61,7 +64,10 @@ public class EventManager implements Serializable {
         this.events = events;
     }
 
-
+    public void setEventCapacity(Integer id, Integer newCapacity) {
+        Event selectedEvent = events.get(id);
+        selectedEvent.setCapacity(newCapacity);
+    }
 
 
     /**
@@ -144,7 +150,7 @@ public class EventManager implements Serializable {
             eventInfo = new String[5];
             eventInfo[0] = e.getTopic();
             eventInfo[1] = e.getSpeaker();
-            eventInfo[2] = e.getLocationName();
+            eventInfo[2] = e.getLocation();
             eventInfo[3] = e.getTime().getTime().toString();
             eventInfo[4] = String.valueOf(e.getId());
             sortedSelectedTalks.put(eventInfo, e.getTime());
@@ -184,7 +190,7 @@ public class EventManager implements Serializable {
      */
     public Integer addNewEvent(String topic, Calendar time, String location, String organizer, Boolean vipOnly) throws ConflictException, ObjectNotFoundException {
         checkValidEvent(time, location);
-        Event eventToAdd = new Event(assignEventID++, topic, time, location, organizer, vipOnly);
+        Event eventToAdd = new Event(assignEventID++, topic, time, location, organizer, , vipOnly, );
         events.put(eventToAdd.getId(), eventToAdd);
         return eventToAdd.getId();
 
@@ -256,9 +262,9 @@ public class EventManager implements Serializable {
         // Validation
         Event selectedEvent = events.get(id);
         if (selectedEvent instanceof Talk)
-            checkValidTalk(newTime, selectedEvent.getLocationName(), ((Talk) selectedEvent).getSpeaker());
+            checkValidTalk(newTime, selectedEvent.getLocation(), ((Talk) selectedEvent).getSpeaker());
         else
-            checkValidEvent(newTime, selectedEvent.getLocationName());
+            checkValidEvent(newTime, selectedEvent.getLocation());
         eventModifier.ChangeTime(events.get(id), newTime);
     }
 
@@ -355,10 +361,6 @@ public class EventManager implements Serializable {
     public boolean isSignedUp(Integer id, String attendee) {
         return events.get(id).getAttendees().contains(attendee);
     }
-
-    private boolean isFull(Integer id) { return getSeatLimit().equals(events.get(id).getAttendees().size()); }
-
-    private Integer getSeatLimit() { return 2; }
 
     /**
      * Attempts to add <code>Attendee</code> with given username to <code>Event</code> attendance with given ID.
