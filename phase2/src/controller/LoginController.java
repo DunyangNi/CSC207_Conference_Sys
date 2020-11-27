@@ -56,16 +56,16 @@ public class LoginController {
         presenter.preUserInput();
         String username = input.nextLine();
         while (!accountManager.containsAccount(username)) {
-            presenter.postUsernameInput();
+            presenter.takenUsernamePrompt();
             username = input.nextLine();
             if (username.equals("*")) {
                 return false;
             }
         }
-        presenter.prePasswordInput();
+        presenter.passwordPrompt();
         String password = input.nextLine();
         while (!accountManager.isCorrectPassword(username, password)) {
-            presenter.postPasswordInput();
+            presenter.incorrectPasswordPrompt();
             password = input.nextLine();
             if (password.equals("*")) {
                 return false;
