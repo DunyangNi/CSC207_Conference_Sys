@@ -85,7 +85,7 @@ public class OrganizerController extends AccountController {
      */
     public void cancelTalk(Integer id) {
         try {
-            this.eventManager.cancelTalk(id);
+            this.eventManager.cancelEvent(id);
         } catch (Exception e) {
             presenter.displayPrompt(e.toString());
         }

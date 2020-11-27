@@ -1,5 +1,6 @@
 package use_cases;
 
+import enums.EventType;
 import exceptions.*;
 import entities.Event;
 import entities.Talk;
@@ -14,6 +15,7 @@ public class EventManager implements Serializable {
     private final ArrayList<String> speakers;
     private final EventModifier eventModifier = new EventModifier();
     private final EventChecker eventChecker = new EventChecker();
+    private final EventFactory eventFactory = new EventFactory();
     private int assignEventID;
     private final EventLocationManager eventLocationManager;
 
@@ -180,20 +182,22 @@ public class EventManager implements Serializable {
     /**
      * Adds a new event given its information
      *
+     * @param type type of event
      * @param topic topic for a new event
      * @param time time for a new event
      * @param location location for a new event
      * @param organizer organizer for a new event
+     * @param speakers <code>ArrayList</code> of arbitrary usernames of speakers
+     * @param capacity maximum capacity for a new event
      * @return id for a new id which has been added
      * @throws ConflictException if <code>checkValidEvent</code> throws
      * @throws ObjectNotFoundException if <code>checkValidEvent</code> throws
      */
-    public Integer addNewEvent(String topic, Calendar time, String location, String organizer, Boolean vipOnly) throws ConflictException, ObjectNotFoundException {
+    public Integer addNewEvent(EventType type, String topic, Calendar time, String location, String organizer, ArrayList<String> speakers, Integer capacity, Boolean vipOnly) throws ConflictException, ObjectNotFoundException, InvalidEventTypeException {
         checkValidEvent(time, location);
-        Event eventToAdd = new Event(assignEventID++, topic, time, location, organizer, , vipOnly, );
+        Event eventToAdd = eventFactory.CreateEvent(type, assignEventID++,topic, time, location, organizer, speakers, capacity, vipOnly);
         events.put(eventToAdd.getId(), eventToAdd);
         return eventToAdd.getId();
-
     }
 
     /**
@@ -222,7 +226,7 @@ public class EventManager implements Serializable {
      * @param id id to be cancelled
      * @throws ObjectNotFoundException if the id is invalid or is associated with non-talk
      */
-    public void cancelTalk(Integer id) throws ObjectNotFoundException {
+    public void cancelEvent(Integer id) throws ObjectNotFoundException {
         if (!events.containsKey(id))
             throw new ObjectNotFoundException("Talk");
         if (!(events.get(id) instanceof Talk))
