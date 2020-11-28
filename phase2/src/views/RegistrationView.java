@@ -21,7 +21,7 @@ public class RegistrationView {
     }
 
     public boolean viewRegistrationMenu() {
-        presenter.preUserInputPrompt();
+        presenter.startPrompt();
         String accountType = userInput.nextLine();
 
         while (!(accountType.equals("1") || (accountType.equals("2")))) {
@@ -50,7 +50,7 @@ public class RegistrationView {
         presenter.passwordPrompt();
         String password = userInput.nextLine();
 
-        presenter.postUserInputPrompt();
+        presenter.exitPrompt();
         return controller.register(accountType, username, password);
     }
 }

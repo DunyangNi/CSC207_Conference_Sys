@@ -2,7 +2,7 @@ package presenter;
 
 public class RegistrationPresenter implements ConsolePresenter {
     @Override
-    public void preUserInputPrompt() {
+    public void startPrompt() {
         System.out.println("[REGISTRATION MENU]");
         System.out.println("1 = Register an Attendee account:");
         System.out.println("2 = Register an Organizer account:");
@@ -33,7 +33,7 @@ public class RegistrationPresenter implements ConsolePresenter {
     }
 
     @Override
-    public void postUserInputPrompt() {
+    public void exitPrompt() {
         System.out.println("Registered...");
     }
 }

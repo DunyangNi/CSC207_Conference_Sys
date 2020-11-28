@@ -2,7 +2,7 @@ package presenter;
 
 public class StartPresenter implements ConsolePresenter {
     @Override
-    public void preUserInputPrompt() {
+    public void startPrompt() {
         System.out.println("[START MENU]");
         System.out.println("0 = Exit program:");
         System.out.println("1 = Login to your account:");
@@ -14,6 +14,6 @@ public class StartPresenter implements ConsolePresenter {
     }
 
     @Override
-    public void postUserInputPrompt() {
+    public void exitPrompt() {
     }
 }

@@ -21,7 +21,7 @@ public class LoginView {
     }
 
     public boolean viewLoginMenu() {
-        presenter.preUserInputPrompt();
+        presenter.startPrompt();
         String username = userInput.nextLine();
 
         while (!accountManager.containsAccount(username)) {
@@ -43,7 +43,7 @@ public class LoginView {
             }
         }
 
-        presenter.postUserInputPrompt();
+        presenter.exitPrompt();
         return controller.login(username);
     }
 }

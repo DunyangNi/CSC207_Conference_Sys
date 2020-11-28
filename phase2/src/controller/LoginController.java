@@ -46,9 +46,9 @@ public class LoginController {
         }
 
         AccountDataManager accountDataManager = new AccountDataManager();
-        EventDataManager eventDataManager = new EventDataManager();
-        ConversationDataManager conversationDataManager = new ConversationDataManager();
         FriendDataManager friendDataManager = new FriendDataManager();
+        ConversationDataManager conversationDataManager = new ConversationDataManager();
+        EventDataManager eventDataManager = new EventDataManager();
 
         accountDataManager.saveManager("AccountManager", "AccountManager", am);
         friendDataManager.saveManager("FriendManager", "FriendManager", fm);

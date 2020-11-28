@@ -19,7 +19,7 @@ public class StartView {
     }
 
     public boolean viewStartMenu() {
-        presenter.preUserInputPrompt();
+        presenter.startPrompt();
         String command = userInput.nextLine();
 
         while (!(command.equals("0") || command.equals("1") || (command.equals("2")))) {
