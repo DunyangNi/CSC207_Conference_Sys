@@ -31,17 +31,17 @@ public class LoginController {
         boolean programEnd = false;
         if (am.containsAttendee(username)) {
             TextPresenter textpresenter = new TextPresenter(em, fm);
-            AttendeeController ac = new AttendeeController(username, em, cm, fm, am, textpresenter);
+            AttendeeController ac = new AttendeeController(username, am, fm, cm, em);
             programEnd = ac.runInteraction();
         }
         if (am.containsOrganizer(username)) {
             TextPresenter textpresenter = new TextPresenter(em, fm);
-            OrganizerController oc = new OrganizerController(username, am, fm, cm, em, textpresenter);
+            OrganizerController oc = new OrganizerController(username, am, fm, cm, em);
             programEnd = oc.runInteraction();
         }
         if (am.containsSpeaker(username)) {
             TextPresenter textpresenter = new TextPresenter(em, fm);
-            SpeakerController sc = new SpeakerController(username, am, fm, cm, em, textpresenter);
+            SpeakerController sc = new SpeakerController(username, am, fm, cm, em);
             programEnd = sc.runInteraction();
         }
 

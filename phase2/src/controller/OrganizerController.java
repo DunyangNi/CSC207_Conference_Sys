@@ -6,7 +6,6 @@ import use_cases.*;
 
 import java.util.*;
 
-import presenter.*;
 import enums.*;
 
 public class OrganizerController extends AccountController {
@@ -17,11 +16,10 @@ public class OrganizerController extends AccountController {
      * @param friendManager manages friendList functionality
      * @param conversationManager manages messaging functionality
      * @param eventManager manages event data
-     * @param presenter specifies the UI
      */
     public OrganizerController(String username, AccountManager accountManager, FriendManager friendManager,
-                               ConversationManager conversationManager, EventManager eventManager, Presenter presenter) {
-        super(username, accountManager, friendManager, conversationManager, eventManager, presenter);
+                               ConversationManager conversationManager, EventManager eventManager) {
+        super(username, accountManager, friendManager, conversationManager, eventManager);
     }
 
     /**

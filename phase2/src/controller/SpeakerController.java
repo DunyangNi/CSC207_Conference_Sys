@@ -4,7 +4,7 @@ import exceptions.ObjectNotFoundException;
 import use_cases.*;
 import java.util.*;
 import java.lang.*;
-import presenter.*;
+
 import enums.*;
 
 public class SpeakerController extends AccountController {
@@ -15,12 +15,10 @@ public class SpeakerController extends AccountController {
      * @param friendManager manages friendlist functionality
      * @param conversationManager manages messaging functionality
      * @param eventmanager manages event data
-     * @param presenter specifies the UI
      */
     public SpeakerController(String username, AccountManager accountmanager, FriendManager friendManager,
-                             ConversationManager conversationManager, EventManager eventmanager,
-                             Presenter presenter) {
-        super(username, accountmanager, friendManager, conversationManager, eventmanager, presenter);
+                             ConversationManager conversationManager, EventManager eventmanager) {
+        super(username, accountmanager, friendManager, conversationManager, eventmanager);
     }
 
     /**

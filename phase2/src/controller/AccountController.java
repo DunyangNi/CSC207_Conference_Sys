@@ -2,6 +2,7 @@ package controller;
 
 import exceptions.ObjectNotFoundException;
 import presenter.Presenter;
+import presenter.TextPresenter;
 import use_cases.*;
 
 import java.util.ArrayList;
@@ -15,27 +16,24 @@ public abstract class AccountController {
     protected FriendManager friendManager;
     protected ConversationManager conversationManager;
     protected EventManager eventManager;
-    protected Presenter presenter;
+    protected Presenter presenter = new TextPresenter();
     protected FriendController friendController;
     protected MessageController messageController;
 
     /**
      * Facilitates interaction with the user (organizer/speaker/attendee) upon login
-     *
-     * @param username username of account user
+     *  @param username username of account user
      * @param accountManager manages data of all accounts in program
      * @param friendManager manages data of contacts lists
      * @param conversationManager manages conversation data
      * @param eventManager manages event data
-     * @param presenter defines the UI
      */
-    public AccountController(String username, AccountManager accountManager, FriendManager friendManager, ConversationManager conversationManager, EventManager eventManager, Presenter presenter) {
+    public AccountController(String username, AccountManager accountManager, FriendManager friendManager, ConversationManager conversationManager, EventManager eventManager) {
         this.username = username;
         this.accountManager = accountManager;
         this.friendManager = friendManager;
         this.conversationManager = conversationManager;
         this.eventManager = eventManager;
-        this.presenter = presenter;
         this.friendController = new FriendController(username, friendManager, presenter);
         this.messageController = new MessageController(username, accountManager, conversationManager, eventManager);
     }

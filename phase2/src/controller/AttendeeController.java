@@ -4,7 +4,7 @@ import exceptions.ObjectNotFoundException;
 import use_cases.*;
 import java.util.*;
 import java.lang.*;
-import presenter.*;
+
 import enums.*;
 
 public class AttendeeController extends AccountController {
@@ -13,15 +13,13 @@ public class AttendeeController extends AccountController {
     /**
      * facilitates interaction with attendee upon login
      * @param username attendee username
-     * @param eventmanager event data
-     * @param conversationManager conversation data
-     * @param friendManager contact information
      * @param accountManager data about all accounts in the program
-     * @param presenter specifies the UI
+     * @param friendManager contact information
+     * @param conversationManager conversation data
+     * @param eventmanager event data
      */
-    public AttendeeController(String username, EventManager eventmanager, ConversationManager conversationManager,
-                              FriendManager friendManager, AccountManager accountManager, Presenter presenter) {
-        super(username, accountManager, friendManager, conversationManager, eventmanager, presenter);
+    public AttendeeController(String username, AccountManager accountManager, FriendManager friendManager, ConversationManager conversationManager, EventManager eventmanager) {
+        super(username, accountManager, friendManager, conversationManager, eventmanager);
     }
 
     /**
