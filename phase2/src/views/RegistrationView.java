@@ -33,7 +33,7 @@ public class RegistrationView {
             presenter.organizerCodePrompt();
             String code = userInput.nextLine();
 
-            while (!code.equals(controller.ORGANIZER_REGISTRATION_CODE)) {
+            while (!code.equals(controller.ORGANIZER_CODE)) {
                 presenter.invalidCodePrompt();
                 code = userInput.nextLine();
             }

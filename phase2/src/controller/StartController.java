@@ -5,32 +5,32 @@ import views.LoginView;
 import views.RegistrationView;
 
 public class StartController {
-    private final AccountManager accountManager;
-    private final FriendManager friendManager;
-    private final ConversationManager conversationManager;
-    private final EventManager eventManager;
+    private final AccountManager am;
+    private final FriendManager fm;
+    private final ConversationManager cm;
+    private final EventManager em;
 
     /**
      * Manages the home screen
-     * @param accountManager manages account data
-     * @param friendManager manages friendList functionality
-     * @param conversationManager manages messaging functionality
-     * @param eventManager manages event data
+     * @param am manages account data
+     * @param fm manages friendList functionality
+     * @param cm manages messaging functionality
+     * @param em manages event data
      */
-    public StartController(AccountManager accountManager, FriendManager friendManager, ConversationManager conversationManager, EventManager eventManager) {
-        this.accountManager = accountManager;
-        this.friendManager = friendManager;
-        this.conversationManager = conversationManager;
-        this.eventManager = eventManager;
+    public StartController(AccountManager am, FriendManager fm, ConversationManager cm, EventManager em) {
+        this.am = am;
+        this.fm = fm;
+        this.cm = cm;
+        this.em = em;
     }
 
     public boolean start(String command) {
        if ("1".equals(command)) {
-            LoginView loginView = new LoginView(accountManager, friendManager, conversationManager, eventManager);
+            LoginView loginView = new LoginView(am, fm, cm, em);
             return loginView.viewLoginMenu();
         }
        else if ("2".equals(command)) {
-            RegistrationView registrationView = new RegistrationView(accountManager, friendManager, conversationManager, eventManager);
+            RegistrationView registrationView = new RegistrationView(am, fm, cm, em);
             return registrationView.viewRegistrationMenu();
         }
        else {

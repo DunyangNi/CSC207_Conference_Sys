@@ -9,14 +9,12 @@ import use_cases.ConversationManager;
 import use_cases.EventManager;
 import use_cases.FriendManager;
 
-import java.util.Scanner;
-
 public class RegistrationController {
-    private final AccountManager accountManager;
-    private final FriendManager friendManager;
-    private final ConversationManager conversationManager;
-    private final EventManager eventManager;
-    public final String ORGANIZER_REGISTRATION_CODE = "123456";
+    private final AccountManager am;
+    private final FriendManager fm;
+    private final ConversationManager cm;
+    private final EventManager em;
+    public final String ORGANIZER_CODE = "123456";
 
     /**
      * handles the creation of new organizer and attendee accounts for registration
@@ -27,17 +25,17 @@ public class RegistrationController {
      * @param em manages data of all events in the program
      */
     public RegistrationController(AccountManager am, FriendManager fm, ConversationManager cm, EventManager em) {
-        this.accountManager = am;
-        this.conversationManager = cm;
-        this.friendManager = fm;
-        this.eventManager = em;
+        this.am = am;
+        this.cm = cm;
+        this.fm = fm;
+        this.em = em;
     }
 
     public boolean register(String accountType, String username, String password) {
         if (accountType.equals("1")) {
-            accountManager.addNewAttendee(username, password, "", "");
+            am.addNewAttendee(username, password, "", "");
         } else {
-            accountManager.addNewOrganizer(username, password, "", "");
+            am.addNewOrganizer(username, password, "", "");
         }
         addNewAccountKeys(username);
 
@@ -46,10 +44,10 @@ public class RegistrationController {
         ConversationDataManager conversationDataManager = new ConversationDataManager();
         FriendDataManager friendDataManager = new FriendDataManager();
 
-        accountDataManager.saveManager("AccountManager", "AccountManager", accountManager);
-        friendDataManager.saveManager("FriendManager", "FriendManager", friendManager);
-        conversationDataManager.saveManager("ConversationManager", "ConversationManager", conversationManager);
-        eventDataManager.saveManager("EventManager", "EventManager", eventManager);
+        accountDataManager.saveManager("AccountManager", "AccountManager", am);
+        friendDataManager.saveManager("FriendManager", "FriendManager", fm);
+        conversationDataManager.saveManager("ConversationManager", "ConversationManager", cm);
+        eventDataManager.saveManager("EventManager", "EventManager", em);
 
         return false;
     }
@@ -137,7 +135,7 @@ public class RegistrationController {
      * @param username given username of associated <code>Account</code>
      */
     private void addNewAccountKeys(String username) {
-        conversationManager.addAccountKey(username);
-        friendManager.addAccountKey(username);
+        cm.addAccountKey(username);
+        fm.addAccountKey(username);
     }
 }
