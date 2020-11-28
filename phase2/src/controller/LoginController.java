@@ -6,6 +6,8 @@ import gateway.EventDataManager;
 import gateway.FriendDataManager;
 import presenter.*;
 import use_cases.*;
+import views.AttendeeView;
+import views.OrganizerView;
 
 public class LoginController {
     private final AccountManager am;
@@ -30,19 +32,16 @@ public class LoginController {
     public boolean login(String username) {
         boolean programEnd = false;
         if (am.containsAttendee(username)) {
-            TextPresenter textpresenter = new TextPresenter(em, fm);
-            AttendeeController ac = new AttendeeController(username, am, fm, cm, em);
-            programEnd = ac.runInteraction();
+            AttendeeView attendeeView = new AttendeeView(username, am, fm, cm, em);
+            programEnd = attendeeView.viewAttendeeMenu();
         }
         if (am.containsOrganizer(username)) {
-            TextPresenter textpresenter = new TextPresenter(em, fm);
-            OrganizerController oc = new OrganizerController(username, am, fm, cm, em);
-            programEnd = oc.runInteraction();
+            OrganizerView organizerView = new OrganizerView(username, am, fm, cm, em);
+            programEnd = organizerView.viewOrganizerMenu();
         }
         if (am.containsSpeaker(username)) {
-            TextPresenter textpresenter = new TextPresenter(em, fm);
-            SpeakerController sc = new SpeakerController(username, am, fm, cm, em);
-            programEnd = sc.runInteraction();
+            OrganizerView organizerView = new OrganizerView(username, am, fm, cm, em);
+            programEnd = organizerView.viewOrganizerMenu();
         }
 
         AccountDataManager accountDataManager = new AccountDataManager();
@@ -57,6 +56,37 @@ public class LoginController {
 
         return programEnd;
     }
+
+//    public boolean login(String username) {
+//        boolean programEnd = false;
+//        if (am.containsAttendee(username)) {
+//            TextPresenter textpresenter = new TextPresenter(em, fm);
+//            AttendeeController ac = new AttendeeController(username, am, fm, cm, em);
+//            programEnd = ac.runInteraction();
+//        }
+//        if (am.containsOrganizer(username)) {
+//            TextPresenter textpresenter = new TextPresenter(em, fm);
+//            OrganizerController oc = new OrganizerController(username, am, fm, cm, em);
+//            programEnd = oc.runInteraction();
+//        }
+//        if (am.containsSpeaker(username)) {
+//            TextPresenter textpresenter = new TextPresenter(em, fm);
+//            SpeakerController sc = new SpeakerController(username, am, fm, cm, em);
+//            programEnd = sc.runInteraction();
+//        }
+//
+//        AccountDataManager accountDataManager = new AccountDataManager();
+//        FriendDataManager friendDataManager = new FriendDataManager();
+//        ConversationDataManager conversationDataManager = new ConversationDataManager();
+//        EventDataManager eventDataManager = new EventDataManager();
+//
+//        accountDataManager.saveManager("AccountManager", "AccountManager", am);
+//        friendDataManager.saveManager("FriendManager", "FriendManager", fm);
+//        conversationDataManager.saveManager("ConversationManager", "ConversationManager", cm);
+//        eventDataManager.saveManager("EventManager", "EventManager", em);
+//
+//        return programEnd;
+//    }
 
 //    /**
 //     * Attempts login on the user
