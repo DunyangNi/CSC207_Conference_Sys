@@ -2,13 +2,13 @@ package presenter;
 
 public class RegistrationPresenter implements ConsolePresenter {
     @Override
-    public void preUserInput() {
+    public void preUserInputPrompt() {
         System.out.println("[REGISTRATION MENU]");
         System.out.println("1 = Register an Attendee account:");
         System.out.println("2 = Register an Organizer account:");
     }
 
-    public void invalidInputPrompt() {
+    public void invalidCommandPrompt() {
         System.out.println("Invalid input, please try again:");
     }
 
@@ -19,6 +19,7 @@ public class RegistrationPresenter implements ConsolePresenter {
     public void invalidCodePrompt() {
         System.out.println("Incorrect code, please try again:");
     }
+
     public void usernamePrompt() {
         System.out.println("Enter a username:");
     }
@@ -32,7 +33,7 @@ public class RegistrationPresenter implements ConsolePresenter {
     }
 
     @Override
-    public void postUserInput() {
+    public void postUserInputPrompt() {
         System.out.println("Registered...");
     }
 }

@@ -31,57 +31,7 @@ public class LoginController {
         this.eventManager = em;
     }
 
-//    public boolean tryUsername(String username) {
-//         return accountManager.containsAccount(username);
-//    }
-//
-//    public boolean tryPassword(String username, String password) {
-//        return accountManager.isCorrectPassword(username, password);
-//    }
-//
-//    public boolean attemptLogin(String username, String password) {
-//        if (!accountManager.containsAccount(username) || !accountManager.isCorrectPassword(username, password) || username.equals("*") || password.equals("*")) {
-//            return false;
-//            }
-//        return login(username);
-//    }
-
-    /**
-     * Attempts login on the user
-     * @return True if the user wishes to terminate the program
-     */
-    public boolean attemptLogin() {
-        Scanner input = new Scanner(System.in);
-
-        presenter.preUserInput();
-        String username = input.nextLine();
-        while (!accountManager.containsAccount(username)) {
-            presenter.takenUsernamePrompt();
-            username = input.nextLine();
-            if (username.equals("*")) {
-                return false;
-            }
-        }
-        presenter.passwordPrompt();
-        String password = input.nextLine();
-        while (!accountManager.isCorrectPassword(username, password)) {
-            presenter.incorrectPasswordPrompt();
-            password = input.nextLine();
-            if (password.equals("*")) {
-                return false;
-            }
-        }
-        presenter.postUserInput();
-        return login(username);
-    }
-
-    /**
-     * Directs user to their respective menu of options depending on their account type
-     * (Attendee, Organizer, or Speaker) and runs the menu interaction
-     * @param username user's username
-     * @return True if the user wishes to terminate the program
-     */
-    private boolean login(String username) {
+    public boolean login(String username) {
         boolean programEnd = false;
         if (accountManager.containsAttendee(username)) {
             TextPresenter textpresenter = new TextPresenter(eventManager, friendManager);
@@ -105,10 +55,68 @@ public class LoginController {
         FriendDataManager friendDataManager = new FriendDataManager();
 
         accountDataManager.saveManager("AccountManager", "AccountManager", accountManager);
-        eventDataManager.saveManager("EventManager", "EventManager", eventManager);
-        conversationDataManager.saveManager("ConversationManager", "ConversationnManager", conversationManager);
         friendDataManager.saveManager("FriendManager", "FriendManager", friendManager);
+        conversationDataManager.saveManager("ConversationManager", "ConversationManager", conversationManager);
+        eventDataManager.saveManager("EventManager", "EventManager", eventManager);
 
         return programEnd;
     }
+
+//    /**
+//     * Attempts login on the user
+//     * @return True if the user wishes to terminate the program
+//     */
+//    public boolean attemptLogin() {
+//        Scanner input = new Scanner(System.in);
+//
+//        presenter.preUserInput();
+//        String username = input.nextLine();
+//        while (!accountManager.containsAccount(username)) {
+//            presenter.takenUsernamePrompt();
+//            username = input.nextLine();
+//            if (username.equals("*")) {
+//                return false;
+//            }
+//        }
+//        presenter.passwordPrompt();
+//        String password = input.nextLine();
+//        while (!accountManager.isCorrectPassword(username, password)) {
+//            presenter.incorrectPasswordPrompt();
+//            password = input.nextLine();
+//            if (password.equals("*")) {
+//                return false;
+//            }
+//        }
+//        presenter.postUserInput();
+//        return login(username);
+//    }
+//
+//    /**
+//     * Directs user to their respective menu of options depending on their account type
+//     * (Attendee, Organizer, or Speaker) and runs the menu interaction
+//     * @param username user's username
+//     * @return True if the user wishes to terminate the program
+//     */
+//    private boolean login(String username) {
+//        boolean programEnd = false;
+//        if (accountManager.containsAttendee(username)) {
+//            TextPresenter textpresenter = new TextPresenter(eventManager, friendManager);
+//            AttendeeController ac = new AttendeeController(username, eventManager, conversationManager, friendManager, accountManager, textpresenter);
+//            programEnd = ac.runInteraction();
+//        }
+//        if (accountManager.containsOrganizer(username)) {
+//            TextPresenter textpresenter = new TextPresenter(eventManager, friendManager);
+//            OrganizerController oc = new OrganizerController(username, accountManager, friendManager, conversationManager, eventManager, textpresenter);
+//            programEnd = oc.runInteraction();
+//        }
+//        if (accountManager.containsSpeaker(username)) {
+//            TextPresenter textpresenter = new TextPresenter(eventManager, friendManager);
+//            SpeakerController sc = new SpeakerController(username, accountManager, friendManager, conversationManager, eventManager, textpresenter);
+//            programEnd = sc.runInteraction();
+//        }
+//
+//        RegistrationController.runDataManagers(accountManager, friendManager, conversationManager, eventManager);
+//
+//        return programEnd;
+//    }
 }

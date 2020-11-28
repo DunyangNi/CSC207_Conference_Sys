@@ -1,6 +1,6 @@
 package presenter;
 
 public interface ConsolePresenter {
-    void preUserInput();
-    void postUserInput();
+    void preUserInputPrompt();
+    void postUserInputPrompt();
 }

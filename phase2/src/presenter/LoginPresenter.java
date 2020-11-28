@@ -1,13 +1,13 @@
 package presenter;
 
 public class LoginPresenter implements ConsolePresenter {
-    public void preUserInput() {
+    public void preUserInputPrompt() {
         System.out.println("[LOGIN MENU]");
         System.out.println("Enter your username:");
         System.out.println("* = Return to the start menu:");
     }
 
-    public void takenUsernamePrompt() {
+    public void dneUsernamePrompt() {
         System.out.println("This username does not exist, please try again:");
         System.out.println("* = Return to the start menu:");
     }
@@ -22,7 +22,7 @@ public class LoginPresenter implements ConsolePresenter {
     }
 
     @Override
-    public void postUserInput() {
+    public void postUserInputPrompt() {
         System.out.println("Logged in...");
     }
 }

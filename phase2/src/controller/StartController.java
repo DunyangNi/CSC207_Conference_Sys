@@ -1,18 +1,14 @@
 package controller;
 
-import presenter.ConsolePresenter;
-import presenter.StartPresenter;
 import use_cases.*;
-
-import java.util.Scanner;
+import views.LoginView;
+import views.RegistrationView;
 
 public class StartController {
-    private final Scanner input = new Scanner(System.in);
     private final AccountManager accountManager;
     private final FriendManager friendManager;
     private final ConversationManager conversationManager;
     private final EventManager eventManager;
-    private final ConsolePresenter presenter = new StartPresenter();
 
     /**
      * Manages the home screen
@@ -28,18 +24,19 @@ public class StartController {
         this.eventManager = eventManager;
     }
 
-    public boolean runStartMenu(String command) {
-        if (command.equals("0")) {
-            return true;
-        } else if (command.equals("1")) {
-            LoginController loginController = new LoginController(accountManager, friendManager, conversationManager, eventManager);
-            return loginController.attemptLogin();
-        } else {
-            RegistrationController registrationController = new RegistrationController(accountManager, friendManager, conversationManager, eventManager);
-            return registrationController.attemptRegister();
+    public boolean start(String command) {
+       if ("1".equals(command)) {
+            LoginView loginView = new LoginView(accountManager, friendManager, conversationManager, eventManager);
+            return loginView.viewLoginMenu();
         }
+       else if ("2".equals(command)) {
+            RegistrationView registrationView = new RegistrationView(accountManager, friendManager, conversationManager, eventManager);
+            return registrationView.viewRegistrationMenu();
+        }
+       else {
+           return true;
+       }
     }
-
 
 //    /**
 //     * Displays the home/start menu to the user when they start the program or return to

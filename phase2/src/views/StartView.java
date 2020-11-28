@@ -19,13 +19,15 @@ public class StartView {
     }
 
     public boolean viewStartMenu() {
-        presenter.preUserInput();
+        presenter.preUserInputPrompt();
         String command = userInput.nextLine();
+
         while (!(command.equals("0") || command.equals("1") || (command.equals("2")))) {
-            presenter.postUserInput();
+            presenter.invalidCommandPrompt();
             command = userInput.nextLine();
         }
-        return controller.runStartMenu(command);
+
+        return controller.start(command);
     }
 }
 
