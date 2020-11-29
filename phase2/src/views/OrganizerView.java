@@ -22,8 +22,7 @@ public class OrganizerView {
 
     public boolean viewOrganizerMenu() {
         presenter.startPrompt();
-
-        presenter.exitPrompt();
+        presenter.organizerMenuPrompt();
         return controller.runInteraction();
     }
 }

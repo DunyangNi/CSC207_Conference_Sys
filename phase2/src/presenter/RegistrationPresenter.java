@@ -39,6 +39,6 @@ public class RegistrationPresenter implements ConsolePresenter {
 
     @Override
     public void exitPrompt() {
-        System.out.println("Registering...");
+        System.out.println("Registered.");
     }
 }

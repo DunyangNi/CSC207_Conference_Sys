@@ -3,6 +3,10 @@ package presenter;
 public class OrganizerPresenter implements ConsolePresenter {
     @Override
     public void startPrompt() {
+        System.out.println("Logged in.");
+    }
+
+    public void organizerMenuPrompt() {
         System.out.println("[ORGANIZER MENU]");
         System.out.println("===================================");
         System.out.println("[ACCOUNT]");

@@ -121,7 +121,6 @@ public class OrganizerController extends AccountController {
     public boolean runInteraction() {
         boolean programEnd = false;
         boolean loggedIn = true;
-        presenter.displayOrganizerMenu();
         Scanner userInput = new Scanner(System.in);
         OrganizerCommand[] commandlist = OrganizerCommand.values();
         String command = userInput.nextLine();
