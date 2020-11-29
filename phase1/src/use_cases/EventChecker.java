@@ -1,7 +1,6 @@
 package use_cases;
 
-import Throwables.ConflictException;
-import Throwables.ObjectNotFoundException;
+import Throwables.*;
 import entities.Event;
 import entities.Talk;
 
@@ -29,22 +28,22 @@ public class EventChecker implements Serializable {
      * between 9 A.M and 4 P.M inclusive, or the same event has been already scheduled
      * @throws ObjectNotFoundException if the location for an event is not allowed
      */
-    public void checkValidEvent(Calendar time, String location, ArrayList<String> locations, ArrayList<Event> events) throws ConflictException, ObjectNotFoundException {
+    public void checkValidEvent(Calendar time, String location, ArrayList<String> locations, ArrayList<Event> events) throws LocationNotFoundException, PastTimeException, TimeConflictException, LocationConflictException {
         Calendar currTime = Calendar.getInstance();
 
         if (!locations.contains(location))  // is a valid location?
-            throw new ObjectNotFoundException("Location " + location);
+            throw new LocationNotFoundException();
 
         if (currTime.compareTo(time) >= 0)  // is time already past?
-            throw new ConflictException("Event to be scheduled takes place in the past.");
+            throw new PastTimeException();
 
         // is time between 9 am to 4 pm inclusive?
         if (!(9 <= time.get(Calendar.HOUR_OF_DAY) && time.get(Calendar.HOUR_OF_DAY) <= 16))
-            throw new ConflictException("Time must start between 9 AM and 5 PM.");
+            throw new TimeConflictException();
 
         for (Event event : events) {    // is the same event already scheduled?
             if (event.getLocation().equals(location) && event.getTime().equals(time))
-                throw new ConflictException("Location " + location + " is busy at scheduled time.");
+                throw new LocationConflictException();
         }
     }
 
@@ -62,7 +61,7 @@ public class EventChecker implements Serializable {
      * throws.
      * @throws ObjectNotFoundException if <code>checkValidEvent</code> throws
      */
-    public void checkValidTalk(Calendar time, String location, String speaker, ArrayList<String> locations, ArrayList<Talk> talks, ArrayList<Event> events) throws ConflictException, ObjectNotFoundException {
+    public void checkValidTalk(Calendar time, String location, String speaker, ArrayList<String> locations, ArrayList<Talk> talks, ArrayList<Event> events) throws ConflictException, LocationNotFoundException, PastTimeException, TimeConflictException, LocationConflictException {
         // Check if the same talk is found from a list of scheduled talkes
         for (Talk t : talks) {
             if (t.getSpeaker().equals(speaker) && t.getTime().equals(time))

@@ -1,5 +1,6 @@
 package controller;
 
+import Throwables.*;
 import gateway.DataManager;
 import presenter.Presenter;
 import presenter.TextPresenter;
@@ -36,7 +37,7 @@ public class LoginController {
      * Attempts login on the user
      * @return True if the user wishes to terminate the program
      */
-    public boolean attemptLogin() {
+    public boolean attemptLogin() throws AlreadyExistException, InvalidIntegerException, MessageNotFound, EventNotFoundException, UserNameNotFoundException, UserNotFoundException, EventFullException, EmptyListException {
         presenter.displayPrompt("[LOGIN MENU]");
         Scanner input = new Scanner(System.in);
 
@@ -67,11 +68,11 @@ public class LoginController {
      * @param username user's username
      * @return True if the user wishes to terminate the program
      */
-    private boolean login(String username) {
+    private boolean login(String username) throws EventNotFoundException, InvalidIntegerException, MessageNotFound, UserNotFoundException, UserNameNotFoundException, EventFullException, AlreadyExistException, EmptyListException {
         boolean programEnd = false;
         if (accountManager.containsAttendee(username)) {
             TextPresenter textpresenter = new TextPresenter(eventManager, friendManager, signupManager);
-            AttendeeController ac = new AttendeeController(username, eventManager, conversationManager, friendManager, signupManager, accountManager, textpresenter);
+            AttendeeController ac = new AttendeeController(username, accountManager, friendManager, conversationManager, eventManager, signupManager,  textpresenter);
             programEnd = ac.runInteraction();
         }
         if (accountManager.containsOrganizer(username)) {

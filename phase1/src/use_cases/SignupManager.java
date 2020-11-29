@@ -3,8 +3,8 @@ package use_cases;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import Throwables.ConflictException;
-import Throwables.ObjectNotFoundException;
+
+import Throwables.*;
 
 /**
  * Represents the entire system of Event and Attendee relationships.
@@ -30,11 +30,10 @@ public class SignupManager implements Serializable {
      * Attempts to return an ArrayList of usernames of Attendees associated with a Talk.
      * @param id given ID of a Talk
      * @return ArrayList of usernames of Attendees associated with a Talk
-     * @throws ObjectNotFoundException upon Talk not being found.
      */
-    public ArrayList<String> fetchTalkAttendeeList(Integer id) throws ObjectNotFoundException {
+    public ArrayList<String> fetchTalkAttendeeList(Integer id) throws EventNotFoundException {
         if (!signups.containsKey(id))
-            throw new ObjectNotFoundException("Talk");
+            throw new EventNotFoundException();
         return signups.get(id);
     }
 
@@ -78,16 +77,16 @@ public class SignupManager implements Serializable {
      *
      * @param talk_id given ID of an associated Talk
      * @param attendee given username of Attendee
-     * @throws ConflictException upon Talk being full of Attendees or Attendee is already signed up for Talk.
-     * @throws ObjectNotFoundException upon Talk not being found
+     * @throws EventFullException upon Talk being full of Attendees or Attendee is already signed up for Talk.
+     * @throws EventNotFoundException upon Talk not being found
      */
-    public void addAttendee(Integer talk_id, String attendee) throws ConflictException, ObjectNotFoundException {
+    public void addAttendee(Integer talk_id, String attendee) throws EventNotFoundException, EventFullException,  AlreadyExistException {
         if (!signups.containsKey(talk_id))
-            throw new ObjectNotFoundException("Talk");
+            throw new EventNotFoundException();
         if (isFull(talk_id))
-            throw new ConflictException("Talk is full.");
+            throw new EventFullException();
         if (isSignedUp(talk_id, attendee))
-            throw new ConflictException("You are already signed up for this Talk.");
+            throw new AlreadyExistException();
         signups.get(talk_id).add(attendee);
     }
 
@@ -96,13 +95,14 @@ public class SignupManager implements Serializable {
      *
      * @param talk_id given ID of an associated Talk
      * @param attendee given username of Attendee
-     * @throws ObjectNotFoundException upon Talk or User not being found
+     * @throws EventNotFoundException upon Talk not being found
+     * @throws UserNameNotFoundException user is not in the given event
      */
-    public void removeAttendee(Integer talk_id, String attendee) throws ObjectNotFoundException {
+    public void removeAttendee(Integer talk_id, String attendee) throws EventNotFoundException, UserNameNotFoundException{
         if (!signups.containsKey(talk_id))
-            throw new ObjectNotFoundException("Talk");
+            throw new EventNotFoundException();
         if (!isSignedUp(talk_id, attendee))
-            throw new ObjectNotFoundException("User");
+            throw new UserNameNotFoundException();
         signups.get(talk_id).remove(attendee);
     }
 }

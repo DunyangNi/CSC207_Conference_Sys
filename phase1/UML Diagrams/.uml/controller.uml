@@ -3,7 +3,7 @@
   <ID>JAVA</ID>
   <OriginalElement>controller</OriginalElement>
   <nodes>
-    <node x="655.0" y="1077.0">controller.FriendController</node>
+    <node x="655.0" y="1077.0">controller.AddFriendController</node>
     <node x="739.0" y="480.0">controller.AttendeeController</node>
     <node x="1018.0" y="1077.0">controller.ConferenceSystem</node>
     <node x="1485.0" y="436.0">controller.OrganizerController</node>
@@ -35,7 +35,7 @@
   </edges>
   <settings layout="Hierarchic Group" zoom="0.944319036869827" x="1107.0" y="654.5" />
   <SelectedNodes>
-    <node>controller.FriendController</node>
+    <node>controller.AddFriendController</node>
   </SelectedNodes>
   <Categories>
     <Category>Fields</Category>

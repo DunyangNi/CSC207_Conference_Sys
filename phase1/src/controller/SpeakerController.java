@@ -1,6 +1,6 @@
 package controller;
 
-import Throwables.ObjectNotFoundException;
+import Throwables.*;
 import use_cases.*;
 import java.util.*;
 import java.lang.*;
@@ -35,7 +35,7 @@ public class SpeakerController extends AccountController {
      * @return True if the speaker wishes to terminate the program
      */
     @Override
-    public boolean runInteraction() {
+    public boolean runInteraction() throws UserNotFoundException, UserNameNotFoundException, EmptyListException, EventNotFoundException, AlreadyExistException, InvalidIntegerException, MessageNotFound {
         boolean programEnd = false;
         boolean loggedIn = true;
         presenter.displaySpeakerMenu();
@@ -59,13 +59,13 @@ public class SpeakerController extends AccountController {
                     presenter.displayAccountList(accounts);
                     presenter.displayContactsPrompt("add");
                     String contactToAdd = userInput.nextLine();
-                    friendController.addFriend(contactToAdd);
+                    addFriendController.addFriend(contactToAdd);
                     break;
                 case "3":
                     presenter.displayContactList(username);
                     presenter.displayContactsPrompt("remove");
                     String removeContact = userInput.nextLine();
-                    friendController.removeFriend(removeContact);
+                    removeFriendController.removeFriend(removeContact);
                     break;
                 case "4":
                     presenter.displayContactList(username);
@@ -84,7 +84,7 @@ public class SpeakerController extends AccountController {
                         this.presenter.displayPrompt("Please enter your message to send: ");
                         String message = userInput.nextLine();
                         if (allAttendees.contains(attendee)) {
-                            messageController.messageAttendee(message, attendee);
+                            messageAttendeeController.messageAttendee(message, attendee);
                         } else {
                             this.presenter.displayPrompt("The entered recipient username is invalid.");
                         }
@@ -111,7 +111,7 @@ public class SpeakerController extends AccountController {
                     }
                     this.presenter.displayPrompt("Please enter your message to send: ");
                     String message = userInput.nextLine();
-                    messageController.messageAttendeesAtTalks(selectedSpeakerTalks, message);
+                    messageAttendeeController.messageAttendeesAtTalks(selectedSpeakerTalks, message);
                     break;
                 case "7":
                     try {
@@ -123,7 +123,7 @@ public class SpeakerController extends AccountController {
                             String user = userInput.nextLine();
                             int pastMessages = userInput.nextInt();
                             userInput.nextLine();
-                            this.viewMessagesFrom(user, pastMessages);
+                            viewConversationController.viewMessagesFrom(user, pastMessages);
                         }
                     } catch (InputMismatchException e) {
                         this.presenter.displayConversationsErrors("mismatch");

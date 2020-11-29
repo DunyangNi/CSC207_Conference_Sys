@@ -47,13 +47,13 @@ public class FriendManager implements Serializable {
      * @throws ObjectNotFoundException upon User or friend not being found
      * @throws ConflictException upon friend already in User's friends
      */
-    public void addFriend(String user, String friendToAdd) throws ObjectNotFoundException, ConflictException {
+    public void addFriend(String user, String friendToAdd) throws AlreadyExistException, UserNotFoundException, UserNameNotFoundException {
         if (!friends.containsKey(user))
-            throw new ObjectNotFoundException("User");
+            throw new UserNotFoundException();
         if (!friends.containsKey(friendToAdd))
-            throw new ObjectNotFoundException("Friend");
+            throw new UserNameNotFoundException();
         if (friends.get(user).contains(friendToAdd))
-            throw new ConflictException("This friend is already in your contacts.");
+            throw new AlreadyExistException();
         friends.get(user).add(friendToAdd);
     }
 
@@ -63,11 +63,11 @@ public class FriendManager implements Serializable {
      * @param friendToRemove given username of friend
      * @throws ObjectNotFoundException upon friend not being in User's friends
      */
-    public void removeFriend(String user, String friendToRemove) throws ObjectNotFoundException{
+    public void removeFriend(String user, String friendToRemove) throws UserNotFoundException, UserNameNotFoundException {
         if (!friends.containsKey(user))
-            throw new ObjectNotFoundException("User");
+            throw new UserNotFoundException();
         if (!friends.containsKey(friendToRemove))
-            throw new ObjectNotFoundException("Friend");
+            throw new UserNameNotFoundException();
         friends.get(user).remove(friendToRemove);
     }
 }

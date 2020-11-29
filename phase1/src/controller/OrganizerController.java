@@ -1,7 +1,6 @@
 package controller;
 
-import Throwables.ConflictException;
-import Throwables.ObjectNotFoundException;
+import Throwables.*;
 import use_cases.*;
 
 import java.util.*;
@@ -25,29 +24,9 @@ public class OrganizerController extends AccountController {
         super(username, accountManager, friendManager, conversationManager, eventManager, signupManager, presenter);
     }
 
-    /**
-     * helper function that adds a user's username as keys to certain
-     * hashmaps in the use cases
-     * @param username specified username
-     */
-    // (NEW!) (Helper)
-    private void addNewSpeakerKeys(String username) {
-        conversationManager.addAccountKey(username);
-        friendManager.addAccountKey(username);
-        eventManager.addSpeakerKey(username);
-    }
 
-    /**
-     * adds a new allowed location where events can take place to the database
-     * @param location location to be added
-     */
-    public void addNewLocation(String location) {
-        try {
-            this.eventManager.addNewLocation(location);
-        } catch (ConflictException e) {
-            presenter.displayPrompt(e.toString());
-        }
-    }
+
+
 
     /**
      * creates a new speaker account with the given information fields
@@ -56,14 +35,7 @@ public class OrganizerController extends AccountController {
      * @param firstname given first name
      * @param lastname given last name
      */
-    public void createSpeakerAccount(String username, String password, String firstname, String lastname) {
-        try {
-            this.accountManager.addNewSpeaker(username, password, firstname, lastname);
-            addNewSpeakerKeys(username);
-        } catch (ConflictException e) {
-            presenter.displayPrompt(e.toString()); //
-        }
-    }
+
 
     /**
      * Registers a new talk into the database with the given information fields
@@ -81,31 +53,8 @@ public class OrganizerController extends AccountController {
         }
     }
 
-    /**
-     * cancels a talk with the given id
-     * @param id id of talk to cancel
-     */
-    public void cancelTalk(Integer id) {
-        try {
-            this.eventManager.cancelTalk(id);
-            signupManager.removeEventKey(id);
-        } catch (Exception e) {
-            presenter.displayPrompt(e.toString());
-        }
-    }
 
-    /**
-     * reschedules a talk with the given id to time newTime
-     * @param id talk id
-     * @param newTime time to reschedule talk to
-     */
-    public void rescheduleTalk(Integer id, Calendar newTime) {
-        try {
-            this.eventManager.changeTime(id, newTime);
-        } catch (Exception e) {
-            presenter.displayPrompt(e.toString());
-        }
-    }
+
 
     /**
      * displays the list of all locations currently in the database
@@ -123,7 +72,7 @@ public class OrganizerController extends AccountController {
      * @return True if organizer wants to terminate the program
      */
     @Override
-    public boolean runInteraction() {
+    public boolean runInteraction() throws UserNotFoundException, AlreadyExistException, UserNameNotFoundException, EmptyListException, InvalidIntegerException, MessageNotFound {
         boolean programEnd = false;
         boolean loggedIn = true;
         presenter.displayOrganizerMenu();
@@ -144,7 +93,7 @@ public class OrganizerController extends AccountController {
                     presenter.displayUserPassPrompt();
                     String username = userInput.nextLine();
                     String password = userInput.nextLine();
-                    createSpeakerAccount(username, password, "", "");
+                    accountCreationController.createSpeakerAccount(username, password, "", "");
                     break;
                 }
                 case "2":
@@ -154,12 +103,12 @@ public class OrganizerController extends AccountController {
                 case "3":
                     presenter.displayContactsPrompt("add");
                     String contactToAdd = userInput.nextLine();
-                    friendController.addFriend(contactToAdd);
+                    addFriendController.addFriend(contactToAdd);
                     break;
                 case "4":
                     presenter.displayContactsPrompt("remove");
                     String contactToRemove = userInput.nextLine();
-                    friendController.removeFriend(contactToRemove);
+                    removeFriendController.removeFriend(contactToRemove);
                     break;
                 case "5":
                     this.viewContactList();
@@ -168,52 +117,44 @@ public class OrganizerController extends AccountController {
                     presenter.displayMessagingPrompt("aSpeaker");
                     String username = userInput.nextLine();
                     String message = userInput.nextLine();
-                    messageController.messageSpeaker(message, username);
+                    messageSpeakerController.messageSpeaker(message, username);
                     break;
                 }
                 case "7": {
                     presenter.displayMessagingPrompt("anAttendee");
                     String username = userInput.nextLine();
                     String message = userInput.nextLine();
-                    messageController.messageAttendee(message, username);
+                    messageAttendeeController.messageAttendee(message, username);
                     break;
                 }
                 case "8": {
                     presenter.displayMessagingPrompt("allSpeakers");
                     String message = userInput.nextLine();
-                    messageController.messageAllSpeakers(message);
+                    messageSpeakerController.messageAllSpeakers(message);
                     break;
                 }
                 case "9": {
                     presenter.displayMessagingPrompt("allAttendees");
                     String message = userInput.nextLine();
-                    messageController.messageAllAttendees(message);
+                    messageAttendeeController.messageAllAttendees(message);
                     break;
                 }
                 case "10":
-                    try {
-                        Set<String> recipients = conversationManager.getAllUserConversationRecipients(username);
-
-                        if (recipients.isEmpty()) {
-                            presenter.displayConversations("empty", recipients);
-                        } else {
-                            presenter.displayConversations("non_empty", recipients);
-                            String recipient = userInput.nextLine();
-                            int pastMessages = Integer.parseInt(userInput.nextLine());
-                            this.viewMessagesFrom(recipient, pastMessages);
-                        }
-                    } catch (InputMismatchException e) {
-                        this.presenter.displayConversationsErrors("mismatch");
-                    } catch (ObjectNotFoundException e) {
-                        this.presenter.displayConversationsErrors("no_user");
-                    } catch (NullPointerException e) {
-                        this.presenter.displayConversationsErrors("no_conversation");
+                    Set<String> recipients = conversationManager.getAllUserConversationRecipients(username);
+                    if (recipients.isEmpty()) {
+                        presenter.displayConversations("empty", recipients);
+                    } else {
+                        presenter.displayConversations("non_empty", recipients);
+                        String recipient = userInput.nextLine();
+                        int pastMessages = Integer.parseInt(userInput.nextLine());
+                        viewConversationController.viewMessagesFrom(recipient, pastMessages);
                     }
+
                     break;
                 case "11":
                     presenter.displayRoomRegistration();
                     String location = userInput.nextLine();
-                    addNewLocation(location);
+                    locationController.addNewLocation(location);
                     break;
                 case "12":
                     this.seeLocationList();
@@ -225,8 +166,8 @@ public class OrganizerController extends AccountController {
                         location = userInput.nextLine();
                         String topic = userInput.nextLine();
                         Calendar time = this.collectTimeInfo();
-                        Integer newTalkID = eventManager.addNewTalk(topic, time, location, this.username, username);
-                        signupManager.addEventKey(newTalkID);
+                        eventCreationController.createEvent(topic, time, location, username);
+
                     } catch (Exception e) {
                         presenter.displayPrompt(e.toString());
                     }
@@ -236,7 +177,7 @@ public class OrganizerController extends AccountController {
                         presenter.displayEventPrompt("cancel");
                         int id = userInput.nextInt();
                         userInput.nextLine();
-                        this.cancelTalk(id);
+                        eventCreationController.cancelTalk(id);
                     }
                     catch(Exception e) {
                         presenter.displayPrompt(e.toString());
@@ -248,7 +189,7 @@ public class OrganizerController extends AccountController {
                         int id = userInput.nextInt();
                         userInput.nextLine();
                         Calendar newTime = this.collectTimeInfo();
-                        this.rescheduleTalk(id, newTime);
+                        eventModifyController.rescheduleTalk(id, newTime);
                     } catch (Exception e) {
                         presenter.displayPrompt(e.toString());
                     }
