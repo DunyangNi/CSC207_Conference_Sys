@@ -3,6 +3,7 @@ import java.util.*;
 public class Request {
     private Calendar timeOfRequest;
     private String senderUsername;
+    private String requestSubjectLine;
     private String request;
     private Boolean resolved = false;
 
@@ -24,7 +25,9 @@ public class Request {
     public Boolean getResolutionSatus(){
         return this.resolved;
     }
-
+    public String getRequestSubjectLine(){
+        return this.requestSubjectLine;
+    }
     public void resolveRequest(){
         this.resolved = true;
     }
