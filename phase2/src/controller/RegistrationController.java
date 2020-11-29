@@ -1,5 +1,6 @@
 package controller;
 
+import exceptions.ConflictException;
 import gateway.AccountDataManager;
 import gateway.ConversationDataManager;
 import gateway.EventDataManager;
@@ -15,6 +16,7 @@ public class RegistrationController {
     private final ConversationManager cm;
     private final EventManager em;
     public final String ORGANIZER_CODE = "123456";
+    public final String SPEAKER_CODE = "123456";
 
     /**
      * handles the creation of new organizer and attendee accounts for registration
@@ -31,10 +33,15 @@ public class RegistrationController {
         this.em = em;
     }
 
-    public boolean register(String accountType, String username, String password) {
+    // TODO: 11/28/20 Refactor methods to manage exceptions consistently
+    public boolean register(String accountType, String username, String password) throws ConflictException {
         if (accountType.equals("1")) {
             am.addNewAttendee(username, password, "", "");
-        } else {
+        }
+        else if (accountType.equals("2")) {
+            am.addNewSpeaker(username, password, "", "");
+        }
+        else {
             am.addNewOrganizer(username, password, "", "");
         }
         addNewAccountKeys(username);
