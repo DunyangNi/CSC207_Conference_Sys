@@ -22,7 +22,7 @@ public class RegistrationView {
         this.controller = new RegistrationController(am, fm, cm, em);
     }
 
-    public boolean viewRegistrationMenu() throws ConflictException {
+    public boolean viewRegistrationMenu() {
         presenter.startPrompt();
         // TODO: 11/29/20 Replace string cases with enum
         // String accountType = AccountType.valueOf(userInput.nextLine()).toString();
@@ -65,7 +65,7 @@ public class RegistrationView {
         }
     }
 
-    public boolean viewAccountInfoMenu(String accountType) throws ConflictException {
+    public boolean viewAccountInfoMenu(String accountType) {
         presenter.usernamePrompt();
         String username = userInput.nextLine();
         // TODO: 11/28/20 Could possibly remove call to AccountManager.containsAccount() and instead pass whatever

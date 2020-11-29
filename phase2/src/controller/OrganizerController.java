@@ -54,12 +54,12 @@ public class OrganizerController extends AccountController {
      * @param lastname given last name
      */
     public void createSpeakerAccount(String username, String password, String firstname, String lastname) {
-        try {
+//        try {
             this.accountManager.addNewSpeaker(username, password, firstname, lastname);
             addNewSpeakerKeys(username);
-        } catch (ConflictException e) {
-            presenter.displayPrompt(e.toString()); //
-        }
+//        } catch (ConflictException e) {
+//            presenter.displayPrompt(e.toString()); //
+//        }
     }
 
 //    /**

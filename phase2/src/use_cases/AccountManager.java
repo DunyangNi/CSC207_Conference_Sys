@@ -158,10 +158,11 @@ public class AccountManager implements Serializable {
      * @param lastName given last name
      * @throws ConflictException upon finding an existing Speaker with the same username
      */
-    public void addNewSpeaker(String username, String password, String firstName, String lastName) throws ConflictException {
-        if (getAccountHashMap().containsKey(username)) {
-            throw new ConflictException("Username already exists.");
-        }
+    public void addNewSpeaker(String username, String password, String firstName, String lastName) {
+        // TODO: 11/29/20 Reintroduce exception thorw in the future
+//        if (getAccountHashMap().containsKey(username)) {
+//            throw new ConflictException("Username already exists.");
+//        }
         Speaker newSpeaker = new Speaker(username, password, firstName, lastName);
         speakerHashMap.put(username, newSpeaker);
     }
