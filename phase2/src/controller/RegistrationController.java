@@ -1,6 +1,5 @@
 package controller;
 
-import exceptions.ConflictException;
 import gateway.AccountDataManager;
 import gateway.ConversationDataManager;
 import gateway.EventDataManager;
@@ -22,7 +21,7 @@ public class RegistrationController {
      * handles the creation of new organizer and attendee accounts for registration
      *
      * @param am manages data of all accounts in the program
-     * @param fm manages friendlist functionality
+     * @param fm manages friend list functionality
      * @param cm manages messaging functionality
      * @param em manages data of all events in the program
      */

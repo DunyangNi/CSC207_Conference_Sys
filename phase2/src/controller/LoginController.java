@@ -4,7 +4,6 @@ import gateway.AccountDataManager;
 import gateway.ConversationDataManager;
 import gateway.EventDataManager;
 import gateway.FriendDataManager;
-import presenter.*;
 import use_cases.*;
 import views.AttendeeView;
 import views.OrganizerView;
