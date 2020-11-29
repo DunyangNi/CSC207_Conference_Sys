@@ -1,25 +1,25 @@
 package controller;
 
-import exceptions.ConflictException;
 import exceptions.ObjectNotFoundException;
 import use_cases.*;
 
 import java.util.*;
 
 import enums.*;
+import views.RegistrationView;
 
 public class OrganizerController extends AccountController {
     /**
      * facilitates interaction with organizer upon login
      * @param username organizer username
-     * @param accountManager manages data of all accounts in program
-     * @param friendManager manages friendList functionality
-     * @param conversationManager manages messaging functionality
-     * @param eventManager manages event data
+     * @param am manages data of all accounts in program
+     * @param fm manages friendList functionality
+     * @param cm manages messaging functionality
+     * @param em manages event data
      */
-    public OrganizerController(String username, AccountManager accountManager, FriendManager friendManager,
-                               ConversationManager conversationManager, EventManager eventManager) {
-        super(username, accountManager, friendManager, conversationManager, eventManager);
+    public OrganizerController(String username, AccountManager am, FriendManager fm,
+                               ConversationManager cm, EventManager em) {
+        super(username, am, fm, cm, em);
     }
 
     /**
@@ -29,9 +29,9 @@ public class OrganizerController extends AccountController {
      */
     // (NEW!) (Helper)
     private void addNewSpeakerKeys(String username) {
-        conversationManager.addAccountKey(username);
-        friendManager.addAccountKey(username);
-        eventManager.addSpeakerKey(username);
+        cm.addAccountKey(username);
+        fm.addAccountKey(username);
+        em.addSpeakerKey(username);
     }
 
     /**
@@ -40,7 +40,7 @@ public class OrganizerController extends AccountController {
      */
     public void addNewLocation(String location) {
         try {
-            this.eventManager.addNewLocation(location);
+            this.em.addNewLocation(location);
         } catch (Exception e) {
             presenter.displayPrompt(e.toString());
         }
@@ -55,7 +55,7 @@ public class OrganizerController extends AccountController {
      */
     public void createSpeakerAccount(String username, String password, String firstname, String lastname) {
 //        try {
-            this.accountManager.addNewSpeaker(username, password, firstname, lastname);
+            this.am.addNewSpeaker(username, password, firstname, lastname);
             addNewSpeakerKeys(username);
 //        } catch (ConflictException e) {
 //            presenter.displayPrompt(e.toString()); //
@@ -83,7 +83,7 @@ public class OrganizerController extends AccountController {
      */
     public void cancelTalk(Integer id) {
         try {
-            this.eventManager.cancelEvent(id);
+            this.em.cancelEvent(id);
         } catch (Exception e) {
             presenter.displayPrompt(e.toString());
         }
@@ -96,7 +96,7 @@ public class OrganizerController extends AccountController {
      */
     public void rescheduleTalk(Integer id, Calendar newTime) {
         try {
-            this.eventManager.changeTime(id, newTime);
+            this.em.changeTime(id, newTime);
         } catch (Exception e) {
             presenter.displayPrompt(e.toString());
         }
@@ -106,7 +106,7 @@ public class OrganizerController extends AccountController {
      * displays the list of all locations currently in the database
      */
     public void seeLocationList() {
-        ArrayList<String> locations = this.eventManager.getLocations();
+        ArrayList<String> locations = this.em.getLocations();
         presenter.displayPrompt("Locations:\n");
         for (String location : locations) {
             presenter.displayPrompt(location);
@@ -154,14 +154,16 @@ public class OrganizerController extends AccountController {
                     loggedIn = false;
                     break;
                 case NEW_SPEAKER: {
-                    presenter.displayUserPassPrompt();
-                    String username = userInput.nextLine();
-                    String password = userInput.nextLine();
-                    createSpeakerAccount(username, password, "", "");
+//                    presenter.displayUserPassPrompt();
+//                    String username = userInput.nextLine();
+//                    String password = userInput.nextLine();
+//                    createSpeakerAccount(username, password, "", "");
+                    RegistrationView registrationView = new RegistrationView(am, fm, cm, em);
+                    registrationView.viewAccountInfoMenu("2");
                     break;
                 }
                 case VIEW_ALL_ACCOUNTS:
-                    Set<String> accounts = accountManager.getAccountHashMap().keySet();
+                    Set<String> accounts = am.getAccountHashMap().keySet();
                     presenter.displayAccountList(accounts);
                     break;
                 case ADD_CONTACT:
@@ -205,7 +207,7 @@ public class OrganizerController extends AccountController {
                 }
                 case VIEW_CONVERSATION:
                     try {
-                        Set<String> recipients = conversationManager.getAllUserConversationRecipients(username);
+                        Set<String> recipients = cm.getAllUserConversationRecipients(username);
 
                         if (recipients.isEmpty()) {
                             presenter.displayConversations("empty", recipients);
@@ -238,7 +240,7 @@ public class OrganizerController extends AccountController {
                         location = userInput.nextLine();
                         String topic = userInput.nextLine();
                         Calendar time = this.collectTimeInfo();
-                        eventManager.addNewEvent(EventType.TALK, topic, time, location, this.username, new ArrayList<>(Collections.singletonList(username)), 2, false);
+                        em.addNewEvent(EventType.TALK, topic, time, location, this.username, new ArrayList<>(Collections.singletonList(username)), 2, false);
                     } catch (Exception e) {
                         presenter.displayPrompt(e.toString());
                     }

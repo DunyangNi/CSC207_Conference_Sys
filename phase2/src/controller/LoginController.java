@@ -8,6 +8,7 @@ import presenter.*;
 import use_cases.*;
 import views.AttendeeView;
 import views.OrganizerView;
+import views.SpeakerView;
 
 public class LoginController {
     private final AccountManager am;
@@ -40,8 +41,8 @@ public class LoginController {
             programEnd = organizerView.viewOrganizerMenu();
         }
         if (am.containsSpeaker(username)) {
-            OrganizerView organizerView = new OrganizerView(username, am, fm, cm, em);
-            programEnd = organizerView.viewOrganizerMenu();
+            SpeakerView speakerView = new SpeakerView(username, am, fm, cm, em);
+            programEnd = speakerView.viewSpeakerMenu();
         }
 
         AccountDataManager accountDataManager = new AccountDataManager();

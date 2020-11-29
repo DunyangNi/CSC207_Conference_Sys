@@ -8,7 +8,7 @@ import java.lang.*;
 import enums.*;
 
 public class AttendeeController extends AccountController {
-    private final SignupController signupController = new SignupController(username, accountManager, eventManager);
+    private final SignupController signupController = new SignupController(username, am, em);
 
     /**
      * facilitates interaction with attendee upon login
@@ -55,7 +55,6 @@ public class AttendeeController extends AccountController {
     public boolean runInteraction() {
         boolean programEnd = false;
         boolean loggedIn = true;
-        presenter.displayAttendeeMenu();
         Scanner userInput = new Scanner(System.in);
         AttendeeCommand[] commandlist = AttendeeCommand.values();
         String command = userInput.nextLine();
@@ -123,7 +122,7 @@ public class AttendeeController extends AccountController {
                 }
                 case VIEW_CONVERSATION:
                     try {
-                        Set<String> myConversations = conversationManager.getAllUserConversationRecipients(username);
+                        Set<String> myConversations = cm.getAllUserConversationRecipients(username);
                         if (myConversations.isEmpty()) {
                             this.presenter.displayConversations("empty", myConversations);
                         } else {

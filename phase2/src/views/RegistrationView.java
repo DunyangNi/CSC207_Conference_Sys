@@ -61,7 +61,7 @@ public class RegistrationView {
 
         while (!codeInput.equals(code)) {
             presenter.invalidCodePrompt();
-            code = userInput.nextLine();
+            codeInput = userInput.nextLine();
         }
     }
 

@@ -22,8 +22,8 @@ public class SpeakerView {
 
     public boolean viewSpeakerMenu() {
         presenter.startPrompt();
+        presenter.speakerMenuPrompt();
 
-        presenter.exitPrompt();
         return controller.runInteraction();
     }
 }

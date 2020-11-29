@@ -12,10 +12,10 @@ import java.util.Scanner;
 
 public abstract class AccountController {
     protected String username;
-    protected AccountManager accountManager;
-    protected FriendManager friendManager;
-    protected ConversationManager conversationManager;
-    protected EventManager eventManager;
+    protected AccountManager am;
+    protected FriendManager fm;
+    protected ConversationManager cm;
+    protected EventManager em;
     protected Presenter presenter = new TextPresenter();
     protected FriendController friendController;
     protected MessageController messageController;
@@ -23,19 +23,19 @@ public abstract class AccountController {
     /**
      * Facilitates interaction with the user (organizer/speaker/attendee) upon login
      *  @param username username of account user
-     * @param accountManager manages data of all accounts in program
-     * @param friendManager manages data of contacts lists
-     * @param conversationManager manages conversation data
-     * @param eventManager manages event data
+     * @param am manages data of all accounts in program
+     * @param fm manages data of contacts lists
+     * @param cm manages conversation data
+     * @param em manages event data
      */
-    public AccountController(String username, AccountManager accountManager, FriendManager friendManager, ConversationManager conversationManager, EventManager eventManager) {
+    public AccountController(String username, AccountManager am, FriendManager fm, ConversationManager cm, EventManager em) {
         this.username = username;
-        this.accountManager = accountManager;
-        this.friendManager = friendManager;
-        this.conversationManager = conversationManager;
-        this.eventManager = eventManager;
-        this.friendController = new FriendController(username, friendManager, presenter);
-        this.messageController = new MessageController(username, accountManager, conversationManager, eventManager);
+        this.am = am;
+        this.fm = fm;
+        this.cm = cm;
+        this.em = em;
+        this.friendController = new FriendController(username, fm, presenter);
+        this.messageController = new MessageController(username, am, cm, em);
     }
 
     /**
@@ -64,12 +64,12 @@ public abstract class AccountController {
                 this.presenter.displayPrompt("You have requested an invalid number");
             } else {
                 String msgToPrint;
-                ArrayList<Integer> convo = conversationManager.getConversationMessages(this.username, recipient);
+                ArrayList<Integer> convo = cm.getConversationMessages(this.username, recipient);
                 this.presenter.displayPrompt("Your recent " + numMessagesRequested + " messages with " + recipient + ":");
                 this.presenter.displayPrompt("");
                 int numMessagesRetrieved = Math.min(numMessagesRequested, convo.size());
                 for (int i = numMessagesRetrieved; i > 0; i--) {
-                    msgToPrint = conversationManager.messageToString(convo.get(convo.size() - i)); // implemented fix
+                    msgToPrint = cm.messageToString(convo.get(convo.size() - i)); // implemented fix
                     this.presenter.displayPrompt(msgToPrint);
                     this.presenter.displayPrompt("");
                 }

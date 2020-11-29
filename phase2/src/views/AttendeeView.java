@@ -22,8 +22,8 @@ public class AttendeeView {
 
     public boolean viewAttendeeMenu() {
         presenter.startPrompt();
+        presenter.attendeeMenuPrompt();
 
-        presenter.exitPrompt();
         return controller.runInteraction();
     }
 }

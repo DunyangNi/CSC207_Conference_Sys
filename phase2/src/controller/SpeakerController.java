@@ -36,7 +36,6 @@ public class SpeakerController extends AccountController {
     public boolean runInteraction() {
         boolean programEnd = false;
         boolean loggedIn = true;
-        presenter.displaySpeakerMenu();
         Scanner userInput = new Scanner(System.in);
         SpeakerCommand[] commandlist = SpeakerCommand.values();
         String command = userInput.nextLine();
@@ -69,11 +68,11 @@ public class SpeakerController extends AccountController {
                     loggedIn = false;
                     break;
                 case VIEW_ALL_ACCOUNTS:
-                    Set<String> accounts = accountManager.getAccountHashMap().keySet();
+                    Set<String> accounts = am.getAccountHashMap().keySet();
                     presenter.displayAccountList(accounts);
                     break;
                 case ADD_CONTACT:
-                    accounts = accountManager.getAccountHashMap().keySet();
+                    accounts = am.getAccountHashMap().keySet();
                     presenter.displayAccountList(accounts);
                     presenter.displayContactsPrompt("add");
                     String contactToAdd = userInput.nextLine();
@@ -89,7 +88,7 @@ public class SpeakerController extends AccountController {
                     presenter.displayContactList(username);
                     break;
                 case MESSAGE_ATTENDEE:
-                    Set<String> allAttendees = accountManager.getAttendeeHashMap().keySet();
+                    Set<String> allAttendees = am.getAttendeeHashMap().keySet();
                     if (!allAttendees.isEmpty()) {
                         this.presenter.displayPrompt("List of attendees");
                         this.presenter.displayPrompt("---------------------------------------------");
@@ -116,7 +115,7 @@ public class SpeakerController extends AccountController {
                     while (!doneAddingTalks) {
                         this.presenter.displayPrompt("Please enter the ID of a Talk you are giving: ");
                         Integer id = Integer.parseInt(userInput.nextLine());
-                        if (eventManager.isSpeakerOfTalk(id, username)) {
+                        if (em.isSpeakerOfTalk(id, username)) {
                             selectedSpeakerTalks.add(id);
                         } else {
                             this.presenter.displayPrompt("Invalid ID. You are not speaking at this talk.");
@@ -133,7 +132,7 @@ public class SpeakerController extends AccountController {
                     break;
                 case VIEW_CONVERSATION:
                     try {
-                        Set<String> myConversations = conversationManager.getAllUserConversationRecipients(username);
+                        Set<String> myConversations = cm.getAllUserConversationRecipients(username);
                         if (myConversations.isEmpty()) {
                             this.presenter.displayConversations("empty", myConversations);
                         } else {

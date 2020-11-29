@@ -3,7 +3,7 @@ package presenter;
 public class OrganizerPresenter implements ConsolePresenter {
     @Override
     public void startPrompt() {
-        System.out.println("Logged in.");
+        System.out.println("Logged in)");
     }
 
     public void organizerMenuPrompt() {

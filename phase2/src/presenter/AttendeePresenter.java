@@ -3,6 +3,10 @@ package presenter;
 public class AttendeePresenter implements ConsolePresenter {
     @Override
     public void startPrompt() {
+        System.out.println("Logged in)");
+    }
+
+    public void attendeeMenuPrompt() {
         System.out.println("[ATTENDEE MENU]");
         System.out.println("===================================");
         System.out.println("[ACCOUNT]");
