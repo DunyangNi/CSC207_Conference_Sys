@@ -14,6 +14,109 @@ public class EventLocationManager implements Serializable {
     private HashMap<Integer, Location> locations = new HashMap<>();
     private int curID = 0; //the id of the next location to be added
 
+    //filters
+
+    public ArrayList<String> getLocationsWithPresentationScreens(ArrayList<String> nameList) throws ObjectNotFoundException{
+        try{
+            ArrayList<String> filtered = new ArrayList<>();
+            for(String name: nameList) {
+                Integer id = getIDAtName(name);
+                Location location = this.locations.get(id);
+                if(location.hasPresentationScreen() == true) {
+                    filtered.add(name);
+                }
+            }
+            return filtered;
+        } catch(Exception e) {
+            throw new ObjectNotFoundException("Location");
+        }
+    }
+    public ArrayList<String> getLocationsWithSoundSystems(ArrayList<String> nameList) throws ObjectNotFoundException{
+        try{
+            ArrayList<String> filtered = new ArrayList<>();
+            for(String name: nameList) {
+                Integer id = getIDAtName(name);
+                Location location = this.locations.get(id);
+                if(location.hasSoundSystem() == true) {
+                    filtered.add(name);
+                }
+            }
+            return filtered;
+        } catch(Exception e) {
+            throw new ObjectNotFoundException("Location");
+        }
+    }
+
+    public ArrayList<String> getLocationsWithInternet(ArrayList<String> nameList) throws ObjectNotFoundException{
+        try{
+            ArrayList<String> filtered = new ArrayList<>();
+            for(String name: nameList) {
+                Integer id = getIDAtName(name);
+                Location location = this.locations.get(id);
+                if(location.hasInternet() == true) {
+                    filtered.add(name);
+                }
+            }
+            return filtered;
+        } catch(Exception e) {
+            throw new ObjectNotFoundException("Location");
+        }
+    }
+
+    //returns location names with numchairs >= i
+    public ArrayList<String> filterByNumChairs(int i, ArrayList<String> nameList) throws ObjectNotFoundException {
+        try{
+            ArrayList<String> filtered = new ArrayList<>();
+            for(String name: nameList) {
+                Integer id = getIDAtName(name);
+                Location location = this.locations.get(id);
+                if(location.numChairs() >= i) {
+                    filtered.add(name);
+                }
+            }
+            return filtered;
+        } catch(Exception e) {
+            throw new ObjectNotFoundException("Location");
+        }
+
+    }
+
+    //returns location names with numtables >= i
+    public ArrayList<String> filterByNumTables(int i, ArrayList<String> nameList) throws ObjectNotFoundException {
+        try{
+            ArrayList<String> filtered = new ArrayList<>();
+            for(String name: nameList) {
+                Integer id = getIDAtName(name);
+                Location location = this.locations.get(id);
+                if(location.numTables() >= i) {
+                    filtered.add(name);
+                }
+            }
+            return filtered;
+        } catch(Exception e) {
+            throw new ObjectNotFoundException("Location");
+        }
+
+    }
+
+    //returns location names with max occupancy >= i
+    public ArrayList<String> filterByMaxOccupancy(int i, ArrayList<String> nameList) throws ObjectNotFoundException {
+        try{
+            ArrayList<String> filtered = new ArrayList<>();
+            for(String name: nameList) {
+                Integer id = getIDAtName(name);
+                Location location = this.locations.get(id);
+                if(location.getMaxOccupancy() >= i) {
+                    filtered.add(name);
+                }
+            }
+            return filtered;
+        } catch(Exception e) {
+            throw new ObjectNotFoundException("Location");
+        }
+
+    }
+
     public void updateMaxOccupancy(int id, int status) throws IntegerOutOfBoundsException, ObjectNotFoundException{
         if(status < 0) {
             throw new IntegerOutOfBoundsException("Too few occupants");
