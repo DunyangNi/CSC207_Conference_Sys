@@ -6,11 +6,13 @@ public class Request {
     private String requestSubjectLine;
     private String request;
     private Boolean resolved = false;
+    private Integer requestID;
 
-    public Request(Calendar timeOfRequest, String senderUsername, String request) {
+    public Request(Calendar timeOfRequest, String senderUsername, String request, Integer requestID) {
         this.timeOfRequest = timeOfRequest;
         this.senderUsername = senderUsername;
         this.request = request;
+        this.requestID = requestID;
     }
 
     public Calendar getTimeOfRequest(){
