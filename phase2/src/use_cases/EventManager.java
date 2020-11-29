@@ -27,10 +27,9 @@ public class EventManager implements Serializable {
      * Create an instance of <code>EventManager</code> given a HashMap of events, ArrayList of locations and speakers.
      *
      * @param events given <code>HashMap</code> of <code>Event</code> IDs to <code>Event</code> objects.
-     * @param locations given <code>ArrayList</code> of location Strings
      * @param speakers given <code>ArrayList</code> of speaker usernames
      */
-    public EventManager(HashMap<Integer, Event> events, ArrayList<String> locations, ArrayList<String> speakers, EventLocationManager eventLocationManager) {
+    public EventManager(HashMap<Integer, Event> events, ArrayList<String> speakers, EventLocationManager eventLocationManager) {
         this.events = events;
         this.eventLocationManager = eventLocationManager;
         this.speakers = speakers;
@@ -124,8 +123,8 @@ public class EventManager implements Serializable {
      * @param speaker a speaker who will give talks
      * @return <code>ArrayList</code> for talks
      */
-    public ArrayList<Talk> fetchSpeakerTalks(String speaker) {
-        ArrayList<Talk> speakerTalks = new ArrayList<>();
+    public ArrayList<Event> fetchSpeakerTalks(String speaker) {
+        ArrayList<Event> speakerTalks = new ArrayList<>();
         for (Talk e : fetchTalkList()) {    // get only talks which the speaker gives
             if (e.getSpeaker().equals(speaker))
                 speakerTalks.add(e);
@@ -140,18 +139,18 @@ public class EventManager implements Serializable {
      * @param selectedTalks a list of talks to be added in ascending order
      * @return <code>HashMap</code> for talks
      */
-    public HashMap<String[], Calendar> fetchSortedTalks(ArrayList<Talk> selectedTalks) {
+    public HashMap<String[], Calendar> fetchSortedTalks(ArrayList<Event> selectedTalks) {
         // Converts from ArrayList to Array, and sorts the array
-        Talk[] selectedTalksToSort = selectedTalks.toArray(new Talk[0]);
+        Event[] selectedTalksToSort = selectedTalks.toArray(new Event[0]);
         Arrays.sort(selectedTalksToSort);
 
         // Creates a hashtable which key is string representation of a talk and value is its time
         HashMap<String[], Calendar> sortedSelectedTalks = new HashMap<>();
         String[] eventInfo;
-        for (Talk e : selectedTalksToSort) {
+        for (Event e : selectedTalksToSort) {
             eventInfo = new String[5];
             eventInfo[0] = e.getTopic();
-            eventInfo[1] = e.getSpeaker();
+            eventInfo[1] = "DOES NOT WORK";
             eventInfo[2] = e.getLocation();
             eventInfo[3] = e.getTime().getTime().toString();
             eventInfo[4] = String.valueOf(e.getId());
@@ -166,7 +165,7 @@ public class EventManager implements Serializable {
      * @return <code>HashMap</code> for talks
      */
     public HashMap<String[], Calendar> fetchSortedTalks() {
-        return fetchSortedTalks(fetchTalkList());
+        return fetchSortedTalks(fetchEventList());
     }
 
     /**
@@ -189,36 +188,34 @@ public class EventManager implements Serializable {
      * @param organizer organizer for a new event
      * @param speakers <code>ArrayList</code> of arbitrary usernames of speakers
      * @param capacity maximum capacity for a new event
-     * @return id for a new id which has been added
      * @throws ConflictException if <code>checkValidEvent</code> throws
      * @throws ObjectNotFoundException if <code>checkValidEvent</code> throws
      */
-    public Integer addNewEvent(EventType type, String topic, Calendar time, String location, String organizer, ArrayList<String> speakers, Integer capacity, Boolean vipOnly) throws ConflictException, ObjectNotFoundException, InvalidEventTypeException {
+    public void addNewEvent(EventType type, String topic, Calendar time, String location, String organizer, ArrayList<String> speakers, Integer capacity, Boolean vipOnly) throws ConflictException, ObjectNotFoundException, InvalidEventTypeException {
         checkValidEvent(time, location);
         Event eventToAdd = eventFactory.CreateEvent(type, assignEventID++,topic, time, location, organizer, speakers, capacity, vipOnly);
         events.put(eventToAdd.getId(), eventToAdd);
-        return eventToAdd.getId();
     }
 
-    /**
-     * Adds a new event given its information
-     * @param topic topic for a new event
-     * @param time time for a new event
-     * @param location location for a new event
-     * @param organizer organizer for a new event
-     * @param speaker speaker for a new event
-     * @return id for a new id which has been added
-     * @throws ConflictException if <code>checkValidEvent</code> throws or a speaker is invalid
-     * @throws ObjectNotFoundException if <code>checkValidEvent</code> throws
-     */
-    public Integer addNewTalk(String topic, Calendar time, String location, String organizer, String speaker) throws ConflictException, ObjectNotFoundException {
-        if (!speakers.contains(speaker))
-            throw new ObjectNotFoundException("Speaker " + speaker);
-        checkValidTalk(time, location, speaker);
-        Talk eventToAdd = new Talk(assignEventID++, topic, time, location, organizer, speaker);
-        events.put(eventToAdd.getId(), eventToAdd);
-        return eventToAdd.getId();
-    }
+//    /**
+//     * Adds a new event given its information
+//     * @param topic topic for a new event
+//     * @param time time for a new event
+//     * @param location location for a new event
+//     * @param organizer organizer for a new event
+//     * @param speaker speaker for a new event
+//     * @return id for a new id which has been added
+//     * @throws ConflictException if <code>checkValidEvent</code> throws or a speaker is invalid
+//     * @throws ObjectNotFoundException if <code>checkValidEvent</code> throws
+//     */
+//    public Integer addNewTalk(String topic, Calendar time, String location, String organizer, String speaker) throws ConflictException, ObjectNotFoundException {
+//        if (!speakers.contains(speaker))
+//            throw new ObjectNotFoundException("Speaker " + speaker);
+//        checkValidTalk(time, location, speaker);
+//        Talk eventToAdd = new Talk(assignEventID++, topic, time, location, organizer, speaker);
+//        events.put(eventToAdd.getId(), eventToAdd);
+//        return eventToAdd.getId();
+//    }
 
     /**
      * Cancels a talk given an id to search
@@ -401,5 +398,15 @@ public class EventManager implements Serializable {
 
     public boolean getVipRestriction(Integer id){
         return events.get(id).getVipOnly();
+    }
+
+    // temp
+    public void addNewLocation(String location) throws ConflictException, IntegerOutOfBoundsException {
+        eventLocationManager.addNewLocation(location, 2, 2, 2, true, true, true, "");
+    }
+
+    // temp
+    public ArrayList<String> getLocations() {
+        return eventLocationManager.getLocations();
     }
 }

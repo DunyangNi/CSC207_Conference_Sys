@@ -1,6 +1,9 @@
 package gateway;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import use_cases.*;
 
 public class EventDataManager implements DataReader, DataSaver{
@@ -18,11 +21,11 @@ public class EventDataManager implements DataReader, DataSaver{
         try{
             return (EventManager) readObject(eventPath);
         } catch (IOException e) {
-            System.out.println("Could not read AccountManager, creating a new AccountManager.");
-            return new EventManager();
+            System.out.println("Could not read EventManager, creating a new EventManager.");
+            return new EventManager(new HashMap<>(), new ArrayList<>(), new EventLocationManager());
         } catch (ClassNotFoundException e) {
-            System.out.println("AccountManager not found, creating a new AccountManager.");
-            return new EventManager();
+            System.out.println("EventManager not found, creating a new EventManager.");
+            return new EventManager(new HashMap<>(), new ArrayList<>(), new EventLocationManager());
         }
     }
 }

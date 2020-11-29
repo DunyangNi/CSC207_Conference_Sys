@@ -41,7 +41,7 @@ public class OrganizerController extends AccountController {
     public void addNewLocation(String location) {
         try {
             this.eventManager.addNewLocation(location);
-        } catch (ConflictException e) {
+        } catch (Exception e) {
             presenter.displayPrompt(e.toString());
         }
     }
@@ -62,20 +62,20 @@ public class OrganizerController extends AccountController {
         }
     }
 
-    /**
-     * Registers a new talk into the database with the given information fields
-     * @param time given time
-     * @param topic given topic
-     * @param location given location
-     * @param speaker given speaker username
-     */
-    public void registerNewTalk(Calendar time, String topic, String location, String speaker) {
-        try {
-            Integer newTalkID = eventManager.addNewTalk(topic, time, location, username, speaker);
-        } catch (Exception e) {
-            presenter.displayPrompt(e.toString());
-        }
-    }
+//    /**
+//     * Registers a new talk into the database with the given information fields
+//     * @param time given time
+//     * @param topic given topic
+//     * @param location given location
+//     * @param speaker given speaker username
+//     */
+//    public void registerNewTalk(Calendar time, String topic, String location, String speaker) {
+//        try {
+//            Integer newTalkID = eventManager.addNewTalk(topic, time, location, username, speaker);
+//        } catch (Exception e) {
+//            presenter.displayPrompt(e.toString());
+//        }
+//    }
 
     /**
      * cancels a talk with the given id
@@ -239,7 +239,7 @@ public class OrganizerController extends AccountController {
                         location = userInput.nextLine();
                         String topic = userInput.nextLine();
                         Calendar time = this.collectTimeInfo();
-                        Integer newTalkID = eventManager.addNewTalk(topic, time, location, this.username, username);
+                        eventManager.addNewEvent(EventType.TALK, topic, time, location, this.username, new ArrayList<>(Collections.singletonList(username)), 2, false);
                     } catch (Exception e) {
                         presenter.displayPrompt(e.toString());
                     }

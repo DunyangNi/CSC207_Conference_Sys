@@ -1,6 +1,8 @@
 package entities;
 
-public class Location {
+import java.io.Serializable;
+
+public class Location implements Serializable {
     private final String name;
     private final Integer id; //unique identifier
     private Integer maxOccupancy;

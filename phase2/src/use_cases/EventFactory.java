@@ -5,10 +5,11 @@ import exceptions.InvalidEventTypeException;
 import entities.Event;
 import entities.Talk;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class EventFactory {
+public class EventFactory implements Serializable {
     public Event CreateEvent(EventType type, Integer id, String topic, Calendar time, String location, String organizer, ArrayList<String> speakers, Integer capacity, Boolean vipOnly) throws InvalidEventTypeException {
         switch(type) {
             case GENERAL_EVENT:

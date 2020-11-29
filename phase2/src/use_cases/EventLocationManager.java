@@ -4,11 +4,13 @@ import exceptions.ConflictException;
 import exceptions.IntegerOutOfBoundsException;
 import exceptions.ObjectNotFoundException;
 import entities.Location;
+
+import java.io.Serializable;
 import java.util.*;
 
 import java.util.HashMap;
 
-public class EventLocationManager {
+public class EventLocationManager implements Serializable {
     private HashMap<Integer, Location> locations = new HashMap<>();
     private int curID = 0; //the id of the next location to be added
 
@@ -139,11 +141,7 @@ public class EventLocationManager {
     }
 
     public ArrayList<Integer> getIDList(){
-        ArrayList<Integer> idList = new ArrayList<>();
-        for(Integer i: this.locations.keySet()) {
-            idList.add(i);
-        }
-        return idList;
+        return new ArrayList<>(this.locations.keySet());
     }
 
     public ArrayList<String> getNameList(){
@@ -183,5 +181,12 @@ public class EventLocationManager {
         }
     }
 
+    public ArrayList<String> getLocations() {
+        ArrayList<String> allLocations = new ArrayList<>();
+        for (Location l : locations.values()) {
+            allLocations.add(l.getName());
+        }
+        return allLocations;
+    }
 
 }
