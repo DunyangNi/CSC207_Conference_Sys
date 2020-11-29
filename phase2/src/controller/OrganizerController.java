@@ -17,17 +17,14 @@ public class OrganizerController extends AccountController {
      * @param cm manages messaging functionality
      * @param em manages event data
      */
-    public OrganizerController(String username, AccountManager am, FriendManager fm,
-                               ConversationManager cm, EventManager em) {
+    public OrganizerController(String username, AccountManager am, FriendManager fm, ConversationManager cm, EventManager em) {
         super(username, am, fm, cm, em);
     }
 
     /**
-     * helper function that adds a user's username as keys to certain
-     * hashmaps in the use cases
+     * Helper function that adds a user's username as keys for hashmaps stored in the use cases
      * @param username specified username
      */
-    // (NEW!) (Helper)
     private void addNewSpeakerKeys(String username) {
         cm.addAccountKey(username);
         fm.addAccountKey(username);
@@ -35,7 +32,7 @@ public class OrganizerController extends AccountController {
     }
 
     /**
-     * adds a new allowed location where events can take place to the database
+     * Adds a new allowed location where events can take place to the database
      * @param location location to be added
      */
     public void addNewLocation(String location) {
@@ -121,31 +118,31 @@ public class OrganizerController extends AccountController {
     public boolean runInteraction() {
         boolean programEnd = false;
         boolean loggedIn = true;
+
         Scanner userInput = new Scanner(System.in);
-        OrganizerCommand[] commandlist = OrganizerCommand.values();
-        String command = userInput.nextLine();
+        OrganizerCommand[] enumCommandList = OrganizerCommand.values();
+        String inputCommand = userInput.nextLine();
+        boolean validInput = false;
+        OrganizerCommand enumCommand = OrganizerCommand.EXIT;
 
-        boolean validinput = false;
-        OrganizerCommand enumRequest = OrganizerCommand.EXIT;
-
-        while (!validinput) {
-            for(OrganizerCommand commandEnum: commandlist){
-                if (commandEnum.command.equals(command)) {
-                    validinput = true;
-                    enumRequest = commandEnum;
+        while (!validInput) {
+            for(OrganizerCommand command: enumCommandList){
+                if (command.command.equals(inputCommand)) {
+                    validInput = true;
+                    enumCommand = command;
                     break;
                 }
             }
-            if(!validinput){
+            if(!validInput){
                 presenter.displayPrompt("Invalid input, please try again:\n");
                 presenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
-                command = userInput.nextLine();
+                inputCommand = userInput.nextLine();
             }
         }
 
         while (loggedIn) {
             // TODO: 11/16/20 Fix scopes defined by {
-            switch (enumRequest) {
+            switch (enumCommand) {
                 case EXIT:
                     programEnd = true;
                     loggedIn = false;
@@ -278,21 +275,21 @@ public class OrganizerController extends AccountController {
             }
             if (loggedIn) {
                 presenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
-                command = userInput.nextLine();
+                inputCommand = userInput.nextLine();
 
-                validinput = false;
-                while (!validinput) {
-                    for(OrganizerCommand commandEnum: commandlist){
-                        if (commandEnum.command.equals(command)) {
-                            validinput = true;
-                            enumRequest = commandEnum;
+                validInput = false;
+                while (!validInput) {
+                    for(OrganizerCommand commandEnum: enumCommandList){
+                        if (commandEnum.command.equals(inputCommand)) {
+                            validInput = true;
+                            enumCommand = commandEnum;
                             break;
                         }
                     }
-                    if(!validinput){
+                    if(!validInput){
                         presenter.displayPrompt("Invalid input, please try again:\n");
                         presenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
-                        command = userInput.nextLine();
+                        inputCommand = userInput.nextLine();
                     }
                 }
             }
