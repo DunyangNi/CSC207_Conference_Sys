@@ -17,6 +17,15 @@ public class AccountCreationController {
         this.friendManager = friendManager;
         this.eventManager = eventManager;
     }
+
+    /**
+     *
+     * @param username
+     * @param password
+     * @param firstname
+     * @param lastname
+     * @throws AlreadyExistException if the username already exist
+     */
     public void createSpeakerAccount(String username, String password, String firstname, String lastname) throws AlreadyExistException {
         this.accountManager.addNewSpeaker(username, password, firstname, lastname);
         addNewSpeakerKeys(username);
