@@ -144,7 +144,8 @@ public class AccountManager implements Serializable {
      * @param firstName given first name
      * @param lastName given last name
      */
-    public void addNewAttendee(String username, String password, String firstName, String lastName) {
+    public void addNewAttendee(String username, String password, String firstName, String lastName) throws AlreadyExistException {
+        if (getAccountHashMap().containsKey(username)) throw new AlreadyExistException();
         Attendee newAttendee = new Attendee(username, password, firstName, lastName);
         attendeeHashMap.put(username, newAttendee);
     }
@@ -156,13 +157,11 @@ public class AccountManager implements Serializable {
      * @param password given password
      * @param firstName given first name
      * @param lastName given last name
-     * @throws ConflictException upon finding an existing Speaker with the same username
+     * @throws AlreadyExistException upon finding an existing Speaker with the same username
      */
-    public void addNewSpeaker(String username, String password, String firstName, String lastName) {
+    public void addNewSpeaker(String username, String password, String firstName, String lastName) throws AlreadyExistException{
         // TODO: 11/29/20 Reintroduce exception thorw in the future
-//        if (getAccountHashMap().containsKey(username)) {
-//            throw new ConflictException("Username already exists.");
-//        }
+        if (getAccountHashMap().containsKey(username)) throw new AlreadyExistException();
         Speaker newSpeaker = new Speaker(username, password, firstName, lastName);
         speakerHashMap.put(username, newSpeaker);
     }
@@ -176,7 +175,8 @@ public class AccountManager implements Serializable {
      * @param firstName given first name
      * @param lastName given last name
      */
-    public void addNewOrganizer(String username, String password, String firstName, String lastName) {
+    public void addNewOrganizer(String username, String password, String firstName, String lastName) throws AlreadyExistException {
+        if (getAccountHashMap().containsKey(username)) throw new AlreadyExistException();
         Organizer newOrganizer = new Organizer(username, password, firstName, lastName);
         organizerHashMap.put(username, newOrganizer);
     }

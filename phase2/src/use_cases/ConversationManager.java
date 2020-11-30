@@ -38,14 +38,15 @@ public class ConversationManager implements Serializable {
      * @param sender given sender username
      * @param recipient given recipient username
      * @return an <code>ArrayList</code> of integers
-     * @throws ObjectNotFoundException upon sender or recipient Account not being found
+     * @throws UserNotFoundException upon sender Account not being found
+     * @throws UserNameNotFoundException recipient not found
      */
-    public ArrayList<Integer> getConversationMessages(String sender, String recipient) throws ObjectNotFoundException{
+    public ArrayList<Integer> getConversationMessages(String sender, String recipient) throws UserNotFoundException, UserNameNotFoundException {
         if (!conversations.containsKey(sender)) {
-            throw new ObjectNotFoundException("Sender");
+            throw new UserNotFoundException();
         }
         if (!conversations.containsKey(recipient)) {
-            throw new ObjectNotFoundException("Recipient");
+            throw new UserNameNotFoundException();
         }
         return conversations.get(sender).get(recipient).getMessages();
     }
@@ -55,11 +56,11 @@ public class ConversationManager implements Serializable {
      *
      * @param user given username
      * @return Set of usernames associated with recipient Accounts
-     * @throws ObjectNotFoundException upon User not being found.
+     * @throws UserNotFoundException upon User not being found.
      */
-    public Set<String> getAllUserConversationRecipients(String user) throws ObjectNotFoundException{
+    public Set<String> getAllUserConversationRecipients(String user) throws UserNotFoundException {
         if (!conversations.containsKey(user)) {
-            throw new ObjectNotFoundException("User");
+            throw new UserNotFoundException();
         }
         Set<String> recipients = this.conversations.get(user).keySet();
         return recipients.isEmpty() ? Collections.emptySet() : recipients;
@@ -81,14 +82,15 @@ public class ConversationManager implements Serializable {
      * @param sender given sender username
      * @param recipient given recipient username
      * @param message given String content for message
-     * @throws ObjectNotFoundException upon sender or recipient Account not being found
+     * @throws UserNotFoundException upon sender Account not being found
+     * @throws UserNameNotFoundException the recipient account not found
      */
-    public void sendMessage(String sender, String recipient, String message) throws ObjectNotFoundException {
+    public void sendMessage(String sender, String recipient, String message) throws UserNotFoundException, UserNameNotFoundException {
         if (!conversations.containsKey(sender)) {
-            throw new ObjectNotFoundException("Sender");
+            throw new UserNotFoundException();
         }
         if (!conversations.containsKey(recipient)) {
-            throw new ObjectNotFoundException("Recipient");
+            throw new UserNameNotFoundException();
         }
         HashMap<String, Conversation> senderConversations = conversations.get(sender);
         HashMap<String, Conversation> recipientConversations = conversations.get(recipient);
