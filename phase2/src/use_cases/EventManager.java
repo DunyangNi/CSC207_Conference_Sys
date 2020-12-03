@@ -224,20 +224,30 @@ public class EventManager implements Serializable {
 //    }
 
     /**
+     * Cancels a event given an id to search
+     *
+     * @param id id to be cancelled
+     * @throws EventNotFoundException if the id is invalid
+     */
+    public void cancelEvent(Integer id) throws EventNotFoundException{
+        if (!events.containsKey(id))
+            throw new EventNotFoundException();
+        Event talkToCancel = events.get(id);
+        if (!(Calendar.getInstance().compareTo(talkToCancel.getTime()) >= 0))
+            events.remove(id);
+    }
+
+    /**
      * Cancels a talk given an id to search
      *
      * @param id id to be cancelled
      * @throws EventNotFoundException if the id is invalid
      * @throws TypeConflictException if the event is associated with non-talk
      */
-    public void cancelEvent(Integer id) throws EventNotFoundException, TypeConflictException {
-        if (!events.containsKey(id))
-            throw new EventNotFoundException();
+    public void cancelTalk(Integer id) throws TypeConflictException, EventNotFoundException {
         if (!(events.get(id) instanceof Talk))
             throw new TypeConflictException();
-        Event talkToCancel = events.get(id);
-        if (!(Calendar.getInstance().compareTo(talkToCancel.getTime()) >= 0))
-            events.remove(id);
+        cancelEvent(id);
     }
 
     /**

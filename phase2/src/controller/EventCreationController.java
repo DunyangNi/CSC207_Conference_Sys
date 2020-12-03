@@ -40,7 +40,7 @@ public class EventCreationController {
      * @throws EventNotFoundException if the id is invalid
      * @throws TypeConflictException if the event is associated with non-talk
      */
-    public void cancelEvent(Integer id) throws EventNotFoundException, TypeConflictException {
+    public void cancelEvent(Integer id) throws EventNotFoundException{
         this.eventManager.cancelEvent(id);
 
     }
