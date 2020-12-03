@@ -58,7 +58,7 @@ public abstract class AccountController {
      * @param recipient person whose conversation with the user is being requested
      * @param numMessagesRequested an upper bound for the number of past messages requested to be seen
      */
-    public void viewMessagesFrom(String recipient, int numMessagesRequested) {
+    public void viewMessagesFrom(String recipient, int numMessagesRequested) throws ObjectNotFoundException, InputMismatchException{
         try {
             if (numMessagesRequested < 0) {
                 this.presenter.displayPrompt("You have requested an invalid number");
@@ -75,9 +75,9 @@ public abstract class AccountController {
                 }
             }
         } catch (ObjectNotFoundException e) {
-                this.presenter.displayConversationsErrors("no_user");
+                throw e;
         } catch (InputMismatchException e) {
-            this.presenter.displayConversationsErrors("mismatch");
+            throw e;
         }
     }
 
