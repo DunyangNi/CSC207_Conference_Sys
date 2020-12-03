@@ -1,10 +1,8 @@
 package views;
 
 import controller.EventCreationController;
-import exceptions.EventNotFoundException;
-import exceptions.TypeConflictException;
+import exceptions.not_found.EventNotFoundException;
 import presenter.EventCancelPresenter;
-import presenter.EventRegistrationPresenter;
 
 import java.util.Scanner;
 

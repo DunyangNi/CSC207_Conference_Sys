@@ -3,7 +3,9 @@ package use_cases;
 import java.io.Serializable;
 import java.util.*;
 import entities.*;
-import exceptions.*;
+import exceptions.not_found.MessageNotFoundException;
+import exceptions.not_found.RecipientNotFoundException;
+import exceptions.not_found.UserNotFoundException;
 
 /**
  * Represents the entire system of Conversations and Messages.
@@ -13,17 +15,9 @@ public class ConversationManager implements Serializable {
     private final HashMap<Integer, Message> messages = new HashMap<>();
     private int assignMessageID;
 
-    /**
-     * Attempts to represent a <code>Message</code> of a given id
-     * as a String containing the sender and the content.
-     *
-     * @param id given id
-     * @return sender and content
-     * @throws ObjectNotFoundException upon <code>Message</code> not being found.
-     */
-    public String messageToString(Integer id) throws ObjectNotFoundException{
+    public String messageToString(Integer id) throws MessageNotFoundException {
         if (!this.messages.containsKey(id)) {
-            throw new ObjectNotFoundException("Message");
+            throw new MessageNotFoundException();
         }
         Message selectedMsg = messages.get(id);
         String sender = selectedMsg.getSender();
@@ -31,22 +25,12 @@ public class ConversationManager implements Serializable {
         return "(" + sender + ") : " + content;
     }
 
-    /**
-     * Attempts to return an <code>ArrayList</code> of <code>Message</code> IDs for a given sender and recipient
-     * of an associated <code>Conversation</code>.
-     *
-     * @param sender given sender username
-     * @param recipient given recipient username
-     * @return an <code>ArrayList</code> of integers
-     * @throws UserNotFoundException upon sender Account not being found
-     * @throws UserNameNotFoundException recipient not found
-     */
-    public ArrayList<Integer> getConversationMessages(String sender, String recipient) throws UserNotFoundException, UserNameNotFoundException {
+    public ArrayList<Integer> getConversationMessages(String sender, String recipient) throws UserNotFoundException, RecipientNotFoundException {
         if (!conversations.containsKey(sender)) {
             throw new UserNotFoundException();
         }
         if (!conversations.containsKey(recipient)) {
-            throw new UserNameNotFoundException();
+            throw new RecipientNotFoundException();
         }
         return conversations.get(sender).get(recipient).getMessages();
     }
@@ -74,23 +58,12 @@ public class ConversationManager implements Serializable {
     public void addAccountKey(String username) { conversations.put(username, new HashMap<>()); }
 
 
-    /**
-     * Creates a new message from a given sender Account to a given recipient Account
-     * with given content, adding it to their associated <code>Conversation</code>. If
-     * no existing <code>Conversation</code> is found, creates a new one.
-     *
-     * @param sender given sender username
-     * @param recipient given recipient username
-     * @param message given String content for message
-     * @throws UserNotFoundException upon sender Account not being found
-     * @throws UserNameNotFoundException the recipient account not found
-     */
-    public void sendMessage(String sender, String recipient, String message) throws UserNotFoundException, UserNameNotFoundException {
+    public void sendMessage(String sender, String recipient, String message) throws UserNotFoundException, RecipientNotFoundException {
         if (!conversations.containsKey(sender)) {
             throw new UserNotFoundException();
         }
         if (!conversations.containsKey(recipient)) {
-            throw new UserNameNotFoundException();
+            throw new RecipientNotFoundException();
         }
         HashMap<String, Conversation> senderConversations = conversations.get(sender);
         HashMap<String, Conversation> recipientConversations = conversations.get(recipient);

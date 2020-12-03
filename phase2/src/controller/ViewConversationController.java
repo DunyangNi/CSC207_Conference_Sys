@@ -1,6 +1,9 @@
 package controller;
 
 import exceptions.*;
+import exceptions.not_found.MessageNotFoundException;
+import exceptions.not_found.RecipientNotFoundException;
+import exceptions.not_found.UserNotFoundException;
 import use_cases.ConversationManager;
 
 import java.util.ArrayList;
@@ -18,24 +21,14 @@ public class ViewConversationController {
 
     public boolean isEmpty() throws UserNotFoundException {
         myConversations = conversationManager.getAllUserConversationRecipients(username);
-        if (myConversations.isEmpty()) {
-            return true;
-        }
-        return false;
+        return myConversations.isEmpty();
     }
 
-    /**
-     * displays the numMessagesRequested most recent messages with the recipient
-     * @param recipient person whose conversation with the user is being requested
-     * @param numMessagesRequested an upper bound for the number of past messages requested to be seen
-     * @throws ObjectNotFoundException when message is not found
-     * @throws IntegerOutOfBoundsException when numMessagesRequested is invalid
-     * @throws NoMessagesException when there is no message
-     */
-    public ArrayList<String> viewMessagesFrom(String recipient, int numMessagesRequested) throws ObjectNotFoundException, IntegerOutOfBoundsException, NoMessagesException {
+
+    public ArrayList<String> viewMessagesFrom(String recipient, int numMessagesRequested) throws NonPositiveIntegerException, NoMessagesException, UserNotFoundException, MessageNotFoundException, RecipientNotFoundException {
         ArrayList<String> conversations;
         if (numMessagesRequested < 0) {
-            throw new IntegerOutOfBoundsException("less than 0");
+            throw new NonPositiveIntegerException();
         } else {
             String msgToPrint;
             ArrayList<Integer> messages = conversationManager.getConversationMessages(this.username, recipient);

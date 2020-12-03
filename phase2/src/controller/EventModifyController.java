@@ -1,6 +1,10 @@
 package controller;
 
 import exceptions.*;
+import exceptions.conflict.LocationInUseException;
+import exceptions.conflict.SpeakerIsBusyException;
+import exceptions.not_found.EventNotFoundException;
+import exceptions.not_found.LocationNotFoundException;
 import use_cases.EventManager;
 
 import java.util.Calendar;
@@ -20,11 +24,11 @@ public class EventModifyController {
      * between 9 A.M and 4 P.M inclusive, or the same event has been already scheduled
      * @throws LocationNotFoundException if the location for an event is not allowed
      * @throws PastTimeException if the time have past
-     * @throws LocationConflictException if the location is being used at the time
-     * @throws SpeakerConflictException if the speaker is not available at the time
+     * @throws LocationInUseException if the location is being used at the time
+     * @throws SpeakerIsBusyException if the speaker is not available at the time
      * @throws EventNotFoundException if the given event id is invalid
      */
-    public void rescheduleTalk(Integer id, Calendar newTime) throws LocationConflictException, PastTimeException, SpeakerConflictException, LocationNotFoundException, InvalidTimeException, EventNotFoundException {
+    public void rescheduleTalk(Integer id, Calendar newTime) throws LocationInUseException, PastTimeException, SpeakerIsBusyException, LocationNotFoundException, InvalidTimeException, EventNotFoundException {
         this.eventManager.changeTime(id, newTime);
     }
 }

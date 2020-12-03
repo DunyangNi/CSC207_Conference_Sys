@@ -3,7 +3,11 @@ package use_cases;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import exceptions.*;
+
+import exceptions.conflict.AlreadyFriendException;
+import exceptions.not_found.FriendNotFoundException;
+import exceptions.not_found.ObjectNotFoundException;
+import exceptions.not_found.UserNotFoundException;
 
 /**
  * Represents the entire system of Friend relationships between <code>Accounts</code>.
@@ -39,21 +43,14 @@ public class FriendManager implements Serializable {
      */
     public void addAccountKey(String user) { friends.put(user, new ArrayList<>()); }
 
-    /**
-     * Attempts to add a friend into the user associated <code>ArrayList</code> of friends.
-     *
-     * @param user given username of User
-     * @param friendToAdd given username of friend
-     * @throws ObjectNotFoundException upon User or friend not being found
-     * @throws ConflictException upon friend already in User's friends
-     */
-    public void addFriend(String user, String friendToAdd) throws ObjectNotFoundException, ConflictException {
+
+    public void addFriend(String user, String friendToAdd) throws UserNotFoundException, FriendNotFoundException, AlreadyFriendException {
         if (!friends.containsKey(user))
-            throw new ObjectNotFoundException("User");
+            throw new UserNotFoundException();
         if (!friends.containsKey(friendToAdd))
-            throw new ObjectNotFoundException("Friend");
+            throw new FriendNotFoundException();
         if (friends.get(user).contains(friendToAdd))
-            throw new ConflictException("This friend is already in your contacts.");
+            throw new AlreadyFriendException();
         friends.get(user).add(friendToAdd);
     }
 
@@ -63,11 +60,11 @@ public class FriendManager implements Serializable {
      * @param friendToRemove given username of friend
      * @throws ObjectNotFoundException upon friend not being in User's friends
      */
-    public void removeFriend(String user, String friendToRemove) throws ObjectNotFoundException{
+    public void removeFriend(String user, String friendToRemove) throws UserNotFoundException, FriendNotFoundException {
         if (!friends.containsKey(user))
-            throw new ObjectNotFoundException("User");
+            throw new UserNotFoundException();
         if (!friends.containsKey(friendToRemove))
-            throw new ObjectNotFoundException("Friend");
+            throw new FriendNotFoundException();
         friends.get(user).remove(friendToRemove);
     }
 }

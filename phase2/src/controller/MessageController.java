@@ -1,7 +1,7 @@
 package controller;
 //To be deleted
-import exceptions.UserNameNotFoundException;
-import exceptions.UserNotFoundException;
+import exceptions.not_found.RecipientNotFoundException;
+import exceptions.not_found.UserNotFoundException;
 import use_cases.ConversationManager;
 import use_cases.AccountManager;
 import use_cases.EventManager;
@@ -36,7 +36,7 @@ public class MessageController {
      * @param message message to be sent
      * @param speaker speaker username
      */
-    public void messageSpeaker(String message, String speaker) throws UserNotFoundException, UserNameNotFoundException {
+    public void messageSpeaker(String message, String speaker) throws UserNotFoundException, RecipientNotFoundException {
         conversationManager.sendMessage(this.username, speaker, message);
     }
 
@@ -45,7 +45,7 @@ public class MessageController {
      * @param message message to be send
      * @param attendeeUsername attendee username
      */
-    public void messageAttendee(String message, String attendeeUsername) throws UserNotFoundException, UserNameNotFoundException {
+    public void messageAttendee(String message, String attendeeUsername) throws UserNotFoundException, RecipientNotFoundException {
         conversationManager.sendMessage(this.username, attendeeUsername, message);
     }
 

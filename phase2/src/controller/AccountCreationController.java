@@ -1,6 +1,6 @@
 package controller;
 
-import exceptions.ObjectAlreadyExistsException;
+import exceptions.already_exists.ObjectAlreadyExistsException;
 import use_cases.AccountManager;
 import use_cases.ConversationManager;
 import use_cases.EventManager;

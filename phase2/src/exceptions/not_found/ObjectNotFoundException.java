@@ -1,4 +1,4 @@
-package exceptions;
+package exceptions.not_found;
 
 public class ObjectNotFoundException extends Exception{
     /**

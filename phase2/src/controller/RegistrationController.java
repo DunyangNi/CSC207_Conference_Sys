@@ -1,5 +1,6 @@
 package controller;
 
+import exceptions.already_exists.AccountAlreadyExistsException;
 import gateway.AccountDataManager;
 import gateway.ConversationDataManager;
 import gateway.EventDataManager;
@@ -33,7 +34,7 @@ public class RegistrationController {
     }
 
     // TODO: 11/28/20 Refactor methods to manage exceptions consistently
-    public boolean register(String accountType, String username, String password) {
+    public boolean register(String accountType, String username, String password) throws AccountAlreadyExistsException {
         if (accountType.equals("1")) {
             am.addNewAttendee(username, password, "", "");
         }

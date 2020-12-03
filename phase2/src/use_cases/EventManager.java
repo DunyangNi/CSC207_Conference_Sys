@@ -4,6 +4,15 @@ import enums.EventType;
 import exceptions.*;
 import entities.Event;
 import entities.Talk;
+import exceptions.already_exists.ObjectAlreadyExistsException;
+import exceptions.conflict.AlreadySignedUpException;
+import exceptions.conflict.EventIsFullException;
+import exceptions.conflict.LocationInUseException;
+import exceptions.conflict.SpeakerIsBusyException;
+import exceptions.not_found.AttendeeNotFoundException;
+import exceptions.not_found.EventNotFoundException;
+import exceptions.not_found.LocationNotFoundException;
+
 import java.io.Serializable;
 import java.util.*;
 
@@ -192,12 +201,12 @@ public class EventManager implements Serializable {
      * between 9 A.M and 4 P.M inclusive, or the same event has been already scheduled
      * @throws LocationNotFoundException if the location for an event is not allowed
      * @throws PastTimeException if the time have past
-     * @throws LocationConflictException if the location is being used at the time
-     * @throws SpeakerConflictException if the speaker is not available at the time
+     * @throws LocationInUseException if the location is being used at the time
+     * @throws SpeakerIsBusyException if the speaker is not available at the time
      * @throws EventNotFoundException if the given event id is invalid
      * @throws InvalidEventTypeException if the event type is not valid
      */
-    public void addNewEvent(EventType type, String topic, Calendar time, String location, String organizer, ArrayList<String> speakers, Integer capacity, Boolean vipOnly) throws InvalidEventTypeException, LocationNotFoundException, PastTimeException, InvalidTimeException, LocationConflictException {
+    public void addNewEvent(EventType type, String topic, Calendar time, String location, String organizer, ArrayList<String> speakers, Integer capacity, Boolean vipOnly) throws InvalidEventTypeException, LocationNotFoundException, PastTimeException, InvalidTimeException, LocationInUseException {
         checkValidEvent(time, location);
         Event eventToAdd = eventFactory.CreateEvent(type, assignEventID++,topic, time, location, organizer, speakers, capacity, vipOnly);
         events.put(eventToAdd.getId(), eventToAdd);
@@ -237,29 +246,15 @@ public class EventManager implements Serializable {
             events.remove(id);
     }
 
-    /**
-     * Cancels a talk given an id to search
-     *
-     * @param id id to be cancelled
-     * @throws EventNotFoundException if the id is invalid
-     * @throws TypeConflictException if the event is associated with non-talk
-     */
-    public void cancelTalk(Integer id) throws TypeConflictException, EventNotFoundException {
+    public void cancelTalk(Integer id) throws EventNotFoundException {
         if (!(events.get(id) instanceof Talk))
-            throw new TypeConflictException();
+            throw new EventNotFoundException();
         cancelEvent(id);
     }
 
-    /**
-     * Changes a topic to new topic given an id to search
-     *
-     * @param id id to search
-     * @param new_topic new topic
-     * @throws ObjectNotFoundException if the id is invalid
-     */
-    public void changeTopic(Integer id, String new_topic) throws ObjectNotFoundException {
+    public void changeTopic(Integer id, String new_topic) throws EventNotFoundException {
         if (!events.containsKey(id))
-            throw new ObjectNotFoundException("Event");
+            throw new EventNotFoundException();
         eventModifier.ChangeTopic(events.get(id), new_topic);
     }
 
@@ -272,11 +267,11 @@ public class EventManager implements Serializable {
      * between 9 A.M and 4 P.M inclusive, or the same event has been already scheduled
      * @throws LocationNotFoundException if the location for an event is not allowed
      * @throws PastTimeException if the time have past
-     * @throws LocationConflictException if the location is being used at the time
-     * @throws SpeakerConflictException if the speaker is not available at the time
+     * @throws LocationInUseException if the location is being used at the time
+     * @throws SpeakerIsBusyException if the speaker is not available at the time
      * @throws EventNotFoundException if the given event id is invalid
      */
-    public void changeTime(Integer id, Calendar newTime) throws SpeakerConflictException, LocationNotFoundException, PastTimeException, InvalidTimeException, LocationConflictException, EventNotFoundException {
+    public void changeTime(Integer id, Calendar newTime) throws SpeakerIsBusyException, LocationNotFoundException, PastTimeException, InvalidTimeException, LocationInUseException, EventNotFoundException {
         // is id valid?
         if (!events.containsKey(id))
             throw new EventNotFoundException();
@@ -297,11 +292,11 @@ public class EventManager implements Serializable {
      * between 9 A.M and 4 P.M inclusive, or the same event has been already scheduled
      * @throws LocationNotFoundException if the location for an event is not allowed
      * @throws PastTimeException if the time have past
-     * @throws LocationConflictException if the location is being used at the time
-     * @throws SpeakerConflictException if the speaker is not available at the time
+     * @throws LocationInUseException if the location is being used at the time
+     * @throws SpeakerIsBusyException if the speaker is not available at the time
      * @throws EventNotFoundException if the given event id is invalid
      */
-    public void changeLocation(Integer id, String newLocation) throws EventNotFoundException, SpeakerConflictException, LocationNotFoundException, PastTimeException, InvalidTimeException, LocationConflictException {
+    public void changeLocation(Integer id, String newLocation) throws EventNotFoundException, SpeakerIsBusyException, LocationNotFoundException, PastTimeException, InvalidTimeException, LocationInUseException {
         // is id valid?
         if (!events.containsKey(id))
             throw new EventNotFoundException();
@@ -315,16 +310,9 @@ public class EventManager implements Serializable {
         eventModifier.ChangeLocation(events.get(id), newLocation);
     }
 
-    /**
-     * Changes an organizer to a new organizer
-     *
-     * @param id id to search
-     * @param new_organizer new organizer
-     * @throws ObjectNotFoundException if id is invalid
-     */
-    public void changeOrganizer(Integer id, String new_organizer) throws ObjectNotFoundException{
+    public void changeOrganizer(Integer id, String new_organizer) throws EventNotFoundException {
         if (!events.containsKey(id))
-            throw new ObjectNotFoundException("Event");
+            throw new EventNotFoundException();
         eventModifier.ChangeOrganizer(events.get(id), new_organizer);
     }
 
@@ -337,9 +325,9 @@ public class EventManager implements Serializable {
      * between 9 A.M and 4 P.M inclusive, or the same event has been already scheduled
      * @throws LocationNotFoundException if the location for an event is not allowed
      * @throws PastTimeException if the time have past
-     * @throws LocationConflictException if the location is being used at the time
+     * @throws LocationInUseException if the location is being used at the time
      */
-    public void checkValidEvent(Calendar time, String location) throws LocationNotFoundException, PastTimeException, InvalidTimeException, LocationConflictException {
+    public void checkValidEvent(Calendar time, String location) throws LocationNotFoundException, PastTimeException, InvalidTimeException, LocationInUseException {
         ArrayList<String> locations = this.eventLocationManager.getNameList();
         eventChecker.checkValidEvent(time, location, locations, fetchEventList());
     }
@@ -354,10 +342,10 @@ public class EventManager implements Serializable {
      * between 9 A.M and 4 P.M inclusive, or the same event has been already scheduled
      * @throws LocationNotFoundException if the location for an event is not allowed
      * @throws PastTimeException if the time have past
-     * @throws LocationConflictException if the location is being used at the time
-     * @throws SpeakerConflictException if the speaker have another talk at the time
+     * @throws LocationInUseException if the location is being used at the time
+     * @throws SpeakerIsBusyException if the speaker have another talk at the time
      */
-    public void checkValidTalk(Calendar time, String location, String speaker) throws SpeakerConflictException, LocationNotFoundException, PastTimeException, InvalidTimeException, LocationConflictException {
+    public void checkValidTalk(Calendar time, String location, String speaker) throws SpeakerIsBusyException, LocationNotFoundException, PastTimeException, InvalidTimeException, LocationInUseException {
         ArrayList<String> locations = this.eventLocationManager.getNameList();
         eventChecker.checkValidTalk(time, location, speaker, locations, fetchTalkList(), fetchEventList());
     }
@@ -394,36 +382,21 @@ public class EventManager implements Serializable {
         return events.get(id).getAttendees().contains(attendee);
     }
 
-    /**
-     * Attempts to add <code>Attendee</code> with given username to <code>Event</code> attendance with given ID.
-     *
-     * @param id given ID of an associated <code>Event</code>
-     * @param attendee given username of <code>Attendee</code>
-     * @throws ConflictException upon <code>Event</code> being full or <code>Attendee</code> is already signed up.
-     * @throws ObjectNotFoundException upon <code>Event</code> not being found
-     */
-    public void addAttendee(Integer id, String attendee) throws ConflictException, ObjectNotFoundException {
+    public void addAttendee(Integer id, String attendee) throws EventIsFullException, EventNotFoundException, AlreadySignedUpException {
         if (!events.containsKey(id))
-            throw new ObjectNotFoundException("Event not found.");
+            throw new EventNotFoundException();
         if (isFull(id))
-            throw new ConflictException("Talk is full.");
+            throw new EventIsFullException();
         if (isSignedUp(id, attendee))
-            throw new ConflictException("You are already signed up for this Talk.");
+            throw new AlreadySignedUpException();
         events.get(id).getAttendees().add(attendee);
     }
 
-    /**
-     * Attempts to remove <code>Attendee</code> with given username from <code>Event</code> attendance with given ID.
-     *
-     * @param id given ID of an associated <code>Event</code>
-     * @param attendee given username of <code>Attendee</code>
-     * @throws ObjectNotFoundException upon <code>Event</code> or <code>Attendee</code> not being found
-     */
-    public void removeAttendee(Integer id, String attendee) throws ObjectNotFoundException {
+    public void removeAttendee(Integer id, String attendee) throws EventNotFoundException, AttendeeNotFoundException {
         if (!events.containsKey(id))
-            throw new ObjectNotFoundException("Event");
+            throw new EventNotFoundException();
         if (!isSignedUp(id, attendee))
-            throw new ObjectNotFoundException("Attendee");
+            throw new AttendeeNotFoundException();
         events.get(id).getAttendees().remove(attendee);
     }
 
@@ -432,7 +405,7 @@ public class EventManager implements Serializable {
     }
 
     // temp
-    public void addNewLocation(String location) throws IntegerOutOfBoundsException, ObjectAlreadyExistsException {
+    public void addNewLocation(String location) throws NonPositiveIntegerException, ObjectAlreadyExistsException {
         eventLocationManager.addNewLocation(location, 2, 2, 2, true, true, true, "");
     }
 

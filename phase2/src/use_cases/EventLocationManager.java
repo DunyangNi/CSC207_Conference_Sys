@@ -1,9 +1,10 @@
 package use_cases;
 
-import exceptions.ObjectAlreadyExistsException;
-import exceptions.IntegerOutOfBoundsException;
-import exceptions.ObjectNotFoundException;
+import exceptions.*;
 import entities.Location;
+import exceptions.already_exists.LocationAlreadyExistsException;
+import exceptions.not_found.LocationNotFoundException;
+import exceptions.not_found.ObjectNotFoundException;
 
 import java.io.Serializable;
 import java.util.*;
@@ -16,19 +17,19 @@ public class EventLocationManager implements Serializable {
 
     //filters
 
-    public ArrayList<String> getLocationsWithPresentationScreens(ArrayList<String> nameList) throws ObjectNotFoundException{
+    public ArrayList<String> getLocationsWithPresentationScreens(ArrayList<String> nameList) throws ObjectNotFoundException {
         try{
             ArrayList<String> filtered = new ArrayList<>();
             for(String name: nameList) {
                 Integer id = getIDAtName(name);
                 Location location = this.locations.get(id);
-                if(location.hasPresentationScreen() == true) {
+                if(location.hasPresentationScreen()) {
                     filtered.add(name);
                 }
             }
             return filtered;
         } catch(Exception e) {
-            throw new ObjectNotFoundException("Location");
+            throw new LocationNotFoundException();
         }
     }
     public ArrayList<String> getLocationsWithSoundSystems(ArrayList<String> nameList) throws ObjectNotFoundException{
@@ -117,43 +118,43 @@ public class EventLocationManager implements Serializable {
 
     }
 
-    public void updateMaxOccupancy(int id, int status) throws IntegerOutOfBoundsException, ObjectNotFoundException{
+    public void updateMaxOccupancy(int id, int status) throws NonPositiveIntegerException, LocationNotFoundException {
         if(status < 0) {
-            throw new IntegerOutOfBoundsException("Too few occupants");
+            throw new NonPositiveIntegerException();
         }
         else{
             try{
                 this.locations.get(id).setMaxOccupancy(status);
             } catch(Exception e) {
-                throw new ObjectNotFoundException("Location");
+                throw new LocationNotFoundException();
             }
 
         }
     }
 
-    public void updateNumTables(int id, int status) throws ObjectNotFoundException, IntegerOutOfBoundsException{
+    public void updateNumTables(int id, int status) throws LocationNotFoundException, NonPositiveIntegerException {
         if(status < 0) {
-            throw new IntegerOutOfBoundsException("Too few tables");
+            throw new NonPositiveIntegerException();
         }
         else{
             try{
                 this.locations.get(id).setNumTables(status);
             } catch(Exception e) {
-                throw new ObjectNotFoundException("Location");
+                throw new LocationNotFoundException();
             }
 
         }
     }
 
-    public void updateNumChairs(int id, int status) throws ObjectNotFoundException, IntegerOutOfBoundsException{
+    public void updateNumChairs(int id, int status) throws LocationNotFoundException, NonPositiveIntegerException {
         if(status < 0) {
-            throw new IntegerOutOfBoundsException("Too few chairs");
+            throw new NonPositiveIntegerException();
         }
         else{
             try{
                 this.locations.get(id).setNumChairs(status);
             } catch(Exception e) {
-                throw new ObjectNotFoundException("Location");
+                throw new LocationNotFoundException();
             }
 
         }
@@ -195,33 +196,20 @@ public class EventLocationManager implements Serializable {
         this.locations.remove(id);
     }
 
-    /**
-     *
-     * @param name
-     * @param maxOccupancy
-     * @param numTables
-     * @param numChairs
-     * @param hasInternet
-     * @param hasSoundSystem
-     * @param hasPresentationScreen
-     * @param furtherNotes
-     * @throws IntegerOutOfBoundsException if occupants or table/chairs are too small
-     * @throws ObjectAlreadyExistsException if the room name already exist
-     */
-    public void addNewLocation(String name, int maxOccupancy, int numTables, int numChairs, boolean hasInternet, boolean hasSoundSystem, boolean hasPresentationScreen, String furtherNotes) throws IntegerOutOfBoundsException, ObjectAlreadyExistsException {
+    public void addNewLocation(String name, int maxOccupancy, int numTables, int numChairs, boolean hasInternet, boolean hasSoundSystem, boolean hasPresentationScreen, String furtherNotes) throws NonPositiveIntegerException, LocationAlreadyExistsException {
         if(maxOccupancy < 0){
-            throw new IntegerOutOfBoundsException("Too few occupants");
+            throw new NonPositiveIntegerException();
         }
         else if(numTables < 0){
-            throw new IntegerOutOfBoundsException("Too few tables");
+            throw new NonPositiveIntegerException();
         }
         else if(numChairs < 0){
-            throw new IntegerOutOfBoundsException("Too few tables");
+            throw new NonPositiveIntegerException();
         }
         else{
             for(Location location: this.locations.values()){
                 if(location.getName().equals(name)){
-                    throw new ObjectAlreadyExistsException("Location");
+                    throw new LocationAlreadyExistsException();
                 }
             }
         }

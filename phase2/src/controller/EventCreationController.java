@@ -2,6 +2,10 @@ package controller;
 
 import enums.EventType;
 import exceptions.*;
+import exceptions.conflict.LocationInUseException;
+import exceptions.conflict.TypeConflictException;
+import exceptions.not_found.EventNotFoundException;
+import exceptions.not_found.LocationNotFoundException;
 import use_cases.EventManager;
 
 import java.util.ArrayList;
@@ -27,10 +31,10 @@ public class EventCreationController {
      * @throws LocationNotFoundException If the location is not valid
      * @throws PastTimeException If the time has past
      * @throws InvalidTimeException If the time is not valid
-     * @throws LocationConflictException If the location is being used at the time
+     * @throws LocationInUseException If the location is being used at the time
      * @throws InvalidEventTypeException If the type is not valid
      */
-    public void createEvent(EventType type, String topic, Calendar time, String location, ArrayList<String> speakers, Integer capacity, Boolean vipOnly) throws LocationNotFoundException, PastTimeException, InvalidTimeException, LocationConflictException, InvalidEventTypeException {
+    public void createEvent(EventType type, String topic, Calendar time, String location, ArrayList<String> speakers, Integer capacity, Boolean vipOnly) throws LocationNotFoundException, PastTimeException, InvalidTimeException, LocationInUseException, InvalidEventTypeException {
         eventManager.addNewEvent(type, topic, time, location, this.username, speakers, capacity, vipOnly);
     }
 

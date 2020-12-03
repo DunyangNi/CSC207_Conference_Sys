@@ -1,9 +1,10 @@
 package controller;
 
-import exceptions.NoRecipientsException;
-import exceptions.EventNotFoundException;
-import exceptions.UserNameNotFoundException;
-import exceptions.UserNotFoundException;
+import exceptions.*;
+import exceptions.not_found.AttendeeNotFoundException;
+import exceptions.not_found.EventNotFoundException;
+import exceptions.not_found.RecipientNotFoundException;
+import exceptions.not_found.UserNotFoundException;
 import use_cases.AccountManager;
 import use_cases.ConversationManager;
 import use_cases.EventManager;
@@ -28,16 +29,9 @@ public class MessageAttendeeController extends MessageAccountController{
         super(username, accountManager, conversationManager, eventManager);
     }
 
-    /**
-     * sends a message to attendee with specified username
-     * @param message message to be send
-     * @param attendeeUsername attendee username
-     * @throws UserNameNotFoundException if attendeeUsername is not found
-     * @throws UserNotFoundException when the sender username is invalid
-     */
-    public void messageAttendee(String message, String attendeeUsername) throws UserNameNotFoundException, UserNotFoundException {
+    public void messageAttendee(String message, String attendeeUsername) throws AttendeeNotFoundException, UserNotFoundException, RecipientNotFoundException {
         if (!accountManager.containsAttendee(attendeeUsername)){
-            throw new UserNameNotFoundException();
+            throw new AttendeeNotFoundException();
         }
         messageAccount(message, attendeeUsername);
     }
@@ -46,34 +40,24 @@ public class MessageAttendeeController extends MessageAccountController{
      * sends a message to all registered attendees
      * @param message message to be sent
      */
-    public void messageAllAttendees(String message) throws UserNotFoundException, UserNameNotFoundException, NoRecipientsException {
+    public void messageAllAttendees(String message) throws UserNotFoundException, AttendeeNotFoundException, RecipientNotFoundException, NoRecipientsException {
 
         Iterator<String> attendeeUsernameIterator = this.accountManager.attendeeUsernameIterator();
         if (!attendeeUsernameIterator.hasNext())
-            throw new NoRecipientsException("to message");
+            throw new NoRecipientsException();
         while (attendeeUsernameIterator.hasNext()) {
             messageAttendee(message, attendeeUsernameIterator.next());
         }
     }
 
-    /**
-     * if the current user is a speaker, this method sends a given message to all attendees
-     * at selected talks the current user is giving
-     * @param selectedSpeakerTalks selected talks that the current user is speaking in
-     * @param message message to be sent to attendees attending these talks
-     * @throws UserNotFoundException if the sender username is invalid
-     * @throws UserNameNotFoundException if the recipient username is not vaid
-     * @throws NoRecipientsException if There is no one to send message
-     * @throws EventNotFoundException if the event id is invalid
-     */
-    public void messageAttendeesAtTalks(ArrayList<Integer> selectedSpeakerTalks, String message) throws UserNotFoundException, UserNameNotFoundException, NoRecipientsException, EventNotFoundException {
+    public void messageAttendeesAtTalks(ArrayList<Integer> selectedSpeakerTalks, String message) throws UserNotFoundException, AttendeeNotFoundException, RecipientNotFoundException, NoRecipientsException, EventNotFoundException {
         Set<String> selectedAttendeeUsernames = new HashSet<>();
         for (Integer id : selectedSpeakerTalks) {
             if (eventManager.isTalk(id))
                 selectedAttendeeUsernames.addAll(eventManager.fetchEventAttendeeList(id));
         }
         if (selectedAttendeeUsernames.isEmpty())
-            throw new NoRecipientsException("to message");
+            throw new NoRecipientsException();
         for (String attendeeUsername : selectedAttendeeUsernames) {
             messageAttendee(message, attendeeUsername);
         }

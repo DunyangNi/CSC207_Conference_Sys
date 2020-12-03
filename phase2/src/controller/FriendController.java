@@ -1,9 +1,10 @@
 package controller;
 
-import exceptions.ConflictException;
-import exceptions.ObjectNotFoundException;
+import exceptions.conflict.AlreadyFriendException;
+import exceptions.not_found.FriendNotFoundException;
+import exceptions.not_found.ObjectNotFoundException;
+import exceptions.not_found.UserNotFoundException;
 import use_cases.FriendManager;
-import presenter.Presenter;
 
 import java.util.ArrayList;
 
@@ -26,13 +27,8 @@ public class FriendController {
      * adds new contact with given username
      * @param friendToAdd username of friend to add
      */
-    public void addFriend(String friendToAdd) throws ConflictException, ObjectNotFoundException {
-        try {
-            friendManager.addFriend(this.username, friendToAdd);
-        }
-        catch(Exception e) {
-            throw e;
-        }
+    public void addFriend(String friendToAdd) throws UserNotFoundException, FriendNotFoundException, AlreadyFriendException {
+        friendManager.addFriend(this.username, friendToAdd);
     }
 
     /**

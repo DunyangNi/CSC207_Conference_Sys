@@ -1,7 +1,9 @@
 package use_cases;
 
-import exceptions.*;
 import entities.*;
+import exceptions.already_exists.AccountAlreadyExistsException;
+import exceptions.already_exists.ObjectAlreadyExistsException;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -144,8 +146,8 @@ public class AccountManager implements Serializable {
      * @param firstName given first name
      * @param lastName given last name
      */
-    public void addNewAttendee(String username, String password, String firstName, String lastName) throws ObjectAlreadyExistsException {
-        if (getAccountHashMap().containsKey(username)) throw new ObjectAlreadyExistsException("Account");
+    public void addNewAttendee(String username, String password, String firstName, String lastName) throws AccountAlreadyExistsException {
+        if (getAccountHashMap().containsKey(username)) throw new AccountAlreadyExistsException();
         Attendee newAttendee = new Attendee(username, password, firstName, lastName);
         attendeeHashMap.put(username, newAttendee);
     }
@@ -159,9 +161,9 @@ public class AccountManager implements Serializable {
      * @param lastName given last name
      * @throws ObjectAlreadyExistsException upon finding an existing Speaker with the same username
      */
-    public void addNewSpeaker(String username, String password, String firstName, String lastName) throws ObjectAlreadyExistsException {
+    public void addNewSpeaker(String username, String password, String firstName, String lastName) throws AccountAlreadyExistsException {
         // TODO: 11/29/20 Reintroduce exception thorw in the future
-        if (getAccountHashMap().containsKey(username)) throw new ObjectAlreadyExistsException("Account");
+        if (getAccountHashMap().containsKey(username)) throw new AccountAlreadyExistsException();
         Speaker newSpeaker = new Speaker(username, password, firstName, lastName);
         speakerHashMap.put(username, newSpeaker);
     }
@@ -175,8 +177,8 @@ public class AccountManager implements Serializable {
      * @param firstName given first name
      * @param lastName given last name
      */
-    public void addNewOrganizer(String username, String password, String firstName, String lastName) throws ObjectAlreadyExistsException {
-        if (getAccountHashMap().containsKey(username)) throw new ObjectAlreadyExistsException("Account");
+    public void addNewOrganizer(String username, String password, String firstName, String lastName) throws AccountAlreadyExistsException {
+        if (getAccountHashMap().containsKey(username)) throw new AccountAlreadyExistsException();
         Organizer newOrganizer = new Organizer(username, password, firstName, lastName);
         organizerHashMap.put(username, newOrganizer);
     }

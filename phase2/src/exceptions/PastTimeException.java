@@ -1,4 +1,3 @@
 package exceptions;
 
-public class PastTimeException extends Exception{
-}
+public class PastTimeException extends Exception { }

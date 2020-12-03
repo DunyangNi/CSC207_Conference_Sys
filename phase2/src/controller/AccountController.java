@@ -1,6 +1,6 @@
 package controller;
 
-import exceptions.ObjectNotFoundException;
+import exceptions.not_found.ObjectNotFoundException;
 import presenter.Presenter;
 import presenter.TextPresenter;
 import use_cases.*;
@@ -59,25 +59,19 @@ public abstract class AccountController {
      * @param numMessagesRequested an upper bound for the number of past messages requested to be seen
      */
     public void viewMessagesFrom(String recipient, int numMessagesRequested) throws ObjectNotFoundException, InputMismatchException{
-        try {
-            if (numMessagesRequested < 0) {
-                this.presenter.displayPrompt("You have requested an invalid number");
-            } else {
-                String msgToPrint;
-                ArrayList<Integer> convo = cm.getConversationMessages(this.username, recipient);
-                this.presenter.displayPrompt("Your recent " + numMessagesRequested + " messages with " + recipient + ":");
+        if (numMessagesRequested < 0) {
+            this.presenter.displayPrompt("You have requested an invalid number");
+        } else {
+            String msgToPrint;
+            ArrayList<Integer> convo = cm.getConversationMessages(this.username, recipient);
+            this.presenter.displayPrompt("Your recent " + numMessagesRequested + " messages with " + recipient + ":");
+            this.presenter.displayPrompt("");
+            int numMessagesRetrieved = Math.min(numMessagesRequested, convo.size());
+            for (int i = numMessagesRetrieved; i > 0; i--) {
+                msgToPrint = cm.messageToString(convo.get(convo.size() - i)); // implemented fix
+                this.presenter.displayPrompt(msgToPrint);
                 this.presenter.displayPrompt("");
-                int numMessagesRetrieved = Math.min(numMessagesRequested, convo.size());
-                for (int i = numMessagesRetrieved; i > 0; i--) {
-                    msgToPrint = cm.messageToString(convo.get(convo.size() - i)); // implemented fix
-                    this.presenter.displayPrompt(msgToPrint);
-                    this.presenter.displayPrompt("");
-                }
             }
-        } catch (ObjectNotFoundException e) {
-                throw e;
-        } catch (InputMismatchException e) {
-            throw e;
         }
     }
 

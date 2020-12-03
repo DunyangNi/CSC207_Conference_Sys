@@ -1,8 +1,6 @@
 package views;
 
 import controller.RegistrationController;
-import enums.AccountType;
-import exceptions.ConflictException;
 import presenter.RegistrationPresenter;
 import use_cases.AccountManager;
 import use_cases.ConversationManager;

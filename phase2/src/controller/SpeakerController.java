@@ -1,6 +1,6 @@
 package controller;
 
-import exceptions.ObjectNotFoundException;
+import exceptions.not_found.ObjectNotFoundException;
 import use_cases.*;
 import java.util.*;
 import java.lang.*;

@@ -3,6 +3,9 @@ package use_cases;
 import exceptions.*;
 import entities.Event;
 import entities.Talk;
+import exceptions.conflict.LocationInUseException;
+import exceptions.conflict.SpeakerIsBusyException;
+import exceptions.not_found.LocationNotFoundException;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -28,9 +31,9 @@ public class EventChecker implements Serializable {
      * between 9 A.M and 4 P.M inclusive, or the same event has been already scheduled
      * @throws LocationNotFoundException if the location for an event is not allowed
      * @throws PastTimeException if the time have past
-     * @throws LocationConflictException if the location is being used at the time
+     * @throws LocationInUseException if the location is being used at the time
      */
-    public void checkValidEvent(Calendar time, String location, ArrayList<String> locations, ArrayList<Event> events) throws LocationNotFoundException, PastTimeException, InvalidTimeException, LocationConflictException {
+    public void checkValidEvent(Calendar time, String location, ArrayList<String> locations, ArrayList<Event> events) throws LocationNotFoundException, PastTimeException, InvalidTimeException, LocationInUseException {
         Calendar currTime = Calendar.getInstance();
 
         if (!locations.contains(location))  // is a valid location?
@@ -45,7 +48,7 @@ public class EventChecker implements Serializable {
 
         for (Event event : events) {    // is the same event already scheduled?
             if (event.getLocation().equals(location) && event.getTime().equals(time))
-                throw new LocationConflictException();
+                throw new LocationInUseException();
         }
     }
 
@@ -62,14 +65,14 @@ public class EventChecker implements Serializable {
      * between 9 A.M and 4 P.M inclusive, or the same event has been already scheduled
      * @throws LocationNotFoundException if the location for an event is not allowed
      * @throws PastTimeException if the time have past
-     * @throws LocationConflictException if the location is being used at the time
-     * @throws SpeakerConflictException if the speaker have another talk at the time
+     * @throws LocationInUseException if the location is being used at the time
+     * @throws SpeakerIsBusyException if the speaker have another talk at the time
      */
-    public void checkValidTalk(Calendar time, String location, String speaker, ArrayList<String> locations, ArrayList<Talk> talks, ArrayList<Event> events) throws LocationNotFoundException, PastTimeException, InvalidTimeException, LocationConflictException, SpeakerConflictException {
+    public void checkValidTalk(Calendar time, String location, String speaker, ArrayList<String> locations, ArrayList<Talk> talks, ArrayList<Event> events) throws LocationNotFoundException, PastTimeException, InvalidTimeException, LocationInUseException, SpeakerIsBusyException {
         // Check if the same talk is found from a list of scheduled talks
         for (Talk t : talks) {
             if (t.getSpeaker().equals(speaker) && t.getTime().equals(time))
-                throw new SpeakerConflictException();
+                throw new SpeakerIsBusyException();
         }
         checkValidEvent(time, location, locations, events);
     }

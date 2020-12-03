@@ -1,8 +1,7 @@
 package controller;
 
-
-import exceptions.UserNameNotFoundException;
-import exceptions.UserNotFoundException;
+import exceptions.not_found.RecipientNotFoundException;
+import exceptions.not_found.UserNotFoundException;
 import use_cases.AccountManager;
 import use_cases.ConversationManager;
 import use_cases.EventManager;
@@ -32,14 +31,7 @@ public class MessageAccountController{
         this.eventManager = eventManager;
     }
 
-    /**
-     * sends a message to account with specified username
-     * @param message the message to be sent
-     * @param account recipient account username
-     * @throws UserNotFoundException upon sender Account not being found
-     * @throws UserNameNotFoundException the recipient account not found
-     */
-    public void messageAccount(String message, String account) throws UserNotFoundException, UserNameNotFoundException {
+    public void messageAccount(String message, String account) throws UserNotFoundException, RecipientNotFoundException {
         conversationManager.sendMessage(this.username, account, message);
     }
 }
