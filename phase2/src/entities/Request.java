@@ -24,7 +24,7 @@ public class Request {
     public String getRequest(){
         return this.request;
     }
-    public Boolean getResolutionSatus(){
+    public Boolean getResolutionStatus(){
         return this.resolved;
     }
     public String getRequestSubjectLine(){

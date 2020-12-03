@@ -1,10 +1,12 @@
 package controller;
 
-import Throwables.*;
+import Throwables.ObjectNotFoundException;
 import presenter.Presenter;
 import use_cases.*;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public abstract class AccountController {
@@ -15,16 +17,8 @@ public abstract class AccountController {
     protected EventManager eventManager;
     protected SignupManager signupManager;
     protected Presenter presenter;
-    protected AddFriendController addFriendController;
-    protected RemoveFriendController removeFriendController;
-    protected MessageAttendeeController messageAttendeeController;
-    protected MessageSpeakerController messageSpeakerController;
-    protected ViewConversationController viewConversationController;
-    protected EventSignUpController eventSignUpController;
-    protected AccountCreationController accountCreationController;
-    protected LocationController locationController;
-    protected EventCreationController eventCreationController;
-    protected EventModifyController eventModifyController;
+    protected FriendController friendController;
+    protected MessageController messageController;
 
     /**
      * Facilitates interaction with the user (organizer/speaker/attendee) upon login
@@ -37,9 +31,7 @@ public abstract class AccountController {
      * @param signupManager manages event signup and related information
      * @param presenter defines the UI
      */
-    public AccountController(String username, AccountManager accountManager, FriendManager friendManager,
-                             ConversationManager conversationManager, EventManager eventManager,
-                             SignupManager signupManager, Presenter presenter) {
+    public AccountController(String username, AccountManager accountManager, FriendManager friendManager, ConversationManager conversationManager, EventManager eventManager, SignupManager signupManager, Presenter presenter) {
         this.username = username;
         this.accountManager = accountManager;
         this.friendManager = friendManager;
@@ -47,16 +39,8 @@ public abstract class AccountController {
         this.eventManager = eventManager;
         this.signupManager = signupManager;
         this.presenter = presenter;
-        this.addFriendController = new AddFriendController(username, friendManager);
-        this.removeFriendController = new RemoveFriendController(username, friendManager);
-        this.messageSpeakerController = new MessageSpeakerController(username, accountManager, conversationManager, eventManager, signupManager);
-        this.messageAttendeeController = new MessageAttendeeController(username, accountManager, conversationManager, eventManager, signupManager);
-        this.viewConversationController = new ViewConversationController(conversationManager, username);
-        this.eventSignUpController = new EventSignUpController(signupManager, username);
-        this.accountCreationController = new AccountCreationController(accountManager ,conversationManager, friendManager, eventManager);
-        this.locationController = new LocationController(eventManager);
-        this.eventCreationController = new EventCreationController(username, eventManager, signupManager);
-        this.eventModifyController = new EventModifyController(eventManager);
+        this.friendController = new FriendController(username, friendManager, presenter);
+        this.messageController = new MessageController(username, accountManager, conversationManager, eventManager, signupManager);
     }
 
     /**
@@ -74,6 +58,33 @@ public abstract class AccountController {
         this.presenter.displayContactList(this.username);
     }
 
+    /**
+     * displays the numMessagesRequested most recent messages with the recipient
+     * @param recipient person whose conversation with the user is being requested
+     * @param numMessagesRequested an upper bound for the number of past messages requested to be seen
+     */
+    public void viewMessagesFrom(String recipient, int numMessagesRequested) {
+        try {
+            if (numMessagesRequested < 0) {
+                this.presenter.displayPrompt("You have requested an invalid number");
+            } else {
+                String msgToPrint;
+                ArrayList<Integer> convo = conversationManager.getConversationMessages(this.username, recipient);
+                this.presenter.displayPrompt("Your recent " + numMessagesRequested + " messages with " + recipient + ":");
+                this.presenter.displayPrompt("");
+                int numMessagesRetrieved = Math.min(numMessagesRequested, convo.size());
+                for (int i = numMessagesRetrieved; i > 0; i--) {
+                    msgToPrint = conversationManager.messageToString(convo.get(convo.size() - i)); // implemented fix
+                    this.presenter.displayPrompt(msgToPrint);
+                    this.presenter.displayPrompt("");
+                }
+            }
+        } catch (ObjectNotFoundException e) {
+                this.presenter.displayConversationsErrors("no_user");
+        } catch (InputMismatchException e) {
+            this.presenter.displayConversationsErrors("mismatch");
+        }
+    }
 
     /**
      * A helper method to collect standart time information
@@ -111,7 +122,7 @@ public abstract class AccountController {
      * Runs the menu of options that the user sees and interacts with
      * @return returns a boolean which is True, indicating the user interaction ended
      */
-    public abstract boolean runInteraction() throws UserNotFoundException, UserNameNotFoundException, AlreadyExistException, EmptyListException, EventNotFoundException, InvalidIntegerException, MessageNotFound, EventFullException, AlreadyExistException;
+    public abstract boolean runInteraction();
 
     /**
      * Returns whether or not the string s is numeric

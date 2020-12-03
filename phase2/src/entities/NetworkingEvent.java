@@ -7,7 +7,7 @@ import java.util.Calendar;
     Represents any Networking event in the system, where a Networking event
     is a type of event without a speaker.
  */
-public class NetworkingEvent extends Event implements Serializable{
+public class NetworkingEvent extends Event implements Serializable {
     public NetworkingEvent(
             Integer id, String topic, Calendar time, String location,
             String organizer, Integer capacity, Boolean vipOnly)
@@ -24,7 +24,7 @@ public class NetworkingEvent extends Event implements Serializable{
      */
     @Override
     public boolean equals(Object other){
-        if (other != null && other instanceof entities.NetworkingEvent) {
+        if (other instanceof NetworkingEvent) {
             return super.equals(other);
         }
         else {

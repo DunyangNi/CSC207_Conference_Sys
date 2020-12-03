@@ -237,28 +237,28 @@ public class TextPresenter implements Presenter {
         System.out.println("[ACCOUNT]");
         System.out.println("00 = Logout and exit program");
         System.out.println("0  = Logout");
-        System.out.println("1  = Register a new speaker account"); //AccountCreationController - createSpeaker
-        System.out.println("2  = View list of all accounts"); //Use presenter directly
+        System.out.println("1  = Register a new speaker account");
+        System.out.println("2  = View list of all accounts");
 
         System.out.println("\n[CONTACTS]");
-        System.out.println("3  = Add a contact");//same as attendee
+        System.out.println("3  = Add a contact");
         System.out.println("4  = Remove a contact");
         System.out.println("5  = View list of all contacts");
 
         System.out.println("\n[CONVERSATIONS]");
-        System.out.println("6  = Message a speaker");//MessageSpeakerController - messageSpeaker
-        System.out.println("7  = Message an attendee");//MessageAttendeeController - messageAttendee
-        System.out.println("8  = Message all speakers");//MessageSpeakerController - messageAllSpeakers
-        System.out.println("9  = Message all attendees");//MessageAttendeeController - messageAllAttendees
-        System.out.println("10 = View your conversations");//same as Attendee
+        System.out.println("6  = Message a speaker");
+        System.out.println("7  = Message an attendee");
+        System.out.println("8  = Message all speakers");
+        System.out.println("9  = Message all attendees");
+        System.out.println("10 = View your conversations");
 
         System.out.println("\n[EVENTS]");
-        System.out.println("11 = Register a new event room");//LocationController - addNewLocation
-        System.out.println("12 = View list of all rooms");//Use presenter
-        System.out.println("13 = Register a new event");//EventModifyController - createEvent
-        System.out.println("14 = Cancel an event");//EventModifyController - cancelTalk
-        System.out.println("15 = Reschedule an event");//EventModifyController - rescheduleTalk
-        System.out.println("16 = View talk schedule");//Use presenter
+        System.out.println("11 = Register a new event room");
+        System.out.println("12 = View list of all rooms");
+        System.out.println("13 = Register a new event");
+        System.out.println("14 = Cancel an event");
+        System.out.println("15 = Reschedule an event");
+        System.out.println("16 = View talk schedule");
         System.out.println("==========================");
     }
 
@@ -302,21 +302,21 @@ public class TextPresenter implements Presenter {
         System.out.println("[ACCOUNT]");
         System.out.println("00 = Logout and exit program");
         System.out.println("0  = Logout");
-        System.out.println("1  = View list of all accounts"); //Use presenter directly
+        System.out.println("1  = View list of all accounts");
 
         System.out.println("\n[CONTACTS]");
-        System.out.println("2  = add a new contact"); //AddFriendController - addFriend
-        System.out.println("3  = remove a contact"); // RemoveFriendController - removeFriend
-        System.out.println("4  = view contacts list"); //// should use ViewFriendListPresenter directly
+        System.out.println("2  = add a new contact");
+        System.out.println("3  = remove a contact");
+        System.out.println("4  = view contacts list");
 
         System.out.println("\n[CONVERSATIONS]");
-        System.out.println("5  = message an attendee"); //MessageAttendeeController - messageAttendee
-        System.out.println("6  = message all attendees for one or multiple talks you're giving"); //MessageAttendeeController - messageAttendeesAtTalks
-        System.out.println("7  = view your conversation with someone"); //ViewConversation - isEmpty, viewMessageFrom
+        System.out.println("5  = message an attendee");
+        System.out.println("6  = message all attendees for one or multiple talks you're giving");
+        System.out.println("7  = view your conversation with someone");
 
         System.out.println("\n[EVENTS]");
-        System.out.println("8  = see a schedule of talks you're giving"); //Use presenter
-        System.out.println("9  = see a schedule of all talks"); //use presenter
+        System.out.println("8  = see a schedule of talks you're giving");
+        System.out.println("9  = see a schedule of all talks");
         System.out.println("==========================");
     }
 
@@ -343,20 +343,20 @@ public class TextPresenter implements Presenter {
         System.out.println("0  = Logout");
 
         System.out.println("\n[CONTACTS]");
-        System.out.println("1  = add a new contact"); //AddFriendController - addFriend
-        System.out.println("2  = remove a contact"); // RemoveFriendController - removeFriend
-        System.out.println("3  = see contacts list"); // should use ViewFriendListPresenter directly
+        System.out.println("1  = add a new contact");
+        System.out.println("2  = remove a contact");
+        System.out.println("3  = see contacts list");
 
         System.out.println("\n[CONVERSATIONS]");
-        System.out.println("4  = message another attendee"); //MessageAttendeeController - messageAttendee
-        System.out.println("5  = message a speaker"); //MessageSpeakerController - messageSpeaker
-        System.out.println("6  = view your conversation with someone"); //ViewConversation - isEmpty, viewMessageFrom
+        System.out.println("4  = message another attendee");
+        System.out.println("5  = message a speaker");
+        System.out.println("6  = view your conversation with someone");
 
         System.out.println("\n[EVENTS]");
-        System.out.println("7  = see talk schedule"); //Use the presenter directly
-        System.out.println("8  = sign up for a talk"); //EventSignUpController - signForEvent
-        System.out.println("9  = cancel enrolment for a talk"); //EventSignUpController - cancelForEvent
-        System.out.println("10 = see a schedule of talks you're attending"); //Use the presenter
+        System.out.println("7  = see talk schedule");
+        System.out.println("8  = sign up for a talk");
+        System.out.println("9  = cancel enrolment for a talk");
+        System.out.println("10 = see a schedule of talks you're attending");
         System.out.println("=========================");
     }
 

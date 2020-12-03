@@ -1,6 +1,6 @@
 package controller;
 
-import Throwables.*;
+import Throwables.ObjectNotFoundException;
 import use_cases.*;
 import java.util.*;
 import java.lang.*;
@@ -8,20 +8,19 @@ import presenter.*;
 
 public class AttendeeController extends AccountController {
 
-
     /**
-     * Facilitates interaction with the user (organizer/speaker/attendee) upon login
-     *
-     * @param username                   username of account user
-     * @param accountManager             manages data of all accounts in program
-     * @param friendManager              manages data of contacts lists
-     * @param conversationManager        manages conversation data
-     * @param eventManager               manages event data
-     * @param signupManager              manages event signup and related information
-     * @param presenter                  defines the UI
+     * facilitates interaction with attendee upon login
+     * @param username attendee username
+     * @param eventmanager event data
+     * @param conversationManager conversation data
+     * @param friendManager contact information
+     * @param signupManager event signup functionality
+     * @param accountManager data about all accounts in the program
+     * @param presenter specifies the UI
      */
-    public AttendeeController(String username, AccountManager accountManager, FriendManager friendManager, ConversationManager conversationManager, EventManager eventManager, SignupManager signupManager, Presenter presenter) {
-        super(username, accountManager, friendManager, conversationManager, eventManager, signupManager, presenter);
+    public AttendeeController(String username, EventManager eventmanager, ConversationManager conversationManager,
+                              FriendManager friendManager, SignupManager signupManager, AccountManager accountManager, Presenter presenter) {
+        super(username, accountManager, friendManager, conversationManager, eventmanager, signupManager, presenter);
     }
 
     /**
@@ -60,7 +59,7 @@ public class AttendeeController extends AccountController {
      * @return True if attendee wishes to terminate the program
      */
     @Override
-    public boolean runInteraction() throws UserNotFoundException, UserNameNotFoundException, AlreadyExistException, InvalidIntegerException, MessageNotFound, EmptyListException, EventNotFoundException, EventFullException {
+    public boolean runInteraction() {
         boolean loggedIn = true;
         boolean programEnd = false;
         presenter.displayAttendeeMenu();
@@ -79,12 +78,12 @@ public class AttendeeController extends AccountController {
                 case "1":
                     this.presenter.displayContactsPrompt("add");
                     String contactToAdd = userInput.nextLine();
-                    addFriendController.addFriend(contactToAdd);
+                    friendController.addFriend(contactToAdd);
                     break;
                 case "2":
                     this.presenter.displayContactsPrompt("remove");
                     String contactToRemove = userInput.nextLine();
-                    removeFriendController.removeFriend(contactToRemove);
+                    friendController.removeFriend(contactToRemove);
                     break;
                 case "3":
                     this.viewContactList();
@@ -96,7 +95,7 @@ public class AttendeeController extends AccountController {
                     String attendeeUsername = userInput.nextLine();
                     //line1 = sc.nextLine();
                     String message = userInput.nextLine();
-                    messageAttendeeController.messageAttendee(message, attendeeUsername);
+                    messageController.messageAttendee(message, attendeeUsername);
                     break;
                 }
                 case "5": {
@@ -106,31 +105,38 @@ public class AttendeeController extends AccountController {
                     String speakerUsername = userInput.nextLine();
                     //line1 = sc.nextLine();
                     String message = userInput.nextLine();
-                    messageSpeakerController.messageSpeaker(message, speakerUsername);
+                    messageController.messageSpeaker(message, speakerUsername);
                     break;
                 }
-                case "6":{
-                    Set<String> myConversations = conversationManager.getAllUserConversationRecipients(username);
-                    if (myConversations.isEmpty()) {
-                        this.presenter.displayConversations("empty", myConversations);
-                    } else {
-                        this.presenter.displayConversations("non_empty", myConversations);
-                        String user = userInput.nextLine();
-                        int pastMessages = userInput.nextInt();
-                        userInput.nextLine();
-                        System.out.println(viewConversationController.viewMessagesFrom(user, pastMessages));
-                    break;
+                case "6":
+                    try {
+                        Set<String> myConversations = conversationManager.getAllUserConversationRecipients(username);
+                        if (myConversations.isEmpty()) {
+                            this.presenter.displayConversations("empty", myConversations);
+                        } else {
+                            this.presenter.displayConversations("non_empty", myConversations);
+                            String user = userInput.nextLine();
+                            int pastMessages = userInput.nextInt();
+                            userInput.nextLine();
+                            this.viewMessagesFrom(user, pastMessages);
+                        }
+                    } catch (InputMismatchException e) {
+                        this.presenter.displayConversationsErrors("mismatch");
+                    } catch (ObjectNotFoundException e) {
+                        this.presenter.displayConversationsErrors("no_user");
+                    } catch (NullPointerException e) {
+                        this.presenter.displayConversationsErrors("no_conversation");
                     }
-                }
-                case "7":{
+                    break;
+                case "7":
                     this.SeeTalkSchedule();
-                    break;}
+                    break;
                 case "8": {
                     this.presenter.displayTalkPrompt("attend");
                     String input = userInput.nextLine();
                     if(isNumeric(input)){
                         Integer id = Integer.parseInt(input);
-                        eventSignUpController.signupForEvent(id);}
+                        this.signupForTalk(id);}
                     else{
                         this.presenter.displayTalkPrompt("invalid");
                     }
@@ -141,7 +147,7 @@ public class AttendeeController extends AccountController {
                     String input = userInput.nextLine();
                     if(isNumeric(input)){
                         Integer id = Integer.parseInt(input);
-                        eventSignUpController.cancelForEvent(id);}
+                        this.cancelSignupForTalk(id);}
                     else{
                         this.presenter.displayTalkPrompt("invalid");
                     }

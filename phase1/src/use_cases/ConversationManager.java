@@ -21,9 +21,9 @@ public class ConversationManager implements Serializable {
      * @return sender and content
      * @throws ObjectNotFoundException upon <code>Message</code> not being found.
      */
-    public String messageToString(Integer id) throws MessageNotFound {
+    public String messageToString(Integer id) throws ObjectNotFoundException{
         if (!this.messages.containsKey(id)) {
-            throw new MessageNotFound();
+            throw new ObjectNotFoundException("Message");
         }
         Message selectedMsg = messages.get(id);
         String sender = selectedMsg.getSender();
@@ -38,15 +38,14 @@ public class ConversationManager implements Serializable {
      * @param sender given sender username
      * @param recipient given recipient username
      * @return an <code>ArrayList</code> of integers
-     * @throws UserNotFoundException throw when the sender username is invalid
-     * @throws UserNameNotFoundException throw when the recipient username is invalid
+     * @throws ObjectNotFoundException upon sender or recipient Account not being found
      */
-    public ArrayList<Integer> getConversationMessages(String sender, String recipient) throws UserNotFoundException, UserNameNotFoundException {
+    public ArrayList<Integer> getConversationMessages(String sender, String recipient) throws ObjectNotFoundException{
         if (!conversations.containsKey(sender)) {
-            throw new UserNotFoundException();
+            throw new ObjectNotFoundException("Sender");
         }
         if (!conversations.containsKey(recipient)) {
-            throw new UserNameNotFoundException();
+            throw new ObjectNotFoundException("Recipient");
         }
         return conversations.get(sender).get(recipient).getMessages();
     }
@@ -56,11 +55,11 @@ public class ConversationManager implements Serializable {
      *
      * @param user given username
      * @return Set of usernames associated with recipient Accounts
-     * @throws UserNotFoundException upon User not being found.
+     * @throws ObjectNotFoundException upon User not being found.
      */
-    public Set<String> getAllUserConversationRecipients(String user) throws UserNotFoundException {
+    public Set<String> getAllUserConversationRecipients(String user) throws ObjectNotFoundException{
         if (!conversations.containsKey(user)) {
-            throw new UserNotFoundException();
+            throw new ObjectNotFoundException("User");
         }
         Set<String> recipients = this.conversations.get(user).keySet();
         return recipients.isEmpty() ? Collections.emptySet() : recipients;
@@ -84,12 +83,12 @@ public class ConversationManager implements Serializable {
      * @param message given String content for message
      * @throws ObjectNotFoundException upon sender or recipient Account not being found
      */
-    public void sendMessage(String sender, String recipient, String message) throws UserNotFoundException, UserNameNotFoundException {
+    public void sendMessage(String sender, String recipient, String message) throws ObjectNotFoundException {
         if (!conversations.containsKey(sender)) {
-            throw new UserNotFoundException();
+            throw new ObjectNotFoundException("Sender");
         }
         if (!conversations.containsKey(recipient)) {
-            throw new UserNameNotFoundException();
+            throw new ObjectNotFoundException("Recipient");
         }
         HashMap<String, Conversation> senderConversations = conversations.get(sender);
         HashMap<String, Conversation> recipientConversations = conversations.get(recipient);

@@ -30,13 +30,12 @@ public class PanelDiscussion extends Event implements Serializable{
      */
     @Override
     public boolean equals(Object other){
-        if (other != null && other instanceof PanelDiscussion) {
+        if (other instanceof PanelDiscussion) {
             PanelDiscussion o = (PanelDiscussion)other;
 
-            if ( speakers.size() == o.getSpeakers().size()) {
-                ArrayList<String> speakersClone1 = (ArrayList<String>)getSpeakers().clone();
-                ArrayList<String> speakersClone2 = (ArrayList<String>)o.getSpeakers().clone();
-
+            if (speakers.size() == o.getSpeakers().size()) {
+                ArrayList<String> speakersClone1 = new ArrayList<>(getSpeakers());
+                ArrayList<String> speakersClone2 = new ArrayList<>(o.getSpeakers());
                 Collections.sort(speakersClone1);
                 Collections.sort(speakersClone2);
                 return super.equals(other) && speakersClone1.equals(speakersClone2);
@@ -60,42 +59,23 @@ public class PanelDiscussion extends Event implements Serializable{
      *
      * @param speakers the username of speakers for this <code>PanelDiscussion</code>
      */
-    public void setSpeakers(ArrayList<String> speakers) {
-        if (speakers == null){
-            this.speakers = new ArrayList<String>();
-        }
-        else {
-            this.speakers = (ArrayList<String>) speakers.clone();
-        }
-    }
+    public void setSpeakers(ArrayList<String> speakers) { this.speakers = speakers; }
 
     /**
      * Append a new speaker for this <code>PanelDiscussion</code>.
      *
      * @param speaker the username of speaker to append for this <code>PanelDiscussion</code>
      */
-    public void appendSpeaker(String speaker) {
-        if (speakers == null){
-            this.speakers = new ArrayList<String>();
+    public void addSpeaker(String speaker) {
+        if (!speakers.contains(speaker))
             this.speakers.add(speaker);
-        }
-        else{
-            if (!speakers.contains(speaker)){
-                this.speakers.add(speaker);
-            }
-            else{ }// already exists. Nothing to do
-        }
     }
 
     /**
      * Removes a speaker
      * @param speaker a speaker to remove
      */
-    public void removeSpeaker(String speaker) {
-        if (speakers != null && speakers.contains(speaker)){
-            speakers.remove(speaker);
-        }
-    }
+    public void removeSpeaker(String speaker) { speakers.remove(speaker); }
 
     /*
 

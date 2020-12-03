@@ -179,11 +179,11 @@ public class EventManager implements Serializable {
      * Adds a new location if valid
      *
      * @param location a new location to add
-     * @throws AlreadyExistException if a new location is invalid
+     * @throws ConflictException if a new location is invalid
      */
-    public void addNewLocation(String location) throws AlreadyExistException {
+    public void addNewLocation(String location) throws ConflictException {
         if (this.locations.contains(location))
-            throw new AlreadyExistException();
+            throw new ConflictException("Location " + location + " already exists.");
         this.locations.add(location);
     }
 
@@ -198,7 +198,7 @@ public class EventManager implements Serializable {
      * @throws ConflictException if <code>checkValidEvent</code> throws
      * @throws ObjectNotFoundException if <code>checkValidEvent</code> throws
      */
-    public Integer addNewEvent(String topic, Calendar time, String location, String organizer) throws LocationNotFoundException, PastTimeException, TimeConflictException, LocationConflictException {
+    public Integer addNewEvent(String topic, Calendar time, String location, String organizer) throws ConflictException, ObjectNotFoundException {
         checkValidEvent(time, location);
         Event eventToAdd = new Event(assignEventID++, topic, time, location, organizer);
         events.put(eventToAdd.getId(), eventToAdd);
@@ -215,11 +215,11 @@ public class EventManager implements Serializable {
      * @param speaker speaker for a new event
      * @return id for a new id which has been added
      * @throws ConflictException if <code>checkValidEvent</code> throws or a speaker is invalid
-     * @throws UserNameNotFoundException if <code>checkValidEvent</code> throws
+     * @throws ObjectNotFoundException if <code>checkValidEvent</code> throws
      */
-    public Integer addNewTalk(String topic, Calendar time, String location, String organizer, String speaker) throws ConflictException, SpeakerNameNotFoundException, LocationNotFoundException, PastTimeException, TimeConflictException, LocationConflictException {
+    public Integer addNewTalk(String topic, Calendar time, String location, String organizer, String speaker) throws ConflictException, ObjectNotFoundException {
         if (!speakers.contains(speaker))
-            throw new SpeakerNameNotFoundException();
+            throw new ObjectNotFoundException("Speaker " + speaker);
         checkValidTalk(time, location, speaker);
         Talk eventToAdd = new Talk(assignEventID++, topic, time, location, organizer, speaker);
         events.put(eventToAdd.getId(), eventToAdd);
@@ -232,11 +232,11 @@ public class EventManager implements Serializable {
      * @param id id to be cancelled
      * @throws ObjectNotFoundException if the id is invalid or is associated with non-talk
      */
-    public void cancelTalk(Integer id) throws EventNotFoundException {
+    public void cancelTalk(Integer id) throws ObjectNotFoundException {
         if (!events.containsKey(id))
-            throw new EventNotFoundException();
+            throw new ObjectNotFoundException("Talk");
         if (!(events.get(id) instanceof Talk))
-            throw new EventNotFoundException();
+            throw new ObjectNotFoundException("Talk");
         Event talkToCancel = events.get(id);
         if (!(Calendar.getInstance().compareTo(talkToCancel.getTime()) >= 0))
             events.remove(id);
@@ -264,10 +264,10 @@ public class EventManager implements Serializable {
      * @throws ConflictException if <code>checkValidTalk</code> or <code>checkValidEvent</code>
      * throw
      */
-    public void changeTime(Integer id, Calendar newTime) throws EventNotFoundException, LocationNotFoundException, PastTimeException, TimeConflictException, LocationConflictException, ConflictException {
+    public void changeTime(Integer id, Calendar newTime) throws ObjectNotFoundException, ConflictException {
         // is id valid?
         if (!events.containsKey(id))
-            throw new EventNotFoundException();
+            throw new ObjectNotFoundException("Event");
 
         // Validation
         Event selectedEvent = events.get(id);
@@ -286,10 +286,10 @@ public class EventManager implements Serializable {
      * @throws ConflictException if <code>checkValidTalk</code> or <code>checkValidEvent</code>
      * throw
      */
-    public void changeLocation(Integer id, String newLocation) throws LocationNotFoundException, PastTimeException, TimeConflictException, LocationConflictException, EventNotFoundException, ConflictException {
+    public void changeLocation(Integer id, String newLocation) throws ObjectNotFoundException, ConflictException {
         // is id valid?
         if (!events.containsKey(id))
-            throw new EventNotFoundException();
+            throw new ObjectNotFoundException("Event");
 
         // Validation
         Event selectedEvent = events.get(id);
@@ -321,7 +321,7 @@ public class EventManager implements Serializable {
      * @throws ConflictException if <code>checkValidEvent</code> throws
      * @throws ObjectNotFoundException if <code>checkValidEnt</code> throws
      */
-    public void checkValidEvent(Calendar time, String location) throws LocationNotFoundException, PastTimeException, TimeConflictException, LocationConflictException {
+    public void checkValidEvent(Calendar time, String location) throws ConflictException, ObjectNotFoundException {
         eventChecker.checkValidEvent(time, location, locations, fetchEventList());
     }
 
@@ -334,7 +334,7 @@ public class EventManager implements Serializable {
      * @throws ConflictException if <code>checkValidEvent</code> throws
      * @throws ObjectNotFoundException if <code>checkValidEnt</code> throws
      */
-    public void checkValidTalk(Calendar time, String location, String speaker) throws ConflictException, LocationNotFoundException, PastTimeException, TimeConflictException, LocationConflictException {
+    public void checkValidTalk(Calendar time, String location, String speaker) throws ConflictException, ObjectNotFoundException {
         eventChecker.checkValidTalk(time, location, speaker, locations, fetchTalkList(), fetchEventList());
     }
 

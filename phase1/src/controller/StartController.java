@@ -1,6 +1,5 @@
 package controller;
 
-import Throwables.*;
 import presenter.Presenter;
 import presenter.TextPresenter;
 import use_cases.*;
@@ -40,7 +39,7 @@ public class StartController {
      * account type (organizer, speaker, or attendee)
      * @return True if the user wishes to terminate the program
      */
-    public boolean runStartMenu() throws InvalidIntegerException, MessageNotFound, EventNotFoundException, UserNameNotFoundException, UserNotFoundException, AlreadyExistException, EventFullException, EmptyListException {
+    public boolean runStartMenu() {
         presenter.displayPrompt("[START MENU]");
         presenter.displayPrompt("0 = Exit program:\n1 = Login to your account:\n2 = Register a new account:");
         String command = input.nextLine();
