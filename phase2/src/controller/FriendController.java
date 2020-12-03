@@ -3,22 +3,21 @@ package controller;
 import use_cases.FriendManager;
 import presenter.Presenter;
 
+import java.util.ArrayList;
+
 public class FriendController {
     protected String username;
     protected FriendManager friendManager;
-    protected Presenter presenter;
 
     /**
      * Instantiates a FriendController which
      * manages friend/contact related functionality for the current user
      * @param username user username
      * @param friendManager manages friendlist functionality
-     * @param presenter specifies the UI
      */
-    public FriendController(String username, FriendManager friendManager, Presenter presenter){
+    public FriendController(String username, FriendManager friendManager){
         this.username = username;
         this.friendManager = friendManager;
-        this.presenter = presenter;
     }
 
     /**
@@ -30,7 +29,7 @@ public class FriendController {
             friendManager.addFriend(this.username, friendToAdd);
         }
         catch(Exception e) {
-            this.presenter.displayPrompt(e.toString());
+            System.out.println(e.toString());
         }
     }
 
@@ -43,14 +42,14 @@ public class FriendController {
             friendManager.removeFriend(this.username, friendToRemove);
         }
         catch(Exception e) {
-            this.presenter.displayPrompt(e.toString());
+            System.out.println(e.toString());
         }
     }
 
     /**
      * displays friend list
      */
-    public void seeFriendList() {
-        this.presenter.displayContactList(this.username);
+    public ArrayList<String> fetchFriendList() {
+        return friendManager.getFriendList(username);
     }
 }

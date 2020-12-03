@@ -34,7 +34,7 @@ public abstract class AccountController {
         this.fm = fm;
         this.cm = cm;
         this.em = em;
-        this.friendController = new FriendController(username, fm, presenter);
+        this.friendController = new FriendController(username, fm);
         this.messageController = new MessageController(username, am, cm, em);
     }
 

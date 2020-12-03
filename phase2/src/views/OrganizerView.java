@@ -1,6 +1,7 @@
 package views;
 
 import controller.OrganizerController;
+import enums.OrganizerCommand;
 import presenter.OrganizerPresenter;
 import use_cases.AccountManager;
 import use_cases.ConversationManager;
@@ -22,7 +23,35 @@ public class OrganizerView {
 
     public boolean viewOrganizerMenu() {
         presenter.startPrompt();
+
         presenter.organizerMenuPrompt();
-        return controller.runInteraction();
+
+        boolean programEnd = false;
+        boolean loggedIn = true;
+        while (loggedIn) {
+
+            String inputCommand = userInput.nextLine();
+            OrganizerCommand[] enumCommandList = OrganizerCommand.values();
+            boolean validInput = false;
+            OrganizerCommand enumCommand = OrganizerCommand.EXIT;
+
+            while (!validInput) {
+                for (OrganizerCommand command : enumCommandList) {
+                    if (command.command.equals(inputCommand)) {
+                        validInput = true;
+                        enumCommand = command;
+                        break;
+                    }
+                }
+                if (!validInput) {
+                    presenter.invalidInputPrompt();
+                    presenter.requestCommandPrompt();
+                    inputCommand = userInput.nextLine();
+                }
+            }
+
+            controller.runInteraction(enumCommand);
+        }
+        return false;
     }
 }
