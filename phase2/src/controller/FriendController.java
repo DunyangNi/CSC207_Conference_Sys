@@ -1,5 +1,7 @@
 package controller;
 
+import exceptions.ConflictException;
+import exceptions.ObjectNotFoundException;
 import use_cases.FriendManager;
 import presenter.Presenter;
 
@@ -24,12 +26,12 @@ public class FriendController {
      * adds new contact with given username
      * @param friendToAdd username of friend to add
      */
-    public void addFriend(String friendToAdd) {
+    public void addFriend(String friendToAdd) throws ConflictException, ObjectNotFoundException {
         try {
             friendManager.addFriend(this.username, friendToAdd);
         }
         catch(Exception e) {
-            System.out.println(e.toString());
+            throw e;
         }
     }
 
@@ -37,12 +39,12 @@ public class FriendController {
      * removes a friend from contacts list
      * @param friendToRemove friend to remove
      */
-    public void removeFriend(String friendToRemove) {
+    public void removeFriend(String friendToRemove) throws ObjectNotFoundException {
         try{
             friendManager.removeFriend(this.username, friendToRemove);
         }
         catch(Exception e) {
-            System.out.println(e.toString());
+            throw e;
         }
     }
 

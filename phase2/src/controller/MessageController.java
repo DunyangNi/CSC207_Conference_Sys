@@ -1,5 +1,7 @@
 package controller;
 //To be deleted
+import exceptions.UserNameNotFoundException;
+import exceptions.UserNotFoundException;
 import use_cases.ConversationManager;
 import use_cases.AccountManager;
 import use_cases.EventManager;
@@ -30,33 +32,12 @@ public class MessageController {
     }
 
     /**
-     * sends a message to account with specified username
-     * @param message the message to be sent
-     * @param account recipient account username
-     */
-    public void messageAccount(String message, String account) {
-        try{
-            conversationManager.sendMessage(this.username, account, message);
-        }
-        catch(Exception e){
-            this.presenter.displayPrompt(e.toString());
-            this.presenter.displayPrompt("Something went wrong with messageAccount while messaging. Try again.");
-        }
-    }
-
-    /**
      * sends a message to speaker with specified username
      * @param message message to be sent
      * @param speaker speaker username
      */
-    public void messageSpeaker(String message, String speaker) {
-        if (accountManager.containsSpeaker(speaker)){
-            messageAccount(message, speaker);
-        }
-        else {
-            this.presenter.displayPrompt("This speaker does not exist.");
-        }
-
+    public void messageSpeaker(String message, String speaker) throws UserNotFoundException, UserNameNotFoundException {
+        conversationManager.sendMessage(this.username, speaker, message);
     }
 
     /**
@@ -64,13 +45,8 @@ public class MessageController {
      * @param message message to be send
      * @param attendeeUsername attendee username
      */
-    public void messageAttendee(String message, String attendeeUsername) {
-        if (accountManager.containsAttendee(attendeeUsername)){
-            messageAccount(message, attendeeUsername);
-        }
-        else {
-            this.presenter.displayPrompt("This attendee does not exist.");
-        }
+    public void messageAttendee(String message, String attendeeUsername) throws UserNotFoundException, UserNameNotFoundException {
+        conversationManager.sendMessage(this.username, attendeeUsername, message);
     }
 
     /**
