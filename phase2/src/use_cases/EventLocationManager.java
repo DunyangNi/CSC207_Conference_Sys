@@ -1,7 +1,6 @@
 package use_cases;
 
-import exceptions.AlreadyExistException;
-import exceptions.ConflictException;
+import exceptions.ObjectAlreadyExistsException;
 import exceptions.IntegerOutOfBoundsException;
 import exceptions.ObjectNotFoundException;
 import entities.Location;
@@ -207,9 +206,9 @@ public class EventLocationManager implements Serializable {
      * @param hasPresentationScreen
      * @param furtherNotes
      * @throws IntegerOutOfBoundsException if occupants or table/chairs are too small
-     * @throws AlreadyExistException if the room name already exist
+     * @throws ObjectAlreadyExistsException if the room name already exist
      */
-    public void addNewLocation(String name, int maxOccupancy, int numTables, int numChairs, boolean hasInternet, boolean hasSoundSystem, boolean hasPresentationScreen, String furtherNotes) throws IntegerOutOfBoundsException, AlreadyExistException {
+    public void addNewLocation(String name, int maxOccupancy, int numTables, int numChairs, boolean hasInternet, boolean hasSoundSystem, boolean hasPresentationScreen, String furtherNotes) throws IntegerOutOfBoundsException, ObjectAlreadyExistsException {
         if(maxOccupancy < 0){
             throw new IntegerOutOfBoundsException("Too few occupants");
         }
@@ -222,7 +221,7 @@ public class EventLocationManager implements Serializable {
         else{
             for(Location location: this.locations.values()){
                 if(location.getName().equals(name)){
-                    throw new AlreadyExistException();
+                    throw new ObjectAlreadyExistsException("Location");
                 }
             }
         }

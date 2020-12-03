@@ -1,7 +1,7 @@
 package controller;
 
 
-import exceptions.EmptyListException;
+import exceptions.NoRecipientsException;
 import exceptions.UserNameNotFoundException;
 import exceptions.UserNotFoundException;
 import use_cases.AccountManager;
@@ -43,13 +43,13 @@ public class MessageSpeakerController extends MessageAccountController{
      * @param message message to be sent
      * @throws UserNotFoundException if the sender username not found
      * @throws UserNameNotFoundException if the recipient name is invalid
-     * @throws EmptyListException if there is no one to send
+     * @throws NoRecipientsException if there is no one to send
      */
-    public void messageAllSpeakers(String message) throws UserNotFoundException, UserNameNotFoundException, EmptyListException {
+    public void messageAllSpeakers(String message) throws UserNotFoundException, UserNameNotFoundException, NoRecipientsException {
 
         Iterator<String> speakerUsernameIterator = this.accountManager.speakerUsernameIterator();
         if (!speakerUsernameIterator.hasNext())
-            throw new EmptyListException();
+            throw new NoRecipientsException("to message");
         while(speakerUsernameIterator.hasNext()) {
             messageSpeaker(message, speakerUsernameIterator.next());
         }

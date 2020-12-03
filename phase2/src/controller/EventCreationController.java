@@ -20,10 +20,10 @@ public class EventCreationController {
      * @param type the event type
      * @param topic the topic of this event
      * @param time the time of event
-     * @param location
-     * @param speakers
-     * @param capacity
-     * @param vipOnly
+     * @param location location of event
+     * @param speakers speaker(s) of event
+     * @param capacity capacity of event
+     * @param vipOnly event is VIP only
      * @throws LocationNotFoundException If the location is not valid
      * @throws PastTimeException If the time has past
      * @throws InvalidTimeException If the time is not valid

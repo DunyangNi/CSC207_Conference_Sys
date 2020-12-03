@@ -1,6 +1,6 @@
 package controller;
 
-import exceptions.EmptyListException;
+import exceptions.NoRecipientsException;
 import exceptions.EventNotFoundException;
 import exceptions.UserNameNotFoundException;
 import exceptions.UserNotFoundException;
@@ -46,11 +46,11 @@ public class MessageAttendeeController extends MessageAccountController{
      * sends a message to all registered attendees
      * @param message message to be sent
      */
-    public void messageAllAttendees(String message) throws UserNotFoundException, UserNameNotFoundException, EmptyListException {
+    public void messageAllAttendees(String message) throws UserNotFoundException, UserNameNotFoundException, NoRecipientsException {
 
         Iterator<String> attendeeUsernameIterator = this.accountManager.attendeeUsernameIterator();
         if (!attendeeUsernameIterator.hasNext())
-            throw new EmptyListException();
+            throw new NoRecipientsException("to message");
         while (attendeeUsernameIterator.hasNext()) {
             messageAttendee(message, attendeeUsernameIterator.next());
         }
@@ -63,17 +63,17 @@ public class MessageAttendeeController extends MessageAccountController{
      * @param message message to be sent to attendees attending these talks
      * @throws UserNotFoundException if the sender username is invalid
      * @throws UserNameNotFoundException if the recipient username is not vaid
-     * @throws EmptyListException if There is no one to send message
+     * @throws NoRecipientsException if There is no one to send message
      * @throws EventNotFoundException if the event id is invalid
      */
-    public void messageAttendeesAtTalks(ArrayList<Integer> selectedSpeakerTalks, String message) throws UserNotFoundException, UserNameNotFoundException, EmptyListException, EventNotFoundException {
+    public void messageAttendeesAtTalks(ArrayList<Integer> selectedSpeakerTalks, String message) throws UserNotFoundException, UserNameNotFoundException, NoRecipientsException, EventNotFoundException {
         Set<String> selectedAttendeeUsernames = new HashSet<>();
         for (Integer id : selectedSpeakerTalks) {
             if (eventManager.isTalk(id))
                 selectedAttendeeUsernames.addAll(eventManager.fetchEventAttendeeList(id));
         }
         if (selectedAttendeeUsernames.isEmpty())
-            throw new EmptyListException();
+            throw new NoRecipientsException("to message");
         for (String attendeeUsername : selectedAttendeeUsernames) {
             messageAttendee(message, attendeeUsername);
         }

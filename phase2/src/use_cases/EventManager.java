@@ -422,7 +422,7 @@ public class EventManager implements Serializable {
     }
 
     // temp
-    public void addNewLocation(String location) throws IntegerOutOfBoundsException, AlreadyExistException {
+    public void addNewLocation(String location) throws IntegerOutOfBoundsException, ObjectAlreadyExistsException {
         eventLocationManager.addNewLocation(location, 2, 2, 2, true, true, true, "");
     }
 

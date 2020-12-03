@@ -30,9 +30,9 @@ public class ViewConversationController {
      * @param numMessagesRequested an upper bound for the number of past messages requested to be seen
      * @throws ObjectNotFoundException when message is not found
      * @throws IntegerOutOfBoundsException when numMessagesRequested is invalid
-     * @throws EmptyListException when there is no message
+     * @throws NoMessagesException when there is no message
      */
-    public ArrayList<String> viewMessagesFrom(String recipient, int numMessagesRequested) throws ObjectNotFoundException, IntegerOutOfBoundsException, EmptyListException {
+    public ArrayList<String> viewMessagesFrom(String recipient, int numMessagesRequested) throws ObjectNotFoundException, IntegerOutOfBoundsException, NoMessagesException {
         ArrayList<String> conversations;
         if (numMessagesRequested < 0) {
             throw new IntegerOutOfBoundsException("less than 0");
@@ -46,7 +46,7 @@ public class ViewConversationController {
                 conversations.add(msgToPrint);
             }
         }
-        if (conversations.isEmpty()){throw new EmptyListException();}
+        if (conversations.isEmpty()){throw new NoMessagesException();}
         return conversations;
     }
 

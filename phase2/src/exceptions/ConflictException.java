@@ -6,7 +6,7 @@ public class ConflictException extends Exception{
      * from performing normal function.
      * Examples of conflicts include scheduling conflicts,
      * attempting to create an account with a username that already exists, etc.
-     * @param message explanation for the conflict that occured
+     * @param message explanation for the conflict that occurred
      */
     public ConflictException(String message) {
         super(message);
