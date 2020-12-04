@@ -1,10 +1,12 @@
 package controller;
 
+import exceptions.HTMLWriteErrorException;
 import exceptions.conflict.AlreadyFriendException;
 import exceptions.not_found.FriendNotFoundException;
 import exceptions.not_found.ObjectNotFoundException;
 import exceptions.not_found.RecipientNotFoundException;
 import exceptions.not_found.UserNotFoundException;
+import gateway.HTMLManager;
 import use_cases.*;
 import java.util.*;
 import java.lang.*;
@@ -188,6 +190,25 @@ public class AttendeeController extends AccountController {
                 case VIEW_MY_SCHEDULE:
                     this.seeAttendeeTalkSchedule();
                     break;
+                case DOWNLOAD_SCHEDULE: {  // download all event schedule in HTML
+                    this.presenter.displayDownloadSchedulePrompt();
+                    command = userInput.nextLine();
+                    if (command.equalsIgnoreCase("Y")) {
+                        try {
+                            HTMLManager hm = new HTMLManager(em);
+                            hm.generateHTML();
+                            hm.openHTML();
+                            this.presenter.displayPrompt("Successful! downloaded: " +
+                                    hm.getDownloadLocation());
+                        } catch (HTMLWriteErrorException e) { // wrong while processing HTML
+                            this.presenter.displayPrompt("Internal Error during HTML processing");
+                        }
+                    } else {
+                        presenter.displayPrompt("Aborted");
+                    }
+                    presenter.displayPrompt("");
+                    break;
+                }
                 case VIEW_MENU:
                     presenter.displayAttendeeMenu();
                     break;

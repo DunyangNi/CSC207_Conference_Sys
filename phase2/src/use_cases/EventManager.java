@@ -4,6 +4,7 @@ import enums.EventType;
 import exceptions.*;
 import entities.Event;
 import entities.Talk;
+import gateway.HTMLWritable;
 import exceptions.already_exists.ObjectAlreadyExistsException;
 import exceptions.conflict.AlreadySignedUpException;
 import exceptions.conflict.EventIsFullException;
@@ -14,12 +15,14 @@ import exceptions.not_found.EventNotFoundException;
 import exceptions.not_found.LocationNotFoundException;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
  * Represents the entire system of Events and their locations and speakers.
  */
-public class EventManager implements Serializable {
+public class EventManager implements Serializable, HTMLWritable {
     private HashMap<Integer, Event> events;
     private final ArrayList<String> speakers;
     private final EventModifier eventModifier = new EventModifier();
@@ -412,5 +415,51 @@ public class EventManager implements Serializable {
     // temp
     public ArrayList<String> getLocations() {
         return eventLocationManager.getLocations();
+    }
+
+    /**
+     * @return a html file name whose name must not contain spaces
+     */
+    @Override public String getHTMLFileName() {
+        return "EventSchedule.html";
+    }
+
+    /**
+     * @return a title for a generated HTML
+     */
+    @Override public String getHTMLTitle() {
+        return "Event Schedule";
+    }
+
+    /**
+     * @return body for a generated HTML
+     */
+    @Override public String getHTMLBody() {
+        DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+        String html = "";
+        html += "<table border='1' style='border-collapse:collapse'>";
+        html += "<caption>" + getHTMLTitle() + "</caption>";
+        html += "<tr>";
+        html += "<th> ID        </th>";
+        html += "<th> TOPIC     </th>";
+        html += "<th> LOCATION  </th>";
+        html += "<th> TIME      </th>";
+        html += "<th> CAPACITY  </th>";
+        html += "<th> VIP ONLY  </th>";
+        html += "<th> ORGANIZER </th>";
+        html += "</tr>";
+        for (Event evt: fetchEventList()){
+            html += "<tr>";
+            html += "<td>" + evt.getId()        + "</td>";
+            html += "<td>" + evt.getTopic()     + "</td>";
+            html += "<td>" + evt.getLocation()  + "</td>";
+            html += "<td>" + df.format(evt.getTime().getTime()) + "</td>";
+            html += "<td>" + evt.getCapacity()  + "</td>";
+            html += "<td>" + evt.getVipOnly()   + "</td>";
+            html += "<td>" + evt.getOrganizer() + "</td>";
+            html += "</tr>";
+        }
+        html += "</table>";
+        return html;
     }
 }

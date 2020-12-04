@@ -354,6 +354,7 @@ public class TextPresenter implements Presenter {
         System.out.println("8  = sign up for a talk");
         System.out.println("9  = cancel enrolment for a talk");
         System.out.println("10 = see a schedule of talks you're attending");
+        System.out.println("16 = download all events in HTML");
         System.out.println("=========================");
     }
 
@@ -391,5 +392,12 @@ public class TextPresenter implements Presenter {
                 displayTalkInfo(eventInfo);
             }
         }
+    }
+
+    /**
+     * Displays prompts if <code>Event</code> schedules are to be downloaded.
+     */
+    @Override public void displayDownloadSchedulePrompt() {
+        System.out.print("Download all event schedule ('Y' to continue) ?  ");
     }
 }

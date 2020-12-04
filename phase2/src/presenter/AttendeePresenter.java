@@ -29,6 +29,7 @@ public class AttendeePresenter implements ConsolePresenter {
         System.out.println("9  = sign up for a talk");//SignUpController
         System.out.println("10  = cancel enrolment for a talk");
         System.out.println("11 = see a schedule of talks you're attending");//Use Presenter
+        System.out.println("16 = download all events in HTML");
         System.out.println("===================================");
     }
 

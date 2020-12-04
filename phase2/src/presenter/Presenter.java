@@ -123,4 +123,10 @@ public interface Presenter {
      * @param attendee The current attendee-user's username
      */
     void displayAttendeeTalkSchedule(String attendee);
+
+    /**
+     * Displays prompts if <code>Event</code> schedules are to be downloaded.
+     *
+     */
+    void displayDownloadSchedulePrompt();
 }

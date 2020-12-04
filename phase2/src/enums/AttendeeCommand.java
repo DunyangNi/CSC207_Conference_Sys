@@ -13,6 +13,7 @@ public enum AttendeeCommand {
     SIGNUP_EVENT("8"),
     LEAVE_EVENT("9"),
     VIEW_MY_SCHEDULE("10"),
+    DOWNLOAD_SCHEDULE("16"),
     VIEW_MENU("*");
 
     public final String command;
