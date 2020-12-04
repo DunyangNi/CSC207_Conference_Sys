@@ -4,10 +4,12 @@ import exceptions.already_exists.ObjectAlreadyExistsException;
 import exceptions.NonPositiveIntegerException;
 import use_cases.EventManager;
 
+import java.util.ArrayList;
+
 public class LocationController {
-    private EventManager eventManager;
-    public LocationController(EventManager eventManager){
-        this.eventManager = eventManager;
+    private final EventManager em;
+    public LocationController(EventManager em){
+        this.em = em;
     }
     /**
      * adds a new allowed location where events can take place to the database
@@ -16,8 +18,10 @@ public class LocationController {
      * @throws ObjectAlreadyExistsException if the room name already exist
      */
     public void addNewLocation(String location) throws NonPositiveIntegerException, ObjectAlreadyExistsException {
+        this.em.addNewLocation(location);
+    }
 
-        this.eventManager.addNewLocation(location);
-
+    public ArrayList<String> getLocations() {
+        return em.getLocations();
     }
 }

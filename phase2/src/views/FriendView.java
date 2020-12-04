@@ -22,12 +22,12 @@ public class FriendView {
         this.controller = new FriendController(username,fm);
     }
 
-    public void viewAddFriendMenu() throws FriendNotFoundException {
+    public void viewAddFriendMenu() {
         presenter.addContactPrompt();
         String username = userInput.nextLine();
         try {
             controller.addFriend(username);
-        } catch (UserNotFoundException | AlreadyFriendException e) {
+        } catch (UserNotFoundException | AlreadyFriendException | FriendNotFoundException e) {
             e.printStackTrace();
         }
     }

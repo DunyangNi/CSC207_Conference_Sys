@@ -31,178 +31,178 @@ public class OrganizerController extends AccountController {
         return false;
     }
 
-    /**
-     * interacts with the organizer via a menu of options
-     * @return True if organizer wants to terminate the program
-     */
-    public boolean runInteraction(OrganizerCommand enumCommand) {
-        boolean programEnd = false;
-        boolean loggedIn = true;
-        Scanner userInput = new Scanner(System.in);
-
-        while (loggedIn) {
-            // TODO: 11/16/20 Fix scopes defined by {}
-            switch (enumCommand) {
-                case EXIT:
-                    programEnd = true;
-                    loggedIn = false;
-                    break;
-                case LOGOUT:
-                    loggedIn = false;
-                    break;
-                case NEW_SPEAKER: {
-                    RegistrationView registrationView = new RegistrationView(am, fm, cm, em);
-                    registrationView.accountInfoMenu("2");
-                    break;
-                }
-                case VIEW_ALL_ACCOUNTS:
-                    Set<String> accounts = am.getAccountHashMap().keySet();
-                    presenter.displayAccountList(accounts);
-                    break;
-                case ADD_CONTACT:
-                    FriendView friendView = new FriendView(username, fm);
-                    try {
-                        friendView.viewAddFriendMenu();
-                    } catch (FriendNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                    break;
-                case REMOVE_CONTACT:
-                    friendView = new FriendView(username, fm);
-                    friendView.viewRemoveFriendMenu();
-                    break;
-                case VIEW_CONTACTS:
-                    friendView = new FriendView(username, fm);
-                    friendView.viewFriendList();
-                    break;
-                case MESSAGE_SPEAKER: {
-                    presenter.displayMessagingPrompt("aSpeaker");
-                    String username = userInput.nextLine();
-                    String message = userInput.nextLine();
-                    try {
-                        messageController.messageSpeaker(message, username);
-                    } catch (UserNotFoundException | RecipientNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                    break;
-                }
-                case MESSAGE_ATTENDEE: {
-                    presenter.displayMessagingPrompt("anAttendee");
-                    String username = userInput.nextLine();
-                    String message = userInput.nextLine();
-                    try {
-                        messageController.messageAttendee(message, username);
-                    } catch (UserNotFoundException | RecipientNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                    break;
-                }
-                case MESSAGE_ALL_SPEAKERS: {
-                    presenter.displayMessagingPrompt("allSpeakers");
-                    String message = userInput.nextLine();
-                    messageController.messageAllSpeakers(message);
-                    break;
-                }
-                case MESSAGE_ALL_ATTENDEES: {
-                    presenter.displayMessagingPrompt("allAttendees");
-                    String message = userInput.nextLine();
-                    messageController.messageAllAttendees(message);
-                    break;
-                }
-                case VIEW_CONVERSATION:
-                    try {
-                        Set<String> recipients = cm.getAllUserConversationRecipients(username);
-
-                        if (recipients.isEmpty()) {
-                            presenter.displayConversations("empty", recipients);
-                        } else {
-                            presenter.displayConversations("non_empty", recipients);
-                            String recipient = userInput.nextLine();
-                            int pastMessages = Integer.parseInt(userInput.nextLine());
-                            this.viewMessagesFrom(recipient, pastMessages);
-                        }
-                    } catch (InputMismatchException e) {
-                        this.presenter.displayConversationsErrors("mismatch");
-                    } catch (ObjectNotFoundException e) {
-                        this.presenter.displayConversationsErrors("no_user");
-                    } catch (NullPointerException e) {
-                        this.presenter.displayConversationsErrors("no_conversation");
-                    }
-                    break;
-                case ADD_ROOM:
-                    presenter.displayRoomRegistration();
-                    String location = userInput.nextLine();
-                    addNewLocation(location);
-                    break;
-                case VIEW_ROOMS:
-                    this.seeLocationList();
-                    break;
-                case ADD_EVENT:
-                    try {
-                        presenter.displayEventPrompt("register");
-                        String username = userInput.nextLine();
-                        location = userInput.nextLine();
-                        String topic = userInput.nextLine();
-                        Calendar time = this.collectTimeInfo();
-                        em.addNewEvent(EventType.TALK, topic, time, location, this.username, new ArrayList<>(Collections.singletonList(username)), 2, false);
-                    } catch (Exception e) {
-                        presenter.displayPrompt(e.toString());
-                    }
-                    break;
-                case CANCEL_EVENT:
-                    try {
-                        presenter.displayEventPrompt("cancel");
-                        int id = userInput.nextInt();
-                        userInput.nextLine();
-                        this.cancelTalk(id);
-                    }
-                    catch(Exception e) {
-                        presenter.displayPrompt(e.toString());
-                    }
-                    break;
-                case RESCHEDULE_EVENT:
-                    try {
-                        presenter.displayEventPrompt("reschedule");
-                        int id = userInput.nextInt();
-                        userInput.nextLine();
-                        Calendar newTime = this.collectTimeInfo();
-                        this.rescheduleTalk(id, newTime);
-                    } catch (Exception e) {
-                        presenter.displayPrompt(e.toString());
-                    }
-                    break;
-                case VIEW_SCHEDULE:
-                    this.SeeTalkSchedule();
-                    break;
-                case VIEW_MENU:
-                    presenter.displayOrganizerMenu();
-                    break;
-                default:
-                    presenter.displayPrompt("Invalid input, please try again:\n");
-            }
-            if (loggedIn) {
-                presenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
-//                enumCommand = userInput.nextLine();
+//    /**
+//     * interacts with the organizer via a menu of options
+//     * @return True if organizer wants to terminate the program
+//     */
+//    public boolean runInteraction(OrganizerCommand enumCommand) {
+//        boolean programEnd = false;
+//        boolean loggedIn = true;
+//        Scanner userInput = new Scanner(System.in);
 //
-//                validInput = false;
-//                while (!validInput) {
-//                    for(OrganizerCommand commandEnum: enumCommandList){
-//                        if (commandEnum.command.equals(enumCommand)) {
-//                            validInput = true;
-//                            enumCommand = commandEnum;
-//                            break;
-//                        }
-//                    }
-//                    if(!validInput){
-//                        presenter.displayPrompt("Invalid input, please try again:\n");
-//                        presenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
-//                        enumCommand = userInput.nextLine();
-//                    }
+//        while (loggedIn) {
+//            // TODO: 11/16/20 Fix scopes defined by {}
+//            switch (enumCommand) {
+//                case EXIT:
+//                    programEnd = true;
+//                    loggedIn = false;
+//                    break;
+//                case LOGOUT:
+//                    loggedIn = false;
+//                    break;
+//                case NEW_SPEAKER: {
+//                    RegistrationView registrationView = new RegistrationView(am, fm, cm, em);
+//                    registrationView.accountInfoMenu("2");
+//                    break;
 //                }
-            }
-        }
-        return programEnd;
-    }
+//                case VIEW_ALL_ACCOUNTS:
+//                    Set<String> accounts = am.getAccountHashMap().keySet();
+//                    presenter.displayAccountList(accounts);
+//                    break;
+//                case ADD_CONTACT:
+//                    FriendView friendView = new FriendView(username, fm);
+//                    try {
+//                        friendView.viewAddFriendMenu();
+//                    } catch (FriendNotFoundException e) {
+//                        e.printStackTrace();
+//                    }
+//                    break;
+//                case REMOVE_CONTACT:
+//                    friendView = new FriendView(username, fm);
+//                    friendView.viewRemoveFriendMenu();
+//                    break;
+//                case VIEW_CONTACTS:
+//                    friendView = new FriendView(username, fm);
+//                    friendView.viewFriendList();
+//                    break;
+//                case MESSAGE_SPEAKER: {
+//                    presenter.displayMessagingPrompt("aSpeaker");
+//                    String username = userInput.nextLine();
+//                    String message = userInput.nextLine();
+//                    try {
+//                        messageController.messageSpeaker(message, username);
+//                    } catch (UserNotFoundException | RecipientNotFoundException e) {
+//                        e.printStackTrace();
+//                    }
+//                    break;
+//                }
+//                case MESSAGE_ATTENDEE: {
+//                    presenter.displayMessagingPrompt("anAttendee");
+//                    String username = userInput.nextLine();
+//                    String message = userInput.nextLine();
+//                    try {
+//                        messageController.messageAttendee(message, username);
+//                    } catch (UserNotFoundException | RecipientNotFoundException e) {
+//                        e.printStackTrace();
+//                    }
+//                    break;
+//                }
+//                case MESSAGE_ALL_SPEAKERS: {
+//                    presenter.displayMessagingPrompt("allSpeakers");
+//                    String message = userInput.nextLine();
+//                    messageController.messageAllSpeakers(message);
+//                    break;
+//                }
+//                case MESSAGE_ALL_ATTENDEES: {
+//                    presenter.displayMessagingPrompt("allAttendees");
+//                    String message = userInput.nextLine();
+//                    messageController.messageAllAttendees(message);
+//                    break;
+//                }
+//                case VIEW_CONVERSATION:
+//                    try {
+//                        Set<String> recipients = cm.getAllUserConversationRecipients(username);
+//
+//                        if (recipients.isEmpty()) {
+//                            presenter.displayConversations("empty", recipients);
+//                        } else {
+//                            presenter.displayConversations("non_empty", recipients);
+//                            String recipient = userInput.nextLine();
+//                            int pastMessages = Integer.parseInt(userInput.nextLine());
+//                            this.viewMessagesFrom(recipient, pastMessages);
+//                        }
+//                    } catch (InputMismatchException e) {
+//                        this.presenter.displayConversationsErrors("mismatch");
+//                    } catch (ObjectNotFoundException e) {
+//                        this.presenter.displayConversationsErrors("no_user");
+//                    } catch (NullPointerException e) {
+//                        this.presenter.displayConversationsErrors("no_conversation");
+//                    }
+//                    break;
+//                case ADD_ROOM:
+//                    presenter.displayRoomRegistration();
+//                    String location = userInput.nextLine();
+//                    addNewLocation(location);
+//                    break;
+//                case VIEW_ROOMS:
+//                    this.seeLocationList();
+//                    break;
+//                case ADD_EVENT:
+//                    try {
+//                        presenter.displayEventPrompt("register");
+//                        String username = userInput.nextLine();
+//                        location = userInput.nextLine();
+//                        String topic = userInput.nextLine();
+//                        Calendar time = this.collectTimeInfo();
+//                        em.addNewEvent(EventType.TALK, topic, time, location, this.username, new ArrayList<>(Collections.singletonList(username)), 2, false);
+//                    } catch (Exception e) {
+//                        presenter.displayPrompt(e.toString());
+//                    }
+//                    break;
+//                case CANCEL_EVENT:
+//                    try {
+//                        presenter.displayEventPrompt("cancel");
+//                        int id = userInput.nextInt();
+//                        userInput.nextLine();
+//                        this.cancelTalk(id);
+//                    }
+//                    catch(Exception e) {
+//                        presenter.displayPrompt(e.toString());
+//                    }
+//                    break;
+//                case RESCHEDULE_EVENT:
+//                    try {
+//                        presenter.displayEventPrompt("reschedule");
+//                        int id = userInput.nextInt();
+//                        userInput.nextLine();
+//                        Calendar newTime = this.collectTimeInfo();
+//                        this.rescheduleTalk(id, newTime);
+//                    } catch (Exception e) {
+//                        presenter.displayPrompt(e.toString());
+//                    }
+//                    break;
+//                case VIEW_SCHEDULE:
+//                    this.SeeTalkSchedule();
+//                    break;
+//                case VIEW_MENU:
+//                    presenter.displayOrganizerMenu();
+//                    break;
+//                default:
+//                    presenter.displayPrompt("Invalid input, please try again:\n");
+//            }
+//            if (loggedIn) {
+//                presenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
+////                enumCommand = userInput.nextLine();
+////
+////                validInput = false;
+////                while (!validInput) {
+////                    for(OrganizerCommand commandEnum: enumCommandList){
+////                        if (commandEnum.command.equals(enumCommand)) {
+////                            validInput = true;
+////                            enumCommand = commandEnum;
+////                            break;
+////                        }
+////                    }
+////                    if(!validInput){
+////                        presenter.displayPrompt("Invalid input, please try again:\n");
+////                        presenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
+////                        enumCommand = userInput.nextLine();
+////                    }
+////                }
+//            }
+//        }
+//        return programEnd;
+//    }
 
     /**
      * Helper function that adds a user's username as keys for hashmaps stored in the use cases

@@ -33,7 +33,5 @@ public class TimeGetterView {
             throw new InstantiationException();
         }
         return time;
-
-
     }
 }
