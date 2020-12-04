@@ -23,15 +23,15 @@ public class ConferenceSystem {
         ConversationDataManager conversationDataManager = new ConversationDataManager();
         FriendDataManager friendDataManager = new FriendDataManager();
 
-        AccountManager accountManager = accountDataManager.readManager();
-        FriendManager friendManager = friendDataManager.readManager();
-        ConversationManager conversationManager = conversationDataManager.readManager();
-        EventManager eventManager = eventDataManager.readManager();
+        AccountManager am = accountDataManager.readManager();
+        FriendManager fm = friendDataManager.readManager();
+        ConversationManager cm = conversationDataManager.readManager();
+        EventManager em = eventDataManager.readManager();
 
         boolean programEnd = false;
         while (!programEnd) {
-            StartView view = new StartView(accountManager, friendManager, conversationManager, eventManager);
-            programEnd = view.viewStartMenu();
+            StartView view = new StartView(am, fm, cm, em);
+            programEnd = view.startMenu();
         }
     }
 }

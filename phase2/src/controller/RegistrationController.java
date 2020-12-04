@@ -34,7 +34,7 @@ public class RegistrationController {
     }
 
     // TODO: 11/28/20 Refactor methods to manage exceptions consistently
-    public boolean register(String accountType, String username, String password) throws AccountAlreadyExistsException {
+    public void register(String accountType, String username, String password) throws AccountAlreadyExistsException {
         if (accountType.equals("1")) {
             am.addNewAttendee(username, password, "", "");
         }
@@ -55,8 +55,6 @@ public class RegistrationController {
         friendDataManager.saveManager("FriendManager", "FriendManager", fm);
         conversationDataManager.saveManager("ConversationManager", "ConversationManager", cm);
         eventDataManager.saveManager("EventManager", "EventManager", em);
-
-        return false;
     }
 
 //    /**

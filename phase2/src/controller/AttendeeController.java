@@ -1,6 +1,10 @@
 package controller;
 
+import exceptions.conflict.AlreadyFriendException;
+import exceptions.not_found.FriendNotFoundException;
 import exceptions.not_found.ObjectNotFoundException;
+import exceptions.not_found.RecipientNotFoundException;
+import exceptions.not_found.UserNotFoundException;
 import use_cases.*;
 import java.util.*;
 import java.lang.*;
@@ -90,12 +94,20 @@ public class AttendeeController extends AccountController {
                 case ADD_CONTACT:
                     this.presenter.displayContactsPrompt("add");
                     String contactToAdd = userInput.nextLine();
-                    friendController.addFriend(contactToAdd);
+                    try {
+                        friendController.addFriend(contactToAdd);
+                    } catch (UserNotFoundException | FriendNotFoundException | AlreadyFriendException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case REMOVE_CONTACT:
                     this.presenter.displayContactsPrompt("remove");
                     String contactToRemove = userInput.nextLine();
-                    friendController.removeFriend(contactToRemove);
+                    try {
+                        friendController.removeFriend(contactToRemove);
+                    } catch (ObjectNotFoundException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case VIEW_CONTACTS:
                     this.viewContactList();
@@ -107,7 +119,11 @@ public class AttendeeController extends AccountController {
                     String attendeeUsername = userInput.nextLine();
                     //line1 = sc.nextLine();
                     String message = userInput.nextLine();
-                    messageController.messageAttendee(message, attendeeUsername);
+                    try {
+                        messageController.messageAttendee(message, attendeeUsername);
+                    } catch (UserNotFoundException | RecipientNotFoundException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 }
                 case MESSAGE_SPEAKER: {
@@ -117,7 +133,11 @@ public class AttendeeController extends AccountController {
                     String speakerUsername = userInput.nextLine();
                     //line1 = sc.nextLine();
                     String message = userInput.nextLine();
-                    messageController.messageSpeaker(message, speakerUsername);
+                    try {
+                        messageController.messageSpeaker(message, speakerUsername);
+                    } catch (UserNotFoundException | RecipientNotFoundException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 }
                 case VIEW_CONVERSATION:

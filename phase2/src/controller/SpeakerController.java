@@ -1,6 +1,10 @@
 package controller;
 
+import exceptions.conflict.AlreadyFriendException;
+import exceptions.not_found.FriendNotFoundException;
 import exceptions.not_found.ObjectNotFoundException;
+import exceptions.not_found.RecipientNotFoundException;
+import exceptions.not_found.UserNotFoundException;
 import use_cases.*;
 import java.util.*;
 import java.lang.*;
@@ -76,13 +80,21 @@ public class SpeakerController extends AccountController {
                     presenter.displayAccountList(accounts);
                     presenter.displayContactsPrompt("add");
                     String contactToAdd = userInput.nextLine();
-                    friendController.addFriend(contactToAdd);
+                    try {
+                        friendController.addFriend(contactToAdd);
+                    } catch (UserNotFoundException | FriendNotFoundException | AlreadyFriendException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case REMOVE_CONTACT:
                     presenter.displayContactList(username);
                     presenter.displayContactsPrompt("remove");
                     String removeContact = userInput.nextLine();
-                    friendController.removeFriend(removeContact);
+                    try {
+                        friendController.removeFriend(removeContact);
+                    } catch (ObjectNotFoundException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case VIEW_CONTACTS:
                     presenter.displayContactList(username);
@@ -101,7 +113,11 @@ public class SpeakerController extends AccountController {
                         this.presenter.displayPrompt("Please enter your message to send: ");
                         String message = userInput.nextLine();
                         if (allAttendees.contains(attendee)) {
-                            messageController.messageAttendee(message, attendee);
+                            try {
+                                messageController.messageAttendee(message, attendee);
+                            } catch (UserNotFoundException | RecipientNotFoundException e) {
+                                e.printStackTrace();
+                            }
                         } else {
                             this.presenter.displayPrompt("The entered recipient username is invalid.");
                         }

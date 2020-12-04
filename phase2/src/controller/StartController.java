@@ -1,8 +1,7 @@
 package controller;
 
+import enums.StartCommand;
 import use_cases.*;
-import views.LoginView;
-import views.RegistrationView;
 
 public class StartController {
     private final AccountManager am;
@@ -24,18 +23,24 @@ public class StartController {
         this.em = em;
     }
 
-    public boolean start(String command) {
-       if ("1".equals(command)) {
-            LoginView loginView = new LoginView(am, fm, cm, em);
-            return loginView.viewLoginMenu();
+    public StartCommand start(String command) {
+//       if ("1".equals(command)) {
+//            LoginView loginView = new LoginView(am, fm, cm, em);
+//            return loginView.loginMenu();
+//        }
+//       else if ("2".equals(command)) {
+//            RegistrationView registrationView = new RegistrationView(am, fm, cm, em);
+//            return registrationView.registrationMenu();
+//        }
+//       else {
+//           return true;
+//       }
+
+        if (command.equals("1")) {
+            return StartCommand.LOGIN;
+        } else {
+            return StartCommand.REGISTER;
         }
-       else if ("2".equals(command)) {
-            RegistrationView registrationView = new RegistrationView(am, fm, cm, em);
-            return registrationView.viewRegistrationMenu();
-        }
-       else {
-           return true;
-       }
     }
 
 //    /**

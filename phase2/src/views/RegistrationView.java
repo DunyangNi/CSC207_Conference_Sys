@@ -1,6 +1,7 @@
 package views;
 
 import controller.RegistrationController;
+import exceptions.already_exists.AccountAlreadyExistsException;
 import presenter.RegistrationPresenter;
 import use_cases.AccountManager;
 import use_cases.ConversationManager;
@@ -10,17 +11,23 @@ import use_cases.FriendManager;
 import java.util.Scanner;
 
 public class RegistrationView {
-    private final AccountManager accountManager;
+    private final AccountManager am;
+    private final FriendManager fm;
+    private final ConversationManager cm;
+    private final EventManager em;
     private final RegistrationController controller;
     private final RegistrationPresenter presenter = new RegistrationPresenter();
     private final Scanner userInput = new Scanner(System.in);
 
     public RegistrationView(AccountManager am, FriendManager fm, ConversationManager cm, EventManager em) {
-        this.accountManager = am;
+        this.am = am;
+        this.fm = fm;
+        this.cm = cm;
+        this.em = em;
         this.controller = new RegistrationController(am, fm, cm, em);
     }
 
-    public boolean viewRegistrationMenu() {
+    public void registrationMenu() {
         presenter.startPrompt();
         // TODO: 11/29/20 Replace string cases with enum
         // String accountType = AccountType.valueOf(userInput.nextLine()).toString();
@@ -32,12 +39,12 @@ public class RegistrationView {
             accountType = userInput.nextLine();
         }
 
-        viewRegistrationCodeMenu(accountType);
+        registrationCodeMenu(accountType);
 
-        return viewAccountInfoMenu(accountType);
+        accountInfoMenu(accountType);
     }
 
-    public void viewRegistrationCodeMenu(String accountType) {
+    public void registrationCodeMenu(String accountType) {
         // TODO: 11/28/20 Add functionality for new account types.
         String code;
         switch (accountType) {
@@ -63,12 +70,12 @@ public class RegistrationView {
         }
     }
 
-    public boolean viewAccountInfoMenu(String accountType) {
+    public void accountInfoMenu(String accountType) {
         presenter.usernamePrompt();
         String username = userInput.nextLine();
         // TODO: 11/28/20 Could possibly remove call to AccountManager.containsAccount() and instead pass whatever
         //  username input to RegistrationController which then catches exceptions when applicable
-        while ((accountManager.containsAccount(username))) {
+        while ((am.containsAccount(username))) {
             presenter.takenUsernamePrompt();
             username = userInput.nextLine();
         }
@@ -77,7 +84,12 @@ public class RegistrationView {
         String password = userInput.nextLine();
 
         presenter.exitPrompt();
-        return controller.register(accountType, username, password);
+
+        try {
+            controller.register(accountType, username, password);
+        } catch (AccountAlreadyExistsException e) {
+            e.printStackTrace();
+        }
     }
 
 }

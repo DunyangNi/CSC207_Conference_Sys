@@ -1,6 +1,10 @@
 package controller;
 
+import exceptions.already_exists.AccountAlreadyExistsException;
+import exceptions.not_found.FriendNotFoundException;
 import exceptions.not_found.ObjectNotFoundException;
+import exceptions.not_found.RecipientNotFoundException;
+import exceptions.not_found.UserNotFoundException;
 import use_cases.*;
 
 import java.util.*;
@@ -48,7 +52,7 @@ public class OrganizerController extends AccountController {
                     break;
                 case NEW_SPEAKER: {
                     RegistrationView registrationView = new RegistrationView(am, fm, cm, em);
-                    registrationView.viewAccountInfoMenu("2");
+                    registrationView.accountInfoMenu("2");
                     break;
                 }
                 case VIEW_ALL_ACCOUNTS:
@@ -57,7 +61,11 @@ public class OrganizerController extends AccountController {
                     break;
                 case ADD_CONTACT:
                     FriendView friendView = new FriendView(username, fm);
-                    friendView.viewAddFriendMenu();
+                    try {
+                        friendView.viewAddFriendMenu();
+                    } catch (FriendNotFoundException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case REMOVE_CONTACT:
                     friendView = new FriendView(username, fm);
@@ -71,14 +79,22 @@ public class OrganizerController extends AccountController {
                     presenter.displayMessagingPrompt("aSpeaker");
                     String username = userInput.nextLine();
                     String message = userInput.nextLine();
-                    messageController.messageSpeaker(message, username);
+                    try {
+                        messageController.messageSpeaker(message, username);
+                    } catch (UserNotFoundException | RecipientNotFoundException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 }
                 case MESSAGE_ATTENDEE: {
                     presenter.displayMessagingPrompt("anAttendee");
                     String username = userInput.nextLine();
                     String message = userInput.nextLine();
-                    messageController.messageAttendee(message, username);
+                    try {
+                        messageController.messageAttendee(message, username);
+                    } catch (UserNotFoundException | RecipientNotFoundException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 }
                 case MESSAGE_ALL_SPEAKERS: {
@@ -219,8 +235,12 @@ public class OrganizerController extends AccountController {
      */
     public void createSpeakerAccount(String username, String password, String firstname, String lastname) {
 //        try {
+        try {
             this.am.addNewSpeaker(username, password, firstname, lastname);
-            addNewSpeakerKeys(username);
+        } catch (AccountAlreadyExistsException e) {
+            e.printStackTrace();
+        }
+        addNewSpeakerKeys(username);
 //        } catch (ConflictException e) {
 //            presenter.displayPrompt(e.toString()); //
 //        }

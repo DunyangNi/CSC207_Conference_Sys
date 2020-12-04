@@ -1,5 +1,6 @@
 package controller;
 
+import enums.AccountType;
 import gateway.AccountDataManager;
 import gateway.ConversationDataManager;
 import gateway.EventDataManager;
@@ -29,32 +30,14 @@ public class LoginController {
         this.em = em;
     }
 
-    public boolean login(String username) {
-        boolean programEnd = false;
-        if (am.containsAttendee(username)) {
-            AttendeeView attendeeView = new AttendeeView(username, am, fm, cm, em);
-            programEnd = attendeeView.viewAttendeeMenu();
-        }
+    public AccountType login(String username) {
         if (am.containsOrganizer(username)) {
-            OrganizerView organizerView = new OrganizerView(username, am, fm, cm, em);
-            programEnd = organizerView.viewOrganizerMenu();
+            return AccountType.ORGANIZER;
+        } else if (am.containsSpeaker(username)) {
+            return AccountType.SPEAKER;
+        } else {
+            return AccountType.ATTENDEE;
         }
-        if (am.containsSpeaker(username)) {
-            SpeakerView speakerView = new SpeakerView(username, am, fm, cm, em);
-            programEnd = speakerView.viewSpeakerMenu();
-        }
-
-        AccountDataManager accountDataManager = new AccountDataManager();
-        FriendDataManager friendDataManager = new FriendDataManager();
-        ConversationDataManager conversationDataManager = new ConversationDataManager();
-        EventDataManager eventDataManager = new EventDataManager();
-
-        accountDataManager.saveManager("AccountManager", "AccountManager", am);
-        friendDataManager.saveManager("FriendManager", "FriendManager", fm);
-        conversationDataManager.saveManager("ConversationManager", "ConversationManager", cm);
-        eventDataManager.saveManager("EventManager", "EventManager", em);
-
-        return programEnd;
     }
 
 //    public boolean login(String username) {

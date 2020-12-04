@@ -1,6 +1,10 @@
 package views;
 
 import controller.FriendController;
+import exceptions.conflict.AlreadyFriendException;
+import exceptions.not_found.FriendNotFoundException;
+import exceptions.not_found.ObjectNotFoundException;
+import exceptions.not_found.UserNotFoundException;
 import presenter.FriendPresenter;
 import use_cases.FriendManager;
 
@@ -18,16 +22,24 @@ public class FriendView {
         this.controller = new FriendController(username,fm);
     }
 
-    public void viewAddFriendMenu() {
+    public void viewAddFriendMenu() throws FriendNotFoundException {
         presenter.addContactPrompt();
         String username = userInput.nextLine();
-        controller.addFriend(username);
+        try {
+            controller.addFriend(username);
+        } catch (UserNotFoundException | AlreadyFriendException e) {
+            e.printStackTrace();
+        }
     }
 
     public void viewRemoveFriendMenu() {
         presenter.removeContactPrompt();
         String username = userInput.nextLine();
-        controller.removeFriend(username);
+        try {
+            controller.removeFriend(username);
+        } catch (ObjectNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public void viewFriendList() {
