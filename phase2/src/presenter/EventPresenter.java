@@ -18,11 +18,11 @@ public class EventPresenter implements ConsolePresenter {
                 System.out.println("Enter the event room:");
                 break;
             case "capacity":
-                System.out.println("Hour of the day (9-16)");
+                System.out.println("Enter event capacity");
                 break;
             case "vip":
                 System.out.println("0 = Standard");
-                System.out.println("0 = VIP");
+                System.out.println("1 = VIP");
                 break;
         }
     }

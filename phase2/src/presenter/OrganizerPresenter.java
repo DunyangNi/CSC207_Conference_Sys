@@ -17,7 +17,7 @@ public class OrganizerPresenter implements ConsolePresenter {
         System.out.println("00 = Logout and exit program");
         System.out.println("0  = Logout");
         System.out.println("1  = Register a new speaker account");//AccountCreationController - createSpeaker
-        System.out.println("2  = View list of all accounts");//Use presenter
+        System.out.println("2  = View list of all users");//Use presenter
         System.out.println("");
         System.out.println("[CONTACTS]");
         System.out.println("3  = Add a contact");//same as others
@@ -50,16 +50,12 @@ public class OrganizerPresenter implements ConsolePresenter {
     }
 
     public void accountList(Set<String> accounts) {
-        if (!accounts.isEmpty()) {
-            System.out.println("List of users");
-            System.out.println("---------------------------------------------");
-            for (String acct : accounts) {
-                System.out.println(acct);
-            }
-            System.out.println("---------------------------------------------\n");
-        } else {
-            System.out.println("(No users)");
+        System.out.println("[USER LIST]");
+        System.out.println("===================================");
+        for (String acct : accounts) {
+            System.out.println(acct);
         }
+        System.out.println("===================================");
     }
 
     public void displayTalkSchedule(HashMap<String[], Calendar> allTalks) {

@@ -41,7 +41,6 @@ public class OrganizerController extends AccountController {
 //        Scanner userInput = new Scanner(System.in);
 //
 //        while (loggedIn) {
-//            // TODO: 11/16/20 Fix scopes defined by {}
 //            switch (enumCommand) {
 //                case EXIT:
 //                    programEnd = true;
@@ -204,47 +203,43 @@ public class OrganizerController extends AccountController {
 //        return programEnd;
 //    }
 
-    /**
-     * Helper function that adds a user's username as keys for hashmaps stored in the use cases
-     * @param username specified username
-     */
-    private void addNewSpeakerKeys(String username) {
-        cm.addAccountKey(username);
-        fm.addAccountKey(username);
-        em.addSpeakerKey(username);
-    }
+//    /**
+//     * Helper function that adds a user's username as keys for hashmaps stored in the use cases
+//     * @param username specified username
+//     */
+//    private void addNewSpeakerKeys(String username) {
+//        cm.addAccountKey(username);
+//        fm.addAccountKey(username);
+//        em.addSpeakerKey(username);
+//    }
 
-    /**
-     * Adds a new allowed location where events can take place to the database
-     * @param location location to be added
-     */
-    public void addNewLocation(String location) {
-        try {
-            this.em.addNewLocation(location);
-        } catch (Exception e) {
-            presenter.displayPrompt(e.toString());
-        }
-    }
-
-    /**
-     * creates a new speaker account with the given information fields
-     * @param username given username
-     * @param password given password
-     * @param firstname given first name
-     * @param lastname given last name
-     */
-    public void createSpeakerAccount(String username, String password, String firstname, String lastname) {
+//    /**
+//     * Adds a new allowed location where events can take place to the database
+//     * @param location location to be added
+//     */
+//    public void addNewLocation(String location) {
 //        try {
-        try {
-            this.am.addNewSpeaker(username, password, firstname, lastname);
-        } catch (AccountAlreadyExistsException e) {
-            e.printStackTrace();
-        }
-        addNewSpeakerKeys(username);
-//        } catch (ConflictException e) {
-//            presenter.displayPrompt(e.toString()); //
+//            this.em.addNewLocation(location);
+//        } catch (Exception e) {
+//            presenter.displayPrompt(e.toString());
 //        }
-    }
+//    }
+
+//    /**
+//     * creates a new speaker account with the given information fields
+//     * @param username given username
+//     * @param password given password
+//     * @param firstname given first name
+//     * @param lastname given last name
+//     */
+//    public void createSpeakerAccount(String username, String password, String firstname, String lastname) {
+//        try {
+//            this.am.addNewSpeaker(username, password, firstname, lastname);
+//        } catch (AccountAlreadyExistsException e) {
+//            e.printStackTrace();
+//        }
+//        addNewSpeakerKeys(username);
+//    }
 
 //    /**
 //     * Registers a new talk into the database with the given information fields
@@ -261,41 +256,42 @@ public class OrganizerController extends AccountController {
 //        }
 //    }
 
-    /**
-     * cancels a talk with the given id
-     * @param id id of talk to cancel
-     */
-    public void cancelTalk(Integer id) {
-        try {
-            this.em.cancelEvent(id);
-        } catch (Exception e) {
-            presenter.displayPrompt(e.toString());
-        }
-    }
 
-    /**
-     * reschedules a talk with the given id to time newTime
-     * @param id talk id
-     * @param newTime time to reschedule talk to
-     */
-    public void rescheduleTalk(Integer id, Calendar newTime) {
-        try {
-            this.em.changeTime(id, newTime);
-        } catch (Exception e) {
-            presenter.displayPrompt(e.toString());
-        }
-    }
-
-    /**
-     * displays the list of all locations currently in the database
-     */
-    public void seeLocationList() {
-        ArrayList<String> locations = this.em.getLocations();
-        presenter.displayPrompt("Locations:\n");
-        for (String location : locations) {
-            presenter.displayPrompt(location);
-        }
-    }
+//    /**
+//     * cancels a talk with the given id
+//     * @param id id of talk to cancel
+//     */
+//    public void cancelTalk(Integer id) {
+//        try {
+//            this.em.cancelEvent(id);
+//        } catch (Exception e) {
+//            presenter.displayPrompt(e.toString());
+//        }
+//    }
+//
+//    /**
+//     * reschedules a talk with the given id to time newTime
+//     * @param id talk id
+//     * @param newTime time to reschedule talk to
+//     */
+//    public void rescheduleTalk(Integer id, Calendar newTime) {
+//        try {
+//            this.em.changeTime(id, newTime);
+//        } catch (Exception e) {
+//            presenter.displayPrompt(e.toString());
+//        }
+//    }
+//
+//    /**
+//     * displays the list of all locations currently in the database
+//     */
+//    public void seeLocationList() {
+//        ArrayList<String> locations = this.em.getLocations();
+//        presenter.displayPrompt("Locations:\n");
+//        for (String location : locations) {
+//            presenter.displayPrompt(location);
+//        }
+//    }
 }
 
 
