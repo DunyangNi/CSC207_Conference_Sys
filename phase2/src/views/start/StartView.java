@@ -3,10 +3,10 @@ package views.start;
 import controllers.start.StartController;
 import enums.StartCommand;
 import presenters.start.StartPresenter;
-import use_cases.AccountManager;
-import use_cases.ContactManager;
+import use_cases.account.AccountManager;
+import use_cases.account.ContactManager;
 import use_cases.ConversationManager;
-import use_cases.EventManager;
+import use_cases.event.EventManager;
 
 import java.util.Scanner;
 

@@ -1,7 +1,7 @@
 package controllers.event;
 
-import use_cases.AccountManager;
-import use_cases.EventManager;
+import use_cases.account.AccountManager;
+import use_cases.event.EventManager;
 
 import java.util.Calendar;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package use_cases;
+package use_cases.account;
 
 import entities.account.*;
 import exceptions.already_exists.AccountAlreadyExistsException;

@@ -2,7 +2,7 @@ package controllers.event;
 
 import exceptions.already_exists.ObjectAlreadyExistsException;
 import exceptions.NonPositiveIntegerException;
-import use_cases.EventManager;
+import use_cases.event.EventManager;
 
 import java.util.ArrayList;
 

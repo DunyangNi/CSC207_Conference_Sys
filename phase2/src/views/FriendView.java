@@ -1,12 +1,12 @@
 package views;
 
-import controllers.ContactController;
+import controllers.account.ContactController;
 import exceptions.conflict.AlreadyFriendException;
 import exceptions.not_found.FriendNotFoundException;
 import exceptions.not_found.ObjectNotFoundException;
 import exceptions.not_found.UserNotFoundException;
-import presenters.ContactPresenter;
-import use_cases.ContactManager;
+import presenters.account.ContactPresenter;
+import use_cases.account.ContactManager;
 
 import java.util.ArrayList;
 import java.util.Scanner;

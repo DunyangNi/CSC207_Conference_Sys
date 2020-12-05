@@ -10,6 +10,9 @@ import java.util.*;
 import java.lang.*;
 
 import enums.*;
+import use_cases.account.AccountManager;
+import use_cases.account.ContactManager;
+import use_cases.event.EventManager;
 
 public class SpeakerController extends AccountController {
     /**

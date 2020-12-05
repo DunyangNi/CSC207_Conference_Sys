@@ -5,7 +5,7 @@ import exceptions.conflict.LocationInUseException;
 import exceptions.conflict.SpeakerIsBusyException;
 import exceptions.not_found.EventNotFoundException;
 import exceptions.not_found.LocationNotFoundException;
-import use_cases.EventManager;
+import use_cases.event.EventManager;
 
 import java.util.Calendar;
 

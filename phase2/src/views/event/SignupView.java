@@ -3,10 +3,10 @@ package views.event;
 import controllers.event.SignupController;
 import enums.AttendeeEnum;
 import presenters.event.SignupPresenter;
-import use_cases.AccountManager;
+import use_cases.account.AccountManager;
 import use_cases.ConversationManager;
-import use_cases.ContactManager;
-import use_cases.EventManager;
+import use_cases.account.ContactManager;
+import use_cases.event.EventManager;
 
 import java.util.Scanner;
 

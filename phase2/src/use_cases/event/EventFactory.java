@@ -1,4 +1,4 @@
-package use_cases;
+package use_cases.event;
 
 import entities.event.NetworkingEvent;
 import entities.event.PanelDiscussion;

@@ -1,6 +1,6 @@
 package controllers.event;
 
-import use_cases.EventManager;
+import use_cases.event.EventManager;
 
 /**
  * Check if a speaker is the speaker of a given event

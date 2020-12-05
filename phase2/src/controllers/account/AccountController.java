@@ -1,11 +1,13 @@
 package controllers.account;
 
-import controllers.ContactController;
 import controllers.message.MessageController;
 import exceptions.not_found.ObjectNotFoundException;
 import deprecated.Presenter;
 import deprecated.TextPresenter;
 import use_cases.*;
+import use_cases.account.AccountManager;
+import use_cases.account.ContactManager;
+import use_cases.event.EventManager;
 
 import java.util.ArrayList;
 import java.util.Calendar;

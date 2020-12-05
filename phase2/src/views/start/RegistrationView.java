@@ -3,10 +3,10 @@ package views.start;
 import controllers.start.RegistrationController;
 import exceptions.already_exists.AccountAlreadyExistsException;
 import presenters.start.RegistrationPresenter;
-import use_cases.AccountManager;
-import use_cases.ContactManager;
+import use_cases.account.AccountManager;
+import use_cases.account.ContactManager;
 import use_cases.ConversationManager;
-import use_cases.EventManager;
+import use_cases.event.EventManager;
 
 import java.util.Scanner;
 

@@ -2,6 +2,9 @@ package controllers.start;
 
 import enums.StartCommand;
 import use_cases.*;
+import use_cases.account.AccountManager;
+import use_cases.account.ContactManager;
+import use_cases.event.EventManager;
 
 public class StartController {
     private final AccountManager am;

@@ -1,10 +1,10 @@
-package controllers;
+package controllers.account;
 
 import exceptions.conflict.AlreadyFriendException;
 import exceptions.not_found.FriendNotFoundException;
 import exceptions.not_found.ObjectNotFoundException;
 import exceptions.not_found.UserNotFoundException;
-import use_cases.ContactManager;
+import use_cases.account.ContactManager;
 
 import java.util.ArrayList;
 

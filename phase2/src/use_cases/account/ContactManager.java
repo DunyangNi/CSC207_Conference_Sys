@@ -1,4 +1,4 @@
-package use_cases;
+package use_cases.account;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -4,7 +4,8 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import use_cases.*;
+import use_cases.event.EventLocationManager;
+import use_cases.event.EventManager;
 
 public class EventDataManager implements DataReader, DataSaver{
     private final String eventPath;

@@ -1,7 +1,8 @@
 package gateway;
 
 import java.io.*;
-import use_cases.*;
+
+import use_cases.account.ContactManager;
 
 public class ContactDataManager implements DataReader, DataSaver{
     private final String friendPath;

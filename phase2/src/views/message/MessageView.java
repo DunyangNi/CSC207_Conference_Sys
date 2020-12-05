@@ -7,10 +7,10 @@ import enums.SpeakerEnum;
 import exceptions.not_found.RecipientNotFoundException;
 import exceptions.not_found.UserNotFoundException;
 import presenters.message.MessagePresenter;
-import use_cases.AccountManager;
+import use_cases.account.AccountManager;
 import use_cases.ConversationManager;
-import use_cases.EventManager;
-import use_cases.ContactManager;
+import use_cases.event.EventManager;
+import use_cases.account.ContactManager;
 
 import java.util.ArrayList;
 import java.util.Scanner;

@@ -1,10 +1,10 @@
 package controllers.start;
 
 import exceptions.already_exists.ObjectAlreadyExistsException;
-import use_cases.AccountManager;
+import use_cases.account.AccountManager;
 import use_cases.ConversationManager;
-import use_cases.EventManager;
-import use_cases.ContactManager;
+import use_cases.event.EventManager;
+import use_cases.account.ContactManager;
 
 public class AccountCreationController {
     private AccountManager accountManager;

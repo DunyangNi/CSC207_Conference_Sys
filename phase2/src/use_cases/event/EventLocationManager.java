@@ -1,4 +1,4 @@
-package use_cases;
+package use_cases.event;
 
 import exceptions.*;
 import entities.event.Location;

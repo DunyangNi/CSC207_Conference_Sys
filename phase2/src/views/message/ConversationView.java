@@ -5,10 +5,10 @@ import exceptions.NoMessagesException;
 import exceptions.NonPositiveIntegerException;
 import exceptions.not_found.ObjectNotFoundException;
 import presenters.message.ConversationPresenter;
-import use_cases.AccountManager;
+import use_cases.account.AccountManager;
 import use_cases.ConversationManager;
-import use_cases.EventManager;
-import use_cases.ContactManager;
+import use_cases.event.EventManager;
+import use_cases.account.ContactManager;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;

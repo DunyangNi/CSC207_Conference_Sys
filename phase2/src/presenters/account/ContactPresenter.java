@@ -1,4 +1,6 @@
-package presenters;
+package presenters.account;
+
+import presenters.ConsolePresenter;
 
 public class ContactPresenter implements ConsolePresenter {
     @Override

@@ -1,9 +1,9 @@
 package gateway;
 
-import use_cases.AccountManager;
-import use_cases.ContactManager;
+import use_cases.account.AccountManager;
+import use_cases.account.ContactManager;
 import use_cases.ConversationManager;
-import use_cases.EventManager;
+import use_cases.event.EventManager;
 
 /**
  * The parameter objects that store all of the instances of use case classes
