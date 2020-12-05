@@ -1,5 +1,6 @@
 package controllers.event;
 
+import gateway.DataManager;
 import use_cases.account.AccountManager;
 import use_cases.event.EventManager;
 
@@ -22,10 +23,10 @@ public class SignupController {
      * @param am given <code>AccountManager</code> managing data of all Accounts in system
      * @param em given <code>EventManager</code>
      */
-    public SignupController(String username, AccountManager am, EventManager em) {
-        this.username = username;
-        this.em = em;
-        this.am = am;
+    public SignupController(DataManager dm) {
+        this.username = dm.getUsername();
+        this.em = dm.getEventManager();
+        this.am = dm.getAccountManager();
     }
 
     /**

@@ -49,7 +49,7 @@ public class DataManager {
      * The getter of contactManager
      * @return fm
      */
-    public ContactManager getFriendManager(){
+    public ContactManager getContactManager(){
         return fm;
     }
 

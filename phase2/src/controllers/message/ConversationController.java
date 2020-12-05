@@ -4,6 +4,7 @@ import exceptions.*;
 import exceptions.not_found.MessageNotFoundException;
 import exceptions.not_found.RecipientNotFoundException;
 import exceptions.not_found.UserNotFoundException;
+import gateway.DataManager;
 import use_cases.ConversationManager;
 
 import java.util.ArrayList;
@@ -14,9 +15,9 @@ public class ConversationController {
     private final String username;
     Set<String> myConversations;
 
-    public ConversationController(String username, ConversationManager cm){
-        this.cm = cm;
-        this.username = username;
+    public ConversationController(DataManager dm){
+        this.cm = dm.getConversationManager();
+        this.username = dm.getUsername();
     }
 
     public boolean isEmpty() throws UserNotFoundException {

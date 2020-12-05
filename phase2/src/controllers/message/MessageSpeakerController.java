@@ -5,6 +5,7 @@ import exceptions.NoRecipientsException;
 import exceptions.not_found.RecipientNotFoundException;
 import exceptions.not_found.SpeakerNotFoundException;
 import exceptions.not_found.UserNotFoundException;
+import gateway.DataManager;
 import use_cases.account.AccountManager;
 import use_cases.ConversationManager;
 import use_cases.event.EventManager;
@@ -22,8 +23,8 @@ public class MessageSpeakerController extends MessageAccountController{
      * @param conversationManager manages messaging functionality
      * @param eventManager        manages event data
      */
-    public MessageSpeakerController(String username, AccountManager accountManager, ConversationManager conversationManager, EventManager eventManager) {
-        super(username, accountManager, conversationManager, eventManager);
+    public MessageSpeakerController(DataManager dm) {
+        super(dm);
     }
 
     public void messageSpeaker(String message, String speaker) throws SpeakerNotFoundException, RecipientNotFoundException, UserNotFoundException {

@@ -2,6 +2,7 @@ package controllers.message;
 
 import exceptions.not_found.RecipientNotFoundException;
 import exceptions.not_found.UserNotFoundException;
+import gateway.DataManager;
 import use_cases.account.AccountManager;
 import use_cases.ConversationManager;
 import use_cases.event.EventManager;
@@ -24,11 +25,11 @@ public class MessageAccountController{
      * @param conversationManager manages messaging functionality
      * @param eventManager        manages event data
      */
-    public MessageAccountController(String username, AccountManager accountManager, ConversationManager conversationManager, EventManager eventManager) {
-        this.username = username;
-        this.accountManager = accountManager;
-        this.conversationManager = conversationManager;
-        this.eventManager = eventManager;
+    public MessageAccountController(DataManager dm) {
+        this.username = dm.getUsername();
+        this.accountManager = dm.getAccountManager();
+        this.conversationManager = dm.getConversationManager();
+        this.eventManager = dm.getEventManager();
     }
 
     public void messageAccount(String message, String account) throws UserNotFoundException, RecipientNotFoundException {

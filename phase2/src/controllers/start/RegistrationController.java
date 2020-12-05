@@ -1,10 +1,7 @@
 package controllers.start;
 
 import exceptions.already_exists.AccountAlreadyExistsException;
-import gateway.AccountDataManager;
-import gateway.ContactDataManager;
-import gateway.ConversationDataManager;
-import gateway.EventDataManager;
+import gateway.*;
 import use_cases.account.AccountManager;
 import use_cases.account.ContactManager;
 import use_cases.ConversationManager;
@@ -26,11 +23,11 @@ public class RegistrationController {
      * @param cm manages messaging functionality
      * @param em manages data of all events in the program
      */
-    public RegistrationController(AccountManager am, ContactManager fm, ConversationManager cm, EventManager em) {
-        this.am = am;
-        this.cm = cm;
-        this.fm = fm;
-        this.em = em;
+    public RegistrationController(DataManager dm) {
+        this.am = dm.getAccountManager();
+        this.cm = dm.getConversationManager();
+        this.fm = dm.getContactManager();
+        this.em = dm.getEventManager();
     }
 
     // TODO: 11/28/20 Refactor methods to manage exceptions consistently

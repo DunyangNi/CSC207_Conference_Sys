@@ -1,6 +1,7 @@
 package controllers.start;
 
 import exceptions.already_exists.ObjectAlreadyExistsException;
+import gateway.DataManager;
 import use_cases.account.AccountManager;
 import use_cases.ConversationManager;
 import use_cases.event.EventManager;
@@ -11,11 +12,11 @@ public class AccountCreationController {
     private ConversationManager conversationManager;
     private ContactManager contactManager;
     private EventManager eventManager;
-    public AccountCreationController(AccountManager accountManager, ConversationManager conversationManager, ContactManager contactManager, EventManager eventManager){
-        this.accountManager = accountManager;
-        this.conversationManager = conversationManager;
-        this.contactManager = contactManager;
-        this.eventManager = eventManager;
+    public AccountCreationController(DataManager dm){
+        this.accountManager = dm.getAccountManager();
+        this.conversationManager = dm.getConversationManager();
+        this.contactManager = dm.getContactManager();
+        this.eventManager = dm.getEventManager();
     }
 
     /**

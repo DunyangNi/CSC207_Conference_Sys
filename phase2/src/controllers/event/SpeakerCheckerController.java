@@ -1,5 +1,6 @@
 package controllers.event;
 
+import gateway.DataManager;
 import use_cases.event.EventManager;
 
 /**
@@ -7,8 +8,8 @@ import use_cases.event.EventManager;
  */
 public class SpeakerCheckerController {
     private EventManager eventManager;
-    public SpeakerCheckerController(EventManager eventManager){
-        this.eventManager = eventManager;
+    public SpeakerCheckerController(DataManager dm){
+        this.eventManager = dm.getEventManager();
     }
 
     public boolean isSpeakerOf(String speakerName, Integer eventId){

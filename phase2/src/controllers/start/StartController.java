@@ -1,6 +1,7 @@
 package controllers.start;
 
 import enums.StartCommand;
+import gateway.DataManager;
 import use_cases.*;
 import use_cases.account.AccountManager;
 import use_cases.account.ContactManager;
@@ -19,11 +20,11 @@ public class StartController {
      * @param cm manages messaging functionality
      * @param em manages event data
      */
-    public StartController(AccountManager am, ContactManager fm, ConversationManager cm, EventManager em) {
-        this.am = am;
-        this.fm = fm;
-        this.cm = cm;
-        this.em = em;
+    public StartController(DataManager dm) {
+        this.am = dm.getAccountManager();
+        this.fm = dm.getContactManager();
+        this.cm = dm.getConversationManager();
+        this.em = dm.getEventManager();
     }
 
     public StartCommand start(String command) {

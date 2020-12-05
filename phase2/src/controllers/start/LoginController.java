@@ -1,6 +1,7 @@
 package controllers.start;
 
 import enums.AccountType;
+import gateway.DataManager;
 import use_cases.*;
 import use_cases.account.AccountManager;
 import use_cases.account.ContactManager;
@@ -19,11 +20,11 @@ public class LoginController {
      * @param cm manages conversation/messaging functionality
      * @param em manages event data
      */
-    public LoginController(AccountManager am, ContactManager fm, ConversationManager cm, EventManager em) {
-        this.am = am;
-        this.cm = cm;
-        this.fm = fm;
-        this.em = em;
+    public LoginController(DataManager dm) {
+        this.am = dm.getAccountManager();
+        this.cm = dm.getConversationManager();
+        this.fm = dm.getContactManager();
+        this.em = dm.getEventManager();
     }
 
     public AccountType login(String username) {

@@ -8,6 +8,7 @@ import exceptions.conflict.LocationInUseException;
 import exceptions.conflict.SpeakerIsBusyException;
 import exceptions.not_found.EventNotFoundException;
 import exceptions.not_found.LocationNotFoundException;
+import gateway.DataManager;
 import use_cases.event.EventManager;
 
 import java.util.ArrayList;
@@ -16,9 +17,9 @@ import java.util.Calendar;
 public class EventController {
     private final String username;
     private final EventManager eventManager;
-    public EventController(String username, EventManager eventManager) {
-        this.username = username;
-        this.eventManager = eventManager;
+    public EventController(DataManager dm) {
+        this.username = dm.getUsername();
+        this.eventManager = dm.getEventManager();
     }
 
     public void createEvent(EventType type, String topic, Calendar time, String location, ArrayList<String> speakers, Integer capacity, Boolean vipOnly)

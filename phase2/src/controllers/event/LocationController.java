@@ -2,14 +2,15 @@ package controllers.event;
 
 import exceptions.already_exists.ObjectAlreadyExistsException;
 import exceptions.NonPositiveIntegerException;
+import gateway.DataManager;
 import use_cases.event.EventManager;
 
 import java.util.ArrayList;
 
 public class LocationController {
     private final EventManager em;
-    public LocationController(EventManager em){
-        this.em = em;
+    public LocationController(DataManager dm){
+        this.em = dm.getEventManager();
     }
     /**
      * adds a new allowed location where events can take place to the database

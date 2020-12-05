@@ -5,14 +5,15 @@ import exceptions.conflict.LocationInUseException;
 import exceptions.conflict.SpeakerIsBusyException;
 import exceptions.not_found.EventNotFoundException;
 import exceptions.not_found.LocationNotFoundException;
+import gateway.DataManager;
 import use_cases.event.EventManager;
 
 import java.util.Calendar;
 
 public class EventModifyController {
     private EventManager eventManager;
-    public EventModifyController(EventManager eventManager){
-        this.eventManager = eventManager;
+    public EventModifyController(DataManager dm){
+        this.eventManager = dm.getEventManager();
     }
 
 
