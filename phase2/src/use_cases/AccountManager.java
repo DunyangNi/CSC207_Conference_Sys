@@ -1,6 +1,6 @@
 package use_cases;
 
-import entities.*;
+import entities.account.*;
 import exceptions.already_exists.AccountAlreadyExistsException;
 import exceptions.already_exists.ObjectAlreadyExistsException;
 

@@ -1,11 +1,11 @@
 package views;
 
-import controller.FriendController;
+import controllers.FriendController;
 import exceptions.conflict.AlreadyFriendException;
 import exceptions.not_found.FriendNotFoundException;
 import exceptions.not_found.ObjectNotFoundException;
 import exceptions.not_found.UserNotFoundException;
-import presenter.FriendPresenter;
+import presenters.FriendPresenter;
 import use_cases.FriendManager;
 
 import java.util.ArrayList;

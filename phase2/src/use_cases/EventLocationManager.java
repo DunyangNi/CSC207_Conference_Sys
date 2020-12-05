@@ -1,7 +1,7 @@
 package use_cases;
 
 import exceptions.*;
-import entities.Location;
+import entities.event.Location;
 import exceptions.already_exists.LocationAlreadyExistsException;
 import exceptions.not_found.LocationNotFoundException;
 import exceptions.not_found.ObjectNotFoundException;

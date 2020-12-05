@@ -1,11 +1,11 @@
 package use_cases;
 
-import entities.NetworkingEvent;
-import entities.PanelDiscussion;
+import entities.event.NetworkingEvent;
+import entities.event.PanelDiscussion;
 import enums.EventType;
 import exceptions.InvalidEventTypeException;
-import entities.Event;
-import entities.Talk;
+import entities.event.Event;
+import entities.event.Talk;
 
 import java.io.Serializable;
 import java.util.ArrayList;

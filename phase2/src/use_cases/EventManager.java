@@ -2,8 +2,8 @@ package use_cases;
 
 import enums.EventType;
 import exceptions.*;
-import entities.Event;
-import entities.Talk;
+import entities.event.Event;
+import entities.event.Talk;
 import gateway.HTMLWritable;
 import exceptions.already_exists.ObjectAlreadyExistsException;
 import exceptions.conflict.AlreadySignedUpException;

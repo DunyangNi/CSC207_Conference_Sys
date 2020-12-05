@@ -1,6 +1,6 @@
 package use_cases;
 
-import entities.Event;
+import entities.event.Event;
 import java.io.Serializable;
 import java.util.Calendar;
 

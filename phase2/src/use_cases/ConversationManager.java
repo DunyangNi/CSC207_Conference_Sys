@@ -2,7 +2,9 @@ package use_cases;
 
 import java.io.Serializable;
 import java.util.*;
-import entities.*;
+
+import entities.message.Conversation;
+import entities.message.Message;
 import exceptions.not_found.MessageNotFoundException;
 import exceptions.not_found.RecipientNotFoundException;
 import exceptions.not_found.UserNotFoundException;

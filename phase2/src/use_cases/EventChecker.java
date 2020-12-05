@@ -1,8 +1,8 @@
 package use_cases;
 
 import exceptions.*;
-import entities.Event;
-import entities.Talk;
+import entities.event.Event;
+import entities.event.Talk;
 import exceptions.conflict.LocationInUseException;
 import exceptions.conflict.SpeakerIsBusyException;
 import exceptions.not_found.LocationNotFoundException;
