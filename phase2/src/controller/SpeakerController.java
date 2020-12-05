@@ -49,7 +49,7 @@ public class SpeakerController extends AccountController {
 
         while (!validinput) {
             for(SpeakerCommand commandEnum: commandlist){
-                if (commandEnum.command.equals(command)) {
+                if (commandEnum.stringValue.equals(command)) {
                     validinput = true;
                     enumRequest = commandEnum;
                     break;
@@ -185,7 +185,7 @@ public class SpeakerController extends AccountController {
                 validinput = false;
                 while (!validinput) {
                     for(SpeakerCommand commandEnum: commandlist){
-                        if (commandEnum.command.equals(command)) {
+                        if (commandEnum.stringValue.equals(command)) {
                             validinput = true;
                             enumRequest = commandEnum;
                             break;

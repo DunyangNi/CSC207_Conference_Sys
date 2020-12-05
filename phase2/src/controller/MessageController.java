@@ -11,24 +11,28 @@ import java.util.*;
 
 public class MessageController {
     protected String username;
-    protected AccountManager accountManager;
-    protected ConversationManager conversationManager;
-    protected EventManager eventManager;
+    protected AccountManager am;
+    protected ConversationManager cm;
+    protected EventManager em;
+    // TODO: 12/04/20 Remove Presenter dependency
     protected Presenter presenter = new TextPresenter();
-
     /**
      * Manages generic messaging functionality for user with given username
      * @param username user username
-     * @param accountManager manages data of all accounts in program
-     * @param conversationManager manages messaging functionality
-     * @param eventManager manages event data
+     * @param am manages data of all accounts in program
+     * @param cm manages messaging functionality
+     * @param em manages event data
      */
-    public MessageController(String username, AccountManager accountManager, ConversationManager conversationManager,
-                             EventManager eventManager){
+    public MessageController(String username, AccountManager am, ConversationManager cm,
+                             EventManager em){
         this.username = username;
-        this.accountManager = accountManager;
-        this.conversationManager = conversationManager;
-        this.eventManager = eventManager;
+        this.am = am;
+        this.cm = cm;
+        this.em = em;
+    }
+
+    public void messageAccount(String message, String account) throws UserNotFoundException, RecipientNotFoundException {
+        cm.sendMessage(this.username, account, message);
     }
 
     /**
@@ -37,7 +41,7 @@ public class MessageController {
      * @param speaker speaker username
      */
     public void messageSpeaker(String message, String speaker) throws UserNotFoundException, RecipientNotFoundException {
-        conversationManager.sendMessage(this.username, speaker, message);
+        cm.sendMessage(this.username, speaker, message);
     }
 
     /**
@@ -46,7 +50,7 @@ public class MessageController {
      * @param attendeeUsername attendee username
      */
     public void messageAttendee(String message, String attendeeUsername) throws UserNotFoundException, RecipientNotFoundException {
-        conversationManager.sendMessage(this.username, attendeeUsername, message);
+        cm.sendMessage(this.username, attendeeUsername, message);
     }
 
     /**
@@ -55,7 +59,7 @@ public class MessageController {
      */
     public void messageAllSpeakers(String message) {
         try {
-            Iterator<String> speakerUsernameIterator = this.accountManager.speakerUsernameIterator();
+            Iterator<String> speakerUsernameIterator = this.am.speakerUsernameIterator();
             if (!speakerUsernameIterator.hasNext())
                 this.presenter.displayPrompt("There are no speakers to message."); // f
             while(speakerUsernameIterator.hasNext()) {
@@ -74,7 +78,7 @@ public class MessageController {
      */
     public void messageAllAttendees(String message) {
         try {
-            Iterator<String> attendeeUsernameIterator = this.accountManager.attendeeUsernameIterator();
+            Iterator<String> attendeeUsernameIterator = this.am.attendeeUsernameIterator();
             if (!attendeeUsernameIterator.hasNext())
                 this.presenter.displayPrompt("There are no attendees to message."); // f
             while (attendeeUsernameIterator.hasNext()) {
@@ -97,8 +101,8 @@ public class MessageController {
         try {
             Set<String> selectedAttendeeUsernames = new HashSet<>();
             for (Integer id : selectedSpeakerTalks) {
-                if (eventManager.isTalk(id))
-                    selectedAttendeeUsernames.addAll(eventManager.fetchEventAttendeeList(id));
+                if (em.isTalk(id))
+                    selectedAttendeeUsernames.addAll(em.fetchEventAttendeeList(id));
             }
             if (selectedAttendeeUsernames.isEmpty())
                 this.presenter.displayPrompt("There are no attendees to message."); // f

@@ -20,10 +20,8 @@ public class AttendeeView {
         this.controller = new AttendeeController(username, am, fm, cm, em);
     }
 
-    public boolean viewAttendeeMenu() {
+    public void viewAttendeeMenu() {
         presenter.startPrompt();
         presenter.attendeeMenuPrompt();
-
-        return controller.runInteraction();
     }
 }

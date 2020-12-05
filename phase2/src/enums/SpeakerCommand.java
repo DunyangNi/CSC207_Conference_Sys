@@ -14,9 +14,9 @@ public enum SpeakerCommand {
     VIEW_SCHEDULE("9"),
     VIEW_MENU("*");
 
-    public final String command;
+    public final String stringValue;
 
-    SpeakerCommand(String command) {
-        this.command = command;
+    SpeakerCommand(String stringValue) {
+        this.stringValue = stringValue;
     }
 }

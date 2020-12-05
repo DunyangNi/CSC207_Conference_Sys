@@ -1,12 +1,7 @@
 package presenter;
 
-public class SpeakerPresenter implements ConsolePresenter {
-    @Override
-    public void startPrompt() {
-        System.out.println("Logged in)");
-    }
-
-    public void speakerMenuPrompt() {
+public class SpeakerPresenter extends AccountPresenter {
+    public void displaySpeakerMenu() {
         System.out.println("[SPEAKER MENU]");
         System.out.println("===================================");
         System.out.println("[ACCOUNT]");
@@ -30,8 +25,11 @@ public class SpeakerPresenter implements ConsolePresenter {
         System.out.println("===================================");
     }
 
-    @Override
-    public void exitPrompt() {
-        System.out.println("Logging out...");
+    public void invalidInputPrompt() {
+        System.out.println("Invalid input, please try again.");
+    }
+
+    public void requestCommandPrompt() {
+        System.out.println("Enter another command (1-16). Enter '*' to view the command menu again.");
     }
 }

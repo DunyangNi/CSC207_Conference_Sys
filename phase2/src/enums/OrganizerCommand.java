@@ -21,9 +21,9 @@ public enum OrganizerCommand {
     VIEW_SCHEDULE("16"),
     VIEW_MENU("*");
 
-    public final String value;
+    public final String stringValue;
 
     OrganizerCommand(String command) {
-        this.value = command;
+        this.stringValue = command;
     }
 }

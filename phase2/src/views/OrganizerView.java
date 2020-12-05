@@ -1,7 +1,6 @@
 package views;
 
 import enums.OrganizerCommand;
-import exceptions.not_found.FriendNotFoundException;
 import presenter.OrganizerPresenter;
 import use_cases.AccountManager;
 import use_cases.ConversationManager;
@@ -43,7 +42,7 @@ public class OrganizerView {
             // TODO: 12/04/20 Find more efficient way to use Enums
             while (!validInput) {
                 for (OrganizerCommand enumCommand : enumCommandList) {
-                    if (userCommand.equals(enumCommand.value)) {
+                    if (userCommand.equals(enumCommand.stringValue)) {
                         validInput = true;
                         nextView = enumCommand;
                         break;
@@ -118,6 +117,7 @@ public class OrganizerView {
                 case VIEW_SCHEDULE:
                     HashMap<String[], Calendar> allTalks = em.fetchSortedTalks();
                     presenter.displayTalkSchedule(allTalks);
+                    break;
                 case VIEW_MENU:
                     presenter.displayOrganizerMenu();
                     break;

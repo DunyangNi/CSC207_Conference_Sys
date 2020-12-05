@@ -13,6 +13,20 @@ public class MessagePresenter implements ConsolePresenter {
         System.out.println("Please enter the message you want to send:");
     }
 
+    public void eventIdPrompt() {
+        System.out.println("Please enter the ID of a Talk you are giving:");
+    }
+
+    public void nextEventIdPrompt() {
+        System.out.println("Would you like to add another Talk?");
+        System.out.println("0 = No:");
+        System.out.println("1 = Yes:");
+    }
+
+    public void invalidIdPrompt() {
+        System.out.println("Invalid ID. You are not speaking at this talk.");
+    }
+
     @Override
     public void exitPrompt() {
     }
