@@ -1,9 +1,9 @@
 package gateway;
 
 import use_cases.AccountManager;
+import use_cases.ContactManager;
 import use_cases.ConversationManager;
 import use_cases.EventManager;
-import use_cases.FriendManager;
 
 /**
  * The parameter objects that store all of the instances of use case classes
@@ -11,7 +11,7 @@ import use_cases.FriendManager;
 public class DataManager {
     protected EventManager em;
     protected AccountManager am;
-    protected FriendManager fm;
+    protected ContactManager fm;
     protected ConversationManager cm;
     protected String username;
 
@@ -19,13 +19,13 @@ public class DataManager {
      * The constructor
      * @param eventManager The EventManager from database.
      * @param accountManager The AccountManager from database.
-     * @param friendManager The FriendManager from database.
+     * @param contactManager The ContactManager from database.
      * @param conversationManager The ConversationManager from database.
      */
-    public DataManager(EventManager eventManager, AccountManager accountManager, FriendManager friendManager, ConversationManager conversationManager){
+    public DataManager(EventManager eventManager, AccountManager accountManager, ContactManager contactManager, ConversationManager conversationManager){
         em = eventManager;
         am = accountManager;
-        fm = friendManager;
+        fm = contactManager;
         cm = conversationManager;
     }
 
@@ -46,10 +46,10 @@ public class DataManager {
     }
 
     /**
-     * The getter of friendManager
+     * The getter of contactManager
      * @return fm
      */
-    public FriendManager getFriendManager(){
+    public ContactManager getFriendManager(){
         return fm;
     }
 

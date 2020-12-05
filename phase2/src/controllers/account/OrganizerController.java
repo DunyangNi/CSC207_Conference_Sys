@@ -11,7 +11,7 @@ public class OrganizerController extends AccountController {
      * @param cm manages messaging functionality
      * @param em manages event data
      */
-    public OrganizerController(String username, AccountManager am, FriendManager fm, ConversationManager cm, EventManager em) {
+    public OrganizerController(String username, AccountManager am, ContactManager fm, ConversationManager cm, EventManager em) {
         super(username, am, fm, cm, em);
     }
 

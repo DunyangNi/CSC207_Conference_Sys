@@ -11,9 +11,9 @@ import exceptions.not_found.EventNotFoundException;
 import exceptions.not_found.LocationNotFoundException;
 import presenters.event.EventPresenter;
 import use_cases.AccountManager;
+import use_cases.ContactManager;
 import use_cases.ConversationManager;
 import use_cases.EventManager;
-import use_cases.FriendManager;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -22,14 +22,14 @@ import java.util.Scanner;
 public class EventView {
     private final String username;
     private final AccountManager am;
-    private final FriendManager fm;
+    private final ContactManager fm;
     private final ConversationManager cm;
     private final EventManager em;
     private final EventPresenter presenter = new EventPresenter();
     private final EventController controller;
     private final Scanner userInput = new Scanner(System.in);
 
-    public EventView(String username, AccountManager am, FriendManager fm, ConversationManager cm, EventManager em) {
+    public EventView(String username, AccountManager am, ContactManager fm, ConversationManager cm, EventManager em) {
         this.username = username;
         this.am = am;
         this.fm = fm;

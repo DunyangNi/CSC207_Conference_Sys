@@ -4,23 +4,23 @@ import exceptions.conflict.AlreadyFriendException;
 import exceptions.not_found.FriendNotFoundException;
 import exceptions.not_found.ObjectNotFoundException;
 import exceptions.not_found.UserNotFoundException;
-import use_cases.FriendManager;
+import use_cases.ContactManager;
 
 import java.util.ArrayList;
 
-public class FriendController {
+public class ContactController {
     protected String username;
-    protected FriendManager friendManager;
+    protected ContactManager contactManager;
 
     /**
-     * Instantiates a FriendController which
+     * Instantiates a ContactController which
      * manages friend/contact related functionality for the current user
      * @param username user username
-     * @param friendManager manages friendlist functionality
+     * @param contactManager manages friendlist functionality
      */
-    public FriendController(String username, FriendManager friendManager){
+    public ContactController(String username, ContactManager contactManager){
         this.username = username;
-        this.friendManager = friendManager;
+        this.contactManager = contactManager;
     }
 
     /**
@@ -28,7 +28,7 @@ public class FriendController {
      * @param friendToAdd username of friend to add
      */
     public void addFriend(String friendToAdd) throws UserNotFoundException, FriendNotFoundException, AlreadyFriendException {
-        friendManager.addFriend(this.username, friendToAdd);
+        contactManager.addFriend(this.username, friendToAdd);
     }
 
     /**
@@ -37,7 +37,7 @@ public class FriendController {
      */
     public void removeFriend(String friendToRemove) throws ObjectNotFoundException {
         try{
-            friendManager.removeFriend(this.username, friendToRemove);
+            contactManager.removeFriend(this.username, friendToRemove);
         }
         catch(Exception e) {
             throw e;
@@ -48,6 +48,6 @@ public class FriendController {
      * displays friend list
      */
     public ArrayList<String> fetchFriendList() {
-        return friendManager.getFriendList(username);
+        return contactManager.getFriendList(username);
     }
 }

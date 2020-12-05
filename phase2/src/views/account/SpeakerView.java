@@ -3,9 +3,9 @@ package views.account;
 import enums.SpeakerEnum;
 import presenters.account.SpeakerPresenter;
 import use_cases.AccountManager;
+import use_cases.ContactManager;
 import use_cases.ConversationManager;
 import use_cases.EventManager;
-import use_cases.FriendManager;
 import views.message.ConversationView;
 import views.FriendView;
 import views.message.MessageView;
@@ -18,13 +18,13 @@ import java.util.Set;
 public class SpeakerView {
     private final String username;
     private final AccountManager am;
-    private final FriendManager fm;
+    private final ContactManager fm;
     private final ConversationManager cm;
     private final EventManager em;
     private final SpeakerPresenter presenter = new SpeakerPresenter();
     private final Scanner userInput = new Scanner(System.in);
 
-    public SpeakerView(String username, AccountManager am, FriendManager fm, ConversationManager cm, EventManager em) {
+    public SpeakerView(String username, AccountManager am, ContactManager fm, ConversationManager cm, EventManager em) {
         this.username = username;
         this.am = am;
         this.fm = fm;

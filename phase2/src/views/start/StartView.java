@@ -4,22 +4,22 @@ import controllers.start.StartController;
 import enums.StartCommand;
 import presenters.start.StartPresenter;
 import use_cases.AccountManager;
+import use_cases.ContactManager;
 import use_cases.ConversationManager;
 import use_cases.EventManager;
-import use_cases.FriendManager;
 
 import java.util.Scanner;
 
 public class StartView {
     private final AccountManager am;
-    private final FriendManager fm;
+    private final ContactManager fm;
     private final ConversationManager cm;
     private final EventManager em;
     private final StartController controller;
     private final StartPresenter presenter = new StartPresenter();
     private final Scanner userInput = new Scanner(System.in);
 
-    public StartView(AccountManager am, FriendManager fm, ConversationManager cm, EventManager em) {
+    public StartView(AccountManager am, ContactManager fm, ConversationManager cm, EventManager em) {
         this.am = am;
         this.fm = fm;
         this.cm = cm;

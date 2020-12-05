@@ -12,7 +12,7 @@ import java.util.Calendar;
 public class TextPresenter implements Presenter {
     // TODO: 11/17/20 Consider whether these fields are necessary or what other fields might be required
     private EventManager eventmanager;
-    private FriendManager friendManager;
+    private ContactManager contactManager;
 
     /**
      * Creates a <code>TextPresenter</code> without any fields.
@@ -24,12 +24,12 @@ public class TextPresenter implements Presenter {
     /**
      * Creates a <code>TextPresenter</code> with access to information stored in Manager objects.
      * @param eventManager The program's <code>EventManager</code> object
-     * @param friendManager The program's <code>FriendManager</code> object
+     * @param contactManager The program's <code>ContactManager</code> object
      */
-    public TextPresenter(EventManager eventManager, FriendManager friendManager) {
+    public TextPresenter(EventManager eventManager, ContactManager contactManager) {
         super();
         this.eventmanager = eventManager;
-        this.friendManager = friendManager;
+        this.contactManager = contactManager;
     }
 
     //Shared methods
@@ -109,7 +109,7 @@ public class TextPresenter implements Presenter {
      * @param user The username of the current user.
      */
     public void displayContactList(String user) {
-        ArrayList<String> selectedFriends = friendManager.getFriendList(user);
+        ArrayList<String> selectedFriends = contactManager.getFriendList(user);
         System.out.println("Your Contacts List:\n");
         if (selectedFriends.isEmpty()) { System.out.println("No one!"); }
         else { for (String friend : selectedFriends) { System.out.println(friend); } }

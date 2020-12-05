@@ -5,7 +5,7 @@ import use_cases.*;
 
 public class StartController {
     private final AccountManager am;
-    private final FriendManager fm;
+    private final ContactManager fm;
     private final ConversationManager cm;
     private final EventManager em;
 
@@ -16,7 +16,7 @@ public class StartController {
      * @param cm manages messaging functionality
      * @param em manages event data
      */
-    public StartController(AccountManager am, FriendManager fm, ConversationManager cm, EventManager em) {
+    public StartController(AccountManager am, ContactManager fm, ConversationManager cm, EventManager em) {
         this.am = am;
         this.fm = fm;
         this.cm = cm;
@@ -62,10 +62,10 @@ public class StartController {
 //        if (command.equals("0")) {
 //            programEnd = true;
 //        } else if (command.equals("1")) {
-//            LoginController loginController = new LoginController(accountManager, friendManager, conversationManager, eventManager);
+//            LoginController loginController = new LoginController(accountManager, contactManager, conversationManager, eventManager);
 //            programEnd = loginController.attemptLogin();
 //        } else {
-//            RegistrationController registrationController = new RegistrationController(accountManager, friendManager, conversationManager, eventManager);
+//            RegistrationController registrationController = new RegistrationController(accountManager, contactManager, conversationManager, eventManager);
 //            programEnd = registrationController.attemptRegister();
 //        }
 //        return programEnd;

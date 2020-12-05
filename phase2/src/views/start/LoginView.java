@@ -4,12 +4,12 @@ import enums.AccountType;
 import gateway.AccountDataManager;
 import gateway.ConversationDataManager;
 import gateway.EventDataManager;
-import gateway.FriendDataManager;
+import gateway.ContactDataManager;
 import presenters.start.LoginPresenter;
 import use_cases.AccountManager;
+import use_cases.ContactManager;
 import use_cases.ConversationManager;
 import use_cases.EventManager;
-import use_cases.FriendManager;
 import controllers.start.LoginController;
 import views.account.AttendeeView;
 import views.account.OrganizerView;
@@ -19,14 +19,14 @@ import java.util.Scanner;
 
 public class LoginView {
     private final AccountManager am;
-    private final FriendManager fm;
+    private final ContactManager fm;
     private final ConversationManager cm;
     private final EventManager em;
     private final LoginController controller;
     private final LoginPresenter presenter = new LoginPresenter();
     private final Scanner userInput = new Scanner(System.in);
 
-    public LoginView(AccountManager am, FriendManager fm, ConversationManager cm, EventManager em) {
+    public LoginView(AccountManager am, ContactManager fm, ConversationManager cm, EventManager em) {
         this.am = am;
         this.fm = fm;
         this.cm = cm;
@@ -76,12 +76,12 @@ public class LoginView {
         }
 
         AccountDataManager accountDataManager = new AccountDataManager();
-        FriendDataManager friendDataManager = new FriendDataManager();
+        ContactDataManager contactDataManager = new ContactDataManager();
         ConversationDataManager conversationDataManager = new ConversationDataManager();
         EventDataManager eventDataManager = new EventDataManager();
 
         accountDataManager.saveManager("AccountManager", "AccountManager", am);
-        friendDataManager.saveManager("FriendManager", "FriendManager", fm);
+        contactDataManager.saveManager("ContactManager", "ContactManager", fm);
         conversationDataManager.saveManager("ConversationManager", "ConversationManager", cm);
         eventDataManager.saveManager("EventManager", "EventManager", em);
     }

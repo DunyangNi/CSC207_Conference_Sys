@@ -1,6 +1,6 @@
 package controllers.account;
 
-import controllers.FriendController;
+import controllers.ContactController;
 import controllers.message.MessageController;
 import exceptions.not_found.ObjectNotFoundException;
 import deprecated.Presenter;
@@ -15,11 +15,11 @@ import java.util.Scanner;
 public abstract class AccountController {
     protected String username;
     protected AccountManager am;
-    protected FriendManager fm;
+    protected ContactManager fm;
     protected ConversationManager cm;
     protected EventManager em;
     protected Presenter presenter = new TextPresenter();
-    protected FriendController friendController;
+    protected ContactController contactController;
     protected MessageController messageController;
 
     /**
@@ -30,13 +30,13 @@ public abstract class AccountController {
      * @param cm manages conversation data
      * @param em manages event data
      */
-    public AccountController(String username, AccountManager am, FriendManager fm, ConversationManager cm, EventManager em) {
+    public AccountController(String username, AccountManager am, ContactManager fm, ConversationManager cm, EventManager em) {
         this.username = username;
         this.am = am;
         this.fm = fm;
         this.cm = cm;
         this.em = em;
-        this.friendController = new FriendController(username, fm);
+        this.contactController = new ContactController(username, fm);
         this.messageController = new MessageController(username, am, cm, em);
     }
 

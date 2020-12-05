@@ -3,9 +3,9 @@ package views.account;
 import enums.AttendeeEnum;
 import presenters.account.AttendeePresenter;
 import use_cases.AccountManager;
+import use_cases.ContactManager;
 import use_cases.ConversationManager;
 import use_cases.EventManager;
-import use_cases.FriendManager;
 import views.message.ConversationView;
 import views.FriendView;
 import views.event.SignupView;
@@ -19,13 +19,13 @@ import java.util.Set;
 public class AttendeeView {
     private final String username;
     private final AccountManager am;
-    private final FriendManager fm;
+    private final ContactManager fm;
     private final ConversationManager cm;
     private final EventManager em;
     private final AttendeePresenter presenter = new AttendeePresenter();
     private final Scanner userInput = new Scanner(System.in);
 
-    public AttendeeView(String username, AccountManager am, FriendManager fm, ConversationManager cm, EventManager em) {
+    public AttendeeView(String username, AccountManager am, ContactManager fm, ConversationManager cm, EventManager em) {
         this.username = username;
         this.am = am;
         this.fm = fm;

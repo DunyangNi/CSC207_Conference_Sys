@@ -12,21 +12,21 @@ import exceptions.not_found.UserNotFoundException;
 /**
  * Represents the entire system of Friend relationships between <code>Accounts</code>.
  */
-public class FriendManager implements Serializable {
+public class ContactManager implements Serializable {
     HashMap<String, ArrayList<String>> friends;
 
     /**
-     * Creates a <code>FriendManager</code> with a given <code>HashMap</code>
+     * Creates a <code>ContactManager</code> with a given <code>HashMap</code>
      * of <code>Account</code> to <code>ArrayList</code> of friends.
      *
      * @param friends given <code>HashMap</code> of Account to ArrayList of friends.
      */
-    public FriendManager(HashMap<String, ArrayList<String>> friends) { this.friends = friends; }
+    public ContactManager(HashMap<String, ArrayList<String>> friends) { this.friends = friends; }
 
     /**
-     * Creates a <code>FriendManager</code> with an empty <code>HashMap</code>.
+     * Creates a <code>ContactManager</code> with an empty <code>HashMap</code>.
      */
-    public FriendManager() { this(new HashMap<>()); }
+    public ContactManager() { this(new HashMap<>()); }
 
     /**
      * Returns an <code>ArrayList</code> of usernames of Accounts that are friends with user.

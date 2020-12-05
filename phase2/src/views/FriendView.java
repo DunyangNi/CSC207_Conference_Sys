@@ -1,25 +1,25 @@
 package views;
 
-import controllers.FriendController;
+import controllers.ContactController;
 import exceptions.conflict.AlreadyFriendException;
 import exceptions.not_found.FriendNotFoundException;
 import exceptions.not_found.ObjectNotFoundException;
 import exceptions.not_found.UserNotFoundException;
-import presenters.FriendPresenter;
-import use_cases.FriendManager;
+import presenters.ContactPresenter;
+import use_cases.ContactManager;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class FriendView {
-    private final FriendManager friendManager;
-    private final FriendController controller;
-    private final FriendPresenter presenter = new FriendPresenter();
+    private final ContactManager contactManager;
+    private final ContactController controller;
+    private final ContactPresenter presenter = new ContactPresenter();
     private final Scanner userInput = new Scanner(System.in);
 
-    public FriendView(String username, FriendManager fm) {
-        this.friendManager = fm;
-        this.controller = new FriendController(username,fm);
+    public FriendView(String username, ContactManager fm) {
+        this.contactManager = fm;
+        this.controller = new ContactController(username,fm);
     }
 
     public void viewAddFriendMenu() {

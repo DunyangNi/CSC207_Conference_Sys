@@ -10,7 +10,7 @@ import presenters.message.MessagePresenter;
 import use_cases.AccountManager;
 import use_cases.ConversationManager;
 import use_cases.EventManager;
-import use_cases.FriendManager;
+import use_cases.ContactManager;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -18,14 +18,14 @@ import java.util.Scanner;
 public class MessageView {
     private final String username;
     private final AccountManager am;
-    private final FriendManager fm;
+    private final ContactManager fm;
     private final ConversationManager cm;
     private final EventManager em;
     private final MessagePresenter presenter = new MessagePresenter();
     private final MessageController controller;
     private final Scanner userInput = new Scanner(System.in);
 
-    public MessageView(String username, AccountManager am, FriendManager fm, ConversationManager cm, EventManager em) {
+    public MessageView(String username, AccountManager am, ContactManager fm, ConversationManager cm, EventManager em) {
         this.username = username;
         this.am = am;
         this.fm = fm;

@@ -21,12 +21,12 @@ public class AttendeeController extends AccountController {
      * facilitates interaction with attendee upon login
      * @param username attendee username
      * @param accountManager data about all accounts in the program
-     * @param friendManager contact information
+     * @param contactManager contact information
      * @param conversationManager conversation data
      * @param eventmanager event data
      */
-    public AttendeeController(String username, AccountManager accountManager, FriendManager friendManager, ConversationManager conversationManager, EventManager eventmanager) {
-        super(username, accountManager, friendManager, conversationManager, eventmanager);
+    public AttendeeController(String username, AccountManager accountManager, ContactManager contactManager, ConversationManager conversationManager, EventManager eventmanager) {
+        super(username, accountManager, contactManager, conversationManager, eventmanager);
     }
 
     /**
@@ -98,7 +98,7 @@ public class AttendeeController extends AccountController {
                     this.presenter.displayContactsPrompt("add");
                     String contactToAdd = userInput.nextLine();
                     try {
-                        friendController.addFriend(contactToAdd);
+                        contactController.addFriend(contactToAdd);
                     } catch (UserNotFoundException | FriendNotFoundException | AlreadyFriendException e) {
                         e.printStackTrace();
                     }
@@ -107,7 +107,7 @@ public class AttendeeController extends AccountController {
                     this.presenter.displayContactsPrompt("remove");
                     String contactToRemove = userInput.nextLine();
                     try {
-                        friendController.removeFriend(contactToRemove);
+                        contactController.removeFriend(contactToRemove);
                     } catch (ObjectNotFoundException e) {
                         e.printStackTrace();
                     }

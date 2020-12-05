@@ -21,10 +21,10 @@ public class ConferenceSystem {
         AccountDataManager accountDataManager = new AccountDataManager();
         EventDataManager eventDataManager = new EventDataManager();
         ConversationDataManager conversationDataManager = new ConversationDataManager();
-        FriendDataManager friendDataManager = new FriendDataManager();
+        ContactDataManager contactDataManager = new ContactDataManager();
 
         AccountManager am = accountDataManager.readManager();
-        FriendManager fm = friendDataManager.readManager();
+        ContactManager fm = contactDataManager.readManager();
         ConversationManager cm = conversationDataManager.readManager();
         EventManager em = eventDataManager.readManager();
 

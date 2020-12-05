@@ -2,17 +2,17 @@ package controllers.start;
 
 import exceptions.already_exists.AccountAlreadyExistsException;
 import gateway.AccountDataManager;
+import gateway.ContactDataManager;
 import gateway.ConversationDataManager;
 import gateway.EventDataManager;
-import gateway.FriendDataManager;
 import use_cases.AccountManager;
+import use_cases.ContactManager;
 import use_cases.ConversationManager;
 import use_cases.EventManager;
-import use_cases.FriendManager;
 
 public class RegistrationController {
     private final AccountManager am;
-    private final FriendManager fm;
+    private final ContactManager fm;
     private final ConversationManager cm;
     private final EventManager em;
     public final String ORGANIZER_CODE = "123456";
@@ -26,7 +26,7 @@ public class RegistrationController {
      * @param cm manages messaging functionality
      * @param em manages data of all events in the program
      */
-    public RegistrationController(AccountManager am, FriendManager fm, ConversationManager cm, EventManager em) {
+    public RegistrationController(AccountManager am, ContactManager fm, ConversationManager cm, EventManager em) {
         this.am = am;
         this.cm = cm;
         this.fm = fm;
@@ -47,12 +47,12 @@ public class RegistrationController {
         addNewAccountKeys(username);
 
         AccountDataManager accountDataManager = new AccountDataManager();
-        FriendDataManager friendDataManager = new FriendDataManager();
+        ContactDataManager contactDataManager = new ContactDataManager();
         ConversationDataManager conversationDataManager = new ConversationDataManager();
         EventDataManager eventDataManager = new EventDataManager();
 
         accountDataManager.saveManager("AccountManager", "AccountManager", am);
-        friendDataManager.saveManager("FriendManager", "FriendManager", fm);
+        contactDataManager.saveManager("ContactManager", "ContactManager", fm);
         conversationDataManager.saveManager("ConversationManager", "ConversationManager", cm);
         eventDataManager.saveManager("EventManager", "EventManager", em);
     }
@@ -83,12 +83,12 @@ public class RegistrationController {
 //        AccountDataManager accountDataManager = new AccountDataManager();
 //        EventDataManager eventDataManager = new EventDataManager();
 //        ConversationDataManager conversationDataManager = new ConversationDataManager();
-//        FriendDataManager friendDataManager = new FriendDataManager();
+//        ContactDataManager friendDataManager = new ContactDataManager();
 //
 //        accountDataManager.saveManager("AccountManager", "AccountManager", accountManager);
 //        eventDataManager.saveManager("EventManager", "EventManager", eventManager);
 //        conversationDataManager.saveManager("ConversationManager", "ConversationManager", conversationManager);
-//        friendDataManager.saveManager("FriendManager", "FriendManager", friendManager);
+//        friendDataManager.saveManager("ContactManager", "ContactManager", contactManager);
 //
 //        return false;
 //    }

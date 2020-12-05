@@ -7,21 +7,21 @@ import presenters.event.LocationPresenter;
 import use_cases.AccountManager;
 import use_cases.ConversationManager;
 import use_cases.EventManager;
-import use_cases.FriendManager;
+import use_cases.ContactManager;
 
 import java.util.Scanner;
 
 public class LocationView {
     private final String username;
     private final AccountManager am;
-    private final FriendManager fm;
+    private final ContactManager fm;
     private final ConversationManager cm;
     private final EventManager em;
     private final LocationPresenter presenter = new LocationPresenter();
     private final LocationController controller;
     private final Scanner userInput = new Scanner(System.in);
 
-    public LocationView(String username, AccountManager am, FriendManager fm, ConversationManager cm, EventManager em) {
+    public LocationView(String username, AccountManager am, ContactManager fm, ConversationManager cm, EventManager em) {
         this.username = username;
         this.am = am;
         this.fm = fm;

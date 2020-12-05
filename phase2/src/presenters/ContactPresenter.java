@@ -1,6 +1,6 @@
 package presenters;
 
-public class FriendPresenter implements ConsolePresenter {
+public class ContactPresenter implements ConsolePresenter {
     @Override
     public void startPrompt() {
     }

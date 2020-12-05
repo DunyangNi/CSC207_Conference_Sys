@@ -7,7 +7,7 @@ public class LoginController {
     private final AccountManager am;
     private final EventManager em;
     private final ConversationManager cm;
-    private final FriendManager fm;
+    private final ContactManager fm;
 
     /**
      * Manages login functionality for the program
@@ -16,7 +16,7 @@ public class LoginController {
      * @param cm manages conversation/messaging functionality
      * @param em manages event data
      */
-    public LoginController(AccountManager am, FriendManager fm, ConversationManager cm, EventManager em) {
+    public LoginController(AccountManager am, ContactManager fm, ConversationManager cm, EventManager em) {
         this.am = am;
         this.cm = cm;
         this.fm = fm;
@@ -52,12 +52,12 @@ public class LoginController {
 //        }
 //
 //        AccountDataManager accountDataManager = new AccountDataManager();
-//        FriendDataManager friendDataManager = new FriendDataManager();
+//        ContactDataManager friendDataManager = new ContactDataManager();
 //        ConversationDataManager conversationDataManager = new ConversationDataManager();
 //        EventDataManager eventDataManager = new EventDataManager();
 //
 //        accountDataManager.saveManager("AccountManager", "AccountManager", am);
-//        friendDataManager.saveManager("FriendManager", "FriendManager", fm);
+//        friendDataManager.saveManager("ContactManager", "ContactManager", fm);
 //        conversationDataManager.saveManager("ConversationManager", "ConversationManager", cm);
 //        eventDataManager.saveManager("EventManager", "EventManager", em);
 //
@@ -102,22 +102,22 @@ public class LoginController {
 //    private boolean login(String username) {
 //        boolean programEnd = false;
 //        if (accountManager.containsAttendee(username)) {
-//            TextPresenter textpresenter = new TextPresenter(eventManager, friendManager);
-//            AttendeeController ac = new AttendeeController(username, eventManager, conversationManager, friendManager, accountManager, textpresenter);
+//            TextPresenter textpresenter = new TextPresenter(eventManager, contactManager);
+//            AttendeeController ac = new AttendeeController(username, eventManager, conversationManager, contactManager, accountManager, textpresenter);
 //            programEnd = ac.runInteraction();
 //        }
 //        if (accountManager.containsOrganizer(username)) {
-//            TextPresenter textpresenter = new TextPresenter(eventManager, friendManager);
-//            OrganizerController oc = new OrganizerController(username, accountManager, friendManager, conversationManager, eventManager, textpresenter);
+//            TextPresenter textpresenter = new TextPresenter(eventManager, contactManager);
+//            OrganizerController oc = new OrganizerController(username, accountManager, contactManager, conversationManager, eventManager, textpresenter);
 //            programEnd = oc.runInteraction();
 //        }
 //        if (accountManager.containsSpeaker(username)) {
-//            TextPresenter textpresenter = new TextPresenter(eventManager, friendManager);
-//            SpeakerController sc = new SpeakerController(username, accountManager, friendManager, conversationManager, eventManager, textpresenter);
+//            TextPresenter textpresenter = new TextPresenter(eventManager, contactManager);
+//            SpeakerController sc = new SpeakerController(username, accountManager, contactManager, conversationManager, eventManager, textpresenter);
 //            programEnd = sc.runInteraction();
 //        }
 //
-//        RegistrationController.runDataManagers(accountManager, friendManager, conversationManager, eventManager);
+//        RegistrationController.runDataManagers(accountManager, contactManager, conversationManager, eventManager);
 //
 //        return programEnd;
 //    }

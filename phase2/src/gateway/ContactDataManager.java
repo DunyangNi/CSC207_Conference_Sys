@@ -3,26 +3,26 @@ package gateway;
 import java.io.*;
 import use_cases.*;
 
-public class FriendDataManager implements DataReader, DataSaver{
+public class ContactDataManager implements DataReader, DataSaver{
     private final String friendPath;
 
-    public FriendDataManager() {
-        this("FriendManager");
+    public ContactDataManager() {
+        this("ContactManager");
     }
 
-    public FriendDataManager(String friendPath) {
+    public ContactDataManager(String friendPath) {
         this.friendPath = friendPath;
     }
 
-    public FriendManager readManager() {
+    public ContactManager readManager() {
         try{
-            return (FriendManager) readObject(friendPath);
+            return (ContactManager) readObject(friendPath);
         } catch (IOException e) {
             System.out.println("Could not read AccountManager, creating a new AccountManager.");
-            return new FriendManager();
+            return new ContactManager();
         } catch (ClassNotFoundException e) {
             System.out.println("AccountManager not found, creating a new AccountManager.");
-            return new FriendManager();
+            return new ContactManager();
         }
     }
 }

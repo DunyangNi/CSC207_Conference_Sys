@@ -16,13 +16,13 @@ public class SpeakerController extends AccountController {
      * facilitates interaction with speaker upon login
      * @param username speaker username
      * @param accountmanager manages data of all accounts in program
-     * @param friendManager manages friendlist functionality
+     * @param contactManager manages friendlist functionality
      * @param conversationManager manages messaging functionality
      * @param eventmanager manages event data
      */
-    public SpeakerController(String username, AccountManager accountmanager, FriendManager friendManager,
+    public SpeakerController(String username, AccountManager accountmanager, ContactManager contactManager,
                              ConversationManager conversationManager, EventManager eventmanager) {
-        super(username, accountmanager, friendManager, conversationManager, eventmanager);
+        super(username, accountmanager, contactManager, conversationManager, eventmanager);
     }
 
     /**
@@ -81,7 +81,7 @@ public class SpeakerController extends AccountController {
                     presenter.displayContactsPrompt("add");
                     String contactToAdd = userInput.nextLine();
                     try {
-                        friendController.addFriend(contactToAdd);
+                        contactController.addFriend(contactToAdd);
                     } catch (UserNotFoundException | FriendNotFoundException | AlreadyFriendException e) {
                         e.printStackTrace();
                     }
@@ -91,7 +91,7 @@ public class SpeakerController extends AccountController {
                     presenter.displayContactsPrompt("remove");
                     String removeContact = userInput.nextLine();
                     try {
-                        friendController.removeFriend(removeContact);
+                        contactController.removeFriend(removeContact);
                     } catch (ObjectNotFoundException e) {
                         e.printStackTrace();
                     }

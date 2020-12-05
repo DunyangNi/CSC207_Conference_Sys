@@ -4,17 +4,17 @@ import exceptions.already_exists.ObjectAlreadyExistsException;
 import use_cases.AccountManager;
 import use_cases.ConversationManager;
 import use_cases.EventManager;
-import use_cases.FriendManager;
+import use_cases.ContactManager;
 
 public class AccountCreationController {
     private AccountManager accountManager;
     private ConversationManager conversationManager;
-    private FriendManager friendManager;
+    private ContactManager contactManager;
     private EventManager eventManager;
-    public AccountCreationController(AccountManager accountManager, ConversationManager conversationManager, FriendManager friendManager, EventManager eventManager){
+    public AccountCreationController(AccountManager accountManager, ConversationManager conversationManager, ContactManager contactManager, EventManager eventManager){
         this.accountManager = accountManager;
         this.conversationManager = conversationManager;
-        this.friendManager = friendManager;
+        this.contactManager = contactManager;
         this.eventManager = eventManager;
     }
 
@@ -44,12 +44,12 @@ public class AccountCreationController {
     // (NEW!) (Helper)
     private void addNewSpeakerKeys(String username) {
         conversationManager.addAccountKey(username);
-        friendManager.addAccountKey(username);
+        contactManager.addAccountKey(username);
         eventManager.addSpeakerKey(username);
     }
 
     private void addNewAttendeeKeys(String username){
         conversationManager.addAccountKey(username);
-        friendManager.addAccountKey(username);
+        contactManager.addAccountKey(username);
     }
 }

@@ -4,22 +4,22 @@ import controllers.start.RegistrationController;
 import exceptions.already_exists.AccountAlreadyExistsException;
 import presenters.start.RegistrationPresenter;
 import use_cases.AccountManager;
+import use_cases.ContactManager;
 import use_cases.ConversationManager;
 import use_cases.EventManager;
-import use_cases.FriendManager;
 
 import java.util.Scanner;
 
 public class RegistrationView {
     private final AccountManager am;
-    private final FriendManager fm;
+    private final ContactManager fm;
     private final ConversationManager cm;
     private final EventManager em;
     private final RegistrationController controller;
     private final RegistrationPresenter presenter = new RegistrationPresenter();
     private final Scanner userInput = new Scanner(System.in);
 
-    public RegistrationView(AccountManager am, FriendManager fm, ConversationManager cm, EventManager em) {
+    public RegistrationView(AccountManager am, ContactManager fm, ConversationManager cm, EventManager em) {
         this.am = am;
         this.fm = fm;
         this.cm = cm;

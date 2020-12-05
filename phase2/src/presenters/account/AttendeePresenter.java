@@ -10,7 +10,7 @@ public class AttendeePresenter extends AccountPresenter {
         System.out.println("1  = View list of all accounts"); //Use presenters directly
         System.out.println("");
         System.out.println("[CONTACTS]");
-        System.out.println("2  = add a new contact"); //FriendController
+        System.out.println("2  = add a new contact"); //ContactController
         System.out.println("3  = remove a contact");
         System.out.println("4  = see contacts list");
         System.out.println("");
