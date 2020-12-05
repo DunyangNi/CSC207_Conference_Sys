@@ -1,6 +1,6 @@
 package enums;
 
-public enum OrganizerCommand {
+public enum OrganizerEnum {
     EXIT("00"),
     LOGOUT("0"),
     NEW_SPEAKER("1"),
@@ -23,7 +23,7 @@ public enum OrganizerCommand {
 
     public final String stringValue;
 
-    OrganizerCommand(String command) {
+    OrganizerEnum(String command) {
         this.stringValue = command;
     }
 }

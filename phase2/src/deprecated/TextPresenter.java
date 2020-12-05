@@ -1,4 +1,4 @@
-package presenter;
+package deprecated;
 import use_cases.*;
 
 import java.util.*;

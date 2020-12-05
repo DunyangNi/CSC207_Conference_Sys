@@ -1,6 +1,6 @@
 package views;
 
-import enums.OrganizerCommand;
+import enums.OrganizerEnum;
 import presenter.OrganizerPresenter;
 import use_cases.AccountManager;
 import use_cases.ConversationManager;
@@ -31,8 +31,8 @@ public class OrganizerView {
         presenter.displayOrganizerMenu();
 
 
-        OrganizerCommand[] enumCommandList = OrganizerCommand.values();
-        OrganizerCommand nextView = null;
+        OrganizerEnum[] enumCommandList = OrganizerEnum.values();
+        OrganizerEnum nextView = null;
         boolean validInput = false;
         boolean loggedIn = true;
 
@@ -41,7 +41,7 @@ public class OrganizerView {
 
             // TODO: 12/04/20 Find more efficient way to use Enums
             while (!validInput) {
-                for (OrganizerCommand enumCommand : enumCommandList) {
+                for (OrganizerEnum enumCommand : enumCommandList) {
                     if (userCommand.equals(enumCommand.stringValue)) {
                         validInput = true;
                         nextView = enumCommand;

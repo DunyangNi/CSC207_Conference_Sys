@@ -24,12 +24,4 @@ public class SpeakerPresenter extends AccountPresenter {
         System.out.println("9  = see a schedule of all talks");
         System.out.println("===================================");
     }
-
-    public void invalidInputPrompt() {
-        System.out.println("Invalid input, please try again.");
-    }
-
-    public void requestCommandPrompt() {
-        System.out.println("Enter another command (1-16). Enter '*' to view the command menu again.");
-    }
 }

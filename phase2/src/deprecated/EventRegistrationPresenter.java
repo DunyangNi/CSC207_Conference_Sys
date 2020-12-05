@@ -1,6 +1,8 @@
-package presenter;
+package deprecated;
 
-public class EventRegistrationPresenter implements ConsolePresenter{
+import presenter.ConsolePresenter;
+
+public class EventRegistrationPresenter implements ConsolePresenter {
 
     @Override
     public void startPrompt() {

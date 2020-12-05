@@ -1,8 +1,8 @@
 package controller;
 
 import exceptions.not_found.ObjectNotFoundException;
-import presenter.Presenter;
-import presenter.TextPresenter;
+import deprecated.Presenter;
+import deprecated.TextPresenter;
 import use_cases.*;
 
 import java.util.ArrayList;

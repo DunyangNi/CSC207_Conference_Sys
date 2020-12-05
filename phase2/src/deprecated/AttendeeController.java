@@ -1,5 +1,7 @@
-package controller;
+package deprecated;
 
+import controller.AccountController;
+import controller.SignupController;
 import exceptions.HTMLWriteErrorException;
 import exceptions.conflict.AlreadyFriendException;
 import exceptions.not_found.FriendNotFoundException;
@@ -62,15 +64,15 @@ public class AttendeeController extends AccountController {
         boolean programEnd = false;
         boolean loggedIn = true;
         Scanner userInput = new Scanner(System.in);
-        AttendeeCommand[] commandlist = AttendeeCommand.values();
+        AttendeeEnum[] commandlist = AttendeeEnum.values();
         String command = userInput.nextLine();
 
         boolean validinput = false;
-        AttendeeCommand enumRequest = AttendeeCommand.EXIT;
+        AttendeeEnum enumRequest = AttendeeEnum.EXIT;
 
         while (!validinput) {
-            for(AttendeeCommand commandEnum: commandlist){
-                if (commandEnum.command.equals(command)) {
+            for(AttendeeEnum commandEnum: commandlist){
+                if (commandEnum.stringValue.equals(command)) {
                     validinput = true;
                     enumRequest = commandEnum;
                     break;
@@ -221,8 +223,8 @@ public class AttendeeController extends AccountController {
 
                 validinput = false;
                 while (!validinput) {
-                    for(AttendeeCommand commandEnum: commandlist){
-                        if (commandEnum.command.equals(command)) {
+                    for(AttendeeEnum commandEnum: commandlist){
+                        if (commandEnum.stringValue.equals(command)) {
                             validinput = true;
                             enumRequest = commandEnum;
                             break;

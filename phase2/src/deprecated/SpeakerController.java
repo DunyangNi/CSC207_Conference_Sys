@@ -1,5 +1,6 @@
-package controller;
+package deprecated;
 
+import controller.AccountController;
 import exceptions.conflict.AlreadyFriendException;
 import exceptions.not_found.FriendNotFoundException;
 import exceptions.not_found.ObjectNotFoundException;
@@ -41,14 +42,14 @@ public class SpeakerController extends AccountController {
         boolean programEnd = false;
         boolean loggedIn = true;
         Scanner userInput = new Scanner(System.in);
-        SpeakerCommand[] commandlist = SpeakerCommand.values();
+        SpeakerEnum[] commandlist = SpeakerEnum.values();
         String command = userInput.nextLine();
 
         boolean validinput = false;
-        SpeakerCommand enumRequest = SpeakerCommand.EXIT;
+        SpeakerEnum enumRequest = SpeakerEnum.EXIT;
 
         while (!validinput) {
-            for(SpeakerCommand commandEnum: commandlist){
+            for(SpeakerEnum commandEnum: commandlist){
                 if (commandEnum.stringValue.equals(command)) {
                     validinput = true;
                     enumRequest = commandEnum;
@@ -184,7 +185,7 @@ public class SpeakerController extends AccountController {
 
                 validinput = false;
                 while (!validinput) {
-                    for(SpeakerCommand commandEnum: commandlist){
+                    for(SpeakerEnum commandEnum: commandlist){
                         if (commandEnum.stringValue.equals(command)) {
                             validinput = true;
                             enumRequest = commandEnum;

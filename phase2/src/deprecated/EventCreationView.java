@@ -1,10 +1,5 @@
-package views;
+package deprecated;
 
-import controller.EventCreationController;
-import enums.EventType;
-import presenter.EventRegistrationPresenter;
-
-import javax.swing.event.DocumentEvent;
 import java.util.Calendar;
 import java.util.InputMismatchException;
 import java.util.Scanner;

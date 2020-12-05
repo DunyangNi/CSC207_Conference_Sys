@@ -1,8 +1,6 @@
-package views;
+package deprecated;
 
-import controller.EventCreationController;
 import exceptions.not_found.EventNotFoundException;
-import presenter.EventCancelPresenter;
 
 import java.util.Scanner;
 

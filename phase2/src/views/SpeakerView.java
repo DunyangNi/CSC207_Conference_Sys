@@ -1,6 +1,6 @@
 package views;
 
-import enums.SpeakerCommand;
+import enums.SpeakerEnum;
 import presenter.SpeakerPresenter;
 import use_cases.AccountManager;
 import use_cases.ConversationManager;
@@ -33,8 +33,8 @@ public class SpeakerView {
         presenter.startPrompt();
         presenter.displaySpeakerMenu();
 
-        SpeakerCommand[] enumCommandList = SpeakerCommand.values();
-        SpeakerCommand nextView = null;
+        SpeakerEnum[] enumCommandList = SpeakerEnum.values();
+        SpeakerEnum nextView = null;
         boolean validInput = false;
         boolean loggedIn = true;
 
@@ -43,7 +43,7 @@ public class SpeakerView {
 
             // TODO: 12/04/20 Find more efficient way to use Enums
             while (!validInput) {
-                for (SpeakerCommand enumCommand : enumCommandList) {
+                for (SpeakerEnum enumCommand : enumCommandList) {
                     if (userCommand.equals(enumCommand.stringValue)) {
                         validInput = true;
                         nextView = enumCommand;

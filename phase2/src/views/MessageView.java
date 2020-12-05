@@ -1,8 +1,9 @@
 package views;
 
 import controller.MessageController;
-import enums.OrganizerCommand;
-import enums.SpeakerCommand;
+import enums.AttendeeEnum;
+import enums.OrganizerEnum;
+import enums.SpeakerEnum;
 import exceptions.not_found.RecipientNotFoundException;
 import exceptions.not_found.UserNotFoundException;
 import presenter.MessagePresenter;
@@ -33,8 +34,8 @@ public class MessageView {
         this.controller = new MessageController(username, am, cm, em);
     }
 
-    public void message(OrganizerCommand accountType) {
-        if (accountType.equals(OrganizerCommand.MESSAGE_SPEAKER) || accountType.equals(OrganizerCommand.MESSAGE_ATTENDEE)) {
+    public void message(OrganizerEnum accountType) {
+        if (accountType.equals(OrganizerEnum.MESSAGE_SPEAKER) || accountType.equals(OrganizerEnum.MESSAGE_ATTENDEE)) {
             presenter.usernamePrompt();
             String username = userInput.nextLine();
         }
@@ -61,7 +62,7 @@ public class MessageView {
         }
     }
 
-    public void message(SpeakerCommand accountType) {
+    public void message(SpeakerEnum accountType) {
         try {
             switch (accountType) {
                 case MESSAGE_ATTENDEE:
@@ -83,6 +84,19 @@ public class MessageView {
                     controller.messageAttendeesAtTalks(selectedSpeakerTalks, message);
                     break;
             }
+        }
+        catch (UserNotFoundException | RecipientNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void message(AttendeeEnum accountType) {
+        presenter.usernamePrompt();
+        String username = userInput.nextLine();
+        presenter.messagePrompt();
+        String message = userInput.nextLine();
+        try {
+            controller.messageAttendee(username, message);
         }
         catch (UserNotFoundException | RecipientNotFoundException e) {
             e.printStackTrace();

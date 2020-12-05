@@ -1,6 +1,6 @@
 package enums;
 
-public enum SpeakerCommand {
+public enum SpeakerEnum {
     EXIT("00"),
     LOGOUT("0"),
     VIEW_ALL_ACCOUNTS("1"),
@@ -16,7 +16,7 @@ public enum SpeakerCommand {
 
     public final String stringValue;
 
-    SpeakerCommand(String stringValue) {
+    SpeakerEnum(String stringValue) {
         this.stringValue = stringValue;
     }
 }

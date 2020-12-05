@@ -1,4 +1,4 @@
-package controller;
+package deprecated;
 
 import exceptions.*;
 import exceptions.conflict.LocationInUseException;

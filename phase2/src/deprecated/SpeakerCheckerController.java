@@ -1,4 +1,4 @@
-package controller;
+package deprecated;
 
 import entities.Event;
 import use_cases.EventManager;

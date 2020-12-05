@@ -1,15 +1,20 @@
 package controller;
 
+import entities.Event;
 import use_cases.AccountManager;
 import use_cases.EventManager;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+// TODO: 12/04/20 Merge this class with EventController
 /**
  * Allows the <code>Attendee</code> user to sign up or cancel signing up for a <code>Event</code>.
  */
 public class SignupController {
     protected String username;
-    protected AccountManager accountManager;
-    protected EventManager eventManager;
+    protected AccountManager am;
+    protected EventManager em;
 
     /**
      * Creates an instance of <code>SignupController</code> with given username, <code>AccountManager</code>,
@@ -21,8 +26,8 @@ public class SignupController {
      */
     public SignupController(String username, AccountManager am, EventManager em) {
         this.username = username;
-        this.eventManager = em;
-        this.accountManager = am;
+        this.em = em;
+        this.am = am;
     }
 
     /**
@@ -31,10 +36,10 @@ public class SignupController {
      * @param id given ID of <code>Event</code>
      */
     public void signupForEvent(Integer id) {
-        if (!accountManager.getVipStatus(username) || !eventManager.getVipRestriction(id)){
+        if (!am.getVipStatus(username) || !em.getVipRestriction(id)){
             try {
-                eventManager.addAttendee(id, username);
-                accountManager.addEventToAttend(id, username);
+                em.addAttendee(id, username);
+                am.addEventToAttend(id, username);
             } catch (Exception e) {
                 System.out.println(e.getMessage()); // to be replaced
             }
@@ -49,10 +54,14 @@ public class SignupController {
      */
     public void cancelSignupForEvent(Integer id) {
         try {
-            eventManager.removeAttendee(id, username);
-            accountManager.removeEventToAttend(id, username);
+            em.removeAttendee(id, username);
+            am.removeEventToAttend(id, username);
         } catch (Exception e) {
             System.out.println(e.getMessage()); // to be replaced
         }
+    }
+
+    // TODO: 12/04/20 Implement this
+    public void displayAttendeeSchedule(String username, HashMap<String[], Calendar> attendeeTalks) {
     }
 }

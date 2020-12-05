@@ -1,4 +1,4 @@
-package controller;
+package deprecated;
 
 import exceptions.already_exists.ObjectAlreadyExistsException;
 import use_cases.AccountManager;

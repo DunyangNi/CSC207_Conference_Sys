@@ -1,12 +1,7 @@
 package presenter;
 
-public class AttendeePresenter implements ConsolePresenter {
-    @Override
-    public void startPrompt() {
-        System.out.println("Logged in)");
-    }
-
-    public void attendeeMenuPrompt() {
+public class AttendeePresenter extends AccountPresenter {
+    public void displayAttendeeMenu() {
         System.out.println("[ATTENDEE MENU]");
         System.out.println("===================================");
         System.out.println("[ACCOUNT]");
@@ -27,14 +22,10 @@ public class AttendeePresenter implements ConsolePresenter {
         System.out.println("[EVENTS]");
         System.out.println("8  = see talk schedule");//USe Presenter
         System.out.println("9  = sign up for a talk");//SignUpController
-        System.out.println("10  = cancel enrolment for a talk");
+        System.out.println("10 = cancel enrolment for a talk");
         System.out.println("11 = see a schedule of talks you're attending");//Use Presenter
-        System.out.println("16 = download all events in HTML");
+        System.out.println("12 = download all events in HTML");
         System.out.println("===================================");
     }
 
-    @Override
-    public void exitPrompt() {
-        System.out.println("Logging out...");
-    }
 }
