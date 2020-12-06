@@ -11,7 +11,6 @@ import java.util.Calendar;
  *
  */
 public class TextPresenter implements Presenter {
-    // TODO: 11/17/20 Consider whether these fields are necessary or what other fields might be required
     private EventManager eventmanager;
     private ContactManager contactManager;
 

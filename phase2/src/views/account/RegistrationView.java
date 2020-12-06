@@ -36,7 +36,6 @@ public class RegistrationView {
         // String accountType = AccountTypeEnum.valueOf(userInput.nextLine()).toString();
         String accountType = userInput.nextLine();
 
-        // TODO: 11/28/20 Consider replace while loop with exception throws in Controller or Use Case level
         while (!accountType.matches("[1-3]")) {
             presenter.invalidCommandPrompt();
             accountType = userInput.nextLine();
@@ -76,8 +75,6 @@ public class RegistrationView {
     public void accountInfoMenu(String accountType) {
         presenter.usernamePrompt();
         String username = userInput.nextLine();
-        // TODO: 11/28/20 Could possibly remove call to AccountManager.containsAccount() and instead pass whatever
-        //  username input to RegistrationController which then catches exceptions when applicable
         while ((am.containsAccount(username))) {
             presenter.takenUsernamePrompt();
             username = userInput.nextLine();

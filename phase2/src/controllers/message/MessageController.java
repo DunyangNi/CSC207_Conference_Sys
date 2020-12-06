@@ -15,7 +15,6 @@ public class MessageController {
     protected AccountManager am;
     protected ConversationManager cm;
     protected EventManager em;
-    // TODO: 12/04/20 Remove Presenter dependency
     protected Presenter presenter = new TextPresenter();
     /**
      * Manages generic messaging functionality for user with given username

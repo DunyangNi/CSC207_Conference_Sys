@@ -4,7 +4,7 @@ import use_cases.*;
 import use_cases.account.AccountManager;
 import use_cases.account.ContactManager;
 import use_cases.event.EventManager;
-import views.StartView;
+import views.account.StartView;
 
 public class ConferenceSystem {
 
@@ -34,6 +34,7 @@ public class ConferenceSystem {
         DataManager dm = new DataManager(am, fm, cm, em);
 
         boolean programEnd = false;
+
         while (!programEnd) {
             StartView view = new StartView(dm);
             programEnd = view.startMenu();

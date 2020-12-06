@@ -1,4 +1,4 @@
-package controllers.account;
+package deprecated;
 
 import use_cases.*;
 import use_cases.account.AccountManager;

@@ -1,4 +1,4 @@
-package controllers;
+package deprecated;
 
 import enums.StartCommand;
 import gateway.DataManager;
@@ -30,7 +30,7 @@ public class StartController {
     public StartCommand start(String command) {
 //       if ("1".equals(command)) {
 //            LoginView loginView = new LoginView(am, fm, cm, em);
-//            return loginView.loginMenu();
+//            return loginView.runView();
 //        }
 //       else if ("2".equals(command)) {
 //            RegistrationView registrationView = new RegistrationView(am, fm, cm, em);

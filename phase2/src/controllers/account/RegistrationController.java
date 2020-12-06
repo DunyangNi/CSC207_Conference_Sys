@@ -30,7 +30,6 @@ public class RegistrationController {
         this.em = dm.getEventManager();
     }
 
-    // TODO: 11/28/20 Refactor methods to manage exceptions consistently
     public void register(String accountType, String username, String password) throws AccountAlreadyExistsException {
         if (accountType.equals("1")) {
             am.addNewAttendee(username, password, "", "");

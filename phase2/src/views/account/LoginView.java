@@ -35,7 +35,7 @@ public class LoginView {
         this.controller = new LoginController(dm);
     }
 
-    public void loginMenu() {
+    public void runView() {
         presenter.startPrompt();
         presenter.usernamePrompt();
         String username = userInput.nextLine();

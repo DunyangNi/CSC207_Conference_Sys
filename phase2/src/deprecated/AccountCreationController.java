@@ -1,4 +1,4 @@
-package controllers.account;
+package deprecated;
 
 import exceptions.already_exists.ObjectAlreadyExistsException;
 import gateway.DataManager;

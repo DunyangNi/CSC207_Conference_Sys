@@ -1,18 +1,9 @@
-package controllers.account;
+package deprecated;
 
-import controllers.event.SignupController;
-import exceptions.HTMLWriteErrorException;
-import exceptions.conflict.AlreadyFriendException;
-import exceptions.not_found.FriendNotFoundException;
-import exceptions.not_found.ObjectNotFoundException;
-import exceptions.not_found.RecipientNotFoundException;
-import exceptions.not_found.UserNotFoundException;
-import gateway.HTMLManager;
 import use_cases.*;
-import java.util.*;
+
 import java.lang.*;
 
-import enums.*;
 import use_cases.account.AccountManager;
 import use_cases.account.ContactManager;
 import use_cases.event.EventManager;
@@ -89,7 +80,6 @@ public class AttendeeController extends AccountController {
 //
 //        while(loggedIn){
 //            switch (enumRequest) {
-//                // TODO: 11/20/20 Add view all accounts command
 //                case EXIT:
 //                    loggedIn = false;
 //                    programEnd = true;

@@ -1,4 +1,4 @@
-package controllers.account;
+package deprecated;
 
 import exceptions.conflict.AlreadyFriendException;
 import exceptions.not_found.FriendNotFoundException;

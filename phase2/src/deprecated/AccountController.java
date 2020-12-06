@@ -1,5 +1,6 @@
-package controllers.account;
+package deprecated;
 
+import controllers.account.ContactController;
 import controllers.message.MessageController;
 import exceptions.not_found.ObjectNotFoundException;
 import deprecated.Presenter;

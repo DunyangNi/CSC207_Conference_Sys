@@ -162,7 +162,6 @@ public class AccountManager implements Serializable {
      * @throws ObjectAlreadyExistsException upon finding an existing Speaker with the same username
      */
     public void addNewSpeaker(String username, String password, String firstName, String lastName) throws AccountAlreadyExistsException {
-        // TODO: 11/29/20 Reintroduce exception thorw in the future
         if (getAccountHashMap().containsKey(username)) throw new AccountAlreadyExistsException();
         Speaker newSpeaker = new Speaker(username, password, firstName, lastName);
         speakerHashMap.put(username, newSpeaker);

@@ -1,15 +1,11 @@
-package views;
+package views.account;
 
-import controllers.StartController;
-import enums.StartCommand;
 import gateway.DataManager;
 import presenters.StartPresenter;
+import use_cases.ConversationManager;
 import use_cases.account.AccountManager;
 import use_cases.account.ContactManager;
-import use_cases.ConversationManager;
 import use_cases.event.EventManager;
-import views.account.LoginView;
-import views.account.RegistrationView;
 
 import java.util.Scanner;
 
@@ -19,7 +15,6 @@ public class StartView {
     private final ContactManager fm;
     private final ConversationManager cm;
     private final EventManager em;
-    private final StartController controller;
     private final StartPresenter presenter = new StartPresenter();
     private final Scanner userInput = new Scanner(System.in);
 
@@ -29,7 +24,6 @@ public class StartView {
         this.fm = dm.getContactManager();
         this.cm = dm.getConversationManager();
         this.em = dm.getEventManager();
-        this.controller = new StartController(dm);
     }
 
     public boolean startMenu() {
@@ -41,19 +35,15 @@ public class StartView {
             command = userInput.nextLine();
         }
 
-        StartCommand nextView = controller.start(command);
-
-        if (nextView.equals(StartCommand.REGISTER)) {
+        if (command.equals("1")) {
+            LoginView view = new LoginView(dm);
+            view.runView();
+        }
+        if (command.equals("2")) {
             RegistrationView view = new RegistrationView(dm);
             view.registrationMenu();
-        }
-        if (nextView.equals(StartCommand.LOGIN)) {
-            LoginView view = new LoginView(dm);
-            view.loginMenu();
         }
 
         return false;
     }
 }
-
-
