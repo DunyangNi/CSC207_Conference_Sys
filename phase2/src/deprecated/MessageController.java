@@ -1,7 +1,5 @@
 package deprecated;
 //To be deleted
-import deprecated.Presenter;
-import deprecated.TextPresenter;
 import exceptions.not_found.RecipientNotFoundException;
 import exceptions.not_found.UserNotFoundException;
 import use_cases.ConversationManager;
@@ -15,7 +13,7 @@ public class MessageController {
     protected AccountManager am;
     protected ConversationManager cm;
     protected EventManager em;
-    protected Presenter presenter = new TextPresenter();
+    protected OldPresenter oldPresenter = new TextOldPresenter();
     /**
      * Manages generic messaging functionality for user with given username
      * @param username user username
@@ -61,14 +59,14 @@ public class MessageController {
         try {
             Iterator<String> speakerUsernameIterator = this.am.speakerUsernameIterator();
             if (!speakerUsernameIterator.hasNext())
-                this.presenter.displayPrompt("There are no speakers to message."); // f
+                this.oldPresenter.displayPrompt("There are no speakers to message."); // f
             while(speakerUsernameIterator.hasNext()) {
                 messageSpeaker(message, speakerUsernameIterator.next());
             }
         }
         catch(Exception e) {
-            this.presenter.displayPrompt(e.toString());
-            this.presenter.displayPrompt("Something went wrong. Please try again.");
+            this.oldPresenter.displayPrompt(e.toString());
+            this.oldPresenter.displayPrompt("Something went wrong. Please try again.");
         }
     }
 
@@ -80,14 +78,14 @@ public class MessageController {
         try {
             Iterator<String> attendeeUsernameIterator = this.am.attendeeUsernameIterator();
             if (!attendeeUsernameIterator.hasNext())
-                this.presenter.displayPrompt("There are no attendees to message."); // f
+                this.oldPresenter.displayPrompt("There are no attendees to message."); // f
             while (attendeeUsernameIterator.hasNext()) {
                 messageAttendee(message, attendeeUsernameIterator.next());
             }
         }
         catch(Exception e) {
-            this.presenter.displayPrompt(e.toString());
-            this.presenter.displayPrompt("Something went wrong. Please try again.");
+            this.oldPresenter.displayPrompt(e.toString());
+            this.oldPresenter.displayPrompt("Something went wrong. Please try again.");
         }
     }
 
@@ -105,13 +103,13 @@ public class MessageController {
                     selectedAttendeeUsernames.addAll(em.fetchEventAttendeeList(id));
             }
             if (selectedAttendeeUsernames.isEmpty())
-                this.presenter.displayPrompt("There are no attendees to message."); // f
+                this.oldPresenter.displayPrompt("There are no attendees to message."); // f
             for (String attendeeUsername : selectedAttendeeUsernames) {
                 messageAttendee(message, attendeeUsername);
             }
         }
         catch(Exception e) {
-            this.presenter.displayPrompt(e.toString() + "\nSomething went wrong. Please enter valid input.\n");
+            this.oldPresenter.displayPrompt(e.toString() + "\nSomething went wrong. Please enter valid input.\n");
         }
     }
 }

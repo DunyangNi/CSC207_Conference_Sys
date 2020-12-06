@@ -1,8 +1,8 @@
 package presenters.account;
 
-import presenters.ConsolePresenter;
+import presenters.Presenter;
 
-public class LoginPresenter implements ConsolePresenter {
+public class LoginPresenter implements Presenter {
     public void startPrompt() {
         System.out.println("[LOGIN MENU]");
     }

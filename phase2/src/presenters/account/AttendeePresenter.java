@@ -20,10 +20,10 @@ public class AttendeePresenter extends AccountPresenter {
         System.out.println("7  = view your conversation with someone");//ViewConversationController-isEmpty, viewMessageFrom
         System.out.println("");
         System.out.println("[EVENTS]");
-        System.out.println("8  = see talk schedule");//USe Presenter
+        System.out.println("8  = see talk schedule");//USe OldPresenter
         System.out.println("9  = sign up for a talk");//SignUpController
         System.out.println("10 = cancel enrolment for a talk");
-        System.out.println("11 = see a schedule of talks you're attending");//Use Presenter
+        System.out.println("11 = see a schedule of talks you're attending");//Use OldPresenter
         System.out.println("12 = download all events in HTML");
         System.out.println("===================================");
     }

@@ -18,7 +18,7 @@ public abstract class AccountController {
     protected ContactManager fm;
     protected ConversationManager cm;
     protected EventManager em;
-    protected Presenter presenter = new TextPresenter();
+    protected OldPresenter oldPresenter = new TextOldPresenter();
     protected ContactController contactController;
     protected MessageController messageController;
 
@@ -45,14 +45,14 @@ public abstract class AccountController {
      * in chronological order
      */
     public void SeeTalkSchedule() {
-        this.presenter.displayTalkSchedule();
+        this.oldPresenter.displayTalkSchedule();
     }
 
     /**
      * Displays the list of contacts for the current user
      */
     public void viewContactList() {
-        this.presenter.displayContactList(this.username);
+        this.oldPresenter.displayContactList(this.username);
     }
 
     /**
@@ -62,17 +62,17 @@ public abstract class AccountController {
      */
     public void viewMessagesFrom(String recipient, int numMessagesRequested) throws ObjectNotFoundException, InputMismatchException{
         if (numMessagesRequested < 0) {
-            this.presenter.displayPrompt("You have requested an invalid number");
+            this.oldPresenter.displayPrompt("You have requested an invalid number");
         } else {
             String msgToPrint;
             ArrayList<Integer> convo = cm.getConversationMessages(this.username, recipient);
-            this.presenter.displayPrompt("Your recent " + numMessagesRequested + " messages with " + recipient + ":");
-            this.presenter.displayPrompt("");
+            this.oldPresenter.displayPrompt("Your recent " + numMessagesRequested + " messages with " + recipient + ":");
+            this.oldPresenter.displayPrompt("");
             int numMessagesRetrieved = Math.min(numMessagesRequested, convo.size());
             for (int i = numMessagesRetrieved; i > 0; i--) {
                 msgToPrint = cm.messageToString(convo.get(convo.size() - i)); // implemented fix
-                this.presenter.displayPrompt(msgToPrint);
-                this.presenter.displayPrompt("");
+                this.oldPresenter.displayPrompt(msgToPrint);
+                this.oldPresenter.displayPrompt("");
             }
         }
     }
@@ -85,16 +85,16 @@ public abstract class AccountController {
     protected Calendar collectTimeInfo() throws InstantiationException {
         try {
             Scanner sc = new Scanner(System.in);
-            this.presenter.displayPrompt("Day of the month (1-31)");
+            this.oldPresenter.displayPrompt("Day of the month (1-31)");
             int dayOfMonth = sc.nextInt();
             sc.nextLine();
-            this.presenter.displayPrompt("Month (1-12)");
+            this.oldPresenter.displayPrompt("Month (1-12)");
             int month = sc.nextInt()-1;
             sc.nextLine();
-            this.presenter.displayPrompt("Year (YYYY)");
+            this.oldPresenter.displayPrompt("Year (YYYY)");
             int year = sc.nextInt();
             sc.nextLine();
-            this.presenter.displayPrompt("Hour of the day (9-16)");
+            this.oldPresenter.displayPrompt("Hour of the day (9-16)");
             int hourOfDay = sc.nextInt();
             sc.nextLine();
 
@@ -104,7 +104,7 @@ public abstract class AccountController {
 
             return time;
         } catch (Exception e) {
-            this.presenter.displayPrompt(e.toString() + "\nSomething went wrong in collectTimeInfo. Please enter valid input.\n");
+            this.oldPresenter.displayPrompt(e.toString() + "\nSomething went wrong in collectTimeInfo. Please enter valid input.\n");
             throw new InstantiationException();
         }
     }

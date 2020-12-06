@@ -10,23 +10,23 @@ import java.util.Calendar;
  * Presents program information to a text-based UI for display.
  *
  */
-public class TextPresenter implements Presenter {
+public class TextOldPresenter implements OldPresenter {
     private EventManager eventmanager;
     private ContactManager contactManager;
 
     /**
-     * Creates a <code>TextPresenter</code> without any fields.
+     * Creates a <code>TextOldPresenter</code> without any fields.
      */
-    public TextPresenter() {
+    public TextOldPresenter() {
         super();
     }
 
     /**
-     * Creates a <code>TextPresenter</code> with access to information stored in Manager objects.
+     * Creates a <code>TextOldPresenter</code> with access to information stored in Manager objects.
      * @param eventManager The program's <code>EventManager</code> object
      * @param contactManager The program's <code>ContactManager</code> object
      */
-    public TextPresenter(EventManager eventManager, ContactManager contactManager) {
+    public TextOldPresenter(EventManager eventManager, ContactManager contactManager) {
         super();
         this.eventmanager = eventManager;
         this.contactManager = contactManager;

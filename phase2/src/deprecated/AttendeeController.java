@@ -45,7 +45,7 @@ public class AttendeeController extends AccountController {
 //     * displays the schedule of talks that the attendee is attending
 //     */
 //    public void seeAttendeeTalkSchedule() {
-//        this.presenter.displayAttendeeTalkSchedule(this.username);
+//        this.oldPresenter.displayAttendeeTalkSchedule(this.username);
 //    }
 
     /**
@@ -72,8 +72,8 @@ public class AttendeeController extends AccountController {
 //                }
 //            }
 //            if(!validinput){
-//                presenter.displayPrompt("Invalid input, please try again:\n");
-//                presenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
+//                oldPresenter.displayPrompt("Invalid input, please try again:\n");
+//                oldPresenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
 //                command = userInput.nextLine();
 //            }
 //        }
@@ -88,7 +88,7 @@ public class AttendeeController extends AccountController {
 //                    loggedIn = false;
 //                    break;
 //                case ADD_CONTACT:
-//                    this.presenter.displayContactsPrompt("add");
+//                    this.oldPresenter.displayContactsPrompt("add");
 //                    String contactToAdd = userInput.nextLine();
 //                    try {
 //                        contactController.addFriend(contactToAdd);
@@ -97,7 +97,7 @@ public class AttendeeController extends AccountController {
 //                    }
 //                    break;
 //                case REMOVE_CONTACT:
-//                    this.presenter.displayContactsPrompt("remove");
+//                    this.oldPresenter.displayContactsPrompt("remove");
 //                    String contactToRemove = userInput.nextLine();
 //                    try {
 //                        contactController.removeFriend(contactToRemove);
@@ -110,7 +110,7 @@ public class AttendeeController extends AccountController {
 //                    break;
 //                case MESSAGE_ATTENDEE: {
 //                    //messageAttendee(String message, String attendeeUsername)
-//                    this.presenter.displayMessagingPrompt("anAttendee");
+//                    this.oldPresenter.displayMessagingPrompt("anAttendee");
 //                    //String line1 = sc.nextLine();
 //                    String attendeeUsername = userInput.nextLine();
 //                    //line1 = sc.nextLine();
@@ -124,7 +124,7 @@ public class AttendeeController extends AccountController {
 //                }
 //                case MESSAGE_SPEAKER: {
 //                    //messageSpeaker(String message, String speakerusername)
-//                    this.presenter.displayMessagingPrompt("aSpeaker");
+//                    this.oldPresenter.displayMessagingPrompt("aSpeaker");
 //                    //String line1 = sc.nextLine();
 //                    String speakerUsername = userInput.nextLine();
 //                    //line1 = sc.nextLine();
@@ -140,44 +140,44 @@ public class AttendeeController extends AccountController {
 //                    try {
 //                        Set<String> myConversations = cm.getAllUserConversationRecipients(username);
 //                        if (myConversations.isEmpty()) {
-//                            this.presenter.displayConversations("empty", myConversations);
+//                            this.oldPresenter.displayConversations("empty", myConversations);
 //                        } else {
-//                            this.presenter.displayConversations("non_empty", myConversations);
+//                            this.oldPresenter.displayConversations("non_empty", myConversations);
 //                            String user = userInput.nextLine();
 //                            int pastMessages = userInput.nextInt();
 //                            userInput.nextLine();
 //                            this.viewMessagesFrom(user, pastMessages);
 //                        }
 //                    } catch (InputMismatchException e) {
-//                        this.presenter.displayConversationsErrors("mismatch");
+//                        this.oldPresenter.displayConversationsErrors("mismatch");
 //                    } catch (ObjectNotFoundException e) {
-//                        this.presenter.displayConversationsErrors("no_user");
+//                        this.oldPresenter.displayConversationsErrors("no_user");
 //                    } catch (NullPointerException e) {
-//                        this.presenter.displayConversationsErrors("no_conversation");
+//                        this.oldPresenter.displayConversationsErrors("no_conversation");
 //                    }
 //                    break;
 //                case VIEW_SCHEDULE:
 //                    this.SeeTalkSchedule();
 //                    break;
 //                case SIGNUP_EVENT: {
-//                    this.presenter.displayTalkPrompt("attend");
+//                    this.oldPresenter.displayTalkPrompt("attend");
 //                    String input = userInput.nextLine();
 //                    if(isNumeric(input)){
 //                        Integer id = Integer.parseInt(input);
 //                        this.signupForTalk(id);}
 //                    else{
-//                        this.presenter.displayTalkPrompt("invalid");
+//                        this.oldPresenter.displayTalkPrompt("invalid");
 //                    }
 //                    break;
 //                }
 //                case LEAVE_EVENT: {
-//                    this.presenter.displayTalkPrompt("cancel");
+//                    this.oldPresenter.displayTalkPrompt("cancel");
 //                    String input = userInput.nextLine();
 //                    if(isNumeric(input)){
 //                        Integer id = Integer.parseInt(input);
 //                        this.cancelSignupForTalk(id);}
 //                    else{
-//                        this.presenter.displayTalkPrompt("invalid");
+//                        this.oldPresenter.displayTalkPrompt("invalid");
 //                    }
 //                    break;
 //                }
@@ -185,32 +185,32 @@ public class AttendeeController extends AccountController {
 //                    this.seeAttendeeTalkSchedule();
 //                    break;
 //                case DOWNLOAD_SCHEDULE: {  // download all event schedule in HTML
-//                    this.presenter.displayDownloadSchedulePrompt();
+//                    this.oldPresenter.displayDownloadSchedulePrompt();
 //                    command = userInput.nextLine();
 //                    if (command.equalsIgnoreCase("Y")) {
 //                        try {
 //                            HTMLManager hm = new HTMLManager(em);
 //                            hm.generateHTML();
 //                            hm.openHTML();
-//                            this.presenter.displayPrompt("Successful! downloaded: " +
+//                            this.oldPresenter.displayPrompt("Successful! downloaded: " +
 //                                    hm.getDownloadLocation());
 //                        } catch (HTMLWriteErrorException e) { // wrong while processing HTML
-//                            this.presenter.displayPrompt("Internal Error during HTML processing");
+//                            this.oldPresenter.displayPrompt("Internal Error during HTML processing");
 //                        }
 //                    } else {
-//                        presenter.displayPrompt("Aborted");
+//                        oldPresenter.displayPrompt("Aborted");
 //                    }
-//                    presenter.displayPrompt("");
+//                    oldPresenter.displayPrompt("");
 //                    break;
 //                }
 //                case VIEW_MENU:
-//                    presenter.displayAttendeeMenu();
+//                    oldPresenter.displayAttendeeMenu();
 //                    break;
 //                default:
-//                    presenter.displayPrompt("Invalid input, please try again:\n");
+//                    oldPresenter.displayPrompt("Invalid input, please try again:\n");
 //            }
 //            if (loggedIn) {
-//                presenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
+//                oldPresenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
 //                command = userInput.nextLine();
 //
 //                validinput = false;
@@ -223,8 +223,8 @@ public class AttendeeController extends AccountController {
 //                        }
 //                    }
 //                    if(!validinput){
-//                        presenter.displayPrompt("Invalid input, please try again:\n");
-//                        presenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
+//                        oldPresenter.displayPrompt("Invalid input, please try again:\n");
+//                        oldPresenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
 //                        command = userInput.nextLine();
 //                    }
 //                }

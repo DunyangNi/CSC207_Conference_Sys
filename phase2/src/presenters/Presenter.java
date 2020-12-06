@@ -1,6 +1,6 @@
 package presenters;
 
-public interface ConsolePresenter {
+public interface Presenter {
     void startPrompt();
     void exitPrompt();
 }

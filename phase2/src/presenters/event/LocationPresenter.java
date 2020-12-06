@@ -1,10 +1,10 @@
 package presenters.event;
 
-import presenters.ConsolePresenter;
+import presenters.Presenter;
 
 import java.util.ArrayList;
 
-public class LocationPresenter implements ConsolePresenter {
+public class LocationPresenter implements Presenter {
     @Override
     public void startPrompt() {
     }

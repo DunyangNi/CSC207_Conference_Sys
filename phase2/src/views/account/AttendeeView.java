@@ -1,5 +1,6 @@
 package views.account;
 
+import com.sun.xml.internal.bind.v2.TODO;
 import enums.AttendeeMenuEnum;
 import gateways.DataManager;
 import presenters.account.AttendeePresenter;
@@ -43,7 +44,6 @@ public class AttendeeView {
 
         while (loggedIn) {
             AttendeeMenuEnum enumCommand = AttendeeMenuEnum.fromString(userInput.nextLine());
-
             switch (enumCommand) {
                 // TODO: 12/04/20 Enable exit
 //                case EXIT:
@@ -81,6 +81,7 @@ public class AttendeeView {
                     HashMap<String[], Calendar> allTalks = em.fetchSortedTalks();
                     presenter.displayTalkSchedule(allTalks);
                     break;
+                // TODO: 12/06/20 Finish implementing these operations
                 case SIGNUP_EVENT:
                     SignupView signupView = new SignupView(dm);
 

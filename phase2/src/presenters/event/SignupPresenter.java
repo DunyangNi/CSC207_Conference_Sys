@@ -1,8 +1,8 @@
 package presenters.event;
 
-import presenters.ConsolePresenter;
+import presenters.Presenter;
 
-public class SignupPresenter implements ConsolePresenter {
+public class SignupPresenter implements Presenter {
     @Override
     public void startPrompt() {
     }

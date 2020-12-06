@@ -42,7 +42,6 @@ public class OrganizerView {
 
         while (loggedIn) {
             OrganizerMenuEnum enumCommand = OrganizerMenuEnum.fromString(userInput.nextLine());
-
             switch (enumCommand) {
                 // TODO: 12/04/20 Enable exit
 //                case EXIT:

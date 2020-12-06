@@ -43,6 +43,7 @@ public class RegistrationController {
                 am.addNewOrganizer(username, password, "", "");
                 break;
         }
+
         addNewAccountKeys(username);
 
         AccountDataManager accountDataManager = new AccountDataManager();

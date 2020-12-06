@@ -56,6 +56,7 @@ public class LoginView {
         }
 
         presenter.exitPrompt();
+
         AccountTypeEnum accountTypeEnum = controller.login(username);
 
         switch (accountTypeEnum) {

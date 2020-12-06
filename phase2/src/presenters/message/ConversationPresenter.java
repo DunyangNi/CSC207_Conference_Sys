@@ -1,11 +1,11 @@
 package presenters.message;
 
-import presenters.ConsolePresenter;
+import presenters.Presenter;
 
 import java.util.ArrayList;
 import java.util.Set;
 
-public class ConversationPresenter implements ConsolePresenter {
+public class ConversationPresenter implements Presenter {
     @Override
     public void startPrompt() {
 

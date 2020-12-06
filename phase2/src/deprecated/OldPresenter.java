@@ -5,7 +5,7 @@ import java.util.Set;
 /**
  * Defines methods that implementing classes must contain to be able to present information from this program to the UI.
  */
-public interface Presenter {
+public interface OldPresenter {
 
     //General account methods
     /**

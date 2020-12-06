@@ -1,8 +1,8 @@
 package presenters.account;
 
-import presenters.ConsolePresenter;
+import presenters.Presenter;
 
-public class ContactPresenter implements ConsolePresenter {
+public class ContactPresenter implements Presenter {
     @Override
     public void startPrompt() {
     }

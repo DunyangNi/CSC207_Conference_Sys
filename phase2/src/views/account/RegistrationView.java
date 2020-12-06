@@ -19,7 +19,6 @@ public class RegistrationView {
 
     public void runView() {
         presenter.startPrompt();
-
         AccountTypeEnum enumCommand = AccountTypeEnum.fromString(userInput.nextLine());
 
         while (enumCommand.equals(AccountTypeEnum.INVALID)) {
@@ -28,7 +27,6 @@ public class RegistrationView {
         }
 
         registrationCodeView(enumCommand);
-
         accountInfoView(enumCommand);
     }
 

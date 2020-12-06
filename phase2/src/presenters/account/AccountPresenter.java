@@ -1,12 +1,12 @@
 package presenters.account;
 
-import presenters.ConsolePresenter;
+import presenters.Presenter;
 
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Set;
 
-public class AccountPresenter implements ConsolePresenter {
+public class AccountPresenter implements Presenter {
     @Override
     public void startPrompt() {
         System.out.println("Logged in}");

@@ -32,7 +32,7 @@ public class SpeakerController extends AccountController {
      * Displays all talks this speaker is giving in the future
      */
     public void SeeSpeakerTalkSchedule() {
-        this.presenter.displaySpeakerTalksSchedule(this.username);
+        this.oldPresenter.displaySpeakerTalksSchedule(this.username);
     }
 
     /**
@@ -59,8 +59,8 @@ public class SpeakerController extends AccountController {
                 }
             }
             if(!validinput){
-                presenter.displayPrompt("Invalid input, please try again:\n");
-                presenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
+                oldPresenter.displayPrompt("Invalid input, please try again:\n");
+                oldPresenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
                 command = userInput.nextLine();
             }
         }
@@ -76,12 +76,12 @@ public class SpeakerController extends AccountController {
                     break;
                 case VIEW_ALL_ACCOUNTS:
                     Set<String> accounts = am.getAccountHashMap().keySet();
-                    presenter.displayAccountList(accounts);
+                    oldPresenter.displayAccountList(accounts);
                     break;
                 case ADD_CONTACT:
                     accounts = am.getAccountHashMap().keySet();
-                    presenter.displayAccountList(accounts);
-                    presenter.displayContactsPrompt("add");
+                    oldPresenter.displayAccountList(accounts);
+                    oldPresenter.displayContactsPrompt("add");
                     String contactToAdd = userInput.nextLine();
                     try {
                         contactController.addFriend(contactToAdd);
@@ -90,8 +90,8 @@ public class SpeakerController extends AccountController {
                     }
                     break;
                 case REMOVE_CONTACT:
-                    presenter.displayContactList(username);
-                    presenter.displayContactsPrompt("remove");
+                    oldPresenter.displayContactList(username);
+                    oldPresenter.displayContactsPrompt("remove");
                     String removeContact = userInput.nextLine();
                     try {
                         contactController.removeFriend(removeContact);
@@ -100,20 +100,20 @@ public class SpeakerController extends AccountController {
                     }
                     break;
                 case VIEW_CONTACTS:
-                    presenter.displayContactList(username);
+                    oldPresenter.displayContactList(username);
                     break;
                 case MESSAGE_ATTENDEE:
                     Set<String> allAttendees = am.getAttendeeHashMap().keySet();
                     if (!allAttendees.isEmpty()) {
-                        this.presenter.displayPrompt("List of attendees");
-                        this.presenter.displayPrompt("---------------------------------------------");
+                        this.oldPresenter.displayPrompt("List of attendees");
+                        this.oldPresenter.displayPrompt("---------------------------------------------");
                         for (String attendeeUsername : allAttendees) {
-                            this.presenter.displayPrompt(attendeeUsername);
+                            this.oldPresenter.displayPrompt(attendeeUsername);
                         }
-                        this.presenter.displayPrompt("---------------------------------------------\n");
-                        this.presenter.displayPrompt("Specify the attendee's username");
+                        this.oldPresenter.displayPrompt("---------------------------------------------\n");
+                        this.oldPresenter.displayPrompt("Specify the attendee's username");
                         String attendee = userInput.nextLine();
-                        this.presenter.displayPrompt("Please enter your message to send: ");
+                        this.oldPresenter.displayPrompt("Please enter your message to send: ");
                         String message = userInput.nextLine();
                         if (allAttendees.contains(attendee)) {
                             try {
@@ -122,30 +122,30 @@ public class SpeakerController extends AccountController {
                                 e.printStackTrace();
                             }
                         } else {
-                            this.presenter.displayPrompt("The entered recipient username is invalid.");
+                            this.oldPresenter.displayPrompt("The entered recipient username is invalid.");
                         }
                     } else {
-                        this.presenter.displayPrompt("(No attendees)");
+                        this.oldPresenter.displayPrompt("(No attendees)");
                     }
                     break;
                 case MESSAGE_ALL_AT_TALKS:
                     ArrayList<Integer> selectedSpeakerTalks = new ArrayList<>();
                     boolean doneAddingTalks = false;
                     while (!doneAddingTalks) {
-                        this.presenter.displayPrompt("Please enter the ID of a Talk you are giving: ");
+                        this.oldPresenter.displayPrompt("Please enter the ID of a Talk you are giving: ");
                         Integer id = Integer.parseInt(userInput.nextLine());
                         if (em.isSpeakerOfTalk(id, username)) {
                             selectedSpeakerTalks.add(id);
                         } else {
-                            this.presenter.displayPrompt("Invalid ID. You are not speaking at this talk.");
+                            this.oldPresenter.displayPrompt("Invalid ID. You are not speaking at this talk.");
                             continue;
                         }
-                        this.presenter.displayPrompt("Would you like to add another Talk? (1 = yes, 0 = no)");
+                        this.oldPresenter.displayPrompt("Would you like to add another Talk? (1 = yes, 0 = no)");
                         int response = userInput.nextInt();
                         userInput.nextLine();
                         doneAddingTalks = response == 0;
                     }
-                    this.presenter.displayPrompt("Please enter your message to send: ");
+                    this.oldPresenter.displayPrompt("Please enter your message to send: ");
                     String message = userInput.nextLine();
                     messageController.messageAttendeesAtTalks(selectedSpeakerTalks, message);
                     break;
@@ -153,20 +153,20 @@ public class SpeakerController extends AccountController {
                     try {
                         Set<String> myConversations = cm.getAllUserConversationRecipients(username);
                         if (myConversations.isEmpty()) {
-                            this.presenter.displayConversations("empty", myConversations);
+                            this.oldPresenter.displayConversations("empty", myConversations);
                         } else {
-                            this.presenter.displayConversations("non_empty", myConversations);
+                            this.oldPresenter.displayConversations("non_empty", myConversations);
                             String user = userInput.nextLine();
                             int pastMessages = userInput.nextInt();
                             userInput.nextLine();
                             this.viewMessagesFrom(user, pastMessages);
                         }
                     } catch (InputMismatchException e) {
-                        this.presenter.displayConversationsErrors("mismatch");
+                        this.oldPresenter.displayConversationsErrors("mismatch");
                     } catch (ObjectNotFoundException e) {
-                        this.presenter.displayConversationsErrors("no_user");
+                        this.oldPresenter.displayConversationsErrors("no_user");
                     } catch (NullPointerException e) {
-                        this.presenter.displayConversationsErrors("no_conversation");
+                        this.oldPresenter.displayConversationsErrors("no_conversation");
                     }
                     break;
                 case MY_TALK_SCHEDULE:
@@ -176,13 +176,13 @@ public class SpeakerController extends AccountController {
                     this.SeeTalkSchedule();
                     break;
                 case VIEW_MENU:
-                    presenter.displaySpeakerMenu();
+                    oldPresenter.displaySpeakerMenu();
                     break;
                 default:
-                    presenter.displayPrompt("Invalid input, please try again:\n");
+                    oldPresenter.displayPrompt("Invalid input, please try again:\n");
             }
             if (loggedIn) {
-                presenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
+                oldPresenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
                 command = userInput.nextLine();
 
                 validinput = false;
@@ -195,8 +195,8 @@ public class SpeakerController extends AccountController {
                         }
                     }
                     if(!validinput){
-                        presenter.displayPrompt("Invalid input, please try again:\n");
-                        presenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
+                        oldPresenter.displayPrompt("Invalid input, please try again:\n");
+                        oldPresenter.displayPrompt("Enter another command (1-16). Enter '*' to view the command menu again.");
                         command = userInput.nextLine();
                     }
                 }

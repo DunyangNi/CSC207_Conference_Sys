@@ -1,8 +1,6 @@
 package presenters;
 
-import presenters.ConsolePresenter;
-
-public class StartPresenter implements ConsolePresenter {
+public class StartPresenter implements Presenter {
     @Override
     public void startPrompt() {
         System.out.println("[START MENU]");

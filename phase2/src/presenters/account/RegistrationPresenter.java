@@ -1,8 +1,8 @@
 package presenters.account;
 
-import presenters.ConsolePresenter;
+import presenters.Presenter;
 
-public class RegistrationPresenter implements ConsolePresenter {
+public class RegistrationPresenter implements Presenter {
     @Override
     public void startPrompt() {
         System.out.println("[REGISTRATION MENU]");
