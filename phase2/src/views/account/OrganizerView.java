@@ -1,5 +1,6 @@
 package views.account;
 
+import controllers.account.AccountController;
 import enums.AccountTypeEnum;
 import enums.OrganizerMenuEnum;
 import gateways.DataManager;
@@ -22,6 +23,7 @@ public class OrganizerView {
     private final ContactManager fm;
     private final ConversationManager cm;
     private final EventManager em;
+    private final AccountController controller;
     private final OrganizerPresenter presenter = new OrganizerPresenter();
     private final Scanner userInput = new Scanner(System.in);
 
@@ -32,6 +34,7 @@ public class OrganizerView {
         this.cm = dm.getConversationManager();
         this.em = dm.getEventManager();
         this.username = dm.getUsername();
+        this.controller = new AccountController(dm);
     }
 
     public void viewOrganizerMenu() {
@@ -55,19 +58,18 @@ public class OrganizerView {
                     registrationView.accountInfoView(AccountTypeEnum.SPEAKER);
                     break;
                 case VIEW_ALL_ACCOUNTS:
-                    Set<String> accounts = am.getAccountHashMap().keySet();
-                    presenter.accountList(accounts);
+                    presenter.accountList(controller.getAllAccounts());
                     break;
                 case ADD_CONTACT:
-                    ContactView contactView = new ContactView(username, fm);
+                    ContactView contactView = new ContactView(dm);
                     contactView.viewAddFriendMenu();
                     break;
                 case REMOVE_CONTACT:
-                    contactView = new ContactView(username, fm);
+                    contactView = new ContactView(dm);
                     contactView.viewRemoveFriendMenu();
                     break;
                 case VIEW_CONTACTS:
-                    contactView = new ContactView(username, fm);
+                    contactView = new ContactView(dm);
                     contactView.viewFriendList();
                     break;
                 case MESSAGE_SPEAKER:
@@ -102,8 +104,8 @@ public class OrganizerView {
                     eventView.eventReschedule();
                     break;
                 case VIEW_SCHEDULE:
-                    HashMap<String[], Calendar> allTalks = em.fetchSortedTalks();
-                    presenter.displayTalkSchedule(allTalks);
+                    eventView = new EventView(dm);
+                    eventView.allTalksSchedule();
                     break;
                 case VIEW_MENU:
                     presenter.displayOrganizerMenu();

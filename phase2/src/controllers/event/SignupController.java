@@ -59,8 +59,4 @@ public class SignupController {
             System.out.println(e.getMessage()); // to be replaced
         }
     }
-
-    // TODO: 12/04/20 Implement this
-    public void displayAttendeeSchedule(String username, HashMap<String[], Calendar> attendeeTalks) {
-    }
 }

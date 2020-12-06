@@ -4,23 +4,23 @@ import exceptions.conflict.AlreadyFriendException;
 import exceptions.not_found.FriendNotFoundException;
 import exceptions.not_found.ObjectNotFoundException;
 import exceptions.not_found.UserNotFoundException;
+import gateways.DataManager;
 import use_cases.account.ContactManager;
 
 import java.util.ArrayList;
 
 public class ContactController {
     protected String username;
-    protected ContactManager contactManager;
+    protected ContactManager fm;
 
     /**
      * Instantiates a ContactController which
      * manages friend/contact related functionality for the current user
-     * @param username user username
-     * @param contactManager manages friendlist functionality
+     * @param dm
      */
-    public ContactController(String username, ContactManager contactManager){
-        this.username = username;
-        this.contactManager = contactManager;
+    public ContactController(DataManager dm){
+        this.username = dm.getUsername();
+        this.fm = dm.getContactManager();
     }
 
     /**
@@ -28,7 +28,7 @@ public class ContactController {
      * @param friendToAdd username of friend to add
      */
     public void addFriend(String friendToAdd) throws UserNotFoundException, FriendNotFoundException, AlreadyFriendException {
-        contactManager.addFriend(this.username, friendToAdd);
+        fm.addFriend(this.username, friendToAdd);
     }
 
     /**
@@ -37,7 +37,7 @@ public class ContactController {
      */
     public void removeFriend(String friendToRemove) throws ObjectNotFoundException {
         try{
-            contactManager.removeFriend(this.username, friendToRemove);
+            fm.removeFriend(this.username, friendToRemove);
         }
         catch(Exception e) {
             throw e;
@@ -48,6 +48,6 @@ public class ContactController {
      * displays friend list
      */
     public ArrayList<String> fetchFriendList() {
-        return contactManager.getFriendList(username);
+        return fm.getFriendList(username);
     }
 }

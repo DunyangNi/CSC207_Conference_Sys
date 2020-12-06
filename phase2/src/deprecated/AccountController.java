@@ -30,15 +30,15 @@ public abstract class AccountController {
      * @param cm manages conversation data
      * @param em manages event data
      */
-    public AccountController(String username, AccountManager am, ContactManager fm, ConversationManager cm, EventManager em) {
-        this.username = username;
-        this.am = am;
-        this.fm = fm;
-        this.cm = cm;
-        this.em = em;
-        this.contactController = new ContactController(username, fm);
-        this.messageController = new MessageController(username, am, cm, em);
-    }
+//    public AccountController(String username, AccountManager am, ContactManager fm, ConversationManager cm, EventManager em) {
+//        this.username = username;
+//        this.am = am;
+//        this.fm = fm;
+//        this.cm = cm;
+//        this.em = em;
+//        this.contactController = new ContactController(username);
+//        this.messageController = new MessageController(username, am, cm, em);
+//    }
 
     /**
      * Displays the talk schedule for talks that start past the current time

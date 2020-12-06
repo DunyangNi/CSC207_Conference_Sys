@@ -32,17 +32,15 @@ public class SignupView {
         this.controller = new SignupController(dm);
     }
 
-    public void signupMenu(AttendeeMenuEnum command) {
+    public void runView(AttendeeMenuEnum command) {
         presenter.eventIdPrompt();
         int id = userInput.nextInt();
+
         if (command.equals(AttendeeMenuEnum.SIGNUP_EVENT)) {
             controller.signupForEvent(id);
         }
-        if (command.equals(AttendeeMenuEnum.SIGNUP_EVENT)) {
+        if (command.equals(AttendeeMenuEnum.LEAVE_EVENT)) {
             controller.cancelSignupForEvent(id);
         }
-    }
-
-    public void signupSchedule() {
     }
 }

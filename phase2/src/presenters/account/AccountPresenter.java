@@ -30,6 +30,7 @@ public class AccountPresenter implements Presenter {
         System.out.println("===================================");
     }
 
+    // TODO: 12/06/20 Cut these Talk methods into EventPresenter, call from EventView
     public void displayTalkSchedule(HashMap<String[], Calendar> allTalks) {
         System.out.println("Schedule for all talks:\n");
         displayTalks(allTalks);

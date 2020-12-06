@@ -2,6 +2,9 @@ package presenters.event;
 
 import presenters.Presenter;
 
+import java.util.Calendar;
+import java.util.HashMap;
+
 public class EventPresenter implements Presenter {
     @Override
     public void startPrompt() {
@@ -48,6 +51,39 @@ public class EventPresenter implements Presenter {
 
     public void eventIdPrompt() {
         System.out.println("Please enter the ID of a talk you wish to modify: ");
+    }
+
+    public void myEventsPrompt() {
+        System.out.println("[MY EVENTS SCHEDULE]");
+        System.out.println("===================================");
+    }
+
+    public void allEventsPrompt() {
+        System.out.println("[ALL EVENTS SCHEDULE]");
+        System.out.println("===================================");
+    }
+
+    // TODO: 12/06/20 Refactor these Talk methods
+    public void displayTalkSchedule(HashMap<String[], Calendar> talks) {
+        if (talks.keySet().isEmpty()) {
+            System.out.println("No scheduled talks");
+        }
+        Calendar timeNow = Calendar.getInstance();
+        for(String[] eventInfo : talks.keySet()) {
+            if(timeNow.compareTo(talks.get(eventInfo)) < 0) {
+                displayTalkInfo(eventInfo);
+            }
+        }
+        System.out.println("===================================");
+    }
+
+    private void displayTalkInfo(String[] eventInfo) {
+        System.out.println("ID: " + eventInfo[4]);
+        System.out.println("Topic: " + eventInfo[0]);
+        System.out.println("Speaker: " + eventInfo[1]);
+        System.out.println("Location: " + eventInfo[2]);
+        System.out.println("Time: " + eventInfo[3]);
+        System.out.println();
     }
 
     @Override
