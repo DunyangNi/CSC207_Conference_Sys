@@ -25,7 +25,6 @@ public class LoginPresenter implements ConsolePresenter {
 
     @Override
     public void exitPrompt() {
-        System.out.println();
         System.out.print("{Logging in... ");
     }
 }

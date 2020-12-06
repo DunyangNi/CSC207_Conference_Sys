@@ -1,6 +1,6 @@
 package views.account;
 
-import enums.OrganizerEnum;
+import enums.OrganizerMenuEnum;
 import gateway.DataManager;
 import presenters.account.OrganizerPresenter;
 import use_cases.account.AccountManager;
@@ -35,12 +35,13 @@ public class OrganizerView {
 
     public void viewOrganizerMenu() {
         boolean loggedIn = true;
+
         presenter.startPrompt();
         presenter.displayOrganizerMenu();
 
         while (loggedIn) {
             String userCommand = userInput.nextLine();
-            OrganizerEnum enumCommand = OrganizerEnum.fromString(userCommand);
+            OrganizerMenuEnum enumCommand = OrganizerMenuEnum.fromString(userCommand);
 
             switch (enumCommand) {
                 // TODO: 12/04/20 Enable exit

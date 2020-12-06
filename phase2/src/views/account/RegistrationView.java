@@ -12,38 +12,30 @@ import use_cases.event.EventManager;
 import java.util.Scanner;
 
 public class RegistrationView {
-    private final DataManager dm;
     private final AccountManager am;
-    private final ContactManager fm;
-    private final ConversationManager cm;
-    private final EventManager em;
     private final RegistrationController controller;
     private final RegistrationPresenter presenter = new RegistrationPresenter();
     private final Scanner userInput = new Scanner(System.in);
 
     public RegistrationView(DataManager dm) {
-        this.dm = dm;
         this.am = dm.getAccountManager();
-        this.fm = dm.getContactManager();
-        this.cm = dm.getConversationManager();
-        this.em = dm.getEventManager();
         this.controller = new RegistrationController(dm);
     }
 
-    public void registrationMenu() {
+    public void runView() {
         presenter.startPrompt();
         // TODO: 11/29/20 Replace string cases with enum
-        // String accountType = AccountTypeEnum.valueOf(userInput.nextLine()).toString();
-        String accountType = userInput.nextLine();
+        // String command = AccountTypeEnum.valueOf(userInput.nextLine()).toString();
+        String command = userInput.nextLine();
 
-        while (!accountType.matches("[1-3]")) {
+        while (!command.matches("[1-3]")) {
             presenter.invalidCommandPrompt();
-            accountType = userInput.nextLine();
+            command = userInput.nextLine();
         }
 
-        registrationCodeMenu(accountType);
+        registrationCodeMenu(command);
 
-        accountInfoMenu(accountType);
+        accountInfoMenu(command);
     }
 
     public void registrationCodeMenu(String accountType) {

@@ -57,14 +57,14 @@ public class AttendeeController extends AccountController {
         boolean programEnd = false;
 //        boolean loggedIn = true;
 //        Scanner userInput = new Scanner(System.in);
-//        AttendeeEnum[] commandlist = AttendeeEnum.values();
+//        AttendeeMenuEnum[] commandlist = AttendeeMenuEnum.values();
 //        String command = userInput.nextLine();
 //
 //        boolean validinput = false;
-//        AttendeeEnum enumRequest = AttendeeEnum.EXIT;
+//        AttendeeMenuEnum enumRequest = AttendeeMenuEnum.EXIT;
 //
 //        while (!validinput) {
-//            for(AttendeeEnum commandEnum: commandlist){
+//            for(AttendeeMenuEnum commandEnum: commandlist){
 //                if (commandEnum.stringValue.equals(command)) {
 //                    validinput = true;
 //                    enumRequest = commandEnum;
@@ -215,7 +215,7 @@ public class AttendeeController extends AccountController {
 //
 //                validinput = false;
 //                while (!validinput) {
-//                    for(AttendeeEnum commandEnum: commandlist){
+//                    for(AttendeeMenuEnum commandEnum: commandlist){
 //                        if (commandEnum.stringValue.equals(command)) {
 //                            validinput = true;
 //                            enumRequest = commandEnum;

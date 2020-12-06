@@ -1,6 +1,6 @@
 package enums;
 
-public enum OrganizerEnum {
+public enum OrganizerMenuEnum {
     EXIT("00"),
     LOGOUT("0"),
     NEW_SPEAKER("1"),
@@ -24,12 +24,12 @@ public enum OrganizerEnum {
 
     public final String stringValue;
 
-    OrganizerEnum(String stringValue) {
+    OrganizerMenuEnum(String stringValue) {
         this.stringValue = stringValue;
     }
 
-    public static OrganizerEnum fromString(String stringValue) {
-        for (OrganizerEnum organizerEnum : OrganizerEnum.values()) {
+    public static OrganizerMenuEnum fromString(String stringValue) {
+        for (OrganizerMenuEnum organizerEnum : OrganizerMenuEnum.values()) {
             if (organizerEnum.stringValue != null && organizerEnum.stringValue.equals(stringValue)) {
                 return organizerEnum;
             }

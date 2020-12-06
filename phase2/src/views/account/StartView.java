@@ -30,7 +30,7 @@ public class StartView {
         presenter.startPrompt();
         String command = userInput.nextLine();
 
-        while (!(command.equals("0") || command.equals("1") || (command.equals("2")))) {
+        while (!command.matches("[0-2]")) {
             presenter.invalidCommandPrompt();
             command = userInput.nextLine();
         }
@@ -41,7 +41,7 @@ public class StartView {
         }
         if (command.equals("2")) {
             RegistrationView view = new RegistrationView(dm);
-            view.registrationMenu();
+            view.runView();
         }
 
         return false;

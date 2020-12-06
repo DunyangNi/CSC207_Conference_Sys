@@ -1,6 +1,5 @@
 package deprecated;
 
-import enums.StartCommand;
 import gateway.DataManager;
 import use_cases.*;
 import use_cases.account.AccountManager;
@@ -27,25 +26,25 @@ public class StartController {
         this.em = dm.getEventManager();
     }
 
-    public StartCommand start(String command) {
-//       if ("1".equals(command)) {
-//            LoginView loginView = new LoginView(am, fm, cm, em);
-//            return loginView.runView();
+//    public StartCommand start(String command) {
+////       if ("1".equals(command)) {
+////            LoginView loginView = new LoginView(am, fm, cm, em);
+////            return loginView.runView();
+////        }
+////       else if ("2".equals(command)) {
+////            RegistrationView registrationView = new RegistrationView(am, fm, cm, em);
+////            return registrationView.runView();
+////        }
+////       else {
+////           return true;
+////       }
+//
+//        if (command.equals("1")) {
+//            return StartCommand.LOGIN;
+//        } else {
+//            return StartCommand.REGISTER;
 //        }
-//       else if ("2".equals(command)) {
-//            RegistrationView registrationView = new RegistrationView(am, fm, cm, em);
-//            return registrationView.registrationMenu();
-//        }
-//       else {
-//           return true;
-//       }
-
-        if (command.equals("1")) {
-            return StartCommand.LOGIN;
-        } else {
-            return StartCommand.REGISTER;
-        }
-    }
+//    }
 
 //    /**
 //     * Displays the home/start menu to the user when they start the program or return to

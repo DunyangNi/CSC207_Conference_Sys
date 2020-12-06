@@ -1,9 +1,9 @@
 package views.message;
 
 import controllers.message.MessageController;
-import enums.AttendeeEnum;
-import enums.OrganizerEnum;
-import enums.SpeakerEnum;
+import enums.AttendeeMenuEnum;
+import enums.OrganizerMenuEnum;
+import enums.SpeakerMenuEnum;
 import exceptions.not_found.RecipientNotFoundException;
 import exceptions.not_found.UserNotFoundException;
 import gateway.DataManager;
@@ -37,8 +37,8 @@ public class MessageView {
         this.controller = new MessageController(username, am, cm, em);
     }
 
-    public void message(OrganizerEnum accountType) {
-        if (accountType.equals(OrganizerEnum.MESSAGE_SPEAKER) || accountType.equals(OrganizerEnum.MESSAGE_ATTENDEE)) {
+    public void message(OrganizerMenuEnum accountType) {
+        if (accountType.equals(OrganizerMenuEnum.MESSAGE_SPEAKER) || accountType.equals(OrganizerMenuEnum.MESSAGE_ATTENDEE)) {
             presenter.usernamePrompt();
             String username = userInput.nextLine();
         }
@@ -65,7 +65,7 @@ public class MessageView {
         }
     }
 
-    public void message(SpeakerEnum accountType) {
+    public void message(SpeakerMenuEnum accountType) {
         try {
             switch (accountType) {
                 case MESSAGE_ATTENDEE:
@@ -93,7 +93,7 @@ public class MessageView {
         }
     }
 
-    public void message(AttendeeEnum accountType) {
+    public void message(AttendeeMenuEnum accountType) {
         presenter.usernamePrompt();
         String username = userInput.nextLine();
         presenter.messagePrompt();

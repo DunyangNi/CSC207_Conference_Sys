@@ -1,7 +1,7 @@
 package views.event;
 
 import controllers.event.SignupController;
-import enums.AttendeeEnum;
+import enums.AttendeeMenuEnum;
 import gateway.DataManager;
 import presenters.event.SignupPresenter;
 import use_cases.account.AccountManager;
@@ -32,13 +32,13 @@ public class SignupView {
         this.controller = new SignupController(dm);
     }
 
-    public void signupMenu(AttendeeEnum command) {
+    public void signupMenu(AttendeeMenuEnum command) {
         presenter.eventIdPrompt();
         int id = userInput.nextInt();
-        if (command.equals(AttendeeEnum.SIGNUP_EVENT)) {
+        if (command.equals(AttendeeMenuEnum.SIGNUP_EVENT)) {
             controller.signupForEvent(id);
         }
-        if (command.equals(AttendeeEnum.SIGNUP_EVENT)) {
+        if (command.equals(AttendeeMenuEnum.SIGNUP_EVENT)) {
             controller.cancelSignupForEvent(id);
         }
     }

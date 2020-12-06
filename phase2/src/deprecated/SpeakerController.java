@@ -44,14 +44,14 @@ public class SpeakerController extends AccountController {
         boolean programEnd = false;
         boolean loggedIn = true;
         Scanner userInput = new Scanner(System.in);
-        SpeakerEnum[] commandlist = SpeakerEnum.values();
+        SpeakerMenuEnum[] commandlist = SpeakerMenuEnum.values();
         String command = userInput.nextLine();
 
         boolean validinput = false;
-        SpeakerEnum enumRequest = SpeakerEnum.EXIT;
+        SpeakerMenuEnum enumRequest = SpeakerMenuEnum.EXIT;
 
         while (!validinput) {
-            for(SpeakerEnum commandEnum: commandlist){
+            for(SpeakerMenuEnum commandEnum: commandlist){
                 if (commandEnum.stringValue.equals(command)) {
                     validinput = true;
                     enumRequest = commandEnum;
@@ -187,7 +187,7 @@ public class SpeakerController extends AccountController {
 
                 validinput = false;
                 while (!validinput) {
-                    for(SpeakerEnum commandEnum: commandlist){
+                    for(SpeakerMenuEnum commandEnum: commandlist){
                         if (commandEnum.stringValue.equals(command)) {
                             validinput = true;
                             enumRequest = commandEnum;

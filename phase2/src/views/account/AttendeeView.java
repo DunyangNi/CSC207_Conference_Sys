@@ -1,6 +1,6 @@
 package views.account;
 
-import enums.AttendeeEnum;
+import enums.AttendeeMenuEnum;
 import gateway.DataManager;
 import presenters.account.AttendeePresenter;
 import use_cases.account.AccountManager;
@@ -36,34 +36,16 @@ public class AttendeeView {
     }
 
     public void viewAttendeeMenu() {
+        boolean loggedIn = true;
+
         presenter.startPrompt();
         presenter.displayAttendeeMenu();
 
-        AttendeeEnum[] enumCommandList = AttendeeEnum.values();
-        AttendeeEnum nextView = null;
-        boolean validInput = false;
-        boolean loggedIn = true;
-
         while (loggedIn) {
             String userCommand = userInput.nextLine();
+            AttendeeMenuEnum enumCommand = AttendeeMenuEnum.fromString(userCommand);
 
-            // TODO: 12/04/20 Find more efficient way to use Enums
-            while (!validInput) {
-                for (AttendeeEnum enumCommand : enumCommandList) {
-                    if (userCommand.equals(enumCommand.stringValue)) {
-                        validInput = true;
-                        nextView = enumCommand;
-                        break;
-                    }
-                }
-                if (!validInput) {
-                    presenter.invalidInputPrompt();
-                    presenter.requestCommandPrompt();
-                    userCommand = userInput.nextLine();
-                }
-            }
-
-            switch (nextView) {
+            switch (enumCommand) {
                 // TODO: 12/04/20 Enable exit
 //                case EXIT:
 //                    loggedIn = false;
@@ -90,7 +72,7 @@ public class AttendeeView {
                 case MESSAGE_ATTENDEE:
                 case MESSAGE_SPEAKER:
                     MessageView messageView = new MessageView(dm);
-                    messageView.message(nextView);
+                    messageView.message(enumCommand);
                     break;
                 case VIEW_CONVERSATION:
                     ConversationView conversationView = new ConversationView(dm);
@@ -113,10 +95,11 @@ public class AttendeeView {
                 case VIEW_MENU:
                     presenter.displayAttendeeMenu();
                     break;
+                case INVALID:
+                    presenter.invalidInputPrompt();
             }
             if (loggedIn) {
                 presenter.requestCommandPrompt();
-                validInput = false;
             }
         }
     }
