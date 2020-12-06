@@ -13,10 +13,12 @@ import use_cases.event.EventManager;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
 public class EventController {
     private final String username;
     private final EventManager eventManager;
+
     public EventController(DataManager dm) {
         this.username = dm.getUsername();
         this.eventManager = dm.getEventManager();
@@ -33,5 +35,22 @@ public class EventController {
 
     public void cancelEvent(Integer id) throws EventNotFoundException{
         this.eventManager.cancelEvent(id);
+    }
+
+    public HashMap<String[], Calendar> getAllEvents() {
+        return eventManager.fetchSortedTalks();
+    }
+
+    public HashMap<String[], Calendar> getAttendeeEvents(String username) {
+        HashMap<String[], Calendar> allTalks = eventManager.fetchSortedTalks();
+        HashMap<String[], Calendar> attendeeTalks = new HashMap<>();
+
+        for(String[] eventInfo : allTalks.keySet()) {
+            if(eventManager.isSignedUp(Integer.parseInt(eventInfo[4]), username)) {
+                attendeeTalks.put(eventInfo, allTalks.get(eventInfo));
+            }
+        }
+
+        return attendeeTalks;
     }
 }

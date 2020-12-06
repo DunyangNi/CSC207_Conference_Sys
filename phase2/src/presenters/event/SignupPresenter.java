@@ -15,15 +15,6 @@ public class SignupPresenter implements Presenter {
         System.out.println("Invalid Talk ID.");
     }
 
-    public void signedupEvents() {
-        System.out.println("[SIGNED UP EVENTS]");
-        System.out.println("===================================");
-    }
-
-    public void emptySchedulePrompt() {
-        System.out.println("Nothing!");
-    }
-
     @Override
     public void exitPrompt() {
     }

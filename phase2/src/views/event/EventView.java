@@ -89,6 +89,16 @@ public class EventView {
         }
     }
 
+    public void attendeeSchedule() {
+        presenter.myEventsPrompt();
+        presenter.displayTalkSchedule(controller.getAttendeeEvents(username));
+    }
+
+    public void allTalksSchedule() {
+        presenter.allEventsPrompt();
+        presenter.displayTalkSchedule(controller.getAllEvents());
+    }
+
     private Calendar collectTimeInfo() {
         presenter.timePrompt("day");
         int day = userInput.nextInt();

@@ -23,10 +23,10 @@ public class SpeakerController extends AccountController {
      * @param conversationManager manages messaging functionality
      * @param eventmanager manages event data
      */
-    public SpeakerController(String username, AccountManager accountmanager, ContactManager contactManager,
-                             ConversationManager conversationManager, EventManager eventmanager) {
-        super(username, accountmanager, contactManager, conversationManager, eventmanager);
-    }
+//    public SpeakerController(String username, AccountManager accountmanager, ContactManager contactManager,
+//                             ConversationManager conversationManager, EventManager eventmanager) {
+//        super(username, accountmanager, contactManager, conversationManager, eventmanager);
+//    }
 
     /**
      * Displays all talks this speaker is giving in the future

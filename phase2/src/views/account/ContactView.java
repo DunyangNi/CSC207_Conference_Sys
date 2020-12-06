@@ -5,6 +5,7 @@ import exceptions.conflict.AlreadyFriendException;
 import exceptions.not_found.FriendNotFoundException;
 import exceptions.not_found.ObjectNotFoundException;
 import exceptions.not_found.UserNotFoundException;
+import gateways.DataManager;
 import presenters.account.ContactPresenter;
 import use_cases.account.ContactManager;
 
@@ -17,9 +18,9 @@ public class ContactView {
     private final ContactPresenter presenter = new ContactPresenter();
     private final Scanner userInput = new Scanner(System.in);
 
-    public ContactView(String username, ContactManager fm) {
-        this.contactManager = fm;
-        this.controller = new ContactController(username,fm);
+    public ContactView(DataManager dm) {
+        this.contactManager = dm.getContactManager();
+        this.controller = new ContactController(dm);
     }
 
     public void viewAddFriendMenu() {

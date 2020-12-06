@@ -19,9 +19,9 @@ public class AttendeeController extends AccountController {
      * @param conversationManager conversation data
      * @param eventmanager event data
      */
-    public AttendeeController(String username, AccountManager accountManager, ContactManager contactManager, ConversationManager conversationManager, EventManager eventmanager) {
-        super(username, accountManager, contactManager, conversationManager, eventmanager);
-    }
+//    public AttendeeController(String username, AccountManager accountManager, ContactManager contactManager, ConversationManager conversationManager, EventManager eventmanager) {
+//        super(username, accountManager, contactManager, conversationManager, eventmanager);
+//    }
 //
 //    /**
 //     * Signs up <code>Attendee</code> user for a <code>Event</code> of a given ID.
