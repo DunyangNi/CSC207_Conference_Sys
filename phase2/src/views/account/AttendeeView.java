@@ -7,7 +7,6 @@ import use_cases.account.AccountManager;
 import use_cases.account.ContactManager;
 import use_cases.ConversationManager;
 import use_cases.event.EventManager;
-import views.ContactView;
 import views.message.ConversationView;
 import views.event.SignupView;
 import views.message.MessageView;

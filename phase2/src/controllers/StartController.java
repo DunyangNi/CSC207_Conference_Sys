@@ -1,4 +1,4 @@
-package controllers.start;
+package controllers;
 
 import enums.StartCommand;
 import gateway.DataManager;

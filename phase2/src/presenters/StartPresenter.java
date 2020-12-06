@@ -1,4 +1,4 @@
-package presenters.start;
+package presenters;
 
 import presenters.ConsolePresenter;
 

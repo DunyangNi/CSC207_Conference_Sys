@@ -1,4 +1,4 @@
-package controllers.start;
+package controllers.account;
 
 import enums.AccountTypeEnum;
 import gateway.DataManager;

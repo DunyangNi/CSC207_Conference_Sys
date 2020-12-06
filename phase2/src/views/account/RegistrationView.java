@@ -1,9 +1,9 @@
-package views.start;
+package views.account;
 
-import controllers.start.RegistrationController;
+import controllers.account.RegistrationController;
 import exceptions.already_exists.AccountAlreadyExistsException;
 import gateway.DataManager;
-import presenters.start.RegistrationPresenter;
+import presenters.account.RegistrationPresenter;
 import use_cases.account.AccountManager;
 import use_cases.account.ContactManager;
 import use_cases.ConversationManager;

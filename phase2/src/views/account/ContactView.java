@@ -1,4 +1,4 @@
-package views;
+package views.account;
 
 import controllers.account.ContactController;
 import exceptions.conflict.AlreadyFriendException;

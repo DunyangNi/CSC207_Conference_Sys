@@ -1,13 +1,15 @@
-package views.start;
+package views;
 
-import controllers.start.StartController;
+import controllers.StartController;
 import enums.StartCommand;
 import gateway.DataManager;
-import presenters.start.StartPresenter;
+import presenters.StartPresenter;
 import use_cases.account.AccountManager;
 import use_cases.account.ContactManager;
 import use_cases.ConversationManager;
 import use_cases.event.EventManager;
+import views.account.LoginView;
+import views.account.RegistrationView;
 
 import java.util.Scanner;
 

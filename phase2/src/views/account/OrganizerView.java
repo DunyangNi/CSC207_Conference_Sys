@@ -7,12 +7,10 @@ import use_cases.account.AccountManager;
 import use_cases.account.ContactManager;
 import use_cases.ConversationManager;
 import use_cases.event.EventManager;
-import views.ContactView;
 import views.message.ConversationView;
 import views.event.LocationView;
 import views.event.EventView;
 import views.message.MessageView;
-import views.start.RegistrationView;
 
 import java.util.*;
 

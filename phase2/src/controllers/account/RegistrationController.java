@@ -1,4 +1,4 @@
-package controllers.start;
+package controllers.account;
 
 import exceptions.already_exists.AccountAlreadyExistsException;
 import gateway.*;

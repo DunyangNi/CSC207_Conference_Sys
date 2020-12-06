@@ -8,7 +8,6 @@ import use_cases.account.ContactManager;
 import use_cases.ConversationManager;
 import use_cases.event.EventManager;
 import views.message.ConversationView;
-import views.ContactView;
 import views.message.MessageView;
 
 import java.util.Calendar;

@@ -1,13 +1,13 @@
-package views.start;
+package views.account;
 
 import enums.AccountTypeEnum;
 import gateway.*;
-import presenters.start.LoginPresenter;
+import presenters.account.LoginPresenter;
 import use_cases.account.AccountManager;
 import use_cases.account.ContactManager;
 import use_cases.ConversationManager;
 import use_cases.event.EventManager;
-import controllers.start.LoginController;
+import controllers.account.LoginController;
 import views.account.AttendeeView;
 import views.account.OrganizerView;
 import views.account.SpeakerView;

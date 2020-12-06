@@ -1,4 +1,4 @@
-package controllers.start;
+package controllers.account;
 
 import exceptions.already_exists.ObjectAlreadyExistsException;
 import gateway.DataManager;
