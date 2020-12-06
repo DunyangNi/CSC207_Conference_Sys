@@ -1,4 +1,4 @@
-package controllers.message;
+package deprecated;
 //To be deleted
 import deprecated.Presenter;
 import deprecated.TextPresenter;

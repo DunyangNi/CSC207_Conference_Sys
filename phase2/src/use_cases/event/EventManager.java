@@ -4,7 +4,7 @@ import enums.EventType;
 import exceptions.*;
 import entities.event.Event;
 import entities.event.Talk;
-import gateway.HTMLWritable;
+import gateways.HTMLWritable;
 import exceptions.already_exists.ObjectAlreadyExistsException;
 import exceptions.conflict.AlreadySignedUpException;
 import exceptions.conflict.EventIsFullException;

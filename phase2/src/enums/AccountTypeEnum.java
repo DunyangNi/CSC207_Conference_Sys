@@ -3,11 +3,21 @@ package enums;
 public enum AccountTypeEnum {
     ATTENDEE("1"),
     SPEAKER("2"),
-    ORGANIZER("3");
+    ORGANIZER("3"),
+    INVALID(null);
 
-    public final String type;
+    public final String stringValue;
 
-    AccountTypeEnum(String type) {
-        this.type = type;
+    AccountTypeEnum(String stringValue) {
+        this.stringValue = stringValue;
+    }
+
+    public static AccountTypeEnum fromString(String stringValue) {
+        for (AccountTypeEnum accountTypeEnum : AccountTypeEnum.values()) {
+            if (accountTypeEnum.stringValue != null && accountTypeEnum.stringValue.equals(stringValue)) {
+                return accountTypeEnum;
+            }
+        }
+        return INVALID;
     }
 }

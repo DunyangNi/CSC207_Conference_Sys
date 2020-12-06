@@ -1,7 +1,7 @@
 package deprecated;
 
 import exceptions.already_exists.ObjectAlreadyExistsException;
-import gateway.DataManager;
+import gateways.DataManager;
 import use_cases.account.AccountManager;
 import use_cases.ConversationManager;
 import use_cases.event.EventManager;

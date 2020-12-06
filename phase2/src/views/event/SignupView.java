@@ -2,7 +2,7 @@ package views.event;
 
 import controllers.event.SignupController;
 import enums.AttendeeMenuEnum;
-import gateway.DataManager;
+import gateways.DataManager;
 import presenters.event.SignupPresenter;
 import use_cases.account.AccountManager;
 import use_cases.ConversationManager;

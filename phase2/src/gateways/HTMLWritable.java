@@ -1,4 +1,4 @@
-package gateway;
+package gateways;
 
 /**
  * Allows to generate a downloadable HTML

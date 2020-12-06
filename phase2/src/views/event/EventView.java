@@ -9,7 +9,7 @@ import exceptions.conflict.LocationInUseException;
 import exceptions.conflict.SpeakerIsBusyException;
 import exceptions.not_found.EventNotFoundException;
 import exceptions.not_found.LocationNotFoundException;
-import gateway.DataManager;
+import gateways.DataManager;
 import presenters.event.EventPresenter;
 import use_cases.account.AccountManager;
 import use_cases.account.ContactManager;

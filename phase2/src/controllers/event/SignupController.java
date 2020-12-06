@@ -1,6 +1,6 @@
 package controllers.event;
 
-import gateway.DataManager;
+import gateways.DataManager;
 import use_cases.account.AccountManager;
 import use_cases.event.EventManager;
 

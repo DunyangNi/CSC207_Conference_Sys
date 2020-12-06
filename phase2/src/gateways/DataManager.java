@@ -1,4 +1,4 @@
-package gateway;
+package gateways;
 
 import use_cases.account.AccountManager;
 import use_cases.account.ContactManager;

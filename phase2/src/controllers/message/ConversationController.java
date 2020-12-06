@@ -4,7 +4,7 @@ import exceptions.*;
 import exceptions.not_found.MessageNotFoundException;
 import exceptions.not_found.RecipientNotFoundException;
 import exceptions.not_found.UserNotFoundException;
-import gateway.DataManager;
+import gateways.DataManager;
 import use_cases.ConversationManager;
 
 import java.util.ArrayList;

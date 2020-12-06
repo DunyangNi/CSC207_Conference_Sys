@@ -1,7 +1,7 @@
 package views.account;
 
 import enums.SpeakerMenuEnum;
-import gateway.DataManager;
+import gateways.DataManager;
 import presenters.account.SpeakerPresenter;
 import use_cases.account.AccountManager;
 import use_cases.account.ContactManager;
@@ -41,8 +41,7 @@ public class SpeakerView {
         presenter.displaySpeakerMenu();
 
         while (loggedIn) {
-            String userCommand = userInput.nextLine();
-            SpeakerMenuEnum enumCommand = SpeakerMenuEnum.fromString(userCommand);
+            SpeakerMenuEnum enumCommand = SpeakerMenuEnum.fromString(userInput.nextLine());
 
             switch (enumCommand) {
                 // TODO: 12/04/20 Enable exit

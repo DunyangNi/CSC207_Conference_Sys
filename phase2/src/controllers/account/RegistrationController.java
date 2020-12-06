@@ -1,7 +1,8 @@
 package controllers.account;
 
+import enums.AccountTypeEnum;
 import exceptions.already_exists.AccountAlreadyExistsException;
-import gateway.*;
+import gateways.*;
 import use_cases.account.AccountManager;
 import use_cases.account.ContactManager;
 import use_cases.ConversationManager;
@@ -30,15 +31,17 @@ public class RegistrationController {
         this.em = dm.getEventManager();
     }
 
-    public void register(String accountType, String username, String password) throws AccountAlreadyExistsException {
-        if (accountType.equals("1")) {
-            am.addNewAttendee(username, password, "", "");
-        }
-        else if (accountType.equals("2")) {
-            am.addNewSpeaker(username, password, "", "");
-        }
-        else {
-            am.addNewOrganizer(username, password, "", "");
+    public void register(AccountTypeEnum accountType, String username, String password) throws AccountAlreadyExistsException {
+        switch (accountType) {
+            case ATTENDEE:
+                am.addNewAttendee(username, password, "", "");
+                break;
+            case SPEAKER:
+                am.addNewSpeaker(username, password, "", "");
+                break;
+            case ORGANIZER:
+                am.addNewOrganizer(username, password, "", "");
+                break;
         }
         addNewAccountKeys(username);
 
@@ -53,82 +56,6 @@ public class RegistrationController {
         eventDataManager.saveManager("EventManager", "EventManager", em);
     }
 
-//    /**
-//     * prompts user for which account they wish to create (attendee or organizer) and then attempts
-//     * to create a new account for them according to username/password specifications by the user
-//     *
-//     * @return false
-//     */
-//    public boolean attemptRegister() {
-//        presenters.preUserInput("accountType");
-//        String accountType = input.nextLine();
-//
-//        while (!(accountType.equals("1") || (accountType.equals("2")))) {
-//            presenters.postUserInput("accountType");
-//            accountType = input.nextLine();
-//        }
-//
-//        String[] accountInfo = getNewAccountInfo(accountType);
-//        if (accountType.equals("1")) {
-//            accountManager.addNewAttendee(accountInfo[0], accountInfo[1], accountInfo[2], accountInfo[3]);
-//        } else {
-//            accountManager.addNewOrganizer(accountInfo[0], accountInfo[1], accountInfo[2], accountInfo[3]);
-//        }
-//        addNewAccountKeys(accountInfo[0]);
-//
-//        AccountDataManager accountDataManager = new AccountDataManager();
-//        EventDataManager eventDataManager = new EventDataManager();
-//        ConversationDataManager conversationDataManager = new ConversationDataManager();
-//        ContactDataManager friendDataManager = new ContactDataManager();
-//
-//        accountDataManager.saveManager("AccountManager", "AccountManager", accountManager);
-//        eventDataManager.saveManager("EventManager", "EventManager", eventManager);
-//        conversationDataManager.saveManager("ConversationManager", "ConversationManager", conversationManager);
-//        friendDataManager.saveManager("ContactManager", "ContactManager", contactManager);
-//
-//        return false;
-//    }
-//
-//
-//    /**
-//     * Prompts the user for the organizer account registration code
-//     */
-//    private void requireOrganizerPassword() {
-//        String ORGANIZER_REGISTRATION_CODE = "123456";
-//
-//        presenters.preUserInput("code");
-//        String code = input.nextLine();
-//        while (!code.equals(ORGANIZER_REGISTRATION_CODE)) {
-//            presenters.postUserInput("code");
-//            code = input.nextLine();
-//        }
-//    }
-//
-//    /**
-//     * prompts user for username and password
-//     *
-//     * @param type 1 if account type is Attendee, 2 if account type is Organizer
-//     * @return username and password info
-//     */
-//    private String[] getNewAccountInfo(String type) {
-//        if (type.equals("2")) {
-//            requireOrganizerPassword();
-//        }
-//        presenters.preUserInput("username");
-//        String username = input.nextLine();
-//
-//        while ((accountManager.containsAccount(username))) {
-//            presenters.postUserInput("username");
-//            username = input.nextLine();
-//        }
-//
-//        // Obtain rest of information and bundle into Tuple of 4
-//        presenters.preUserInput("password");
-//        String password = input.nextLine();
-//
-//        return new String[]{username, password, "", ""};
-//    }
-
     /**
      * helper method that adds the given username as a key to various
      * hashmaps in the use cases
@@ -138,5 +65,9 @@ public class RegistrationController {
     private void addNewAccountKeys(String username) {
         cm.addAccountKey(username);
         fm.addAccountKey(username);
+    }
+
+    public boolean usernameExists(String username) {
+        return am.containsAccount(username);
     }
 }

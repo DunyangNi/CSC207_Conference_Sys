@@ -1,7 +1,8 @@
 package views.account;
 
+import enums.AccountTypeEnum;
 import enums.OrganizerMenuEnum;
-import gateway.DataManager;
+import gateways.DataManager;
 import presenters.account.OrganizerPresenter;
 import use_cases.account.AccountManager;
 import use_cases.account.ContactManager;
@@ -40,8 +41,7 @@ public class OrganizerView {
         presenter.displayOrganizerMenu();
 
         while (loggedIn) {
-            String userCommand = userInput.nextLine();
-            OrganizerMenuEnum enumCommand = OrganizerMenuEnum.fromString(userCommand);
+            OrganizerMenuEnum enumCommand = OrganizerMenuEnum.fromString(userInput.nextLine());
 
             switch (enumCommand) {
                 // TODO: 12/04/20 Enable exit
@@ -53,7 +53,7 @@ public class OrganizerView {
                     break;
                 case NEW_SPEAKER:
                     RegistrationView registrationView = new RegistrationView(dm);
-                    registrationView.accountInfoMenu("2");
+                    registrationView.accountInfoView(AccountTypeEnum.SPEAKER);
                     break;
                 case VIEW_ALL_ACCOUNTS:
                     Set<String> accounts = am.getAccountHashMap().keySet();

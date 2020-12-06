@@ -2,7 +2,7 @@ package controllers.message;
 
 import exceptions.not_found.RecipientNotFoundException;
 import exceptions.not_found.UserNotFoundException;
-import gateway.DataManager;
+import gateways.DataManager;
 import use_cases.account.AccountManager;
 import use_cases.ConversationManager;
 import use_cases.event.EventManager;

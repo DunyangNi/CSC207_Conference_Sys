@@ -1,12 +1,12 @@
 package views.message;
 
-import controllers.message.MessageController;
+import deprecated.MessageController;
 import enums.AttendeeMenuEnum;
 import enums.OrganizerMenuEnum;
 import enums.SpeakerMenuEnum;
 import exceptions.not_found.RecipientNotFoundException;
 import exceptions.not_found.UserNotFoundException;
-import gateway.DataManager;
+import gateways.DataManager;
 import presenters.message.MessagePresenter;
 import use_cases.account.AccountManager;
 import use_cases.ConversationManager;

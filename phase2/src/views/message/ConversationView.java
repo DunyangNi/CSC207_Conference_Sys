@@ -4,7 +4,7 @@ import controllers.message.ConversationController;
 import exceptions.NoMessagesException;
 import exceptions.NonPositiveIntegerException;
 import exceptions.not_found.ObjectNotFoundException;
-import gateway.DataManager;
+import gateways.DataManager;
 import presenters.message.ConversationPresenter;
 import use_cases.account.AccountManager;
 import use_cases.ConversationManager;

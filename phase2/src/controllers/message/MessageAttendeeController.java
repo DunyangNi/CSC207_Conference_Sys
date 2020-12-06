@@ -5,10 +5,7 @@ import exceptions.not_found.AttendeeNotFoundException;
 import exceptions.not_found.EventNotFoundException;
 import exceptions.not_found.RecipientNotFoundException;
 import exceptions.not_found.UserNotFoundException;
-import gateway.DataManager;
-import use_cases.account.AccountManager;
-import use_cases.ConversationManager;
-import use_cases.event.EventManager;
+import gateways.DataManager;
 
 import java.util.ArrayList;
 import java.util.HashSet;

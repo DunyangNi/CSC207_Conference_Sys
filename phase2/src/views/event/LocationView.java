@@ -3,7 +3,7 @@ package views.event;
 import controllers.event.LocationController;
 import exceptions.NonPositiveIntegerException;
 import exceptions.already_exists.ObjectAlreadyExistsException;
-import gateway.DataManager;
+import gateways.DataManager;
 import presenters.event.LocationPresenter;
 import use_cases.account.AccountManager;
 import use_cases.ConversationManager;

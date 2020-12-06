@@ -2,7 +2,7 @@ package controllers.event;
 
 import exceptions.already_exists.ObjectAlreadyExistsException;
 import exceptions.NonPositiveIntegerException;
-import gateway.DataManager;
+import gateways.DataManager;
 import use_cases.event.EventManager;
 
 import java.util.ArrayList;

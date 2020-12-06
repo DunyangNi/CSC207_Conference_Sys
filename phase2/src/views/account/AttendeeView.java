@@ -1,7 +1,7 @@
 package views.account;
 
 import enums.AttendeeMenuEnum;
-import gateway.DataManager;
+import gateways.DataManager;
 import presenters.account.AttendeePresenter;
 import use_cases.account.AccountManager;
 import use_cases.account.ContactManager;
@@ -42,8 +42,7 @@ public class AttendeeView {
         presenter.displayAttendeeMenu();
 
         while (loggedIn) {
-            String userCommand = userInput.nextLine();
-            AttendeeMenuEnum enumCommand = AttendeeMenuEnum.fromString(userCommand);
+            AttendeeMenuEnum enumCommand = AttendeeMenuEnum.fromString(userInput.nextLine());
 
             switch (enumCommand) {
                 // TODO: 12/04/20 Enable exit

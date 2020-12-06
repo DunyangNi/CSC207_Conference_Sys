@@ -43,7 +43,7 @@ public class OrganizerController extends AccountController {
 //                    break;
 //                case NEW_SPEAKER: {
 //                    RegistrationView registrationView = new RegistrationView(am, fm, cm, em);
-//                    registrationView.accountInfoMenu("2");
+//                    registrationView.accountInfoView("2");
 //                    break;
 //                }
 //                case VIEW_ALL_ACCOUNTS:

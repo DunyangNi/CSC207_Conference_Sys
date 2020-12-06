@@ -1,21 +1,17 @@
 package views.account;
 
+import controllers.account.LoginController;
 import enums.AccountTypeEnum;
-import gateway.*;
+import gateways.*;
 import presenters.account.LoginPresenter;
+import use_cases.ConversationManager;
 import use_cases.account.AccountManager;
 import use_cases.account.ContactManager;
-import use_cases.ConversationManager;
 import use_cases.event.EventManager;
-import controllers.account.LoginController;
-import views.account.AttendeeView;
-import views.account.OrganizerView;
-import views.account.SpeakerView;
 
 import java.util.Scanner;
 
 public class LoginView {
-    private final String username;
     private final DataManager dm;
     private final AccountManager am;
     private final ContactManager fm;
@@ -31,16 +27,16 @@ public class LoginView {
         this.fm = dm.getContactManager();
         this.cm = dm.getConversationManager();
         this.em = dm.getEventManager();
-        this.username = dm.getUsername();
         this.controller = new LoginController(dm);
     }
 
     public void runView() {
         presenter.startPrompt();
+
         presenter.usernamePrompt();
         String username = userInput.nextLine();
 
-        while (!am.containsAccount(username)) {
+        while (!controller.usernameExists(username)) {
             presenter.dneUsernamePrompt();
             username = userInput.nextLine();
             if (username.equals("*")) {
@@ -51,7 +47,7 @@ public class LoginView {
         presenter.passwordPrompt();
         String password = userInput.nextLine();
 
-        while (!am.isCorrectPassword(username, password)) {
+        while (!controller.isCorrectPassword(username, password)) {
             presenter.incorrectPasswordPrompt();
             password = userInput.nextLine();
             if (password.equals("*")) {
