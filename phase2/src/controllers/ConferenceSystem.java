@@ -31,9 +31,11 @@ public class ConferenceSystem {
         ConversationManager cm = conversationDataManager.readManager();
         EventManager em = eventDataManager.readManager();
 
+        DataManager dm = new DataManager(am, fm, cm, em);
+
         boolean programEnd = false;
         while (!programEnd) {
-            StartView view = new StartView(am, fm, cm, em);
+            StartView view = new StartView(dm);
             programEnd = view.startMenu();
         }
     }

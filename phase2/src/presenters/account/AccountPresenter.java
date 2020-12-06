@@ -9,15 +9,16 @@ import java.util.Set;
 public class AccountPresenter implements ConsolePresenter {
     @Override
     public void startPrompt() {
-        System.out.println("Logged in)");
+        System.out.println("Logged in}");
+        System.out.println();
     }
 
     public void invalidInputPrompt() {
-        System.out.println("Invalid input, please try again.");
+        System.out.println("{Invalid input}");
     }
 
     public void requestCommandPrompt() {
-        System.out.println("Enter another command (1-16). Enter '*' to view the command menu again.");
+        System.out.println("Enter another command (1-16) or '*' to view the command menu again.");
     }
 
     public void accountList(Set<String> accounts) {
@@ -57,6 +58,6 @@ public class AccountPresenter implements ConsolePresenter {
 
     @Override
     public void exitPrompt() {
-        System.out.println("Logging out...");
+        System.out.println("{Logging out...");
     }
 }

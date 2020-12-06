@@ -1,10 +1,7 @@
 package views.start;
 
-import enums.AccountType;
-import gateway.AccountDataManager;
-import gateway.ConversationDataManager;
-import gateway.EventDataManager;
-import gateway.ContactDataManager;
+import enums.AccountTypeEnum;
+import gateway.*;
 import presenters.start.LoginPresenter;
 import use_cases.account.AccountManager;
 import use_cases.account.ContactManager;
@@ -18,6 +15,8 @@ import views.account.SpeakerView;
 import java.util.Scanner;
 
 public class LoginView {
+    private final String username;
+    private final DataManager dm;
     private final AccountManager am;
     private final ContactManager fm;
     private final ConversationManager cm;
@@ -26,16 +25,19 @@ public class LoginView {
     private final LoginPresenter presenter = new LoginPresenter();
     private final Scanner userInput = new Scanner(System.in);
 
-    public LoginView(AccountManager am, ContactManager fm, ConversationManager cm, EventManager em) {
-        this.am = am;
-        this.fm = fm;
-        this.cm = cm;
-        this.em = em;
-        this.controller = new LoginController(am, fm, cm, em);
+    public LoginView(DataManager dm) {
+        this.dm = dm;
+        this.am = dm.getAccountManager();
+        this.fm = dm.getContactManager();
+        this.cm = dm.getConversationManager();
+        this.em = dm.getEventManager();
+        this.username = dm.getUsername();
+        this.controller = new LoginController(dm);
     }
 
     public void loginMenu() {
         presenter.startPrompt();
+        presenter.usernamePrompt();
         String username = userInput.nextLine();
 
         while (!am.containsAccount(username)) {
@@ -58,19 +60,19 @@ public class LoginView {
         }
 
         presenter.exitPrompt();
-        AccountType accountType = controller.login(username);
+        AccountTypeEnum accountTypeEnum = controller.login(username);
 
-        switch (accountType) {
+        switch (accountTypeEnum) {
             case ORGANIZER:
-                OrganizerView organizerView = new OrganizerView(username, am, fm, cm, em);
+                OrganizerView organizerView = new OrganizerView(dm);
                 organizerView.viewOrganizerMenu();
                 break;
             case SPEAKER:
-                SpeakerView speakerView = new SpeakerView(username, am, fm, cm, em);
+                SpeakerView speakerView = new SpeakerView(dm);
                 speakerView.viewSpeakerMenu();
                 break;
             case ATTENDEE:
-                AttendeeView attendeeView = new AttendeeView(username, am, fm, cm, em);
+                AttendeeView attendeeView = new AttendeeView(dm);
                 attendeeView.viewAttendeeMenu();
                 break;
         }

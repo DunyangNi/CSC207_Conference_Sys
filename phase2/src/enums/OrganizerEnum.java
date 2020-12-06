@@ -19,11 +19,21 @@ public enum OrganizerEnum {
     CANCEL_EVENT("14"),
     RESCHEDULE_EVENT("15"),
     VIEW_SCHEDULE("16"),
-    VIEW_MENU("*");
+    VIEW_MENU("*"),
+    INVALID(null);
 
     public final String stringValue;
 
-    OrganizerEnum(String command) {
-        this.stringValue = command;
+    OrganizerEnum(String stringValue) {
+        this.stringValue = stringValue;
+    }
+
+    public static OrganizerEnum fromString(String stringValue) {
+        for (OrganizerEnum organizerEnum : OrganizerEnum.values()) {
+            if (organizerEnum.stringValue != null && organizerEnum.stringValue.equals(stringValue)) {
+                return organizerEnum;
+            }
+        }
+        return INVALID;
     }
 }

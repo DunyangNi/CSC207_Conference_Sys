@@ -6,6 +6,7 @@ import enums.OrganizerEnum;
 import enums.SpeakerEnum;
 import exceptions.not_found.RecipientNotFoundException;
 import exceptions.not_found.UserNotFoundException;
+import gateway.DataManager;
 import presenters.message.MessagePresenter;
 import use_cases.account.AccountManager;
 import use_cases.ConversationManager;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MessageView {
+    private final DataManager dm;
     private final String username;
     private final AccountManager am;
     private final ContactManager fm;
@@ -25,12 +27,13 @@ public class MessageView {
     private final MessageController controller;
     private final Scanner userInput = new Scanner(System.in);
 
-    public MessageView(String username, AccountManager am, ContactManager fm, ConversationManager cm, EventManager em) {
-        this.username = username;
-        this.am = am;
-        this.fm = fm;
-        this.cm = cm;
-        this.em = em;
+    public MessageView(DataManager dm) {
+        this.dm = dm;
+        this.am = dm.getAccountManager();
+        this.fm = dm.getContactManager();
+        this.cm = dm.getConversationManager();
+        this.em = dm.getEventManager();
+        this.username = dm.getUsername();
         this.controller = new MessageController(username, am, cm, em);
     }
 

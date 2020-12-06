@@ -2,6 +2,7 @@ package views.event;
 
 import controllers.event.SignupController;
 import enums.AttendeeEnum;
+import gateway.DataManager;
 import presenters.event.SignupPresenter;
 import use_cases.account.AccountManager;
 import use_cases.ConversationManager;
@@ -11,6 +12,7 @@ import use_cases.event.EventManager;
 import java.util.Scanner;
 
 public class SignupView {
+    private final DataManager dm;
     private final String username;
     private final AccountManager am;
     private final ContactManager fm;
@@ -20,13 +22,14 @@ public class SignupView {
     private final SignupController controller;
     private final Scanner userInput = new Scanner(System.in);
 
-    public SignupView(String username, AccountManager am, ContactManager fm, ConversationManager cm, EventManager em) {
-        this.username = username;
-        this.am = am;
-        this.fm = fm;
-        this.cm = cm;
-        this.em = em;
-        this.controller = new SignupController(username, am, em);
+    public SignupView(DataManager dm) {
+        this.dm = dm;
+        this.am = dm.getAccountManager();
+        this.fm = dm.getContactManager();
+        this.cm = dm.getConversationManager();
+        this.em = dm.getEventManager();
+        this.username = dm.getUsername();
+        this.controller = new SignupController(dm);
     }
 
     public void signupMenu(AttendeeEnum command) {

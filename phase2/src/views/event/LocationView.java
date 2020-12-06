@@ -3,6 +3,7 @@ package views.event;
 import controllers.event.LocationController;
 import exceptions.NonPositiveIntegerException;
 import exceptions.already_exists.ObjectAlreadyExistsException;
+import gateway.DataManager;
 import presenters.event.LocationPresenter;
 import use_cases.account.AccountManager;
 import use_cases.ConversationManager;
@@ -12,6 +13,7 @@ import use_cases.account.ContactManager;
 import java.util.Scanner;
 
 public class LocationView {
+    private final DataManager dm;
     private final String username;
     private final AccountManager am;
     private final ContactManager fm;
@@ -21,13 +23,14 @@ public class LocationView {
     private final LocationController controller;
     private final Scanner userInput = new Scanner(System.in);
 
-    public LocationView(String username, AccountManager am, ContactManager fm, ConversationManager cm, EventManager em) {
-        this.username = username;
-        this.am = am;
-        this.fm = fm;
-        this.cm = cm;
-        this.em = em;
-        this.controller = new LocationController(em);
+    public LocationView(DataManager dm) {
+        this.dm = dm;
+        this.am = dm.getAccountManager();
+        this.fm = dm.getContactManager();
+        this.cm = dm.getConversationManager();
+        this.em = dm.getEventManager();
+        this.username = dm.getUsername();
+        this.controller = new LocationController(dm);
     }
 
     public void addRoom() {

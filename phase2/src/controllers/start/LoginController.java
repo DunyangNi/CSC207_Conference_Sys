@@ -1,6 +1,6 @@
 package controllers.start;
 
-import enums.AccountType;
+import enums.AccountTypeEnum;
 import gateway.DataManager;
 import use_cases.*;
 import use_cases.account.AccountManager;
@@ -27,13 +27,13 @@ public class LoginController {
         this.em = dm.getEventManager();
     }
 
-    public AccountType login(String username) {
+    public AccountTypeEnum login(String username) {
         if (am.containsOrganizer(username)) {
-            return AccountType.ORGANIZER;
+            return AccountTypeEnum.ORGANIZER;
         } else if (am.containsSpeaker(username)) {
-            return AccountType.SPEAKER;
+            return AccountTypeEnum.SPEAKER;
         } else {
-            return AccountType.ATTENDEE;
+            return AccountTypeEnum.ATTENDEE;
         }
     }
 

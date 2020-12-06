@@ -1,13 +1,14 @@
 package views.account;
 
 import enums.AttendeeEnum;
+import gateway.DataManager;
 import presenters.account.AttendeePresenter;
 import use_cases.account.AccountManager;
 import use_cases.account.ContactManager;
 import use_cases.ConversationManager;
 import use_cases.event.EventManager;
+import views.ContactView;
 import views.message.ConversationView;
-import views.FriendView;
 import views.event.SignupView;
 import views.message.MessageView;
 
@@ -17,6 +18,7 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class AttendeeView {
+    private final DataManager dm;
     private final String username;
     private final AccountManager am;
     private final ContactManager fm;
@@ -25,12 +27,13 @@ public class AttendeeView {
     private final AttendeePresenter presenter = new AttendeePresenter();
     private final Scanner userInput = new Scanner(System.in);
 
-    public AttendeeView(String username, AccountManager am, ContactManager fm, ConversationManager cm, EventManager em) {
-        this.username = username;
-        this.am = am;
-        this.fm = fm;
-        this.cm = cm;
-        this.em = em;
+    public AttendeeView(DataManager dm) {
+        this.dm = dm;
+        this.am = dm.getAccountManager();
+        this.fm = dm.getContactManager();
+        this.cm = dm.getConversationManager();
+        this.em = dm.getEventManager();
+        this.username = dm.getUsername();
     }
 
     public void viewAttendeeMenu() {
@@ -74,24 +77,24 @@ public class AttendeeView {
                     presenter.accountList(accounts);
                     break;
                 case ADD_CONTACT:
-                    FriendView friendView = new FriendView(username, fm);
-                    friendView.viewAddFriendMenu();
+                    ContactView contactView = new ContactView(username, fm);
+                    contactView.viewAddFriendMenu();
                     break;
                 case REMOVE_CONTACT:
-                    friendView = new FriendView(username, fm);
-                    friendView.viewRemoveFriendMenu();
+                    contactView = new ContactView(username, fm);
+                    contactView.viewRemoveFriendMenu();
                     break;
                 case VIEW_CONTACTS:
-                    friendView = new FriendView(username, fm);
-                    friendView.viewFriendList();
+                    contactView = new ContactView(username, fm);
+                    contactView.viewFriendList();
                     break;
                 case MESSAGE_ATTENDEE:
                 case MESSAGE_SPEAKER:
-                    MessageView messageView = new MessageView(username, am, fm, cm, em);
+                    MessageView messageView = new MessageView(dm);
                     messageView.message(nextView);
                     break;
                 case VIEW_CONVERSATION:
-                    ConversationView conversationView = new ConversationView(username, am, fm, cm, em);
+                    ConversationView conversationView = new ConversationView(dm);
                     conversationView.conversations();
                     break;
                 case VIEW_SCHEDULE:
@@ -99,7 +102,7 @@ public class AttendeeView {
                     presenter.displayTalkSchedule(allTalks);
                     break;
                 case SIGNUP_EVENT:
-                    SignupView signupView = new SignupView(username, am, fm, cm, em);
+                    SignupView signupView = new SignupView(dm);
 
                     break;
                 case LEAVE_EVENT:

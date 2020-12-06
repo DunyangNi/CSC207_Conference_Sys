@@ -17,12 +17,12 @@ public class DataManager {
 
     /**
      * The constructor
-     * @param eventManager The EventManager from database.
      * @param accountManager The AccountManager from database.
      * @param contactManager The ContactManager from database.
      * @param conversationManager The ConversationManager from database.
+     * @param eventManager The EventManager from database.
      */
-    public DataManager(EventManager eventManager, AccountManager accountManager, ContactManager contactManager, ConversationManager conversationManager){
+    public DataManager(AccountManager accountManager, ContactManager contactManager, ConversationManager conversationManager, EventManager eventManager){
         em = eventManager;
         am = accountManager;
         fm = contactManager;

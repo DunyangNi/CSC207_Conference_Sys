@@ -2,6 +2,7 @@ package views.start;
 
 import controllers.start.RegistrationController;
 import exceptions.already_exists.AccountAlreadyExistsException;
+import gateway.DataManager;
 import presenters.start.RegistrationPresenter;
 import use_cases.account.AccountManager;
 import use_cases.account.ContactManager;
@@ -11,6 +12,7 @@ import use_cases.event.EventManager;
 import java.util.Scanner;
 
 public class RegistrationView {
+    private final DataManager dm;
     private final AccountManager am;
     private final ContactManager fm;
     private final ConversationManager cm;
@@ -19,18 +21,19 @@ public class RegistrationView {
     private final RegistrationPresenter presenter = new RegistrationPresenter();
     private final Scanner userInput = new Scanner(System.in);
 
-    public RegistrationView(AccountManager am, ContactManager fm, ConversationManager cm, EventManager em) {
-        this.am = am;
-        this.fm = fm;
-        this.cm = cm;
-        this.em = em;
-        this.controller = new RegistrationController(am, fm, cm, em);
+    public RegistrationView(DataManager dm) {
+        this.dm = dm;
+        this.am = dm.getAccountManager();
+        this.fm = dm.getContactManager();
+        this.cm = dm.getConversationManager();
+        this.em = dm.getEventManager();
+        this.controller = new RegistrationController(dm);
     }
 
     public void registrationMenu() {
         presenter.startPrompt();
         // TODO: 11/29/20 Replace string cases with enum
-        // String accountType = AccountType.valueOf(userInput.nextLine()).toString();
+        // String accountType = AccountTypeEnum.valueOf(userInput.nextLine()).toString();
         String accountType = userInput.nextLine();
 
         // TODO: 11/28/20 Consider replace while loop with exception throws in Controller or Use Case level

@@ -11,13 +11,13 @@ import use_cases.account.ContactManager;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class FriendView {
+public class ContactView {
     private final ContactManager contactManager;
     private final ContactController controller;
     private final ContactPresenter presenter = new ContactPresenter();
     private final Scanner userInput = new Scanner(System.in);
 
-    public FriendView(String username, ContactManager fm) {
+    public ContactView(String username, ContactManager fm) {
         this.contactManager = fm;
         this.controller = new ContactController(username,fm);
     }

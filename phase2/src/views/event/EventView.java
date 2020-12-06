@@ -9,6 +9,7 @@ import exceptions.conflict.LocationInUseException;
 import exceptions.conflict.SpeakerIsBusyException;
 import exceptions.not_found.EventNotFoundException;
 import exceptions.not_found.LocationNotFoundException;
+import gateway.DataManager;
 import presenters.event.EventPresenter;
 import use_cases.account.AccountManager;
 import use_cases.account.ContactManager;
@@ -20,6 +21,7 @@ import java.util.Calendar;
 import java.util.Scanner;
 
 public class EventView {
+    private final DataManager dm;
     private final String username;
     private final AccountManager am;
     private final ContactManager fm;
@@ -29,13 +31,14 @@ public class EventView {
     private final EventController controller;
     private final Scanner userInput = new Scanner(System.in);
 
-    public EventView(String username, AccountManager am, ContactManager fm, ConversationManager cm, EventManager em) {
-        this.username = username;
-        this.am = am;
-        this.fm = fm;
-        this.cm = cm;
-        this.em = em;
-        this.controller = new EventController(username, em);
+    public EventView(DataManager dm) {
+        this.dm = dm;
+        this.am = dm.getAccountManager();
+        this.fm = dm.getContactManager();
+        this.cm = dm.getConversationManager();
+        this.em = dm.getEventManager();
+        this.username = dm.getUsername();
+        this.controller = new EventController(dm);
     }
 
     public void eventCreation() {

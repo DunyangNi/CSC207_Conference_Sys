@@ -51,7 +51,7 @@ public class OrganizerController extends AccountController {
 //                    presenters.displayAccountList(accounts);
 //                    break;
 //                case ADD_CONTACT:
-//                    FriendView friendView = new FriendView(username, fm);
+//                    ContactView friendView = new ContactView(username, fm);
 //                    try {
 //                        friendView.viewAddFriendMenu();
 //                    } catch (FriendNotFoundException e) {
@@ -59,11 +59,11 @@ public class OrganizerController extends AccountController {
 //                    }
 //                    break;
 //                case REMOVE_CONTACT:
-//                    friendView = new FriendView(username, fm);
+//                    friendView = new ContactView(username, fm);
 //                    friendView.viewRemoveFriendMenu();
 //                    break;
 //                case VIEW_CONTACTS:
-//                    friendView = new FriendView(username, fm);
+//                    friendView = new ContactView(username, fm);
 //                    friendView.viewFriendList();
 //                    break;
 //                case MESSAGE_SPEAKER: {
