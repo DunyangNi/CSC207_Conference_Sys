@@ -1,5 +1,6 @@
 package views.event;
 
+import controllers.event.EventController;
 import controllers.event.EventCreationController;
 import presenters.event.EventCancelPresenter;
 import exceptions.not_found.EventNotFoundException;
@@ -8,14 +9,14 @@ import java.util.Scanner;
 
 public class EventCancelView {
 
-    private EventCreationController eventCreationController;
+    private EventController eventController;
     private EventCancelPresenter p = new EventCancelPresenter();
     Scanner userInput = new Scanner(System.in);
-    public EventCancelView(EventCreationController ecc){
-        eventCreationController = ecc;
+    public EventCancelView(EventController ec){
+        eventController = ec;
     }
 
-    public void runInteraction(){
+    public void runView(){
         p.startPrompt();
         int id;
         try{
@@ -26,7 +27,7 @@ public class EventCancelView {
             return;
         }
         try{
-            eventCreationController.cancelEvent(id);
+            eventController.cancelEvent(id);
             p.exitPrompt();
         } catch (EventNotFoundException e) {
             System.out.println("This id is not found.");

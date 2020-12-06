@@ -31,7 +31,7 @@ public class EventView {
     private final EventController controller;
     private final Scanner userInput = new Scanner(System.in);
 
-    public EventView(DataManager dm) {
+    public EventView(Event) {
         this.dm = dm;
         this.am = dm.getAccountManager();
         this.fm = dm.getContactManager();
