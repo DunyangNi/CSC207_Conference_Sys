@@ -30,33 +30,6 @@ public class AccountPresenter implements Presenter {
         System.out.println("===================================");
     }
 
-    // TODO: 12/06/20 Cut these Talk methods into EventPresenter, call from EventView
-    public void displayTalkSchedule(HashMap<String[], Calendar> allTalks) {
-        System.out.println("Schedule for all talks:\n");
-        displayTalks(allTalks);
-    }
-
-    private void displayTalks(HashMap<String[], Calendar> allTalks) {
-        if (allTalks.keySet().isEmpty()) {
-            System.out.println("Nothing!");
-        }
-        Calendar timeNow = Calendar.getInstance();
-        for(String[] eventInfo : allTalks.keySet()) {
-            if(timeNow.compareTo(allTalks.get(eventInfo)) < 0) {
-                displayTalkInfo(eventInfo);
-            }
-        }
-    }
-
-    private void displayTalkInfo(String[] eventInfo) {
-        System.out.println("ID: " + eventInfo[4]);
-        System.out.println("Topic: " + eventInfo[0]);
-        System.out.println("Speaker: " + eventInfo[1]);
-        System.out.println("Location: " + eventInfo[2]);
-        System.out.println("Time: " + eventInfo[3]);
-        System.out.println();
-    }
-
     @Override
     public void exitPrompt() {
         System.out.println("{Logging out...");
