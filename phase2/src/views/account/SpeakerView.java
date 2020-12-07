@@ -6,7 +6,6 @@ import gateways.*;
 import presenters.account.SpeakerPresenter;
 import views.event.EventView;
 import views.message.ConversationView;
-import views.message.MessageAllAttendeesView;
 import views.message.MessageTalkAttendeesView;
 import views.message.MessageView;
 
@@ -57,7 +56,7 @@ public class SpeakerView {
                 case MESSAGE:
                     MessageView messageView = new MessageView(dm);
                     messageView.runView();
-                case MESSAGE_ATTENDEES:
+                case MESSAGE_TALK_ATTENDEES:
                     MessageTalkAttendeesView messageTalkAttendeesView = new MessageTalkAttendeesView(dm);
                     messageTalkAttendeesView.runView();
                     break;
@@ -65,7 +64,7 @@ public class SpeakerView {
                     ConversationView conversationView = new ConversationView(dm);
                     conversationView.conversations();
                     break;
-                case VIEW_SCHEDULE:
+                case VIEW_EVENT_SCHEDULE:
                     EventView eventView = new EventView(dm);
                     eventView.allTalksSchedule();
                     break;

@@ -65,11 +65,11 @@ public class OrganizerView {
                     MessageView messageView = new MessageView(dm);
                     messageView.runView();
                     break;
-                case MESSAGE_SPEAKERS:
+                case MESSAGE_ALL_SPEAKERS:
                     MessageAllSpeakersView messageAllSpeakersView = new MessageAllSpeakersView(dm);
                     messageAllSpeakersView.runView();
                     break;
-                case MESSAGE_ATTENDEES:
+                case MESSAGE_ALL_ATTENDEES:
                     MessageAllAttendeesView messageAllAttendeesView = new MessageAllAttendeesView(dm);
                     messageAllAttendeesView.runView();
                     break;
@@ -97,7 +97,7 @@ public class OrganizerView {
                     eventView = new EventView(dm);
                     eventView.eventReschedule();
                     break;
-                case VIEW_SCHEDULE:
+                case VIEW_EVENT_SCHEDULE:
                     eventView = new EventView(dm);
                     eventView.allTalksSchedule();
                     break;

@@ -1,6 +1,6 @@
 package use_cases.event;
 
-import enums.EventType;
+import enums.EventTypeEnum;
 import exceptions.*;
 import entities.event.Event;
 import entities.event.Talk;
@@ -209,7 +209,7 @@ public class EventManager implements Serializable, HTMLWritable {
      * @throws EventNotFoundException if the given event id is invalid
      * @throws InvalidEventTypeException if the event type is not valid
      */
-    public void addNewEvent(EventType type, String topic, Calendar time, String location, String organizer, ArrayList<String> speakers, Integer capacity, Boolean vipOnly) throws InvalidEventTypeException, LocationNotFoundException, PastTimeException, InvalidTimeException, LocationInUseException {
+    public void addNewEvent(EventTypeEnum type, String topic, Calendar time, String location, String organizer, ArrayList<String> speakers, Integer capacity, Boolean vipOnly) throws InvalidEventTypeException, LocationNotFoundException, PastTimeException, InvalidTimeException, LocationInUseException {
         checkValidEvent(time, location);
         Event eventToAdd = eventFactory.CreateEvent(type, assignEventID++,topic, time, location, organizer, speakers, capacity, vipOnly);
         events.put(eventToAdd.getId(), eventToAdd);

@@ -135,7 +135,7 @@ public class OrganizerController extends AccountController {
 //                        location = userInput.nextLine();
 //                        String topic = userInput.nextLine();
 //                        Calendar time = this.collectTimeInfo();
-//                        em.addNewEvent(EventType.TALK, topic, time, location, this.username, new ArrayList<>(Collections.singletonList(username)), 2, false);
+//                        em.addNewEvent(EventTypeEnum.TALK, topic, time, location, this.username, new ArrayList<>(Collections.singletonList(username)), 2, false);
 //                    } catch (Exception e) {
 //                        presenters.displayPrompt(e.toString());
 //                    }

@@ -1,8 +1,7 @@
 package views.event;
 
 import controllers.event.EventController;
-import controllers.event.EventCreationController;
-import enums.EventType;
+import enums.EventTypeEnum;
 import exceptions.InvalidEventTypeException;
 import exceptions.InvalidTimeException;
 import exceptions.PastTimeException;
@@ -21,7 +20,7 @@ public class EventCreationView {
     private EventController eventController;
     private EventRegistrationPresenter er = new EventRegistrationPresenter();
     private TimeGetterView tg = new TimeGetterView(new TimePresenter());
-    private EventType type;
+    private EventTypeEnum type;
     Scanner userInput = new Scanner(System.in);
     public EventCreationView(EventController ec){
         eventController = ec;

@@ -1,6 +1,6 @@
 package enums;
 
-public enum EventType {
+public enum EventTypeEnum {
     GENERAL_EVENT("1"),
     TALK("2"),
     NETWORKING_EVENT("3"),
@@ -8,5 +8,5 @@ public enum EventType {
 
     public final String type;
 
-    EventType(String type) { this.type = type; }
+    EventTypeEnum(String type) { this.type = type; }
 }

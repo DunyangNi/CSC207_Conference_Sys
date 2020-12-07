@@ -4,10 +4,6 @@ import controllers.account.AccountController;
 import enums.AttendeeMenuEnum;
 import gateways.*;
 import presenters.account.AttendeePresenter;
-import use_cases.account.AccountManager;
-import use_cases.account.ContactManager;
-import use_cases.ConversationManager;
-import use_cases.event.EventManager;
 import views.event.EventView;
 import views.message.ConversationView;
 import views.event.SignupView;
@@ -65,7 +61,7 @@ public class AttendeeView {
                     ConversationView conversationView = new ConversationView(dm);
                     conversationView.conversations();
                     break;
-                case VIEW_SCHEDULE:
+                case VIEW_EVENT_SCHEDULE:
                     EventView eventView = new EventView(dm);
                     eventView.allTalksSchedule();
                     break;
@@ -74,7 +70,7 @@ public class AttendeeView {
                     SignupView signupView = new SignupView(dm);
                     signupView.runView(enumCommand);
                     break;
-                case VIEW_MY_SCHEDULE:
+                case VIEW_SIGNUP_SCHEDULE:
                     eventView = new EventView(dm);
                     eventView.attendeeSchedule();
                     break;

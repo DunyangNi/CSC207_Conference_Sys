@@ -1,7 +1,7 @@
 package views.event;
 
 import controllers.event.EventController;
-import enums.EventType;
+import enums.EventTypeEnum;
 import exceptions.InvalidEventTypeException;
 import exceptions.InvalidTimeException;
 import exceptions.PastTimeException;
@@ -61,7 +61,7 @@ public class EventView {
         boolean vip = userInput.nextInt() != 0;
 
         try {
-            controller.createEvent(EventType.TALK, topic, time, room, speakers, capacity, vip);
+            controller.createEvent(EventTypeEnum.TALK, topic, time, room, speakers, capacity, vip);
         } catch (LocationNotFoundException | PastTimeException | InvalidTimeException | LocationInUseException | InvalidEventTypeException e) {
             e.printStackTrace();
         }

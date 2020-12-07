@@ -9,10 +9,10 @@ public enum AttendeeMenuEnum {
     VIEW_CONTACTS("4"),
     MESSAGE("5"), // TODO: Update numbering
     VIEW_CONVERSATION("7"),
-    VIEW_SCHEDULE("8"),
+    VIEW_EVENT_SCHEDULE("8"),
+    VIEW_SIGNUP_SCHEDULE("11"),
     SIGNUP_EVENT("9"),
     LEAVE_EVENT("10"),
-    VIEW_MY_SCHEDULE("11"),
     DOWNLOAD_SCHEDULE("12"),
     VIEW_MENU("*"),
     INVALID(null);

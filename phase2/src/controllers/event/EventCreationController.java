@@ -1,6 +1,6 @@
 package controllers.event;
 
-import enums.EventType;
+import enums.EventTypeEnum;
 import exceptions.*;
 import exceptions.conflict.LocationInUseException;
 import exceptions.conflict.TypeConflictException;
@@ -35,7 +35,7 @@ public class EventCreationController {
      * @throws LocationInUseException If the location is being used at the time
      * @throws InvalidEventTypeException If the type is not valid
      */
-    public void createEvent(EventType type, String topic, Calendar time, String location,
+    public void createEvent(EventTypeEnum type, String topic, Calendar time, String location,
                             ArrayList<String> speakers, Integer capacity, Boolean vipOnly)
             throws LocationNotFoundException, PastTimeException, InvalidTimeException,
             LocationInUseException, InvalidEventTypeException {

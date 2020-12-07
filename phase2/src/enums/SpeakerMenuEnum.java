@@ -8,10 +8,10 @@ public enum SpeakerMenuEnum {
     REMOVE_CONTACT("3"),
     VIEW_CONTACTS("4"),
     MESSAGE("5"),
-    MESSAGE_ATTENDEES("6"),
+    MESSAGE_TALK_ATTENDEES("6"),
     VIEW_CONVERSATION("7"),
-    MY_TALK_SCHEDULE("8"),
-    VIEW_SCHEDULE("9"),
+    VIEW_EVENT_SCHEDULE("9"),
+    VIEW_SPEAKER_SCHEDULE("8"),
     VIEW_MENU("*"),
     INVALID(null);
 

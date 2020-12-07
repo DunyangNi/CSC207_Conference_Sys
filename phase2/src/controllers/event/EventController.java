@@ -1,6 +1,6 @@
 package controllers.event;
 
-import enums.EventType;
+import enums.EventTypeEnum;
 import exceptions.InvalidEventTypeException;
 import exceptions.InvalidTimeException;
 import exceptions.PastTimeException;
@@ -24,7 +24,7 @@ public class EventController {
         this.eventManager = dm.getEventManager();
     }
 
-    public void createEvent(EventType type, String topic, Calendar time, String location, ArrayList<String> speakers, Integer capacity, Boolean vipOnly)
+    public void createEvent(EventTypeEnum type, String topic, Calendar time, String location, ArrayList<String> speakers, Integer capacity, Boolean vipOnly)
             throws LocationNotFoundException, PastTimeException, InvalidTimeException, LocationInUseException, InvalidEventTypeException {
         eventManager.addNewEvent(type, topic, time, location, this.username, speakers, capacity, vipOnly);
     }
