@@ -1,6 +1,6 @@
 package views.message;
 
-import deprecated.MessageController;
+import controllers.message.MessageController;
 import enums.AttendeeMenuEnum;
 import enums.OrganizerMenuEnum;
 import enums.SpeakerMenuEnum;

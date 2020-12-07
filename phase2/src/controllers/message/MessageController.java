@@ -1,5 +1,7 @@
-package deprecated;
+package controllers.message;
 //To be deleted
+import deprecated.OldPresenter;
+import deprecated.TextOldPresenter;
 import exceptions.not_found.RecipientNotFoundException;
 import exceptions.not_found.UserNotFoundException;
 import use_cases.ConversationManager;

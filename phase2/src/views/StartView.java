@@ -1,7 +1,9 @@
-package views.account;
+package views;
 
 import gateways.DataManager;
 import presenters.StartPresenter;
+import views.account.LoginView;
+import views.account.RegistrationView;
 
 import java.util.Scanner;
 
@@ -23,6 +25,9 @@ public class StartView {
             command = userInput.nextLine();
         }
 
+        if (command.equals("0")) {
+            return true;
+        }
         if (command.equals("1")) {
             LoginView view = new LoginView(dm);
             view.runView();

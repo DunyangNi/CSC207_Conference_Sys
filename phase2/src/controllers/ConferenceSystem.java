@@ -4,7 +4,7 @@ import use_cases.*;
 import use_cases.account.AccountManager;
 import use_cases.account.ContactManager;
 import use_cases.event.EventManager;
-import views.account.StartView;
+import views.StartView;
 
 public class ConferenceSystem {
 
