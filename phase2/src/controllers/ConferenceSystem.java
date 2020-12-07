@@ -1,6 +1,7 @@
 package controllers;
+
 import gateways.*;
-import use_cases.*;
+import use_cases.ConversationManager;
 import use_cases.account.AccountManager;
 import use_cases.account.ContactManager;
 import use_cases.event.EventManager;
@@ -10,6 +11,7 @@ public class ConferenceSystem {
 
     /**
      * Runs the entire conference program by calling the run method in this class
+     *
      * @param args command-line arguments
      */
     public static void main(String[] args) {

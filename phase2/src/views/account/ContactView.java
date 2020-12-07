@@ -9,7 +9,6 @@ import gateways.DataManager;
 import presenters.account.ContactPresenter;
 import use_cases.account.ContactManager;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ContactView {
@@ -44,15 +43,6 @@ public class ContactView {
     }
 
     public void viewFriendList() {
-        presenter.contactListPrompt();
-        ArrayList<String> friendList = controller.fetchFriendList();
-        if (friendList.isEmpty()) {
-            presenter.emptyContactListPrompt();
-        }
-        else {
-            for (String friend: friendList) {
-                presenter.friendPrompt(friend);
-            }
-        }
+        presenter.contactListPrompt(controller.fetchFriendList());
     }
 }
