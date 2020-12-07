@@ -16,7 +16,7 @@ public class MessagePresenter implements Presenter {
     }
 
     public void eventIdPrompt() {
-        System.out.println("Please enter the ID of a Talk you are giving:");
+        System.out.println("Please enter the ID of the Talk whose attendees you wish to message:");
     }
 
     public void nextEventIdPrompt() {

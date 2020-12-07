@@ -15,8 +15,7 @@ public class AttendeePresenter extends AccountPresenter {
         System.out.println("4  = see contacts list");
         System.out.println("");
         System.out.println("[CONVERSATIONS]");
-        System.out.println("5  = message another attendee"); //MessageAttendeeController-messageAttendee
-        System.out.println("6  = message a speaker"); //MessageSpeakerController-messageSpeaker
+        System.out.println("5  = Message a user"); // TODO Update numbering
         System.out.println("7  = view your conversation with someone");//ViewConversationController-isEmpty, viewMessageFrom
         System.out.println("");
         System.out.println("[EVENTS]");
@@ -27,5 +26,4 @@ public class AttendeePresenter extends AccountPresenter {
         System.out.println("12 = download all events in HTML");
         System.out.println("===================================");
     }
-
 }

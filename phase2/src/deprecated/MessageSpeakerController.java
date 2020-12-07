@@ -1,4 +1,4 @@
-package controllers.message;
+package deprecated;
 
 
 import exceptions.NoRecipientsException;

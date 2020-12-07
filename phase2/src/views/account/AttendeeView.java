@@ -57,10 +57,9 @@ public class AttendeeView {
                     contactView = new ContactView(dm);
                     contactView.viewFriendList();
                     break;
-                case MESSAGE_ATTENDEE:
-                case MESSAGE_SPEAKER:
+                case MESSAGE:
                     MessageView messageView = new MessageView(dm);
-                    messageView.message(enumCommand);
+                    messageView.runView();
                     break;
                 case VIEW_CONVERSATION:
                     ConversationView conversationView = new ConversationView(dm);

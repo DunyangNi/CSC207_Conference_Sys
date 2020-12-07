@@ -15,8 +15,8 @@ public class SpeakerPresenter extends AccountPresenter {
         System.out.println("4  = view contacts list");
         System.out.println("");
         System.out.println("[CONVERSATIONS]");
-        System.out.println("5  = message an attendee");//MessageAttendeeController - messageAttendee
-        System.out.println("6  = message all attendees for one or multiple talks you're giving");//MessageAttendeeController - messageAttendeesAtTalks
+        System.out.println("5  = Message a user");
+        System.out.println("6  = message all attendees for one or multiple talks you're giving");//MessageAttendeeController - messageTalkAttendees
         System.out.println("7  = view your conversation with someone");//ViewConversation - isEmpty, viewMessageFrom
         System.out.println("");
         System.out.println("[EVENTS]");

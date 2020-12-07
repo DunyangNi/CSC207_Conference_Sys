@@ -4,18 +4,13 @@ import controllers.account.AccountController;
 import enums.SpeakerMenuEnum;
 import gateways.*;
 import presenters.account.SpeakerPresenter;
-import use_cases.account.AccountManager;
-import use_cases.account.ContactManager;
-import use_cases.ConversationManager;
-import use_cases.event.EventManager;
 import views.event.EventView;
 import views.message.ConversationView;
+import views.message.MessageAllAttendeesView;
+import views.message.MessageTalkAttendeesView;
 import views.message.MessageView;
 
-import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Scanner;
-import java.util.Set;
 
 public class SpeakerView {
     private final DataManager dm;
@@ -59,10 +54,12 @@ public class SpeakerView {
                     contactView = new ContactView(dm);
                     contactView.viewFriendList();
                     break;
-                case MESSAGE_ATTENDEE:
-                case MESSAGE_ALL_AT_TALKS:
+                case MESSAGE:
                     MessageView messageView = new MessageView(dm);
-                    messageView.message(enumCommand);
+                    messageView.runView();
+                case MESSAGE_ATTENDEES:
+                    MessageTalkAttendeesView messageTalkAttendeesView = new MessageTalkAttendeesView(dm);
+                    messageTalkAttendeesView.runView();
                     break;
                 case VIEW_CONVERSATION:
                     ConversationView conversationView = new ConversationView(dm);

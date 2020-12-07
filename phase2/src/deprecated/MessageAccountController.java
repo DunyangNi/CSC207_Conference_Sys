@@ -1,4 +1,4 @@
-package controllers.message;
+package deprecated;
 
 import exceptions.not_found.RecipientNotFoundException;
 import exceptions.not_found.UserNotFoundException;

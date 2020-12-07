@@ -8,10 +8,9 @@ public enum OrganizerMenuEnum {
     ADD_CONTACT("3"),
     REMOVE_CONTACT("4"),
     VIEW_CONTACTS("5"),
-    MESSAGE_SPEAKER("6"),
-    MESSAGE_ATTENDEE("7"),
-    MESSAGE_ALL_SPEAKERS("8"),
-    MESSAGE_ALL_ATTENDEES("9"),
+    MESSAGE("6"),
+    MESSAGE_SPEAKERS("8"), // TODO: 12/07/20 Update numbering
+    MESSAGE_ATTENDEES("9"),
     VIEW_CONVERSATION("10"),
     ADD_ROOM("11"),
     VIEW_ROOMS("12"),

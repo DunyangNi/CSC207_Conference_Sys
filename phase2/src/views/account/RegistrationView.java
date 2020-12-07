@@ -1,6 +1,6 @@
 package views.account;
 
-import controllers.account.RegistrationController;
+import controllers.account.AccountRegistrationController;
 import enums.AccountTypeEnum;
 import exceptions.already_exists.AccountAlreadyExistsException;
 import gateways.*;
@@ -10,13 +10,13 @@ import java.util.Scanner;
 
 public class RegistrationView {
     private final DataManager dm;
-    private final RegistrationController controller;
+    private final AccountRegistrationController controller;
     private final RegistrationPresenter presenter = new RegistrationPresenter();
     private final Scanner userInput = new Scanner(System.in);
 
     public RegistrationView(DataManager dm) {
         this.dm = dm;
-        this.controller = new RegistrationController(dm);
+        this.controller = new AccountRegistrationController(dm);
     }
 
     public void runView() {

@@ -8,6 +8,8 @@ import presenters.account.OrganizerPresenter;
 import views.event.EventView;
 import views.event.LocationView;
 import views.message.ConversationView;
+import views.message.MessageAllAttendeesView;
+import views.message.MessageAllSpeakersView;
 import views.message.MessageView;
 
 import java.util.Scanner;
@@ -59,12 +61,17 @@ public class OrganizerView {
                     contactView = new ContactView(dm);
                     contactView.viewFriendList();
                     break;
-                case MESSAGE_SPEAKER:
-                case MESSAGE_ATTENDEE:
-                case MESSAGE_ALL_SPEAKERS:
-                case MESSAGE_ALL_ATTENDEES:
+                case MESSAGE:
                     MessageView messageView = new MessageView(dm);
-                    messageView.message(enumCommand);
+                    messageView.runView();
+                    break;
+                case MESSAGE_SPEAKERS:
+                    MessageAllSpeakersView messageAllSpeakersView = new MessageAllSpeakersView(dm);
+                    messageAllSpeakersView.runView();
+                    break;
+                case MESSAGE_ATTENDEES:
+                    MessageAllAttendeesView messageAllAttendeesView = new MessageAllAttendeesView(dm);
+                    messageAllAttendeesView.runView();
                     break;
                 case VIEW_CONVERSATION:
                     ConversationView conversationView = new ConversationView(dm);

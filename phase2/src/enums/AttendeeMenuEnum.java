@@ -7,8 +7,7 @@ public enum AttendeeMenuEnum {
     ADD_CONTACT("2"),
     REMOVE_CONTACT("3"),
     VIEW_CONTACTS("4"),
-    MESSAGE_ATTENDEE("5"),
-    MESSAGE_SPEAKER("6"),
+    MESSAGE("5"), // TODO: Update numbering
     VIEW_CONVERSATION("7"),
     VIEW_SCHEDULE("8"),
     SIGNUP_EVENT("9"),

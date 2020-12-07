@@ -2,8 +2,6 @@ package presenters.account;
 
 import presenters.Presenter;
 
-import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Set;
 
 public class AccountPresenter implements Presenter {
@@ -18,7 +16,8 @@ public class AccountPresenter implements Presenter {
     }
 
     public void requestCommandPrompt() {
-        System.out.println("Enter another command (1-16) or '*' to view the command menu again.");
+        System.out.println();
+        System.out.println("Enter a command (1-16) or '*' to view the command menu again.");
     }
 
     public void accountList(Set<String> accounts) {

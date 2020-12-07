@@ -1,4 +1,4 @@
-package controllers.message;
+package deprecated;
 
 import exceptions.*;
 import exceptions.not_found.AttendeeNotFoundException;

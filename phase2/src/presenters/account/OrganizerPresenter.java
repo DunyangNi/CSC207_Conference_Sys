@@ -16,8 +16,7 @@ public class OrganizerPresenter extends AccountPresenter {
         System.out.println("5  = View list of all contacts");
         System.out.println("");
         System.out.println("[CONVERSATIONS]");
-        System.out.println("6  = Message a speaker");//MessageSpeakerController - messageSpeaker
-        System.out.println("7  = Message an attendee");//MessageAttendeeController - messageAttendee
+        System.out.println("6  = Message a user"); // TODO Update numbering
         System.out.println("8  = Message all speakers");//MessageSpeakerController - messageAllSpeakers
         System.out.println("9  = Message all attendees");//MessageAttendeeController - messageAllAttendees
         System.out.println("10 = View your conversations");//same as others
