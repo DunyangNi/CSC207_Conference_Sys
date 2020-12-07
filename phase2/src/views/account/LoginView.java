@@ -57,8 +57,8 @@ public class LoginView {
 
         presenter.exitPrompt();
 
+        dm.setUsername(username); // TODO: 12/07/20 Find a more appropriate place for this method call? Would change if we refactor Views to no longer take DataManager argument
         AccountTypeEnum accountTypeEnum = controller.login(username);
-
         switch (accountTypeEnum) {
             case ORGANIZER:
                 OrganizerView organizerView = new OrganizerView(dm);

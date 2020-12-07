@@ -27,6 +27,10 @@ public class RegistrationController {
         this.em = dm.getEventManager();
     }
 
+    public boolean usernameExists(String username) {
+        return am.containsAccount(username);
+    }
+
     public void register(AccountTypeEnum accountType, String username, String password) throws AccountAlreadyExistsException {
         switch (accountType) {
             case ATTENDEE:
@@ -51,9 +55,5 @@ public class RegistrationController {
     private void addNewAccountKeys(String username) {
         fm.addAccountKey(username);
         cm.addAccountKey(username);
-    }
-
-    public boolean usernameExists(String username) {
-        return am.containsAccount(username);
     }
 }

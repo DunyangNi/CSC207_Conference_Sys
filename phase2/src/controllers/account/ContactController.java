@@ -28,7 +28,7 @@ public class ContactController {
      * @param friendToAdd username of friend to add
      */
     public void addFriend(String friendToAdd) throws UserNotFoundException, FriendNotFoundException, AlreadyFriendException {
-        fm.addFriend(this.username, friendToAdd);
+        fm.addFriend(username, friendToAdd);
     }
 
     /**
@@ -36,7 +36,7 @@ public class ContactController {
      * @param friendToRemove friend to remove
      */
     public void removeFriend(String friendToRemove) throws ObjectNotFoundException {
-        fm.removeFriend(this.username, friendToRemove);
+        fm.removeFriend(username, friendToRemove);
     }
 
     /**
