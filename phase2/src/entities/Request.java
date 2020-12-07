@@ -1,6 +1,6 @@
 package entities;
 import java.util.*;
-public class Request {
+public class Request implements Comparable {
     private Calendar timeOfRequest;
     private String senderUsername;
     private String requestSubjectLine;
@@ -32,6 +32,16 @@ public class Request {
     }
     public void resolveRequest(){
         this.resolved = true;
+    }
+    public Integer getRequestID() {
+        return this.requestID;
+    }
+
+    public int compareTo(Object request){
+        if(!(request instanceof Request)) {
+            throw new RuntimeException();
+        }
+        return this.getTimeOfRequest().compareTo(((Request) request).getTimeOfRequest());
     }
 
 }
