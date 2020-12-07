@@ -16,9 +16,9 @@ public interface DataSaver {
     default void saveManager(String managerName, String filePath, Serializable manager) {
         try {
             saveSerializable(filePath, manager);
-            System.out.println("Saved " + managerName);
+//            System.out.println("Saved " + managerName);
         } catch (IOException e) {
-            System.out.printf("Failed to save the %s.%n", managerName);
+//            System.out.printf("Failed to save the %s.%n", managerName);
         }
     }
 }

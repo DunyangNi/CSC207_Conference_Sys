@@ -3,17 +3,19 @@ package views.account;
 import controllers.account.RegistrationController;
 import enums.AccountTypeEnum;
 import exceptions.already_exists.AccountAlreadyExistsException;
-import gateways.DataManager;
+import gateways.*;
 import presenters.account.RegistrationPresenter;
 
 import java.util.Scanner;
 
 public class RegistrationView {
+    private final DataManager dm;
     private final RegistrationController controller;
     private final RegistrationPresenter presenter = new RegistrationPresenter();
     private final Scanner userInput = new Scanner(System.in);
 
     public RegistrationView(DataManager dm) {
+        this.dm = dm;
         this.controller = new RegistrationController(dm);
     }
 
@@ -28,6 +30,16 @@ public class RegistrationView {
 
         registrationCodeView(enumCommand);
         accountInfoView(enumCommand);
+
+        AccountDataManager accountDataManager = new AccountDataManager();
+        ContactDataManager contactDataManager = new ContactDataManager();
+        ConversationDataManager conversationDataManager = new ConversationDataManager();
+        EventDataManager eventDataManager = new EventDataManager();
+
+        accountDataManager.saveManager("AccountManager", "AccountManager", dm.getAccountManager());
+        contactDataManager.saveManager("ContactManager", "ContactManager", dm.getContactManager());
+        conversationDataManager.saveManager("ConversationManager", "ConversationManager", dm.getConversationManager());
+        eventDataManager.saveManager("EventManager", "EventManager", dm.getEventManager());
     }
 
     public void registrationCodeView(AccountTypeEnum accountType) {

@@ -18,10 +18,10 @@ public class ConversationDataManager implements DataReader, DataSaver{
         try{
             return (ConversationManager) readObject(conversationPath);
         } catch (IOException e) {
-            System.out.println("Could not read AccountManager, creating a new AccountManager.");
+            System.out.println("Could not read ConversationManager, creating a new ConversationManager.");
             return new ConversationManager();
         } catch (ClassNotFoundException e) {
-            System.out.println("AccountManager not found, creating a new AccountManager.");
+            System.out.println("ConversationManager not found, creating a new ConversationManager.");
             return new ConversationManager();
         }
     }

@@ -3,37 +3,23 @@ package views.account;
 import controllers.account.AccountController;
 import enums.AccountTypeEnum;
 import enums.OrganizerMenuEnum;
-import gateways.DataManager;
+import gateways.*;
 import presenters.account.OrganizerPresenter;
-import use_cases.account.AccountManager;
-import use_cases.account.ContactManager;
-import use_cases.ConversationManager;
-import use_cases.event.EventManager;
-import views.message.ConversationView;
-import views.event.LocationView;
 import views.event.EventView;
+import views.event.LocationView;
+import views.message.ConversationView;
 import views.message.MessageView;
 
-import java.util.*;
+import java.util.Scanner;
 
 public class OrganizerView {
     private final DataManager dm;
-    private final String username;
-    private final AccountManager am;
-    private final ContactManager fm;
-    private final ConversationManager cm;
-    private final EventManager em;
     private final AccountController controller;
     private final OrganizerPresenter presenter = new OrganizerPresenter();
     private final Scanner userInput = new Scanner(System.in);
 
     public OrganizerView(DataManager dm) {
         this.dm = dm;
-        this.am = dm.getAccountManager();
-        this.fm = dm.getContactManager();
-        this.cm = dm.getConversationManager();
-        this.em = dm.getEventManager();
-        this.username = dm.getUsername();
         this.controller = new AccountController(dm);
     }
 
@@ -42,6 +28,7 @@ public class OrganizerView {
 
         presenter.startPrompt();
         presenter.displayOrganizerMenu();
+        presenter.requestCommandPrompt();
 
         while (loggedIn) {
             OrganizerMenuEnum enumCommand = OrganizerMenuEnum.fromString(userInput.nextLine());
@@ -112,7 +99,18 @@ public class OrganizerView {
                     break;
                 case INVALID:
                     presenter.invalidInputPrompt();
-            } if (loggedIn) {
+            }
+            AccountDataManager accountDataManager = new AccountDataManager();
+            ContactDataManager contactDataManager = new ContactDataManager();
+            ConversationDataManager conversationDataManager = new ConversationDataManager();
+            EventDataManager eventDataManager = new EventDataManager();
+
+            accountDataManager.saveManager("AccountManager", "AccountManager", dm.getAccountManager());
+            contactDataManager.saveManager("ContactManager", "ContactManager", dm.getContactManager());
+            conversationDataManager.saveManager("ConversationManager", "ConversationManager", dm.getConversationManager());
+            eventDataManager.saveManager("EventManager", "EventManager", dm.getEventManager());
+
+            if (loggedIn) {
                 presenter.requestCommandPrompt();
             }
         }

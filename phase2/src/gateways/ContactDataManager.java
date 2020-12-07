@@ -19,10 +19,10 @@ public class ContactDataManager implements DataReader, DataSaver{
         try{
             return (ContactManager) readObject(friendPath);
         } catch (IOException e) {
-            System.out.println("Could not read AccountManager, creating a new AccountManager.");
+            System.out.println("Could not read ContactManager, creating a new ContactManager.");
             return new ContactManager();
         } catch (ClassNotFoundException e) {
-            System.out.println("AccountManager not found, creating a new AccountManager.");
+            System.out.println("ContactManager not found, creating a new ContactManager.");
             return new ContactManager();
         }
     }

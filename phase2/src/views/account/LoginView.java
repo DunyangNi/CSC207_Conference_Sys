@@ -73,15 +73,5 @@ public class LoginView {
                 attendeeView.viewAttendeeMenu();
                 break;
         }
-
-        AccountDataManager accountDataManager = new AccountDataManager();
-        ContactDataManager contactDataManager = new ContactDataManager();
-        ConversationDataManager conversationDataManager = new ConversationDataManager();
-        EventDataManager eventDataManager = new EventDataManager();
-
-        accountDataManager.saveManager("AccountManager", "AccountManager", am);
-        contactDataManager.saveManager("ContactManager", "ContactManager", fm);
-        conversationDataManager.saveManager("ConversationManager", "ConversationManager", cm);
-        eventDataManager.saveManager("EventManager", "EventManager", em);
     }
 }

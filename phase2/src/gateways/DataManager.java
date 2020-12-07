@@ -9,10 +9,10 @@ import use_cases.event.EventManager;
  * The parameter objects that store all of the instances of use case classes
  */
 public class DataManager {
-    protected EventManager em;
     protected AccountManager am;
     protected ContactManager fm;
     protected ConversationManager cm;
+    protected EventManager em;
     protected String username;
 
     /**
@@ -23,10 +23,10 @@ public class DataManager {
      * @param eventManager The EventManager from database.
      */
     public DataManager(AccountManager accountManager, ContactManager contactManager, ConversationManager conversationManager, EventManager eventManager){
-        em = eventManager;
         am = accountManager;
         fm = contactManager;
         cm = conversationManager;
+        em = eventManager;
     }
 
     /**
