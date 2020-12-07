@@ -2,13 +2,14 @@ package controllers.account;
 
 import enums.AccountTypeEnum;
 import exceptions.already_exists.AccountAlreadyExistsException;
+import exceptions.already_exists.ObjectAlreadyExistsException;
 import gateways.*;
 import use_cases.account.AccountManager;
 import use_cases.account.ContactManager;
 import use_cases.ConversationManager;
 import use_cases.event.EventManager;
 
-public class RegistrationController {
+public class AccountRegistrationController {
     private final AccountManager am;
     private final ContactManager fm;
     private final ConversationManager cm;
@@ -20,7 +21,7 @@ public class RegistrationController {
      * handles the creation of new organizer and attendee accounts for registration
      *
      */
-    public RegistrationController(DataManager dm) {
+    public AccountRegistrationController(DataManager dm) {
         this.am = dm.getAccountManager();
         this.cm = dm.getConversationManager();
         this.fm = dm.getContactManager();
@@ -55,5 +56,26 @@ public class RegistrationController {
     private void addNewAccountKeys(String username) {
         fm.addAccountKey(username);
         cm.addAccountKey(username);
+    }
+
+    private void addNewSpeakerKeys(String username) {
+        cm.addAccountKey(username);
+        fm.addAccountKey(username);
+        em.addSpeakerKey(username);
+    }
+
+    public void createSpeakerAccount(String username, String password, String firstname, String lastname) throws ObjectAlreadyExistsException {
+        this.am.addNewSpeaker(username, password, firstname, lastname);
+        addNewSpeakerKeys(username);
+    }
+
+    public void createAttendeeAccount(String username, String password, String firstname, String lastname) throws ObjectAlreadyExistsException {
+        this.am.addNewAttendee(username, password, firstname, lastname);
+        addNewAttendeeKeys(username);
+    }
+
+    private void addNewAttendeeKeys(String username){
+        cm.addAccountKey(username);
+        fm.addAccountKey(username);
     }
 }
