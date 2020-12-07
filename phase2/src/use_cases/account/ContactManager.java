@@ -13,20 +13,20 @@ import exceptions.not_found.UserNotFoundException;
  * Represents the entire system of Friend relationships between <code>Accounts</code>.
  */
 public class ContactManager implements Serializable {
-    HashMap<String, ArrayList<String>> contacts;
+    private final HashMap<String, ArrayList<String>> contacts = new HashMap<>();;
 
-    /**
-     * Creates a <code>ContactManager</code> with a given <code>HashMap</code>
-     * of <code>Account</code> to <code>ArrayList</code> of friends.
-     *
-     * @param contacts given <code>HashMap</code> of Account to ArrayList of friends.
-     */
-    public ContactManager(HashMap<String, ArrayList<String>> contacts) { this.contacts = contacts; }
-
-    /**
-     * Creates a <code>ContactManager</code> with an empty <code>HashMap</code>.
-     */
-    public ContactManager() { this(new HashMap<>()); }
+//    /**
+//     * Creates a <code>ContactManager</code> with a given <code>HashMap</code>
+//     * of <code>Account</code> to <code>ArrayList</code> of friends.
+//     *
+//     * @param contacts given <code>HashMap</code> of Account to ArrayList of friends.
+//     */
+//    public ContactManager(HashMap<String, ArrayList<String>> contacts) { this.contacts = contacts; }
+//
+//    /**
+//     * Creates a <code>ContactManager</code> with an empty <code>HashMap</code>.
+//     */
+//    public ContactManager() { this(new HashMap<>()); }
 
     /**
      * Returns an <code>ArrayList</code> of usernames of Accounts that are friends with user.
@@ -34,15 +34,18 @@ public class ContactManager implements Serializable {
      * @param user given username
      * @return <code>ArrayList</code> of usernames of Accounts that are friends with user.
      */
-    public ArrayList<String> getFriendList(String user) { return contacts.get(user); }
+    public ArrayList<String> getFriendList(String user) {
+        return contacts.get(user);
+    }
 
     /**
-     * Adds a new key a username of an associated <code>Account</code>.
+     * Adds a new key a user of an associated <code>Account</code>.
      *
-     * @param user given username of associated <code>Account</code>
+     * @param user given user of associated <code>Account</code>
      */
-    public void addAccountKey(String user) { contacts.put(user, new ArrayList<>()); }
-
+    public void addAccountKey(String user) {
+        contacts.put(user, new ArrayList<>());
+    }
 
     public void addFriend(String currentUser, String friendToAdd) throws UserNotFoundException, FriendNotFoundException, AlreadyFriendException {
         if (!contacts.containsKey(currentUser))
@@ -51,7 +54,7 @@ public class ContactManager implements Serializable {
             throw new FriendNotFoundException();
         if (contacts.get(currentUser).contains(friendToAdd))
             throw new AlreadyFriendException();
-        contacts.get(currentUser).add(friendToAdd);
+        contacts.get(currentUser).add(friendToAdd); // TODO: 12/07/20 Not working
     }
 
     /**

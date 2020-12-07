@@ -49,8 +49,8 @@ public class RegistrationController {
      * @param username given username of associated <code>Account</code>
      */
     private void addNewAccountKeys(String username) {
-        cm.addAccountKey(username);
         fm.addAccountKey(username);
+        cm.addAccountKey(username);
     }
 
     public boolean usernameExists(String username) {
