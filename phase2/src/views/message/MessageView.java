@@ -38,26 +38,27 @@ public class MessageView {
     }
 
     public void message(OrganizerMenuEnum accountType) {
+        String username = null;
         if (accountType.equals(OrganizerMenuEnum.MESSAGE_SPEAKER) || accountType.equals(OrganizerMenuEnum.MESSAGE_ATTENDEE)) {
             presenter.usernamePrompt();
-            String username = userInput.nextLine();
+            username = userInput.nextLine();
         }
         presenter.messagePrompt();
         String message = userInput.nextLine();
         try {
             switch (accountType) {
-            case MESSAGE_SPEAKER:
-                controller.messageSpeaker(username, message);
-                break;
-            case MESSAGE_ATTENDEE:
-                controller.messageAttendee(username, message);
-                break;
-            case MESSAGE_ALL_SPEAKERS:
-                controller.messageAllSpeakers(message);
-                break;
-            case MESSAGE_ALL_ATTENDEES:
-                controller.messageAllAttendees(message);
-                break;
+                case MESSAGE_SPEAKER:
+                    controller.messageSpeaker(username, message);
+                    break;
+                case MESSAGE_ATTENDEE:
+                    controller.messageAttendee(username, message);
+                    break;
+                case MESSAGE_ALL_SPEAKERS:
+                    controller.messageAllSpeakers(message);
+                    break;
+                case MESSAGE_ALL_ATTENDEES:
+                    controller.messageAllAttendees(message);
+                    break;
             }
         }
         catch (UserNotFoundException | RecipientNotFoundException e) {

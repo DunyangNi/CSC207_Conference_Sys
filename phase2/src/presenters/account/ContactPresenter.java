@@ -17,6 +17,7 @@ public class ContactPresenter implements Presenter {
 
     public void contactListPrompt() {
         System.out.println("[CONTACTS]");
+        System.out.println("===================================");
     }
 
     public void emptyContactListPrompt() {

@@ -39,7 +39,7 @@ public class MessageController {
      * @param speaker speaker username
      */
     public void messageSpeaker(String message, String speaker) throws UserNotFoundException, RecipientNotFoundException {
-        cm.sendMessage(this.username, speaker, message);
+        cm.sendMessage(this.username, message, speaker);
     }
 
     /**
