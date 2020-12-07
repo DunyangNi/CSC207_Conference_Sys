@@ -10,10 +10,6 @@ public class LoginController {
     /**
      * Manages login functionality for the program
      *
-     * @param am stores data of all accounts
-     * @param fm manages friendlist functionality
-     * @param cm manages conversation/messaging functionality
-     * @param em manages event data
      */
     public LoginController(DataManager dm) {
         this.am = dm.getAccountManager();

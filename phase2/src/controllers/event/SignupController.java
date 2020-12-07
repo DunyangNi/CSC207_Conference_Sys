@@ -1,5 +1,10 @@
 package controllers.event;
 
+import exceptions.conflict.AlreadySignedUpException;
+import exceptions.conflict.EventIsFullException;
+import exceptions.not_found.AttendeeNotFoundException;
+import exceptions.not_found.EventNotFoundException;
+import exceptions.conflict.VipRestrictionException;
 import gateways.DataManager;
 import use_cases.account.AccountManager;
 import use_cases.event.EventManager;
@@ -34,16 +39,15 @@ public class SignupController {
      *
      * @param id given ID of <code>Event</code>
      */
-    public void signupForEvent(Integer id) {
-        if (!am.getVipStatus(username) || !em.getVipRestriction(id)){
-            try {
-                em.addAttendee(id, username);
-                am.addEventToAttend(id, username);
-            } catch (Exception e) {
-                System.out.println(e.getMessage()); // to be replaced
-            }
+    public void signupForEvent(Integer id) throws VipRestrictionException, EventNotFoundException,
+            EventIsFullException, AlreadySignedUpException {
+        if ((!am.getVipStatus(username)) && em.getVipRestriction(id)) {
+            throw new VipRestrictionException();
         }
-        System.out.println("This event is restricted to VIPs.");
+        else {
+        em.addAttendee(id, username);
+        am.addEventToAttend(id, username);
+        }
     }
 
     /**
@@ -51,12 +55,8 @@ public class SignupController {
      *
      * @param id given ID of <code>Event</code>
      */
-    public void cancelSignupForEvent(Integer id) {
-        try {
-            em.removeAttendee(id, username);
-            am.removeEventToAttend(id, username);
-        } catch (Exception e) {
-            System.out.println(e.getMessage()); // to be replaced
-        }
+    public void cancelSignupForEvent(Integer id) throws EventNotFoundException, AttendeeNotFoundException {
+        em.removeAttendee(id, username);
+        am.removeEventToAttend(id, username);
     }
 }

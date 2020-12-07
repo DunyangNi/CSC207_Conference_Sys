@@ -35,7 +35,10 @@ public class EventCreationController {
      * @throws LocationInUseException If the location is being used at the time
      * @throws InvalidEventTypeException If the type is not valid
      */
-    public void createEvent(EventType type, String topic, Calendar time, String location, ArrayList<String> speakers, Integer capacity, Boolean vipOnly) throws LocationNotFoundException, PastTimeException, InvalidTimeException, LocationInUseException, InvalidEventTypeException {
+    public void createEvent(EventType type, String topic, Calendar time, String location,
+                            ArrayList<String> speakers, Integer capacity, Boolean vipOnly)
+            throws LocationNotFoundException, PastTimeException, InvalidTimeException,
+            LocationInUseException, InvalidEventTypeException {
         eventManager.addNewEvent(type, topic, time, location, this.username, speakers, capacity, vipOnly);
     }
 
@@ -47,6 +50,5 @@ public class EventCreationController {
      */
     public void cancelEvent(Integer id) throws EventNotFoundException{
         this.eventManager.cancelEvent(id);
-
     }
 }

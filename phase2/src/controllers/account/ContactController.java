@@ -36,12 +36,7 @@ public class ContactController {
      * @param friendToRemove friend to remove
      */
     public void removeFriend(String friendToRemove) throws ObjectNotFoundException {
-        try{
-            fm.removeFriend(this.username, friendToRemove);
-        }
-        catch(Exception e) {
-            throw e;
-        }
+        fm.removeFriend(this.username, friendToRemove);
     }
 
     /**

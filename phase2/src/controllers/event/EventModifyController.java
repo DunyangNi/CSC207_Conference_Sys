@@ -29,7 +29,9 @@ public class EventModifyController {
      * @throws SpeakerIsBusyException if the speaker is not available at the time
      * @throws EventNotFoundException if the given event id is invalid
      */
-    public void rescheduleTalk(Integer id, Calendar newTime) throws LocationInUseException, PastTimeException, SpeakerIsBusyException, LocationNotFoundException, InvalidTimeException, EventNotFoundException {
+    public void rescheduleTalk(Integer id, Calendar newTime) throws
+            LocationInUseException, PastTimeException, SpeakerIsBusyException, LocationNotFoundException,
+            InvalidTimeException, EventNotFoundException {
         this.eventManager.changeTime(id, newTime);
     }
 }

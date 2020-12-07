@@ -19,11 +19,6 @@ public class MessageAccountController{
 
     /**
      * Manages generic messaging functionality for user with given username
-     *
-     * @param username            user username
-     * @param accountManager      manages data of all accounts in program
-     * @param conversationManager manages messaging functionality
-     * @param eventManager        manages event data
      */
     public MessageAccountController(DataManager dm) {
         this.username = dm.getUsername();

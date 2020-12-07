@@ -29,7 +29,9 @@ public class EventController {
         eventManager.addNewEvent(type, topic, time, location, this.username, speakers, capacity, vipOnly);
     }
 
-    public void rescheduleTalk(Integer id, Calendar newTime) throws LocationInUseException, PastTimeException, SpeakerIsBusyException, LocationNotFoundException, InvalidTimeException, EventNotFoundException {
+    public void rescheduleTalk(Integer id, Calendar newTime) throws
+            LocationInUseException, PastTimeException, SpeakerIsBusyException,
+            LocationNotFoundException, InvalidTimeException, EventNotFoundException {
         this.eventManager.changeTime(id, newTime);
     }
 
