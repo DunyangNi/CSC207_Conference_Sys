@@ -37,22 +37,22 @@ public class LoginView {
         String username = userInput.nextLine();
 
         while (!controller.usernameExists(username)) {
-            presenter.dneUsernamePrompt();
-            username = userInput.nextLine();
             if (username.equals("*")) {
                 return;
             }
+            presenter.dneUsernamePrompt();
+            username = userInput.nextLine();
         }
 
         presenter.passwordPrompt();
         String password = userInput.nextLine();
 
         while (!controller.isCorrectPassword(username, password)) {
-            presenter.incorrectPasswordPrompt();
-            password = userInput.nextLine();
             if (password.equals("*")) {
                 return;
             }
+            presenter.incorrectPasswordPrompt();
+            password = userInput.nextLine();
         }
 
         presenter.exitPrompt();

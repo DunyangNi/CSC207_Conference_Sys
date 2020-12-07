@@ -1,5 +1,7 @@
-package deprecated;
+package controllers.message;
 //To be deleted
+import deprecated.OldPresenter;
+import deprecated.TextOldPresenter;
 import exceptions.not_found.RecipientNotFoundException;
 import exceptions.not_found.UserNotFoundException;
 import use_cases.ConversationManager;
@@ -39,7 +41,7 @@ public class MessageController {
      * @param speaker speaker username
      */
     public void messageSpeaker(String message, String speaker) throws UserNotFoundException, RecipientNotFoundException {
-        cm.sendMessage(this.username, speaker, message);
+        cm.sendMessage(this.username, message, speaker);
     }
 
     /**

@@ -2,6 +2,8 @@ package presenters.account;
 
 import presenters.Presenter;
 
+import java.util.ArrayList;
+
 public class ContactPresenter implements Presenter {
     @Override
     public void startPrompt() {
@@ -15,16 +17,17 @@ public class ContactPresenter implements Presenter {
         System.out.println("Please enter the username of a contact to remove: ");
     }
 
-    public void contactListPrompt() {
+    public void contactListPrompt(ArrayList<String> friendList) {
         System.out.println("[CONTACTS]");
-    }
-
-    public void emptyContactListPrompt() {
-        System.out.println("Your contact list is empty.");
-    }
-
-    public void friendPrompt(String username) {
-        System.out.println(username);
+        System.out.println("===================================");
+        if (friendList.isEmpty()) {
+            System.out.println("Your contact list is empty.");
+        } else {
+            for (String friend : friendList) {
+                System.out.println(friend);
+            }
+        }
+        System.out.println("===================================");
     }
 
     @Override
