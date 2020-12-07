@@ -2,6 +2,11 @@ package views.event;
 
 import controllers.event.SignupController;
 import enums.AttendeeMenuEnum;
+import exceptions.conflict.AlreadySignedUpException;
+import exceptions.conflict.EventIsFullException;
+import exceptions.conflict.VipRestrictionException;
+import exceptions.not_found.AttendeeNotFoundException;
+import exceptions.not_found.EventNotFoundException;
 import gateways.DataManager;
 import presenters.event.SignupPresenter;
 import use_cases.account.AccountManager;
@@ -37,10 +42,19 @@ public class SignupView {
         int id = userInput.nextInt();
 
         if (command.equals(AttendeeMenuEnum.SIGNUP_EVENT)) {
-            controller.signupForEvent(id);
+            try {
+                controller.signupForEvent(id);
+            }
+            catch (VipRestrictionException | AlreadySignedUpException | EventIsFullException | EventNotFoundException e) {
+                e.printStackTrace();
+            }
         }
         if (command.equals(AttendeeMenuEnum.LEAVE_EVENT)) {
-            controller.cancelSignupForEvent(id);
+            try {
+                controller.cancelSignupForEvent(id);
+            } catch (EventNotFoundException | AttendeeNotFoundException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
