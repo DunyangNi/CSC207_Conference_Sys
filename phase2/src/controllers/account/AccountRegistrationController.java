@@ -37,6 +37,7 @@ public class AccountRegistrationController extends AccountController {
                 break;
             case SPEAKER:
                 am.addNewSpeaker(username, password, "", "");
+                addNewSpeakerKeys(username);
                 break;
             case ORGANIZER:
                 am.addNewOrganizer(username, password, "", "");
@@ -57,8 +58,6 @@ public class AccountRegistrationController extends AccountController {
     }
 
     private void addNewSpeakerKeys(String username) {
-        cm.addAccountKey(username);
-        fm.addAccountKey(username);
         em.addSpeakerKey(username);
     }
 

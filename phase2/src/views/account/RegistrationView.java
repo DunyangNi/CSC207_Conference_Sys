@@ -10,9 +10,9 @@ import presenters.account.RegistrationPresenter;
 import java.util.Scanner;
 
 public class RegistrationView {
-    private final AccountRegistrationController controller;
-    private final RegistrationPresenter presenter = new RegistrationPresenter();
-    private final Scanner userInput = new Scanner(System.in);
+    protected final AccountRegistrationController controller;
+    protected final RegistrationPresenter presenter = new RegistrationPresenter();
+    protected final Scanner userInput = new Scanner(System.in);
 
     public RegistrationView(DataManager dm) {
         this.controller = new AccountRegistrationController(dm);
@@ -20,6 +20,15 @@ public class RegistrationView {
 
     public void runView() {
         presenter.startPrompt();
+        AccountTypeEnum enumCommand = getType();
+
+        registrationCodeView(enumCommand);
+        accountInfoView(enumCommand);
+
+        controller.saveData();
+    }
+
+    protected AccountTypeEnum getType(){
         AccountTypeEnum enumCommand = AccountTypeEnum.fromString(userInput.nextLine());
 
         while (enumCommand.equals(AccountTypeEnum.INVALID)) {
@@ -27,10 +36,7 @@ public class RegistrationView {
             enumCommand = AccountTypeEnum.fromString(userInput.nextLine());
         }
 
-        registrationCodeView(enumCommand);
-        accountInfoView(enumCommand);
-
-        controller.saveData();
+        return enumCommand;
     }
 
     public void registrationCodeView(AccountTypeEnum accountType) {
@@ -71,10 +77,11 @@ public class RegistrationView {
 
         try {
             controller.register(accountType, username, password);
+            presenter.exitPrompt();
         } catch (AccountAlreadyExistsException e) {
             e.printStackTrace();
         }
 
-        presenter.exitPrompt();
+
     }
 }
