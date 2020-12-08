@@ -8,7 +8,7 @@ public class EventCreationPresenter implements Presenter {
 
     @Override
     public void startPrompt() {
-        System.out.println("Welcome to Event Creation! Follow the prompts to create your event.");
+        System.out.println("[EVENT CREATION]\nWelcome to Event Creation! Follow the prompts to create your event.");
     }
 
     @Override

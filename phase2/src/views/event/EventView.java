@@ -27,42 +27,6 @@ public class EventView {
         this.controller = new EventController(dm);
     }
 
-    public void eventCreation() {
-        presenter.eventCreationPrompt("topic");
-        String topic = userInput.nextLine();
-
-        presenter.eventCreationPrompt("speaker");
-        ArrayList<String> speakers = new ArrayList<>();
-        speakers.add(userInput.nextLine());
-
-        presenter.eventCreationPrompt("room");
-        String room = userInput.nextLine();
-
-        Calendar time = collectTimeInfo();
-
-        presenter.eventCreationPrompt("capacity");
-        int capacity = userInput.nextInt();
-
-        presenter.eventCreationPrompt("vip");
-        boolean vip = userInput.nextInt() != 0;
-
-        try {
-            controller.createEvent(EventTypeEnum.TALK, topic, time, room, speakers, capacity, vip);
-        } catch (LocationNotFoundException | PastTimeException | InvalidTimeException | LocationInUseException | InvalidEventTypeException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void eventCancellation() {
-        presenter.eventIdPrompt();
-        int id = userInput.nextInt();
-        try {
-            controller.cancelEvent(id);
-        } catch (EventNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void eventReschedule() {
         presenter.eventIdPrompt();
         int id = userInput.nextInt();
