@@ -10,27 +10,6 @@ public class EventPresenter implements Presenter {
     public void startPrompt() {
     }
 
-    public void eventCreationPrompt(String field) {
-        switch (field) {
-            case "topic":
-                System.out.println("Enter the event topic:");
-                break;
-            case "speaker":
-                System.out.println("Enter the speaker's username:");
-                break;
-            case "room":
-                System.out.println("Enter the event room:");
-                break;
-            case "capacity":
-                System.out.println("Enter event capacity");
-                break;
-            case "vip":
-                System.out.println("0 = Standard");
-                System.out.println("1 = VIP");
-                break;
-        }
-    }
-
     public void timePrompt(String field) {
         switch (field) {
             case "day":

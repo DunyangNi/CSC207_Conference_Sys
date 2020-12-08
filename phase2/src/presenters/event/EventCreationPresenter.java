@@ -38,7 +38,7 @@ public class EventCreationPresenter implements Presenter {
 
     // (NEW!)
     public void multiSpeakerPrompt() {
-        System.out.println("Please enter the usernames of all speakers on separate lines (press ENTER/RETURN twice to finish): ");
+        System.out.println("Please enter the usernames of all speakers on separate lines\n(press ENTER/RETURN twice to finish): ");
     }
 
     // (NEW!)
@@ -47,7 +47,7 @@ public class EventCreationPresenter implements Presenter {
     }
 
     public void notEnoughSpeakersPrompt() {
-        System.out.println("Less than two speakers were inputted.");
+        System.out.println("Less than two speakers were entered.");
     }
 
     public void topicPrompt(){
