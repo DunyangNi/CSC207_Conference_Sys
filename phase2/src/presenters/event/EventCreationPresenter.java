@@ -2,86 +2,109 @@ package presenters.event;
 
 import presenters.Presenter;
 
+import java.util.Calendar;
+
 public class EventCreationPresenter implements Presenter {
 
     @Override
     public void startPrompt() {
-        System.out.println("You need to enter the speaker's username, room, topic, and the time");
-    }
-
-    public void topicPrompt(){
-        System.out.println("Enter the event's topic:");
-    }
-
-    public void speakerPrompt(){
-        System.out.println("Enter the speaker's username:");
-    }
-
-    public void moreSpeakersPrompt() {
-        System.out.println("Add more speakers?");
-        System.out.println("0 = No:");
-        System.out.println("1 = Yes:");
-    }
-
-    public void roomPrompt(){
-        System.out.println("Enter the event's room:");
-    }
-
-    public void capacityPrompt() {
-        System.out.println("Enter the event's capacity:");
-    }
-
-    public void vipPrompt() {
-        System.out.println("VIP event?");
-        System.out.println("0 = No");
-        System.out.println("1 = Yes:");
-    }
-
-    public void timePrompt(){
-        System.out.println("Enter the event's time:");
-    }
-
-    public void dayPrompt() {
-        System.out.println("Day of the month (1-31)");
-    }
-
-    public void monthPrompt() {
-        System.out.println("Month (1-12)");
-    }
-
-    public void yearPrompt() {
-        System.out.println("Year (YYYY)");
-    }
-
-    public void hourPrompt() {
-        System.out.println("Hour of the day (9-16)");
-    }
-
-    public void invalidTimePrompt() {
-        System.out.println("{Invalid time, please try again}");
-    }
-
-    public void invalidInputPrompt() {
-        System.out.println("{Invalid input, please try again}");
-    }
-
-    public void ErrorMessage(String type){
-        switch(type){
-            case "LocationNotFound":
-                System.out.println("This location is not found.");break;
-            case "InvalidEventType":
-                System.out.println("The type is not valid.");break;
-            case "LocationInUse":
-                System.out.println("This location has been booked.");break;
-            case "PastTime":
-                System.out.println("The time has passed");
-            case "InvalidTime":
-                System.out.println("You cannot have event at this time.");
-        }
+        System.out.println("Welcome to Event Creation! Follow the prompts to create your event.");
     }
 
     @Override
     public void exitPrompt() {
-        System.out.println("{Creating... Created}");
+        System.out.println("Event Creation successful! Thank you! :)");
     }
+
+    // (NEW!)
+    public void eventTypePrompt() {
+        System.out.println("Please enter the type of event you wish to create (1-3):");
+    }
+
+    // (NEW!)
+    public void eventTypeMenu() {
+        System.out.println("[EVENT TYPES]");
+        System.out.println("=======================================================");
+        System.out.println("1 = Networking Event      (No special requirements)");
+        System.out.println("2 = Talk                  (Requires 1 speaker)");
+        System.out.println("3 = Panel Discussion      (Requires 2 or more speakers)");
+        System.out.println("=======================================================");
+    }
+
+    // (NEW!)
+    public void singleSpeakerPrompt() {
+        System.out.println("Please enter the username of the speaker: ");
+    }
+
+    // (NEW!)
+    public void multiSpeakerPrompt() {
+        System.out.println("Please enter the usernames of all speakers on separate lines (press ENTER/RETURN twice to finish): ");
+    }
+
+    // (NEW!)
+    public void invalidSpeakerPrompt(String speaker) {
+        System.out.println("The speaker " + speaker + " could not be found.");
+    }
+
+    public void notEnoughSpeakersPrompt() {
+        System.out.println("Less than two speakers were inputted.");
+    }
+
+    public void topicPrompt(){
+        System.out.println("Please enter the topic / name of the event: ");
+    }
+
+    public void timePrompt(){
+        System.out.println("You will now input a time slot. ");
+    }
+
+    public void timeYearPrompt() {
+        System.out.println("Input a year (YYYY): ");
+    }
+
+    public void timeMonthPrompt() {
+        System.out.println("Input a month (1-12): ");
+    }
+
+    public void timeDayPrompt() {
+        System.out.println("Input a day of month (1-31): ");
+    }
+
+    public void timeHourPrompt() {
+        System.out.println("Input an hour of day (9-16): ");
+    }
+
+    public void selectedTimePrompt(Calendar time) {
+        System.out.println("The time you have selected is " + time.getTime().toString());
+    }
+
+    // (NEW!)
+    public void capacityPrompt() { System.out.println("Please enter the capacity of the event: ");}
+
+    // (NEW!)
+    public void vipOnlyPrompt() { System.out.println("Is this event restricted to VIPs (Y/N)?");}
+
+
+    // TODO: TO BE REDONE
+    public void locationPrompt() {
+        System.out.println("Please enter the name of the location: ");
+    }
+
+    public void invalidLocationPrompt() { System.out.println("The selected location could not be found."); }
+
+    public void inUseLocationPrompt() { System.out.println("The selected location is busy at the specified time."); }
+
+    // (NEW!)
+    public void invalidEventTypePrompt() {
+        System.out.println("This type of event is invalid.");
+    }
+
+    public void invalidTimePrompt() { System.out.println("The selected time is invalid, please enter a valid time slot."); }
+
+    public void pastTimePrompt() { System.out.println("The selected time takes place in the past."); }
+
+    public void invalidInputPrompt() { System.out.println("Invalid input, please enter again:");}
+
+    // (NEW!)
+    public void invalidCapacityPrompt() { System.out.println("The capacity is invalid, please enter a valid capacity: ");}
 }

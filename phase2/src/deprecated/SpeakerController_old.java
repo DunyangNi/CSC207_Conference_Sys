@@ -11,7 +11,7 @@ import java.lang.*;
 
 import enums.*;
 
-public class SpeakerController extends AccountController {
+public class SpeakerController_old extends AccountController {
     /**
      * facilitates interaction with speaker upon login
      * @param username speaker username

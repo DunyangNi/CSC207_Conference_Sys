@@ -1,87 +1,163 @@
 package views.event;
 
 import controllers.event.EventController;
+import controllers.event.SpeakerController;
 import enums.EventTypeEnum;
 import exceptions.InvalidEventTypeException;
 import exceptions.InvalidTimeException;
 import exceptions.PastTimeException;
 import exceptions.conflict.LocationInUseException;
 import exceptions.not_found.LocationNotFoundException;
+import gateways.DataManager;
 import presenters.event.EventCreationPresenter;
-import presenters.event.TimePresenter;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.util.*;
+
+import static enums.EventTypeEnum.*;
 
 public class EventCreationView {
-
-    private EventController controller;
-    private EventCreationPresenter er = new EventCreationPresenter();
-    private TimeGetterView tg = new TimeGetterView(new TimePresenter());
-    private EventTypeEnum type;
+    private final EventController eventController;
+    private final SpeakerController speakerController;
+    private final EventCreationPresenter eventCreationPresenter = new EventCreationPresenter();
     Scanner userInput = new Scanner(System.in);
-    public EventCreationView(EventController ec){
-        controller = ec;
+
+    public EventCreationView(DataManager dataManager) {
+        eventController = new EventController(dataManager);
+        speakerController = new SpeakerController(dataManager);
     }
 
-    public void runInteraction(){
-        er.startPrompt();
+    public void runInteraction() {
+        eventCreationPresenter.startPrompt();
 
-        ArrayList<String> usernames = new ArrayList<>();
-        er.speakerPrompt();
-        boolean finished = false;
-        while (!finished) {
-            String username = userInput.nextLine();
-            usernames.add(username);
-            er.moreSpeakersPrompt();
-            String input = userInput.nextLine();
-            if (!input.equals("1")){finished = true;}
+        EventTypeEnum eventType = GENERAL_EVENT;
+        boolean eventNotChosen = true;
+        eventCreationPresenter.eventTypeMenu();
+        eventCreationPresenter.eventTypePrompt();
+        while(eventNotChosen) {
+            eventType = EventTypeEnum.fromString(userInput.nextLine());
+            if (eventType != INVALID) eventNotChosen = false;
+            else { eventCreationPresenter.invalidEventTypePrompt(); eventCreationPresenter.eventTypePrompt(); }
         }
 
-        er.roomPrompt();
-        String room = userInput.nextLine();
+        ArrayList<String> speakers = null;
+        boolean chosenSpeakers = false;
+        while (!chosenSpeakers) {
+            speakers = runSpeakerInputInteraction(eventType);
+            if (validSpeakerInput(eventType, speakers)) chosenSpeakers = true;
+        }
 
-        er.topicPrompt();
+        eventCreationPresenter.topicPrompt();
         String topic = userInput.nextLine();
 
-        er.timePrompt();
+        eventCreationPresenter.timePrompt();
         boolean valid = false;
         Calendar time = Calendar.getInstance();
         while (!valid){
-            try{
-                time = tg.collectTimeInfo();
+            try {
+                time = parseTime();
                 valid = true;
-            } catch (InstantiationException e) {
-                er.invalidTimePrompt();
-            } catch (InputMismatchException e) {
-                er.invalidInputPrompt();
-            }
+            } catch (Exception e) { eventCreationPresenter.invalidTimePrompt(); }
         }
 
-        er.capacityPrompt();
+        eventCreationPresenter.capacityPrompt();
         valid = false;
+        int capacity = 0;
         while (!valid){
-            try{
-                int capacity = userInput.nextInt();} catch (Exception e) {
-                er.invalidInputPrompt();
+            try {
+                capacity = Integer.parseInt(userInput.nextLine());
+                if (capacity <= 0) {
+                    eventCreationPresenter.invalidCapacityPrompt();
+                    continue;
+                }
+                valid = true;
             }
+            catch (NumberFormatException e) { eventCreationPresenter.invalidCapacityPrompt(); }
         }
 
-        try{
-            controller.createEvent(type, topic, time, room, usernames, 2, false);
+        eventCreationPresenter.vipOnlyPrompt();
+        valid = false;
+        boolean vipOnly = false;
+        while (!valid) {
+            String input = userInput.nextLine();
+            if (input.equals("Y")) {
+                vipOnly = true;
+                valid = true;
+            } else if (input.equals("N")) {
+                valid = true;
+            } else { eventCreationPresenter.invalidInputPrompt(); }
+        }
+
+        // TODO: TO BE REDONE
+        eventCreationPresenter.locationPrompt();
+        String location = userInput.nextLine();
+
+        try {
+            eventController.createEvent(eventType, topic, time, location, speakers, capacity, vipOnly);
+            eventCreationPresenter.exitPrompt();
         } catch (LocationNotFoundException e) {
-            er.ErrorMessage("LocationNot");
+            eventCreationPresenter.invalidLocationPrompt();
         } catch (InvalidEventTypeException e) {
-            er.ErrorMessage("InvalidEventType");
+            eventCreationPresenter.invalidEventTypePrompt();
         } catch (LocationInUseException e) {
-            er.ErrorMessage("LocationInUse");
+            eventCreationPresenter.inUseLocationPrompt();
         } catch (PastTimeException e) {
-            er.ErrorMessage("PastTime");
+            eventCreationPresenter.pastTimePrompt();
         } catch (InvalidTimeException e) {
-            er.ErrorMessage("InvalidTime");
+            eventCreationPresenter.invalidTimePrompt();
         }
     }
 
+    private ArrayList<String> runSpeakerInputInteraction(EventTypeEnum eventType) {
+        ArrayList<String> speakers = new ArrayList<>();
+        if (eventType == TALK) {
+            eventCreationPresenter.singleSpeakerPrompt();
+            speakers.add(userInput.nextLine());
+        } else if (eventType == PANEL_DISCUSSION) {
+            boolean inputSpeakers = true;
+            eventCreationPresenter.multiSpeakerPrompt();
+            while (inputSpeakers) {
+                String speaker = userInput.nextLine();
+                if (speaker.equals("")) inputSpeakers = false;
+                else speakers.add(speaker);
+            }
+        }
+        return speakers;
+    }
+
+    private boolean validSpeakerInput(EventTypeEnum eventType, ArrayList<String> speakers) {
+        if (eventType == TALK) {
+            if (!speakerController.isValidSpeaker(speakers.get(0))) {
+                eventCreationPresenter.invalidSpeakerPrompt(speakers.get(0));
+                return false;
+            }
+        } else if (eventType == PANEL_DISCUSSION) {
+            if (speakers.size() < 2) {
+                eventCreationPresenter.notEnoughSpeakersPrompt();
+                return false;
+            }
+            for (String speaker : speakers) {
+                if (!speakerController.isValidSpeaker(speaker)) {
+                    eventCreationPresenter.invalidSpeakerPrompt(speaker);
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private Calendar parseTime() {
+        eventCreationPresenter.timeYearPrompt();
+        int year = Integer.parseInt(userInput.nextLine());
+        eventCreationPresenter.timeMonthPrompt();
+        int month = Integer.parseInt(userInput.nextLine()) - 1;
+        eventCreationPresenter.timeDayPrompt();
+        int day = Integer.parseInt(userInput.nextLine());
+        eventCreationPresenter.timeHourPrompt();
+        int hour = Integer.parseInt(userInput.nextLine());
+        Calendar newTime = Calendar.getInstance();
+        newTime.set(year, month, day, hour, 0, 0);
+        newTime.clear(Calendar.MILLISECOND);
+        eventCreationPresenter.selectedTimePrompt(newTime);
+        return newTime;
+    }
 }

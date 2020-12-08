@@ -5,6 +5,7 @@ import enums.AccountTypeEnum;
 import enums.OrganizerMenuEnum;
 import gateways.*;
 import presenters.account.OrganizerPresenter;
+import views.event.EventCreationView;
 import views.event.EventView;
 import views.event.LocationView;
 import views.message.ConversationView;
@@ -86,11 +87,11 @@ public class OrganizerView {
                     locationView.rooms();
                     break;
                 case ADD_EVENT:
-                    EventView eventView = new EventView(dm);
-                    eventView.eventCreation();
+                    EventCreationView eventCreationView = new EventCreationView(dm);
+                    eventCreationView.runInteraction();
                     break;
                 case VIEW_EVENT_SCHEDULE:
-                    eventView = new EventView(dm);
+                    EventView eventView = new EventView(dm);
                     eventView.allTalksSchedule();
                     break;
                 case CANCEL_EVENT:

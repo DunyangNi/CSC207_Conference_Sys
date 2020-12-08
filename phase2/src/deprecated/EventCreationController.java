@@ -1,4 +1,4 @@
-package controllers.event;
+package deprecated;
 
 import enums.EventTypeEnum;
 import exceptions.*;
@@ -46,7 +46,6 @@ public class EventCreationController {
      * cancels a talk with the given id
      * @param id id of talk to cancel
      * @throws EventNotFoundException if the id is invalid
-     * @throws TypeConflictException if the event is associated with non-talk
      */
     public void cancelEvent(Integer id) throws EventNotFoundException{
         this.eventManager.cancelEvent(id);
