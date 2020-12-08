@@ -10,13 +10,11 @@ import presenters.account.RegistrationPresenter;
 import java.util.Scanner;
 
 public class RegistrationView {
-    private final AccountController accountController;
     private final AccountRegistrationController controller;
     private final RegistrationPresenter presenter = new RegistrationPresenter();
     private final Scanner userInput = new Scanner(System.in);
 
     public RegistrationView(DataManager dm) {
-        this.accountController = new AccountController(dm);
         this.controller = new AccountRegistrationController(dm);
     }
 
@@ -32,7 +30,7 @@ public class RegistrationView {
         registrationCodeView(enumCommand);
         accountInfoView(enumCommand);
 
-        accountController.saveData();
+        controller.saveData();
     }
 
     public void registrationCodeView(AccountTypeEnum accountType) {
