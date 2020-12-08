@@ -4,6 +4,7 @@ import controllers.account.AccountController;
 import enums.AttendeeMenuEnum;
 import gateways.*;
 import presenters.account.AttendeePresenter;
+import views.event.DownloadScheduleView;
 import views.event.EventView;
 import views.message.ConversationView;
 import views.event.SignupView;
@@ -75,7 +76,8 @@ public class AttendeeView {
                     signupView.runView(enumCommand);
                     break;
                 case DOWNLOAD_SCHEDULE:
-                    // TODO: 12/06/20 Finish implementing this operation
+                    DownloadScheduleView dlView = new DownloadScheduleView(dm);
+                    dlView.runView();
                     break;
                 case VIEW_MENU:
                     presenter.displayAttendeeMenu();
