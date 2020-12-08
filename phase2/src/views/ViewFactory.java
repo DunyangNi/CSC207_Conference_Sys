@@ -107,6 +107,7 @@ public class ViewFactory {
                 ConversationPresenter conversationPresenter = new ConversationPresenter();
                 view = new ConversationView(conversationController, conversationPresenter);
                 break;
+            // TODO Implement the following:
             case ADD_ROOM:
                 break;
             case VIEW_ROOMS:

@@ -1,27 +1,26 @@
 package views.account;
 
 import controllers.account.ContactController;
+import enums.ViewEnum;
 import exceptions.conflict.AlreadyFriendException;
 import exceptions.not_found.FriendNotFoundException;
-import exceptions.not_found.ObjectNotFoundException;
 import exceptions.not_found.UserNotFoundException;
-import gateways.DataManager;
 import presenters.account.ContactPresenter;
-import use_cases.account.ContactManager;
+import views.View;
 
 import java.util.Scanner;
 
-public class ContactView {
+public class ContactAddView implements View {
     private final ContactController controller;
     private final ContactPresenter presenter;
     private final Scanner userInput = new Scanner(System.in);
 
-    public ContactView(ContactController controller, ContactPresenter presenter) {
+    public ContactAddView(ContactController controller, ContactPresenter presenter) {
         this.presenter = presenter;
         this.controller = controller;
     }
 
-    public void viewAddFriendMenu() {
+    public ViewEnum runView() {
         presenter.addContactPrompt();
         String username = userInput.nextLine();
         try {
@@ -29,19 +28,6 @@ public class ContactView {
         } catch (UserNotFoundException | AlreadyFriendException | FriendNotFoundException e) {
             e.printStackTrace();
         }
-    }
-
-    public void viewRemoveFriendMenu() {
-        presenter.removeContactPrompt();
-        String username = userInput.nextLine();
-        try {
-            controller.removeFriend(username);
-        } catch (ObjectNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void viewFriendList() {
-        presenter.contactListPrompt(controller.fetchFriendList());
+        return ViewEnum.VOID;
     }
 }
