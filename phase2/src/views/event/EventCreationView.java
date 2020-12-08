@@ -2,6 +2,7 @@ package views.event;
 
 import controllers.event.EventController;
 import controllers.event.SpeakerController;
+import entities.account.Speaker;
 import enums.EventTypeEnum;
 import exceptions.InvalidEventTypeException;
 import exceptions.InvalidTimeException;
@@ -18,12 +19,13 @@ import static enums.EventTypeEnum.*;
 public class EventCreationView {
     private final EventController eventController;
     private final SpeakerController speakerController;
-    private final EventCreationPresenter eventCreationPresenter = new EventCreationPresenter();
+    private final EventCreationPresenter eventCreationPresenter;
     Scanner userInput = new Scanner(System.in);
 
-    public EventCreationView(DataManager dataManager) {
-        eventController = new EventController(dataManager);
-        speakerController = new SpeakerController(dataManager);
+    public EventCreationView(EventController controller, SpeakerController controller2, EventCreationPresenter presenter ) {
+        eventController = controller;
+        speakerController = controller2;
+        eventCreationPresenter = presenter;
     }
 
     public void runView() {

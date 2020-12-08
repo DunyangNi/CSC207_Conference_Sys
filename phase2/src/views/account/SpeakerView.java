@@ -1,6 +1,7 @@
 package views.account;
 
 import controllers.account.AccountController;
+import entities.account.Speaker;
 import enums.SpeakerMenuEnum;
 import gateways.*;
 import presenters.account.SpeakerPresenter;
@@ -12,14 +13,13 @@ import views.message.MessageView;
 import java.util.Scanner;
 
 public class SpeakerView {
-    private final DataManager dm;
     private final AccountController controller;
-    private final SpeakerPresenter presenter = new SpeakerPresenter();
+    private final SpeakerPresenter presenter;
     private final Scanner userInput = new Scanner(System.in);
 
-    public SpeakerView(DataManager dm) {
-        this.dm = dm;
-        this.controller = new AccountController(dm);
+    public SpeakerView(AccountController controller, SpeakerPresenter presenter) {
+        this.controller = controller;
+        this.presenter = presenter;
     }
 
     public void viewSpeakerMenu() {

@@ -13,7 +13,7 @@ import java.util.Scanner;
  */
 public class DownloadScheduleView {
 
-    private final DownloadSchedulePresenter presenter = new DownloadSchedulePresenter();
+    private final DownloadSchedulePresenter presenter;
     private final Scanner userInput = new Scanner(System.in);
     private final DownloadScheduleController dlsController;
     private final HTMLManager hm;
@@ -22,9 +22,10 @@ public class DownloadScheduleView {
      * Constructs an object for DownloadScheduleView
      * @param dm data manger
      */
-    public DownloadScheduleView(DataManager dm) {
-        this.hm = new HTMLManager(dm.getEventManager());
-        this.dlsController = new DownloadScheduleController(hm);
+    public DownloadScheduleView(DownloadScheduleController controller, DownloadSchedulePresenter presenter, HTMLManager html) {
+        this.hm = html;
+        this.dlsController = controller;
+        this.presenter = presenter;
     }
 
     /**

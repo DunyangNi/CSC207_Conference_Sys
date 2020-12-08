@@ -9,10 +9,11 @@ import java.util.Scanner;
 
 public class EventCancelView {
     private final EventController eventController;
-    private final EventCancelPresenter eventCancelPresenter = new EventCancelPresenter();
+    private final EventCancelPresenter eventCancelPresenter;
     Scanner userInput = new Scanner(System.in);
-    public EventCancelView(DataManager dataManager){
-        eventController = new EventController(dataManager);
+    public EventCancelView(EventController controller, EventCancelPresenter presenter){
+        eventController = controller;
+        eventCancelPresenter = presenter;
     }
 
     public void runView(){

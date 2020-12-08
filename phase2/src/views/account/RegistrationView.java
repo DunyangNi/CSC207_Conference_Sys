@@ -11,11 +11,12 @@ import java.util.Scanner;
 
 public class RegistrationView {
     protected final AccountRegistrationController controller;
-    protected final RegistrationPresenter presenter = new RegistrationPresenter();
+    protected final RegistrationPresenter presenter;
     protected final Scanner userInput = new Scanner(System.in);
 
-    public RegistrationView(DataManager dm) {
-        this.controller = new AccountRegistrationController(dm);
+    public RegistrationView(AccountRegistrationController controller, RegistrationPresenter presenter) {
+        this.controller = controller;
+        this.presenter = presenter;
     }
 
     public void runView() {

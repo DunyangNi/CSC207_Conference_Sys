@@ -17,12 +17,13 @@ import use_cases.event.EventManager;
 import java.util.Scanner;
 
 public class SignupView {
-    private final SignupPresenter presenter = new SignupPresenter();
+    private final SignupPresenter presenter;
     private final SignupController controller;
     private final Scanner userInput = new Scanner(System.in);
 
-    public SignupView(DataManager dm) {
-        this.controller = new SignupController(dm);
+    public SignupView(SignupController controller, SignupPresenter presenter) {
+        this.controller = controller;
+        this.presenter = presenter;
     }
 
     public void runView(AttendeeMenuEnum command) {

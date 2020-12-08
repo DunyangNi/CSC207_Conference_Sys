@@ -16,12 +16,15 @@ import java.util.Scanner;
 
 public class EventRescheduleView {
     private final EventController controller;
-    private final EventPresenter presenter = new EventPresenter();
+    private final EventPresenter presenter;
     private final Scanner userInput = new Scanner(System.in);
     private final TimeGetterView timeGetter= new TimeGetterView(new TimePresenter());
 
-    public EventRescheduleView(DataManager dm) {
-        this.controller = new EventController(dm);
+    public EventRescheduleView(EventController controller, EventPresenter presenter) {
+        this.controller = controller;
+        this.presenter = presenter;
+
+
     }
 
     public void runView() {

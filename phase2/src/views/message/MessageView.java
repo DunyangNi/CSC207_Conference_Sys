@@ -9,11 +9,12 @@ import java.util.Scanner;
 
 public class MessageView {
     private final MessageController controller;
-    private final MessagePresenter presenter = new MessagePresenter();
+    private final MessagePresenter presenter;
     private final Scanner userInput = new Scanner(System.in);
 
-    public MessageView(DataManager dm) {
-        this.controller = new MessageController(dm);
+    public MessageView(MessageController controller, MessagePresenter presenter) {
+        this.controller = controller;
+        this.presenter = presenter;
     }
 
     public void runView() {

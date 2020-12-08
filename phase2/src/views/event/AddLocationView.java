@@ -10,13 +10,15 @@ import java.util.Scanner;
 
 public class AddLocationView {
 
-        private final LocationPresenter presenter = new LocationPresenter();
+        private final LocationPresenter presenter;
         private final LocationController controller;
         private final Scanner userInput = new Scanner(System.in);
 
-        public AddLocationView(DataManager dm) {
+        public AddLocationView(LocationController controller, LocationPresenter presenter) {
 
-            this.controller = new LocationController(dm);
+            this.controller = controller;
+            this.presenter = presenter;
+
         }
 
         public void runView() {

@@ -16,29 +16,18 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class ConversationView {
-    private final DataManager dm;
-    private final String username;
-    private final AccountManager am;
-    private final ContactManager fm;
-    private final ConversationManager cm;
-    private final EventManager em;
-    private final ConversationPresenter presenter = new ConversationPresenter();
+    private final ConversationPresenter presenter;
     private final ConversationController controller;
     private final Scanner userInput = new Scanner(System.in);
 
-    public ConversationView(DataManager dm) {
-        this.dm = dm;
-        this.am = dm.getAccountManager();
-        this.fm = dm.getContactManager();
-        this.cm = dm.getConversationManager();
-        this.em = dm.getEventManager();
-        this.username = dm.getUsername();
-        this.controller = new ConversationController(dm);
+    public ConversationView(ConversationController controller, ConversationPresenter presenter) {
+        this.controller = controller;
+        this.presenter = presenter;
     }
 
     public void conversations() {
         try {
-            Set<String> recipients = cm.getAllUserConversationRecipients(username);
+            Set<String> recipients = controller.getAllUserConversationRecipients();
             presenter.conversationsPrompt(recipients);
 
             presenter.usernamePrompt();

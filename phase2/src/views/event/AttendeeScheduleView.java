@@ -6,10 +6,12 @@ import presenters.event.EventPresenter;
 
 public class AttendeeScheduleView {
     private final EventController controller;
-    private final EventPresenter presenter = new EventPresenter();
+    private final EventPresenter presenter;
 
-    public AttendeeScheduleView(DataManager dm) {
-        this.controller = new EventController(dm);
+    public AttendeeScheduleView(EventController controller, EventPresenter presenter) {
+
+        this.controller = controller;
+        this.presenter = presenter;
     }
 
     public void runView() {

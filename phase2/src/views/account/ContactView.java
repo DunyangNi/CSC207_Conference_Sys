@@ -12,14 +12,13 @@ import use_cases.account.ContactManager;
 import java.util.Scanner;
 
 public class ContactView {
-    private final ContactManager contactManager;
     private final ContactController controller;
-    private final ContactPresenter presenter = new ContactPresenter();
+    private final ContactPresenter presenter;
     private final Scanner userInput = new Scanner(System.in);
 
-    public ContactView(DataManager dm) {
-        this.contactManager = dm.getContactManager();
-        this.controller = new ContactController(dm);
+    public ContactView(ContactController controller, ContactPresenter presenter) {
+        this.presenter = presenter;
+        this.controller = controller;
     }
 
     public void viewAddFriendMenu() {

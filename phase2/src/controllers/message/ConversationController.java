@@ -25,6 +25,10 @@ public class ConversationController {
         return myConversations.isEmpty();
     }
 
+    public Set<String> getAllUserConversationRecipients() throws UserNotFoundException {
+        return cm.getAllUserConversationRecipients(username);
+    }
+
 
     public ArrayList<String> viewMessagesFrom(String recipient, int numMessagesRequested) throws NonPositiveIntegerException,
             NoMessagesException, UserNotFoundException, MessageNotFoundException, RecipientNotFoundException {
