@@ -23,6 +23,7 @@ public class TimePresenter implements Presenter {
                 break;
         }
     }
+    public void errorPrompt(){System.out.println("This is not a valid time.");}
 
     @Override
     public void exitPrompt() {System.out.println("Successfully get the time.");}

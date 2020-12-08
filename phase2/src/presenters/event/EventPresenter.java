@@ -31,6 +31,8 @@ public class EventPresenter implements Presenter {
         System.out.println("Please enter the ID of a talk you wish to modify: ");
     }
 
+    public void GeneralInvalid() { System.out.println("This is not a valid input.");}
+
     public void myEventsPrompt() {
         System.out.println("[MY EVENTS SCHEDULE]");
         System.out.println("===================================");

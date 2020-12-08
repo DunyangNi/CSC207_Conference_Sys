@@ -1,4 +1,4 @@
-package views.event;
+package deprecated;
 
 import controllers.event.EventController;
 import enums.EventTypeEnum;
@@ -27,7 +27,7 @@ public class EventView {
         this.controller = new EventController(dm);
     }
 
-    public void eventReschedule() {
+    public void eventReschedule() {//replaced
         presenter.eventIdPrompt();
         int id = userInput.nextInt();
         Calendar time = collectTimeInfo();
@@ -39,12 +39,12 @@ public class EventView {
         }
     }
 
-    public void attendeeSchedule() {
+    public void attendeeSchedule() {//replaced
         presenter.myEventsPrompt();
-        presenter.displayTalkSchedule(controller.getAttendeeEvents(username));
+        presenter.displayTalkSchedule(controller.getAttendeeEvents());
     }
 
-    public void allTalksSchedule() {
+    public void allTalksSchedule() {//replaced
         presenter.allEventsPrompt();
         presenter.displayTalkSchedule(controller.getAllEvents());
     }

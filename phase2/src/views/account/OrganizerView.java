@@ -5,10 +5,7 @@ import enums.AccountTypeEnum;
 import enums.OrganizerMenuEnum;
 import gateways.*;
 import presenters.account.OrganizerPresenter;
-import views.event.EventCancelView;
-import views.event.EventCreationView;
-import views.event.EventView;
-import views.event.LocationView;
+import views.event.*;
 import views.message.ConversationView;
 import views.message.MessageAllAttendeesView;
 import views.message.MessageAllSpeakersView;
@@ -92,16 +89,16 @@ public class OrganizerView {
                     eventCreationView.runInteraction();
                     break;
                 case VIEW_EVENT_SCHEDULE:
-                    EventView eventView = new EventView(dm);
-                    eventView.allTalksSchedule();
+                    AllTalksScheduleView allTalksScheduleView = new AllTalksScheduleView(dm);
+                    allTalksScheduleView.runView();
                     break;
                 case CANCEL_EVENT:
                     EventCancelView eventCancelView = new EventCancelView(dm);
                     eventCancelView.runView();
                     break;
                 case RESCHEDULE_EVENT:
-                    eventView = new EventView(dm);
-                    eventView.eventReschedule();
+                    EventRescheduleView eventRescheduleView= new EventRescheduleView(dm);
+                    eventRescheduleView.runView();
                     break;
                 case VIEW_MENU:
                     presenter.displayOrganizerMenu();

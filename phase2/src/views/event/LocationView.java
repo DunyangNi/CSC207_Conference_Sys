@@ -13,23 +13,13 @@ import use_cases.account.ContactManager;
 import java.util.Scanner;
 
 public class LocationView {
-    private final DataManager dm;
-    private final String username;
-    private final AccountManager am;
-    private final ContactManager fm;
-    private final ConversationManager cm;
-    private final EventManager em;
+
     private final LocationPresenter presenter = new LocationPresenter();
     private final LocationController controller;
     private final Scanner userInput = new Scanner(System.in);
 
     public LocationView(DataManager dm) {
-        this.dm = dm;
-        this.am = dm.getAccountManager();
-        this.fm = dm.getContactManager();
-        this.cm = dm.getConversationManager();
-        this.em = dm.getEventManager();
-        this.username = dm.getUsername();
+
         this.controller = new LocationController(dm);
     }
 

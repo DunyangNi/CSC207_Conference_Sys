@@ -46,7 +46,7 @@ public class EventController {
         return eventManager.fetchSortedTalks();
     }
 
-    public HashMap<String[], Calendar> getAttendeeEvents(String username) {
+    public HashMap<String[], Calendar> getAttendeeEvents() { //only for attendee
         HashMap<String[], Calendar> allTalks = eventManager.fetchSortedTalks();
         HashMap<String[], Calendar> attendeeTalks = new HashMap<>();
 

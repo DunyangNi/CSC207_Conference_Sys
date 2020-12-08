@@ -4,7 +4,7 @@ import controllers.account.AccountController;
 import enums.SpeakerMenuEnum;
 import gateways.*;
 import presenters.account.SpeakerPresenter;
-import views.event.EventView;
+import views.event.AllTalksScheduleView;
 import views.message.ConversationView;
 import views.message.MessageTalkAttendeesView;
 import views.message.MessageView;
@@ -65,8 +65,8 @@ public class SpeakerView {
                     conversationView.conversations();
                     break;
                 case VIEW_EVENT_SCHEDULE:
-                    EventView eventView = new EventView(dm);
-                    eventView.allTalksSchedule();
+                    AllTalksScheduleView allTalksScheduleView = new AllTalksScheduleView(dm);
+                    allTalksScheduleView.runView();
                     break;
                 case VIEW_MENU:
                     presenter.displaySpeakerMenu();
