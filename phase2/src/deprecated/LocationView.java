@@ -1,4 +1,4 @@
-package views.event;
+package deprecated;
 
 import controllers.event.LocationController;
 import exceptions.NonPositiveIntegerException;

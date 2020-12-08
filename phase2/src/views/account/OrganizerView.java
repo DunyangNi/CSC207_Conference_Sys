@@ -77,12 +77,12 @@ public class OrganizerView {
                     conversationView.conversations();
                     break;
                 case ADD_ROOM:
-                    LocationView locationView = new LocationView(dm);
-                    locationView.addRoom();
+                    AddLocationView addLocationView = new AddLocationView(dm);
+                    addLocationView.runView();
                     break;
                 case VIEW_ROOMS:
-                    locationView = new LocationView(dm);
-                    locationView.rooms();
+                    AllLocationsView allLocationsView = new AllLocationsView(dm);
+                    allLocationsView.runView();
                     break;
                 case ADD_EVENT:
                     EventCreationView eventCreationView = new EventCreationView(dm);

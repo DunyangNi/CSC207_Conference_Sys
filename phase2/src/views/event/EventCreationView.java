@@ -26,7 +26,7 @@ public class EventCreationView {
         speakerController = new SpeakerController(dataManager);
     }
 
-    public void runInteraction() {
+    public void runView() {
         eventCreationPresenter.startPrompt();
 
         EventTypeEnum eventType = GENERAL_EVENT;
