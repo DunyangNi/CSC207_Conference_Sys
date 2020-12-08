@@ -1,35 +1,38 @@
 package views.account;
 
-import controllers.account.AccountController;
-import controllers.account.AccountRegistrationController;
+import controllers.account.RegistrationController;
 import enums.AccountTypeEnum;
+import enums.ViewEnum;
 import exceptions.already_exists.AccountAlreadyExistsException;
-import gateways.DataManager;
 import presenters.account.RegistrationPresenter;
+import views.View;
 
 import java.util.Scanner;
 
-public class RegistrationView {
-    protected final AccountRegistrationController controller;
+public class RegistrationView implements View {
+    protected final RegistrationController controller;
     protected final RegistrationPresenter presenter;
     protected final Scanner userInput = new Scanner(System.in);
 
-    public RegistrationView(AccountRegistrationController controller, RegistrationPresenter presenter) {
+    public RegistrationView(RegistrationController controller, RegistrationPresenter presenter) {
         this.controller = controller;
         this.presenter = presenter;
     }
 
-    public void runView() {
+    @Override
+    public ViewEnum runView() {
         presenter.startPrompt();
-        AccountTypeEnum enumCommand = getType();
+        AccountTypeEnum enumCommand = getAccountType();
 
         registrationCodeView(enumCommand);
         accountInfoView(enumCommand);
 
         controller.saveData();
+
+        return ViewEnum.START;
     }
 
-    protected AccountTypeEnum getType(){
+    protected AccountTypeEnum getAccountType(){
         AccountTypeEnum enumCommand = AccountTypeEnum.fromString(userInput.nextLine());
 
         while (enumCommand.equals(AccountTypeEnum.INVALID)) {
@@ -82,7 +85,5 @@ public class RegistrationView {
         } catch (AccountAlreadyExistsException e) {
             e.printStackTrace();
         }
-
-
     }
 }

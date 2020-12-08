@@ -1,5 +1,7 @@
 package views;
 
+import enums.ViewEnum;
+
 public interface View {
-    View runView();
+    ViewEnum runView();
 }

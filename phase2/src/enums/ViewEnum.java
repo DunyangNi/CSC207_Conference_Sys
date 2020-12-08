@@ -1,0 +1,35 @@
+package enums;
+
+public enum ViewEnum {
+    // Common
+    EXIT,
+    LOGOUT,
+    START,
+    LOGIN,
+    REGISTRATION,
+    ORGANIZER,
+    SPEAKER,
+    VIP,
+    ATTENDEE,
+    VIEW_ALL_ACCOUNTS,
+    ADD_CONTACT,
+    REMOVE_CONTACT,
+    VIEW_CONTACTS,
+    MESSAGE,
+    VIEW_CONVERSATION,
+    VIEW_EVENT_SCHEDULE,
+    VIEW_MENU,
+    INVALID,
+    VOID,
+
+    // Organizer,
+    NEW_SPEAKER,
+    MESSAGE_ALL_SPEAKERS,
+    MESSAGE_ALL_ATTENDEES,
+    VIEW_ROOMS,
+    ADD_ROOM,
+    ADD_EVENT,
+    CANCEL_EVENT,
+    RESCHEDULE_EVENT
+
+}

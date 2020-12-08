@@ -2,34 +2,30 @@ package views.account;
 
 import controllers.account.LoginController;
 import enums.AccountTypeEnum;
-import gateways.*;
+import enums.ViewEnum;
 import presenters.account.LoginPresenter;
-import use_cases.ConversationManager;
-import use_cases.account.AccountManager;
-import use_cases.account.ContactManager;
-import use_cases.event.EventManager;
+import views.View;
 
 import java.util.Scanner;
 
-public class LoginView {
-    private final DataManager dm;
+public class LoginView implements View {
     private final LoginController controller;
-    private final LoginPresenter presenter = new LoginPresenter();
+    private final LoginPresenter presenter;
     private final Scanner userInput = new Scanner(System.in);
 
-    public LoginView(DataManager dm) {
-        this.dm = dm;
-        this.controller = new LoginController(dm);
+    public LoginView(LoginController controller, LoginPresenter presenter) {
+        this.controller = controller;
+        this.presenter = presenter;
     }
 
-    public void runView() {
+    public ViewEnum runView() {
         presenter.startPrompt();
         presenter.usernamePrompt();
         String username = userInput.nextLine();
 
         while (!controller.usernameExists(username)) {
             if (username.equals("*")) {
-                return;
+                return ViewEnum.START;
             }
             presenter.dneUsernamePrompt();
             username = userInput.nextLine();
@@ -40,7 +36,7 @@ public class LoginView {
 
         while (!controller.isCorrectPassword(username, password)) {
             if (password.equals("*")) {
-                return;
+                return ViewEnum.START;
             }
             presenter.incorrectPasswordPrompt();
             password = userInput.nextLine();
@@ -48,22 +44,6 @@ public class LoginView {
 
         presenter.exitPrompt();
 
-        dm.setUsername(username); // TODO: 12/07/20 Find a more appropriate place for this method call? Would change if we refactor Views to no longer take DataManager argument
-
-        AccountTypeEnum accountTypeEnum = controller.login(username);
-        switch (accountTypeEnum) {
-            case ORGANIZER:
-                OrganizerView organizerView = new OrganizerView(dm);
-                organizerView.viewOrganizerMenu();
-                break;
-            case SPEAKER:
-                SpeakerView speakerView = new SpeakerView(dm);
-                speakerView.viewSpeakerMenu();
-                break;
-            case ATTENDEE:
-                AttendeeView attendeeView = new AttendeeView(dm);
-                attendeeView.viewAttendeeMenu();
-                break;
-        }
+        return controller.login(username);
     }
 }

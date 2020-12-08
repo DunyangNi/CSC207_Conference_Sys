@@ -1,14 +1,16 @@
 package views.message;
 
 import controllers.message.MessageController;
+import enums.ViewEnum;
 import exceptions.NoRecipientsException;
 import exceptions.not_found.AccountNotFoundException;
 import gateways.DataManager;
 import presenters.message.MessagePresenter;
+import views.View;
 
 import java.util.Scanner;
 
-public class MessageAllSpeakersView {
+public class MessageAllSpeakersView implements View {
     private final MessageController controller;
     private final MessagePresenter presenter;
     private final Scanner userInput = new Scanner(System.in);
@@ -18,7 +20,7 @@ public class MessageAllSpeakersView {
         this.presenter = presenter;
     }
 
-    public void runView() {
+    public ViewEnum runView() {
         presenter.messagePrompt();
         String message = userInput.nextLine();
         try {
@@ -26,5 +28,6 @@ public class MessageAllSpeakersView {
         } catch (AccountNotFoundException | NoRecipientsException e) {
             e.printStackTrace();
         }
+        return ViewEnum.VOID;
     }
 }

@@ -42,7 +42,7 @@ public class ContactController {
     /**
      * displays friend list
      */
-    public ArrayList<String> fetchFriendList() {
+    public ArrayList<String> getContactList() {
         return fm.getFriendList(username);
     }
 }

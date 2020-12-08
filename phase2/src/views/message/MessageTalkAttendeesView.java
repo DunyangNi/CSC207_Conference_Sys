@@ -1,16 +1,18 @@
 package views.message;
 
 import controllers.message.MessageController;
+import enums.ViewEnum;
 import exceptions.NoRecipientsException;
 import exceptions.not_found.AccountNotFoundException;
 import exceptions.not_found.EventNotFoundException;
 import gateways.DataManager;
 import presenters.message.MessagePresenter;
+import views.View;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class MessageTalkAttendeesView {
+public class MessageTalkAttendeesView implements View {
     private final MessageController controller;
     private final MessagePresenter presenter;
     private final Scanner userInput = new Scanner(System.in);
@@ -20,7 +22,7 @@ public class MessageTalkAttendeesView {
         this.presenter = presenter;
     }
 
-    public void runView() {
+    public ViewEnum runView() {
         ArrayList<Integer> selectedTalks = new ArrayList<>();
         boolean another;
 
@@ -43,6 +45,6 @@ public class MessageTalkAttendeesView {
         } catch (EventNotFoundException e) {
             e.printStackTrace();
         }
-
+        return ViewEnum.VOID;
     }
 }

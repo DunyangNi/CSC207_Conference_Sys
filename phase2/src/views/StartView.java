@@ -1,5 +1,6 @@
 package views;
 
+import enums.ViewEnum;
 import gateways.DataManager;
 import presenters.StartPresenter;
 import views.account.LoginView;
@@ -7,16 +8,15 @@ import views.account.RegistrationView;
 
 import java.util.Scanner;
 
-public class StartView {
-    private final DataManager dm;
-    private final StartPresenter presenter = new StartPresenter();
+public class StartView implements View {
+    private final StartPresenter presenter;
     private final Scanner userInput = new Scanner(System.in);
 
-    public StartView(DataManager dm) {
-        this.dm = dm;
+    public StartView(StartPresenter presenter) {
+        this.presenter = presenter;
     }
 
-    public boolean startMenu() {
+    public ViewEnum runView() {
         presenter.startPrompt();
         String command = userInput.nextLine();
 
@@ -25,18 +25,13 @@ public class StartView {
             command = userInput.nextLine();
         }
 
-        if (command.equals("0")) {
-            return true;
+        switch (command) {
+            case "1":
+                return ViewEnum.LOGIN;
+            case "2":
+                return ViewEnum.REGISTRATION;
+            default: // "0"
+                return null;
         }
-        if (command.equals("1")) {
-            LoginView view = new LoginView(dm);
-            view.runView();
-        }
-        if (command.equals("2")) {
-            RegistrationView view = new RegistrationView(dm);
-            view.runView();
-        }
-
-        return false;
     }
 }

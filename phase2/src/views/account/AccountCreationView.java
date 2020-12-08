@@ -1,23 +1,25 @@
 package views.account;
 
-import controllers.account.AccountRegistrationController;
+import controllers.account.RegistrationController;
 import enums.AccountTypeEnum;
-import gateways.DataManager;
+import enums.ViewEnum;
 import presenters.account.RegistrationPresenter;
 
 public class AccountCreationView extends RegistrationView{
 
 
-    public AccountCreationView(AccountRegistrationController controller, RegistrationPresenter presenter) {
+    public AccountCreationView(RegistrationController controller, RegistrationPresenter presenter) {
         super(controller, presenter);
     }
 
-    public void runView() {
+    public ViewEnum runView() {
         presenter.startPrompt();
-        AccountTypeEnum enumCommand = getType();
+        AccountTypeEnum enumCommand = getAccountType();
 
         accountInfoView(enumCommand);
 
         controller.saveData();
+
+        return ViewEnum.VOID;
     }
 }

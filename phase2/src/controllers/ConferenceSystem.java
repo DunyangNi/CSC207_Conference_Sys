@@ -1,11 +1,15 @@
 package controllers;
 
+import enums.ViewEnum;
 import gateways.*;
+import presenters.StartPresenter;
 import use_cases.ConversationManager;
 import use_cases.account.AccountManager;
 import use_cases.account.ContactManager;
 import use_cases.event.EventManager;
 import views.StartView;
+import views.View;
+import views.ViewFactory;
 
 public class ConferenceSystem {
 
@@ -34,12 +38,12 @@ public class ConferenceSystem {
         EventManager em = eventDataManager.readManager();
 
         DataManager dm = new DataManager(am, fm, cm, em);
+        ViewFactory viewFactory = new ViewFactory(dm);
 
-        boolean programEnd = false;
+        View currentView = viewFactory.getView(ViewEnum.START);
 
-        while (!programEnd) {
-            StartView view = new StartView(dm);
-            programEnd = view.startMenu();
+        while (currentView != null) {
+            currentView = viewFactory.getView(currentView.runView());
         }
     }
 }

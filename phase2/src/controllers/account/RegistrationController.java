@@ -10,7 +10,7 @@ import use_cases.ConversationManager;
 import use_cases.event.EventManager;
 
 // TODO: 12/07/20 Consider merging with AccountController
-public class AccountRegistrationController extends AccountController {
+public class RegistrationController extends AccountController {
     private final AccountManager am;
     private final ContactManager fm;
     private final ConversationManager cm;
@@ -22,7 +22,7 @@ public class AccountRegistrationController extends AccountController {
      * handles the creation of new organizer and attendee accounts for registration
      *
      */
-    public AccountRegistrationController(DataManager dm) {
+    public RegistrationController(DataManager dm) {
         super(dm);
         this.am = dm.getAccountManager();
         this.cm = dm.getConversationManager();
