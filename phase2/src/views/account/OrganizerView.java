@@ -86,7 +86,7 @@ public class OrganizerView {
                     break;
                 case ADD_EVENT:
                     EventCreationView eventCreationView = new EventCreationView(dm);
-                    eventCreationView.runInteraction();
+                    eventCreationView.runView();
                     break;
                 case VIEW_EVENT_SCHEDULE:
                     AllTalksScheduleView allTalksScheduleView = new AllTalksScheduleView(dm);
