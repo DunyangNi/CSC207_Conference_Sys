@@ -65,17 +65,17 @@ public class AttendeeView {
                     EventView eventView = new EventView(dm);
                     eventView.allTalksSchedule();
                     break;
+                case VIEW_SIGNUP_SCHEDULE:
+                    eventView = new EventView(dm);
+                    eventView.attendeeSchedule();
+                    break;
                 case SIGNUP_EVENT:
                 case LEAVE_EVENT:
                     SignupView signupView = new SignupView(dm);
                     signupView.runView(enumCommand);
                     break;
-                case VIEW_SIGNUP_SCHEDULE:
-                    eventView = new EventView(dm);
-                    eventView.attendeeSchedule();
-                    break;
                 case DOWNLOAD_SCHEDULE:
-                    // TODO: 12/06/20 Finish implementing this operations
+                    // TODO: 12/06/20 Finish implementing this operation
                     break;
                 case VIEW_MENU:
                     presenter.displayAttendeeMenu();
@@ -83,15 +83,7 @@ public class AttendeeView {
                 case INVALID:
                     presenter.invalidInputPrompt();
             }
-            AccountDataManager accountDataManager = new AccountDataManager();
-            ContactDataManager contactDataManager = new ContactDataManager();
-            ConversationDataManager conversationDataManager = new ConversationDataManager();
-            EventDataManager eventDataManager = new EventDataManager();
-
-            accountDataManager.saveManager("AccountManager", "AccountManager", dm.getAccountManager());
-            contactDataManager.saveManager("ContactManager", "ContactManager", dm.getContactManager());
-            conversationDataManager.saveManager("ConversationManager", "ConversationManager", dm.getConversationManager());
-            eventDataManager.saveManager("EventManager", "EventManager", dm.getEventManager());
+            controller.saveData();
 
             if (loggedIn) {
                 presenter.requestCommandPrompt();

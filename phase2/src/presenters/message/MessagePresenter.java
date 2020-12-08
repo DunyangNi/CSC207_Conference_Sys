@@ -20,7 +20,7 @@ public class MessagePresenter implements Presenter {
     }
 
     public void nextEventIdPrompt() {
-        System.out.println("Would you like to add another Talk?");
+        System.out.println("Add another Talk?");
         System.out.println("0 = No:");
         System.out.println("1 = Yes:");
     }

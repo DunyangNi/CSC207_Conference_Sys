@@ -11,32 +11,18 @@ import exceptions.not_found.EventNotFoundException;
 import exceptions.not_found.LocationNotFoundException;
 import gateways.DataManager;
 import presenters.event.EventPresenter;
-import use_cases.account.AccountManager;
-import use_cases.account.ContactManager;
-import use_cases.ConversationManager;
-import use_cases.event.EventManager;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
 
 public class EventView {
-    private final DataManager dm;
     private final String username;
-    private final AccountManager am;
-    private final ContactManager fm;
-    private final ConversationManager cm;
-    private final EventManager em;
-    private final EventPresenter presenter = new EventPresenter();
     private final EventController controller;
+    private final EventPresenter presenter = new EventPresenter();
     private final Scanner userInput = new Scanner(System.in);
 
     public EventView(DataManager dm) {
-        this.dm = dm;
-        this.am = dm.getAccountManager();
-        this.fm = dm.getContactManager();
-        this.cm = dm.getConversationManager();
-        this.em = dm.getEventManager();
         this.username = dm.getUsername();
         this.controller = new EventController(dm);
     }
@@ -67,6 +53,16 @@ public class EventView {
         }
     }
 
+    public void eventCancellation() {
+        presenter.eventIdPrompt();
+        int id = userInput.nextInt();
+        try {
+            controller.cancelEvent(id);
+        } catch (EventNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void eventReschedule() {
         presenter.eventIdPrompt();
         int id = userInput.nextInt();
@@ -75,16 +71,6 @@ public class EventView {
         try {
             controller.rescheduleTalk(id, time);
         } catch (LocationInUseException | PastTimeException | SpeakerIsBusyException | LocationNotFoundException | InvalidTimeException | EventNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void eventCancellation() {
-        presenter.eventIdPrompt();
-        int id = userInput.nextInt();
-        try {
-            controller.cancelEvent(id);
-        } catch (EventNotFoundException e) {
             e.printStackTrace();
         }
     }

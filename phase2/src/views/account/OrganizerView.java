@@ -89,6 +89,10 @@ public class OrganizerView {
                     EventView eventView = new EventView(dm);
                     eventView.eventCreation();
                     break;
+                case VIEW_EVENT_SCHEDULE:
+                    eventView = new EventView(dm);
+                    eventView.allTalksSchedule();
+                    break;
                 case CANCEL_EVENT:
                     eventView = new EventView(dm);
                     eventView.eventCancellation();
@@ -97,25 +101,14 @@ public class OrganizerView {
                     eventView = new EventView(dm);
                     eventView.eventReschedule();
                     break;
-                case VIEW_EVENT_SCHEDULE:
-                    eventView = new EventView(dm);
-                    eventView.allTalksSchedule();
-                    break;
                 case VIEW_MENU:
                     presenter.displayOrganizerMenu();
                     break;
                 case INVALID:
                     presenter.invalidInputPrompt();
             }
-            AccountDataManager accountDataManager = new AccountDataManager();
-            ContactDataManager contactDataManager = new ContactDataManager();
-            ConversationDataManager conversationDataManager = new ConversationDataManager();
-            EventDataManager eventDataManager = new EventDataManager();
-
-            accountDataManager.saveManager("AccountManager", "AccountManager", dm.getAccountManager());
-            contactDataManager.saveManager("ContactManager", "ContactManager", dm.getContactManager());
-            conversationDataManager.saveManager("ConversationManager", "ConversationManager", dm.getConversationManager());
-            eventDataManager.saveManager("EventManager", "EventManager", dm.getEventManager());
+            controller.saveData();
+            presenter.savedDataPrompt();
 
             if (loggedIn) {
                 presenter.requestCommandPrompt();

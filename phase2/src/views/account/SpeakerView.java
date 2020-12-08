@@ -74,15 +74,7 @@ public class SpeakerView {
                 case INVALID:
                     presenter.invalidInputPrompt();
             }
-            AccountDataManager accountDataManager = new AccountDataManager();
-            ContactDataManager contactDataManager = new ContactDataManager();
-            ConversationDataManager conversationDataManager = new ConversationDataManager();
-            EventDataManager eventDataManager = new EventDataManager();
-
-            accountDataManager.saveManager("AccountManager", "AccountManager", dm.getAccountManager());
-            contactDataManager.saveManager("ContactManager", "ContactManager", dm.getContactManager());
-            conversationDataManager.saveManager("ConversationManager", "ConversationManager", dm.getConversationManager());
-            eventDataManager.saveManager("EventManager", "EventManager", dm.getEventManager());
+            controller.saveData();
 
             if (loggedIn) {
                 presenter.requestCommandPrompt();

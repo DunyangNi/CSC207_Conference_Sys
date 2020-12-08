@@ -10,18 +10,18 @@ public class ContactPresenter implements Presenter {
     }
 
     public void addContactPrompt() {
-        System.out.println("Please enter the username of a contact to add: ");
+        System.out.println("Please enter the username of a contact to add:");
     }
 
     public void removeContactPrompt() {
-        System.out.println("Please enter the username of a contact to remove: ");
+        System.out.println("Please enter the username of a contact to remove:");
     }
 
     public void contactListPrompt(ArrayList<String> friendList) {
         System.out.println("[CONTACTS]");
         System.out.println("===================================");
         if (friendList.isEmpty()) {
-            System.out.println("Your contact list is empty.");
+            System.out.println("{Empty}");
         } else {
             for (String friend : friendList) {
                 System.out.println(friend);

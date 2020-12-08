@@ -69,7 +69,7 @@ public class MessageView {
 //                    break;
 //                case MESSAGE_ALL_AT_TALKS:
 //                    ArrayList<Integer> selectedSpeakerTalks = new ArrayList<>();
-//                    presenter.eventIdPrompt();
+//                    presenter.idPrompt();
 //                    Integer id = Integer.parseInt(userInput.nextLine());
 //                    if (em.isSpeakerOfTalk(id, this.username)) {
 //                        selectedSpeakerTalks.add(id);

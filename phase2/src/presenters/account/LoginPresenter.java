@@ -12,7 +12,7 @@ public class LoginPresenter implements Presenter {
     }
 
     public void dneUsernamePrompt() {
-        System.out.println("This username does not exist, please try again:");
+        System.out.println("{This username does not exist, please try again}");
     }
 
     public void passwordPrompt() {
@@ -20,7 +20,7 @@ public class LoginPresenter implements Presenter {
     }
 
     public void incorrectPasswordPrompt() {
-        System.out.println("Incorrect password, please try again:");
+        System.out.println("{Incorrect password, please try again}");
     }
 
     @Override

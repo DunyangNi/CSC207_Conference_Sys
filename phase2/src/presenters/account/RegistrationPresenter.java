@@ -12,7 +12,7 @@ public class RegistrationPresenter implements Presenter {
     }
 
     public void invalidCommandPrompt() {
-        System.out.println("Invalid input, please try again:");
+        System.out.println("{Invalid input, please try again}");
     }
 
     public void organizerCodePrompt() {
@@ -24,7 +24,7 @@ public class RegistrationPresenter implements Presenter {
     }
 
     public void invalidCodePrompt() {
-        System.out.println("Incorrect code, please try again:");
+        System.out.println("{Incorrect code, please try again}");
     }
 
     public void usernamePrompt() {
@@ -32,7 +32,7 @@ public class RegistrationPresenter implements Presenter {
     }
 
     public void takenUsernamePrompt() {
-        System.out.println("This username is already taken, please try again:");
+        System.out.println("{This username is already taken, please try again}");
     }
 
     public void passwordPrompt() {
@@ -41,6 +41,7 @@ public class RegistrationPresenter implements Presenter {
 
     @Override
     public void exitPrompt() {
-        System.out.println("(Registered)");
+        System.out.println("{Registering... Registered}");
+        System.out.println();
     }
 }

@@ -4,14 +4,15 @@ import enums.AccountTypeEnum;
 import gateways.DataManager;
 import use_cases.account.AccountManager;
 
-public class LoginController {
+// TODO: 12/07/20 Consider merging with AccountController
+public class LoginController extends AccountController {
     private final AccountManager am;
 
     /**
      * Manages login functionality for the program
-     *
      */
     public LoginController(DataManager dm) {
+        super(dm);
         this.am = dm.getAccountManager();
     }
 
@@ -23,10 +24,6 @@ public class LoginController {
         } else {
             return AccountTypeEnum.ATTENDEE;
         }
-    }
-
-    public boolean usernameExists(String username) {
-        return am.containsAccount(username);
     }
 
     public boolean isCorrectPassword(String username, String password) {

@@ -10,7 +10,6 @@ public class EventPresenter implements Presenter {
     public void startPrompt() {
     }
 
-
     public void eventCreationPrompt(String field) {
         switch (field) {
             case "topic":

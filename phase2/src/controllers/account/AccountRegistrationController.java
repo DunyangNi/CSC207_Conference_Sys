@@ -9,7 +9,8 @@ import use_cases.account.ContactManager;
 import use_cases.ConversationManager;
 import use_cases.event.EventManager;
 
-public class AccountRegistrationController {
+// TODO: 12/07/20 Consider merging with AccountController
+public class AccountRegistrationController extends AccountController {
     private final AccountManager am;
     private final ContactManager fm;
     private final ConversationManager cm;
@@ -22,14 +23,11 @@ public class AccountRegistrationController {
      *
      */
     public AccountRegistrationController(DataManager dm) {
+        super(dm);
         this.am = dm.getAccountManager();
         this.cm = dm.getConversationManager();
         this.fm = dm.getContactManager();
         this.em = dm.getEventManager();
-    }
-
-    public boolean usernameExists(String username) {
-        return am.containsAccount(username);
     }
 
     public void register(AccountTypeEnum accountType, String username, String password) throws AccountAlreadyExistsException {

@@ -13,26 +13,17 @@ import java.util.Scanner;
 
 public class LoginView {
     private final DataManager dm;
-    private final AccountManager am;
-    private final ContactManager fm;
-    private final ConversationManager cm;
-    private final EventManager em;
     private final LoginController controller;
     private final LoginPresenter presenter = new LoginPresenter();
     private final Scanner userInput = new Scanner(System.in);
 
     public LoginView(DataManager dm) {
         this.dm = dm;
-        this.am = dm.getAccountManager();
-        this.fm = dm.getContactManager();
-        this.cm = dm.getConversationManager();
-        this.em = dm.getEventManager();
         this.controller = new LoginController(dm);
     }
 
     public void runView() {
         presenter.startPrompt();
-
         presenter.usernamePrompt();
         String username = userInput.nextLine();
 
@@ -58,6 +49,7 @@ public class LoginView {
         presenter.exitPrompt();
 
         dm.setUsername(username); // TODO: 12/07/20 Find a more appropriate place for this method call? Would change if we refactor Views to no longer take DataManager argument
+
         AccountTypeEnum accountTypeEnum = controller.login(username);
         switch (accountTypeEnum) {
             case ORGANIZER:

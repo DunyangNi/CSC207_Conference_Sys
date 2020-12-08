@@ -11,13 +11,13 @@ public class AccountPresenter implements Presenter {
         System.out.println();
     }
 
-    public void invalidInputPrompt() {
-        System.out.println("{Invalid input}");
-    }
-
     public void requestCommandPrompt() {
         System.out.println();
         System.out.println("Enter a command (1-16) or '*' to view the command menu again.");
+    }
+
+    public void invalidInputPrompt() {
+        System.out.println("{Invalid input, please try again}");
     }
 
     public void accountList(Set<String> accounts) {
@@ -27,6 +27,10 @@ public class AccountPresenter implements Presenter {
             System.out.println(acct);
         }
         System.out.println("===================================");
+    }
+
+    public void savedDataPrompt() {
+        System.out.println("{Saving data... Saved}");
     }
 
     @Override
