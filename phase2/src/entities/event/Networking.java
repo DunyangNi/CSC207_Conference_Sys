@@ -7,8 +7,8 @@ import java.util.Calendar;
     Represents any Networking event in the system, where a Networking event
     is a type of event without a speaker.
  */
-public class NetworkingEvent extends Event implements Serializable {
-    public NetworkingEvent(
+public class Networking extends Event implements Serializable {
+    public Networking(
             Integer id, String topic, Calendar time, String location,
             String organizer, Integer capacity, int tables, int chairs, boolean hasInternet, boolean hasSoundSystem, boolean hasPresentationScreen, Boolean vipOnly)
     {
@@ -16,15 +16,15 @@ public class NetworkingEvent extends Event implements Serializable {
     }
 
     /**
-     * Compares a given <code>Object</code> with this <code>NetworkingEvent</code>. Returns
-     * true iff the given <code>Object</code> matches this <code>NetworkingEvent</code>.
+     * Compares a given <code>Object</code> with this <code>Networking</code>. Returns
+     * true iff the given <code>Object</code> matches this <code>Networking</code>.
      *
-     * @param other other <code>Object</code> presumed <code>NetworkingEvent</code> to compare
-     * @return the given <code>Object</code> matches this <code>NetworkingEvent</code>
+     * @param other other <code>Object</code> presumed <code>Networking</code> to compare
+     * @return the given <code>Object</code> matches this <code>Networking</code>
      */
     @Override
     public boolean equals(Object other){
-        if (other instanceof NetworkingEvent) return super.equals(other);
+        if (other instanceof Networking) return super.equals(other);
         else return false;
     }
 

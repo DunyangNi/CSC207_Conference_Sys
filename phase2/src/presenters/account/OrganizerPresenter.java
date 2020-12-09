@@ -24,8 +24,8 @@ public class OrganizerPresenter extends AccountPresenter {
         System.out.println();
         System.out.println("[EVENTS]");
         System.out.println("10 = View event schedule");//use presenters
-        System.out.println("11 = View list of all rooms");//presenters
-        System.out.println("12 = Create a new event room");//LocationController - addNewLocation
+        System.out.println("11 = View list of all locations");//presenters
+        System.out.println("12 = Add a new location");//LocationController - addNewLocation
         System.out.println("13 = Create a new event");//EventCreationController - createEvent
         System.out.println("14 = Cancel an event");//EventModifyController - cancelEvent
         System.out.println("15 = Reschedule an event");//EventModifyController - rescheduleTalk

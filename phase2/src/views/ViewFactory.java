@@ -123,12 +123,12 @@ public class ViewFactory {
                 messagePresenter = new MessagePresenter();
                 view = new MessageAllAttendeesView(messageController, messagePresenter);
                 break;
-            case VIEW_ROOMS:
+            case VIEW_LOCATIONS:
                 LocationController locationController = new LocationController(dm);
                 LocationPresenter locationPresenter = new LocationPresenter();
                 view = new LocationListView(locationController, locationPresenter);
                 break;
-            case ADD_ROOM:
+            case ADD_LOCATION:
                 locationController = new LocationController(dm);
                 locationPresenter = new LocationPresenter();
                 view = new LocationAddView(locationController, locationPresenter);

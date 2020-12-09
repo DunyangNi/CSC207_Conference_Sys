@@ -9,10 +9,10 @@ import java.util.Collections;
     Represents any Panel Discussion in the system, where a Panel discussion
     is a type of event with multiple speakers.
  */
-public class PanelDiscussion extends Event implements Serializable{
+public class Panel extends Event implements Serializable{
     private ArrayList<String> speakers;
 
-    public PanelDiscussion(
+    public Panel(
             Integer id, String topic, Calendar time, String location,
             String organizer, ArrayList<String> speakers, Integer capacity, int tables, int chairs, boolean hasInternet, boolean hasSoundSystem, boolean hasPresentationScreen,
             Boolean vipOnly)
@@ -22,16 +22,16 @@ public class PanelDiscussion extends Event implements Serializable{
     }
 
     /**
-     * Compares a given <code>Object</code> with this <code>PanelDiscussion</code>. Returns
-     * true iff the given <code>Object</code> matches this <code>PanelDiscussion</code>.
+     * Compares a given <code>Object</code> with this <code>Panel</code>. Returns
+     * true iff the given <code>Object</code> matches this <code>Panel</code>.
      *
-     * @param other other <code>Object</code> presumed <code>PanelDiscussion</code> to compare
-     * @return the given <code>Object</code> matches this <code>PanelDiscussion</code>
+     * @param other other <code>Object</code> presumed <code>Panel</code> to compare
+     * @return the given <code>Object</code> matches this <code>Panel</code>
      */
     @Override
     public boolean equals(Object other){
-        if (other instanceof PanelDiscussion) {
-            PanelDiscussion o = (PanelDiscussion)other;
+        if (other instanceof Panel) {
+            Panel o = (Panel)other;
 
             if (speakers.size() == o.getSpeakers().size()) {
                 ArrayList<String> speakersClone1 = new ArrayList<>(getSpeakers());
@@ -59,23 +59,23 @@ public class PanelDiscussion extends Event implements Serializable{
     }
 
     /**
-     * @return speakers of this <code>PanelDiscussion</code>
+     * @return speakers of this <code>Panel</code>
      */
     public ArrayList<String> getSpeakers() {
         return speakers;
     }
 
     /**
-     * Sets new speakers for this <code>PanelDiscussion</code>.
+     * Sets new speakers for this <code>Panel</code>.
      *
-     * @param speakers the username of speakers for this <code>PanelDiscussion</code>
+     * @param speakers the username of speakers for this <code>Panel</code>
      */
     public void setSpeakers(ArrayList<String> speakers) { this.speakers = speakers; }
 
     /**
-     * Append a new speaker for this <code>PanelDiscussion</code>.
+     * Append a new speaker for this <code>Panel</code>.
      *
-     * @param speaker the username of speaker to append for this <code>PanelDiscussion</code>
+     * @param speaker the username of speaker to append for this <code>Panel</code>
      */
     public void addSpeaker(String speaker) {
         if (!speakers.contains(speaker))
@@ -93,9 +93,9 @@ public class PanelDiscussion extends Event implements Serializable{
     // TEST
     public static void main(String args[]){
         Calendar c = Calendar.getInstance();
-        PanelDiscussion p1 = new PanelDiscussion(
+        Panel p1 = new Panel(
         1, "t1", c, "l1", "o1", null, 3, false);
-        PanelDiscussion p2 = new PanelDiscussion(
+        Panel p2 = new Panel(
         1, "t1", c, "l1", "o1", null, 3, false);
 
         p1.appendSpeaker("a3");

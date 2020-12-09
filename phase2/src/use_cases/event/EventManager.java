@@ -1,6 +1,7 @@
 package use_cases.event;
 
-import entities.event.PanelDiscussion;
+import entities.event.EventFactory;
+import entities.event.Panel;
 import enums.EventTypeEnum;
 import exceptions.*;
 import entities.event.Event;
@@ -63,7 +64,7 @@ public class EventManager implements Serializable, HTMLWritable {
     private ArrayList<Event> getSpeakerEvents(String speaker) {
         ArrayList<Event> speakerTalks = new ArrayList<>();
         for (Event e : fetchEventList()) {
-            if ((e instanceof Talk && ((Talk) e).getSpeaker().equals(speaker)) | (e instanceof PanelDiscussion && ((PanelDiscussion) e).getSpeakers().contains(speaker)))
+            if ((e instanceof Talk && ((Talk) e).getSpeaker().equals(speaker)) | (e instanceof Panel && ((Panel) e).getSpeakers().contains(speaker)))
                 speakerTalks.add(e);
         }
         return speakerTalks;
@@ -112,7 +113,7 @@ public class EventManager implements Serializable, HTMLWritable {
         Event selectedEvent = events.get(id);
         ArrayList<String> selectedSpeakers = new ArrayList<>();
         if (selectedEvent instanceof Talk) selectedSpeakers.add(((Talk) selectedEvent).getSpeaker());
-        else if (selectedEvent instanceof PanelDiscussion) selectedSpeakers.addAll(((PanelDiscussion) selectedEvent).getSpeakers());
+        else if (selectedEvent instanceof Panel) selectedSpeakers.addAll(((Panel) selectedEvent).getSpeakers());
         checkValidEvent(newTime, selectedEvent.getLocation(), selectedSpeakers);
         eventModifier.ChangeTime(events.get(id), newTime);
     }

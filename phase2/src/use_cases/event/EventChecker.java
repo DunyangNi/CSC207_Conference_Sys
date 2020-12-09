@@ -1,6 +1,6 @@
 package use_cases.event;
 
-import entities.event.PanelDiscussion;
+import entities.event.Panel;
 import entities.event.Event;
 import entities.event.Talk;
 import exceptions.OutOfScheduleException;
@@ -26,8 +26,8 @@ public class EventChecker implements Serializable {
             if (event.getTime().equals(time)) {
                 if (event.getLocation().equals(location)) throw new LocationInUseException();
                 if (event instanceof Talk && speakers.contains(((Talk) event).getSpeaker())) throw new SpeakerIsBusyException();
-                else if (event instanceof PanelDiscussion) {
-                    ArrayList<String> selectedSpeakers = new ArrayList<>(((PanelDiscussion) event).getSpeakers());
+                else if (event instanceof Panel) {
+                    ArrayList<String> selectedSpeakers = new ArrayList<>(((Panel) event).getSpeakers());
                     selectedSpeakers.retainAll(speakers);
                     if (!selectedSpeakers.isEmpty()) throw new SpeakerIsBusyException();
                 }

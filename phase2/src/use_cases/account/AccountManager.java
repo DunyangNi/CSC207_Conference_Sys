@@ -135,7 +135,7 @@ public class AccountManager implements Serializable {
     }
 
     public boolean getVipStatus(String username) {
-        return getAccountHashMap().get(username) instanceof VipAttendee;
+        return getAccountHashMap().get(username) instanceof Vip;
     }
 
     /**

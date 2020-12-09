@@ -1,7 +1,7 @@
-package use_cases.event;
+package entities.event;
 
-import entities.event.NetworkingEvent;
-import entities.event.PanelDiscussion;
+import entities.event.Networking;
+import entities.event.Panel;
 import enums.EventTypeEnum;
 import exceptions.InvalidEventTypeException;
 import entities.event.Event;
@@ -19,9 +19,9 @@ public class EventFactory implements Serializable {
             case TALK:
                 return new Talk(id, topic, time, location, organizer, speakers.get(0), capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen, vipOnly);
             case NETWORKING_EVENT:
-                return new NetworkingEvent(id, topic, time, location, organizer, capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen, vipOnly);
+                return new Networking(id, topic, time, location, organizer, capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen, vipOnly);
             case PANEL_DISCUSSION:
-                return new PanelDiscussion(id, topic, time, location, organizer, speakers, capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen, vipOnly);
+                return new Panel(id, topic, time, location, organizer, speakers, capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen, vipOnly);
             default:
                 throw new InvalidEventTypeException();
         }
