@@ -26,6 +26,10 @@ public class EventPresenter implements Presenter {
         System.out.println("===================================");
     }
 
+    public void eventIdPrompt(){
+        System.out.println("Enter the ID of the event.");
+    }
+
     @Override
     public void exitPrompt() {
     }

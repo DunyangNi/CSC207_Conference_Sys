@@ -8,12 +8,12 @@ public enum AttendeeMenuEnum {
     REMOVE_CONTACT("3"),
     VIEW_CONTACTS("4"),
     MESSAGE("5"), // TODO: Update numbering
-    VIEW_CONVERSATION("7"),
-    VIEW_EVENT_SCHEDULE("8"),
-    VIEW_SIGNUP_SCHEDULE("11"),
+    VIEW_CONVERSATION("6"),
+    VIEW_EVENT_SCHEDULE("7"),
+    VIEW_SIGNUP_SCHEDULE("8"),
     SIGNUP_EVENT("9"),
     LEAVE_EVENT("10"),
-    DOWNLOAD_SCHEDULE("12"),
+    DOWNLOAD_SCHEDULE("11"),
     VIEW_MENU("*"),
     INVALID(null);
 

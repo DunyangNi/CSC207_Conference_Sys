@@ -17,14 +17,14 @@ public class AttendeePresenter extends AccountPresenter {
         System.out.println();
         System.out.println("[CONVERSATIONS]");
         System.out.println("5  = Message a user");
-        System.out.println("7  = view your conversations");//ViewConversationController-isEmpty, viewMessageFrom
+        System.out.println("6  = view your conversations");//ViewConversationController-isEmpty, viewMessageFrom
         System.out.println();
         System.out.println("[EVENTS]");
-        System.out.println("8  = View event schedule");//USe OldPresenter
-        System.out.println("11 = View your sign-up schedule");//Use OldPresenter
+        System.out.println("7  = View event schedule");//USe OldPresenter
+        System.out.println("8 = View your sign-up schedule");//Use OldPresenter
         System.out.println("9  = Sign-up for an event");//SignUpController
         System.out.println("10 = Cancel a sign-up");
-        System.out.println("12 = Download all events in HTML");
+        System.out.println("11 = Download all events in HTML");
         System.out.println("===================================");
     }
 }

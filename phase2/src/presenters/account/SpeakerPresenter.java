@@ -21,8 +21,8 @@ public class SpeakerPresenter extends AccountPresenter {
         System.out.println("7  = View your conversations");//ViewConversation - isEmpty, viewMessageFrom
         System.out.println();
         System.out.println("[EVENTS]");
-        System.out.println("9  = View event schedule");
-        System.out.println("8  = View your speaker schedule");//presenters
+        System.out.println("8  = View event schedule");
+        System.out.println("9  = View your speaker schedule");//presenters
         System.out.println("===================================");
     }
 }
