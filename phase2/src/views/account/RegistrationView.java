@@ -83,7 +83,7 @@ public class RegistrationView implements View {
             controller.register(accountType, username, password);
             presenter.exitPrompt();
         } catch (AccountAlreadyExistsException e) {
-            e.printStackTrace();
+            presenter.AccountAlreadyExistsPrompt();
         }
     }
 }

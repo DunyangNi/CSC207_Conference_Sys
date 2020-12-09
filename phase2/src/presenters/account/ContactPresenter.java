@@ -30,6 +30,14 @@ public class ContactPresenter implements Presenter {
         System.out.println("===================================");
     }
 
+    public void UserNotFoundPrompt() { System.out.println("This account does not exist.");}
+
+    public void AlreadyFriendPrompt() { System.out.println("This account is already in your contact list.");}
+
+    public void FriendNotFoundPrompt() { System.out.println("This account does not exist");}
+
+    public void ObjectNotFoundPrompt() { System.out.println("Could not find this account in your contact list.");}
+
     @Override
     public void exitPrompt() {
 

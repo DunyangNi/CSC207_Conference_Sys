@@ -24,7 +24,7 @@ public class ContactRemoveView implements View {
         try {
             controller.removeFriend(username);
         } catch (ObjectNotFoundException e) {
-            e.printStackTrace();
+            presenter.ObjectNotFoundPrompt();
         }
         return ViewEnum.VOID;
     }

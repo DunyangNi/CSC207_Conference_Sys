@@ -25,8 +25,15 @@ public class ContactAddView implements View {
         String username = userInput.nextLine();
         try {
             controller.addFriend(username);
-        } catch (UserNotFoundException | AlreadyFriendException | FriendNotFoundException e) {
-            e.printStackTrace();
+        }
+        catch (UserNotFoundException e) {
+            presenter.UserNotFoundPrompt();
+        }
+        catch (AlreadyFriendException e) {
+            presenter.AlreadyFriendPrompt();
+        }
+        catch (FriendNotFoundException e) {
+            presenter.FriendNotFoundPrompt();
         }
         return ViewEnum.VOID;
     }
