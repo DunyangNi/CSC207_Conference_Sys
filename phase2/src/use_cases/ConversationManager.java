@@ -59,7 +59,7 @@ public class ConversationManager implements Serializable {
      */
     public void addAccountKey(String username) { conversations.put(username, new HashMap<>()); }
 
-
+    // TODO this method is incorrectly assigning recipient and message (being swapped)
     public void sendMessage(String sender, String recipient, String message) throws UserNotFoundException, RecipientNotFoundException {
         if (!conversations.containsKey(sender)) {
             throw new UserNotFoundException();

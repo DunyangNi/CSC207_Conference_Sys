@@ -4,19 +4,19 @@ import controllers.account.AccountController;
 import controllers.account.ContactController;
 import controllers.account.RegistrationController;
 import controllers.account.LoginController;
+import controllers.event.EventController;
 import controllers.message.ConversationController;
 import controllers.message.MessageController;
 import enums.ViewEnum;
 import gateways.DataManager;
 import presenters.StartPresenter;
 import presenters.account.*;
+import presenters.event.EventPresenter;
 import presenters.message.ConversationPresenter;
 import presenters.message.MessagePresenter;
 import views.account.*;
-import views.message.ConversationView;
-import views.message.MessageAllAttendeesView;
-import views.message.MessageAllSpeakersView;
-import views.message.MessageView;
+import views.event.AllTalksScheduleView;
+import views.message.*;
 
 public class ViewFactory {
     private final DataManager dm;
@@ -89,6 +89,9 @@ public class ViewFactory {
                 view = new ConversationView(conversationController, conversationPresenter);
                 break;
             case VIEW_EVENT_SCHEDULE: // TODO Choose how to implement this
+                EventController eventController = new EventController(dm);
+                EventPresenter eventPresenter = new EventPresenter();
+                view = new AllTalksScheduleView(eventController, eventPresenter);
                 break;
             case DOWNLOAD_SCHEDULE:
                 break;
@@ -129,6 +132,9 @@ public class ViewFactory {
 
             // Speaker
             case MESSAGE_TALK_ATTENDEES:
+                messageController = new MessageController(dm);
+                messagePresenter = new MessagePresenter();
+                view = new MessageTalkAttendeesView(messageController, messagePresenter);
                 break;
             case VIEW_SPEAKER_SCHEDULE: // TODO Choose how to implement this
                 break;

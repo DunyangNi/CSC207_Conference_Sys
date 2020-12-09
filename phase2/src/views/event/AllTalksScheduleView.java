@@ -1,12 +1,13 @@
 package views.event;
 
 import controllers.event.EventController;
-import gateways.DataManager;
+import enums.ViewEnum;
 import presenters.event.EventPresenter;
+import views.View;
 
 import java.util.Scanner;
 
-public class AllTalksScheduleView {
+public class AllTalksScheduleView implements View {
     private final EventController controller;
     private final EventPresenter presenter;
     private final Scanner userInput = new Scanner(System.in);
@@ -16,8 +17,10 @@ public class AllTalksScheduleView {
         this.presenter = presenter;
     }
 
-    public void runView() {
+    @Override
+    public ViewEnum runView() {
         presenter.allEventsPrompt();
         presenter.displayTalkSchedule(controller.getAllEvents());
+        return ViewEnum.VOID;
     }
 }

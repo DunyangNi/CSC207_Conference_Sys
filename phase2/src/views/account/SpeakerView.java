@@ -2,6 +2,7 @@ package views.account;
 
 import controllers.account.AccountController;
 import entities.account.Speaker;
+import enums.OrganizerMenuEnum;
 import enums.SpeakerMenuEnum;
 import enums.ViewEnum;
 import gateways.*;
@@ -32,8 +33,30 @@ public class SpeakerView implements View {
         presenter.displaySpeakerMenu();
 
         while (loggedIn) {
-            SpeakerMenuEnum enumCommand = SpeakerMenuEnum.fromString(userInput.nextLine());
-//            switch (enumCommand) {
+            SpeakerMenuEnum speakerMenuEnum = SpeakerMenuEnum.fromString(userInput.nextLine());
+            switch (speakerMenuEnum) {
+                case EXIT:
+                    return null;
+                case LOGOUT:
+                    loggedIn = false;
+                    break;
+                case VIEW_ALL_ACCOUNTS:
+                    presenter.displayAccountList(controller.getAccountList());
+                    break;
+                case VIEW_CONTACTS:
+                    presenter.displayContactList(controller.getContactList());
+                    break;
+                case VIEW_MENU:
+                    presenter.displaySpeakerMenu();
+                    break;
+                case INVALID:
+                    presenter.invalidInputPrompt();
+                default:
+                    ViewEnum viewEnum = ViewEnum.valueOf(speakerMenuEnum.toString());
+                    controller.getView(viewEnum).runView();
+                    break;
+            }
+//            switch (speakerMenuEnum) {
 ////                case EXIT:
 ////                    loggedIn = false;
 ////                    break;
@@ -76,11 +99,9 @@ public class SpeakerView implements View {
 //                case INVALID:
 //                    presenter.invalidInputPrompt();
 //            }
-            controller.saveData();
-
-            if (loggedIn) {
-                presenter.requestCommandPrompt();
-            }
+            controller.saveData(); // TODO Consider moving this to ConferenceSystem
+            presenter.savedDataPrompt();
+            presenter.requestCommandPrompt();
         }
         return ViewEnum.START;
     }

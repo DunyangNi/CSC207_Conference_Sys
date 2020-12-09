@@ -33,7 +33,7 @@ public class MessageController {
         this.username = dm.getUsername();
     }
 
-    public void messageAccount(String message, String accountUsername) throws AccountNotFoundException {
+    public void messageAccount(String accountUsername, String message) throws AccountNotFoundException {
         if (!am.containsAccount(accountUsername)) {
             throw new AccountNotFoundException();
         }

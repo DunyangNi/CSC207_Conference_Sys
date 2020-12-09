@@ -2,6 +2,7 @@ package views.account;
 
 import controllers.account.AccountController;
 import enums.AttendeeMenuEnum;
+import enums.SpeakerMenuEnum;
 import enums.ViewEnum;
 import gateways.*;
 import presenters.account.AttendeePresenter;
@@ -30,8 +31,30 @@ public class AttendeeView implements View {
         presenter.displayAttendeeMenu();
 
         while (loggedIn) {
-            AttendeeMenuEnum enumCommand = AttendeeMenuEnum.fromString(userInput.nextLine());
-//            switch (enumCommand) {
+            AttendeeMenuEnum attendeeMenuEnum = AttendeeMenuEnum.fromString(userInput.nextLine());
+            switch (attendeeMenuEnum) {
+                case EXIT:
+                    return null;
+                case LOGOUT:
+                    loggedIn = false;
+                    break;
+                case VIEW_ALL_ACCOUNTS:
+                    presenter.displayAccountList(controller.getAccountList());
+                    break;
+                case VIEW_CONTACTS:
+                    presenter.displayContactList(controller.getContactList());
+                    break;
+                case VIEW_MENU:
+                    presenter.displayAttendeeMenu();
+                    break;
+                case INVALID:
+                    presenter.invalidInputPrompt();
+                default:
+                    ViewEnum viewEnum = ViewEnum.valueOf(attendeeMenuEnum.toString());
+                    controller.getView(viewEnum).runView();
+                    break;
+            }
+//            switch (attendeeMenuEnum) {
 ////                case EXIT:
 ////                    loggedIn = false;
 ////                    break;
@@ -72,7 +95,7 @@ public class AttendeeView implements View {
 //                case SIGNUP_EVENT:
 //                case LEAVE_EVENT:
 //                    SignupView signupView = new SignupView(dm);
-//                    signupView.runView(enumCommand);
+//                    signupView.runView(attendeeMenuEnum);
 //                    break;
 //                case DOWNLOAD_SCHEDULE:
 //                    DownloadScheduleView dlView = new DownloadScheduleView(dm);
@@ -84,11 +107,9 @@ public class AttendeeView implements View {
 //                case INVALID:
 //                    presenter.invalidInputPrompt();
 //            }
-            controller.saveData();
-
-            if (loggedIn) {
-                presenter.requestCommandPrompt();
-            }
+            controller.saveData(); // TODO Consider moving this to ConferenceSystem
+            presenter.savedDataPrompt();
+            presenter.requestCommandPrompt();
         }
         return ViewEnum.START;
     }
