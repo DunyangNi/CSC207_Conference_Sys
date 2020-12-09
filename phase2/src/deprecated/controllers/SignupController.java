@@ -41,9 +41,7 @@ public class SignupController {
      */
     public void signupForEvent(Integer id) throws VipRestrictionException, EventNotFoundException,
             EventIsFullException, AlreadySignedUpException {
-        if ((!am.getVipStatus(username)) && em.getVipRestriction(id)) {
-            throw new VipRestrictionException();
-        }
+        if ((!am.getVipStatus(username)) && em.getVipRestriction(id)) { throw new VipRestrictionException(); }
         else {
         em.addAttendee(id, username);
         am.addEventToAttend(id, username);

@@ -1,27 +1,24 @@
 package presenters.event;
 
+import presenters.InputErrorPresenter;
 import presenters.Presenter;
 
-public class SignupPresenter implements Presenter {
+public class SignupPresenter implements Presenter, EventErrorPresenter, InputErrorPresenter {
     @Override
-    public void startPrompt() {
-    }
+    public void startPrompt() { System.out.println("[SIGN UP FOR EVENT]\nPlease follow the prompts to sign up for an event."); }
 
     public void eventIdPrompt() {
-        System.out.println("Please enter the ID of the Talk");
+        System.out.println("Please enter the ID of an event you wish to sign up for: ");
     }
 
-    public void VipRestrictionPrompt() { System.out.println("Signup failed. This event is restricted for VIPs.");}
+    public void vipRestrictionPrompt() { System.out.println("Sorry, this event is restricted to VIPs.");}
 
-    public void EventNotFoundPrompt() { System.out.println("Could not find this event. Please enter a valid event ID.");}
+    public void eventIsFullPrompt() { System.out.println("Sorry, this event is already full.");}
 
-    public void EventIsFullPrompt() { System.out.println("Signup failed. This event is already full.");}
+    public void alreadySignedUpPrompt() { System.out.println("You are already signed up for this event.");}
 
-    public void AlreadySignedUpPrompt() { System.out.println("Signup failed. You are already signed up.");}
-
-    public void AttendeeNotFoundPrompt() { System.out.println("Signup failed. Could not find this attendee.");}
+    public void cancelExitPrompt() { System.out.println("Sign up cancelled. :(");}
 
     @Override
-    public void exitPrompt() {
-    }
+    public void exitPrompt() { System.out.println("Successfully signed up for event! :)"); }
 }

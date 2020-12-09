@@ -1,24 +1,21 @@
 package views.event;
 
 import controllers.event.EventController;
-import enums.AttendeeMenuEnum;
+
 import enums.ViewEnum;
-import exceptions.conflict.AlreadySignedUpException;
-import exceptions.conflict.EventIsFullException;
-import exceptions.conflict.VipRestrictionException;
 import exceptions.not_found.AttendeeNotFoundException;
 import exceptions.not_found.EventNotFoundException;
-import presenters.event.SignupPresenter;
+import presenters.event.CancelSignupPresenter;
 import views.View;
 
 import java.util.Scanner;
 
-public class SignupView implements View {
-    private final SignupPresenter presenter;
+public class CancelSignupView implements View {
+    private final CancelSignupPresenter presenter;
     private final EventController controller;
     private final Scanner userInput = new Scanner(System.in);
 
-    public SignupView(EventController controller, SignupPresenter presenter) {
+    public CancelSignupView(EventController controller, CancelSignupPresenter presenter) {
         this.controller = controller;
         this.presenter = presenter;
     }
@@ -28,15 +25,12 @@ public class SignupView implements View {
         presenter.eventIdPrompt();
         try {
             int id = Integer.parseInt(userInput.nextLine());
-            controller.signupForEvent(id);
+            controller.cancelSignupForEvent(id);
             presenter.exitPrompt();
             return ViewEnum.VOID;
         }
-        catch (VipRestrictionException e) { presenter.vipRestrictionPrompt(); }
-        catch (EventIsFullException e){ presenter.eventIsFullPrompt(); }
         catch (EventNotFoundException e){ presenter.eventNotFoundPrompt(); }
-        catch (AlreadySignedUpException e) { presenter.alreadySignedUpPrompt(); }
-        catch (NumberFormatException e) { presenter.invalidNumberPrompt(); }
+        catch (AttendeeNotFoundException e) { presenter.attendeeNotFoundPrompt(); }
         presenter.cancelExitPrompt();
         return ViewEnum.VOID;
     }

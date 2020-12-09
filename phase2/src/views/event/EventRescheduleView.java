@@ -39,7 +39,7 @@ public class EventRescheduleView implements View {
         Calendar newTime = timeView.runTimeView();
 
         try {
-            eventController.rescheduleTalk(id, newTime);
+            eventController.rescheduleEvent(id, newTime);
             eventReschedulePresenter.exitPrompt();
             return ViewEnum.VOID;
         } catch (LocationInUseException e) {

@@ -1,8 +1,6 @@
 package views.event;
 
 import controllers.event.EventController;
-import controllers.event.LocationController;
-import controllers.event.SpeakerController;
 import enums.EventTypeEnum;
 import enums.ViewEnum;
 import exceptions.*;
@@ -18,18 +16,13 @@ import static enums.EventTypeEnum.*;
 
 public class EventCreationView implements View {
     private final EventController eventController;
-    private final SpeakerController speakerController;
     private final EventCreationPresenter eventCreationPresenter;
-    private final LocationController locationController;
     private final TimeView timeView = new TimeView();
     Scanner userInput = new Scanner(System.in);
 
-    // TODO All other Views only use one Controller and Presenter each.
-    public EventCreationView(EventController eventController, SpeakerController speakerController, LocationController locationController, EventCreationPresenter presenter ) {
+    public EventCreationView(EventController eventController, EventCreationPresenter presenter ) {
         this.eventController = eventController;
-        this.speakerController = speakerController;
         eventCreationPresenter = presenter;
-        this.locationController = locationController;
     }
 
     public ViewEnum runView() {
@@ -50,7 +43,7 @@ public class EventCreationView implements View {
         while (!chosenSpeakers) {
             speakers = runSpeakerInputInteraction(eventType);
             try {
-                speakerController.checkValidSpeaker(eventType, speakers);
+                eventController.checkValidSpeaker(eventType, speakers);
                 chosenSpeakers = true;
             }
             catch (SpeakerNotFoundException e) { eventCreationPresenter.invalidSpeakerPrompt(); }
@@ -83,7 +76,7 @@ public class EventCreationView implements View {
         while (!capacityInput) {
             try {
                 capacity = Integer.parseInt(userInput.nextLine());
-                if (capacity <= 0) eventCreationPresenter.invalidNumberPrompt();
+                if (capacity <= 0) eventCreationPresenter.positiveNumberPrompt();
                 else capacityInput = true;
             }
             catch (NumberFormatException e) { eventCreationPresenter.invalidNumberPrompt(); }
@@ -95,7 +88,7 @@ public class EventCreationView implements View {
         while (!tablesInput) {
             try {
                 tables = Integer.parseInt(userInput.nextLine());
-                if (tables < 0) eventCreationPresenter.invalidNumberPrompt();
+                if (tables < 0) eventCreationPresenter.nonNegativeNumberPrompt();
                 else tablesInput = true;
             }
             catch (NumberFormatException e) { eventCreationPresenter.invalidNumberPrompt(); }
@@ -107,7 +100,7 @@ public class EventCreationView implements View {
         while (!chairsInput) {
             try {
                 chairs = Integer.parseInt(userInput.nextLine());
-                if (chairs < 0) eventCreationPresenter.invalidNumberPrompt();
+                if (chairs < 0) eventCreationPresenter.nonNegativeNumberPrompt();
                 else chairsInput = true;
             }
             catch (NumberFormatException e) { eventCreationPresenter.invalidNumberPrompt(); }
@@ -154,7 +147,7 @@ public class EventCreationView implements View {
 
         ArrayList<String> suggestedLocationStrings;
         try {
-            suggestedLocationStrings = locationController.getSuggestedLocations(capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen);
+            suggestedLocationStrings = eventController.getSuggestedLocations(capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen);
         } catch (NoSuggestedLocationsException e) {
             eventCreationPresenter.noSuggestedLocationsPrompt();
             return null;
@@ -166,8 +159,8 @@ public class EventCreationView implements View {
         while (!chosenLocation) {
             eventCreationPresenter.locationPrompt();
             location = userInput.nextLine();
-            if (!locationController.isExistingLocation(location)) eventCreationPresenter.invalidLocationPrompt();
-            else if (locationController.locationMeetsRequirements(location, capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen))
+            if (!eventController.isExistingLocation(location)) eventCreationPresenter.invalidLocationPrompt();
+            else if (eventController.locationMeetsRequirements(location, capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen))
                 eventCreationPresenter.requirementMismatchPrompt();
             else chosenLocation = true;
         }

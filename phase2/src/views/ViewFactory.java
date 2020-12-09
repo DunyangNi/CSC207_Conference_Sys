@@ -6,8 +6,6 @@ import controllers.account.LoginController;
 import controllers.account.RegistrationController;
 import controllers.event.EventController;
 import controllers.event.LocationController;
-import controllers.event.SignupController;
-import controllers.event.SpeakerController;
 import controllers.message.ConversationController;
 import controllers.message.MessageController;
 import enums.ViewEnum;
@@ -134,11 +132,9 @@ public class ViewFactory {
                 view = new LocationAddView(locationController, locationPresenter);
                 break;
             case ADD_EVENT:
-                eventController= new EventController(dm);
-                SpeakerController speakerController = new SpeakerController(dm);
-                locationController = new LocationController(dm);
+                eventController = new EventController(dm);
                 EventCreationPresenter eventCreationPresenter = new EventCreationPresenter();
-                view = new EventCreationView(eventController, speakerController, locationController,  eventCreationPresenter);
+                view = new EventCreationView(eventController, eventCreationPresenter);
                 break;
             case CANCEL_EVENT:
                 eventController = new EventController(dm);
@@ -170,14 +166,14 @@ public class ViewFactory {
                 view = new AttendeeScheduleView(eventController, eventPresenter);
                 break;
             case SIGNUP_EVENT:
-                SignupController signupController = new SignupController(dm);
+                eventController = new EventController(dm);
                 SignupPresenter signupPresenter = new SignupPresenter();
-                // TODO
+                view = new SignupView(eventController, signupPresenter);
                 break;
             case LEAVE_EVENT:
-                signupController = new SignupController(dm);
-                signupPresenter = new SignupPresenter();
-                // TODO
+                eventController = new EventController(dm);
+                CancelSignupPresenter cancelSignupPresenter = new CancelSignupPresenter();
+                view = new CancelSignupView(eventController, cancelSignupPresenter);
                 break;
         }
         return view;
