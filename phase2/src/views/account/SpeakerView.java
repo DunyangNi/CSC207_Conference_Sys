@@ -42,7 +42,7 @@ public class SpeakerView implements View {
                 case INVALID:
                     presenter.invalidInputPrompt();
                 default:
-                    ViewEnum viewEnum = ViewEnum.valueOf(speakerMenuEnum.toString());
+                    ViewEnum viewEnum = ViewEnum.valueOf(speakerMenuEnum.name());
                     controller.getView(viewEnum).runView();
                     break;
             }

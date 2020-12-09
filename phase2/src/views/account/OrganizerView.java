@@ -42,7 +42,7 @@ public class OrganizerView implements View {
                 case INVALID:
                     presenter.invalidInputPrompt();
                 default:
-                    ViewEnum viewEnum = ViewEnum.valueOf(organizerMenuEnum.toString());
+                    ViewEnum viewEnum = ViewEnum.valueOf(organizerMenuEnum.name());
                     controller.getView(viewEnum).runView();
                     break;
             }

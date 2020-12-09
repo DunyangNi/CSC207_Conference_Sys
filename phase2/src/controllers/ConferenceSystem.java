@@ -42,7 +42,6 @@ public class ConferenceSystem {
         ViewFactory viewFactory = new ViewFactory(dm);
 
         View currentView = viewFactory.getView(ViewEnum.START);
-
         while (currentView != null) {
             currentView = viewFactory.getView(currentView.runView());
             // TODO Method call to save data here?

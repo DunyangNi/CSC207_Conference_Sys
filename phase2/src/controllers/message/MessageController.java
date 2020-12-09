@@ -40,18 +40,18 @@ public class MessageController {
         cm.sendMessage(username, accountUsername, message);
     }
 
-    /**
-     * sends a message to attendee with specified username
-     *
-     * @param message          message to be send
-     * @param attendeeUsername attendee username
-     */
-    public void messageAttendee(String message, String attendeeUsername) throws AccountNotFoundException {
-        if (!am.containsAttendee(attendeeUsername)) {
-            throw new AttendeeNotFoundException();
-        }
-        messageAccount(message, attendeeUsername);
-    }
+//    /**
+//     * sends a message to attendee with specified username
+//     *
+//     * @param message          message to be send
+//     * @param attendeeUsername attendee username
+//     */
+//    public void messageAttendee(String message, String attendeeUsername) throws AccountNotFoundException {
+//        if (!am.containsAttendee(attendeeUsername)) {
+//            throw new AttendeeNotFoundException();
+//        }
+//        messageAccount(message, attendeeUsername);
+//    }
 
     /**
      * sends a message to all registered attendees
@@ -63,7 +63,7 @@ public class MessageController {
         if (!attendeeUsernameIterator.hasNext())
             throw new NoRecipientsException();
         while (attendeeUsernameIterator.hasNext()) {
-            messageAttendee(message, attendeeUsernameIterator.next());
+            messageAccount(attendeeUsernameIterator.next(), message);
         }
     }
 
@@ -87,23 +87,23 @@ public class MessageController {
             throw new NoRecipientsException();
         } else {
             for (String attendee : selectedAttendees) {
-                messageAttendee(message, attendee);
+                messageAccount(attendee, message);
             }
         }
     }
 
-    /**
-     * sends a message to speaker with specified username
-     *
-     * @param message message to be sent
-     * @param speaker speaker username
-     */
-    public void messageSpeaker(String message, String speaker) throws AccountNotFoundException {
-        if (!am.containsSpeaker(speaker)) {
-            throw new SpeakerNotFoundException();
-        }
-        messageAccount(message, speaker);
-    }
+//    /**
+//     * sends a message to speaker with specified username
+//     *
+//     * @param message message to be sent
+//     * @param speaker speaker username
+//     */
+//    public void messageSpeaker(String message, String speaker) throws AccountNotFoundException {
+//        if (!am.containsSpeaker(speaker)) {
+//            throw new SpeakerNotFoundException();
+//        }
+//        messageAccount(message, speaker);
+//    }
 
     /**
      * sends a message to all registered speakers
@@ -116,7 +116,7 @@ public class MessageController {
         if (!speakerUsernameIterator.hasNext())
             throw new NoRecipientsException();
         while (speakerUsernameIterator.hasNext()) {
-            messageSpeaker(message, speakerUsernameIterator.next());
+            messageAccount(speakerUsernameIterator.next(), message);
         }
     }
 }
