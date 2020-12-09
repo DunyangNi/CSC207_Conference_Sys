@@ -22,6 +22,7 @@ public class SpeakerPresenter extends AccountPresenter {
         System.out.println();
         System.out.println("[EVENTS]");
         System.out.println("8  = View event schedule");
+        System.out.println("10 = Download event schedule as HTML");
         System.out.println("9  = View your speaker schedule");//presenters
         System.out.println("===================================");
     }
