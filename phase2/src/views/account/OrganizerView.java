@@ -3,17 +3,18 @@ package views.account;
 import controllers.account.AccountController;
 import enums.OrganizerMenuEnum;
 import enums.ViewEnum;
-import presenters.account.OrganizerPresenter;
+import presenters.account.AccountPresenter;
 import views.View;
 
 import java.util.Scanner;
 
-public class OrganizerView implements View {
+public class OrganizerView extends AccountView implements View {
     private final AccountController controller;
-    private final OrganizerPresenter presenter;
+    private final AccountPresenter presenter;
     private final Scanner userInput = new Scanner(System.in);
 
-    public OrganizerView(AccountController controller, OrganizerPresenter presenter) {
+    public OrganizerView(AccountController controller, AccountPresenter presenter) {
+        super(controller, presenter);
         this.controller = controller;
         this.presenter = presenter;
     }
@@ -21,31 +22,34 @@ public class OrganizerView implements View {
     @Override
     public ViewEnum runView() {
         presenter.startPrompt();
-        presenter.displayOrganizerMenu();
+        presenter.displayUserMenu();
         presenter.requestCommandPrompt();
 
-        boolean loggedIn = true;
-        while (loggedIn) {
+        ViewEnum viewEnum = null;
+        while (viewEnum != ViewEnum.LOGOUT) {
             OrganizerMenuEnum organizerMenuEnum = OrganizerMenuEnum.fromString(userInput.nextLine());
-            switch (organizerMenuEnum) {
-                case EXIT:
-                    return ViewEnum.EXIT;
-                case LOGOUT:
-                    loggedIn = false;
-                    break;
-                case VIEW_ALL_ACCOUNTS:
-                    presenter.displayAccountList(controller.getAccountList());
-                    break;
-                case VIEW_MENU:
-                    presenter.displayOrganizerMenu();
-                    break;
-                case INVALID:
-                    presenter.invalidInputPrompt();
-                default:
-                    ViewEnum viewEnum = ViewEnum.valueOf(organizerMenuEnum.name());
-                    controller.getView(viewEnum).runView();
-                    break;
-            }
+            viewEnum = getView(organizerMenuEnum);
+//            switch (organizerMenuEnum) {
+//                case EXIT:
+//                    return ViewEnum.EXIT;
+//                case LOGOUT:
+//                    loggedIn = false;
+//                    break;
+//                case VIEW_ALL_ACCOUNTS:
+//                    presenter.displayAccountList(controller.getAccountList());
+//                    break;
+//                case VIEW_MENU:
+//                    presenter.displayUserMenu();
+//                    break;
+//                case INVALID:
+//                    presenter.invalidInputPrompt();
+//                    break;
+//                default:
+//                    ViewEnum viewEnum = ViewEnum.valueOf(organizerMenuEnum.name());
+//                    controller.getView(viewEnum).runView();
+//                    break;
+//            }
+
 //            switch (organizerMenuEnum) {
 ////                case EXIT:
 ////                    loggedIn = false;

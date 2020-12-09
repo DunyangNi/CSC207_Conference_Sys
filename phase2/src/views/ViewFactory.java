@@ -50,13 +50,13 @@ public class ViewFactory {
                 break;
             case ORGANIZER:
                 AccountController accountController = new AccountController(dm);
-                OrganizerPresenter organizerPresenter = new OrganizerPresenter();
-                view = new OrganizerView(accountController, organizerPresenter);
+                AccountPresenter accountPresenter = new OrganizerPresenter();
+                view = new OrganizerView(accountController, accountPresenter);
                 break;
             case SPEAKER:
                 accountController = new AccountController(dm);
-                SpeakerPresenter speakerPresenter = new SpeakerPresenter();
-                view = new SpeakerView(accountController, speakerPresenter);
+                accountPresenter = new SpeakerPresenter();
+                view = new SpeakerView(accountController, accountPresenter);
                 break;
             case VIP: // TODO Implement this
                 break;

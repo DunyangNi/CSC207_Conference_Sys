@@ -1,7 +1,7 @@
 package presenters.account;
 
 public class OrganizerPresenter extends AccountPresenter {
-    public void displayOrganizerMenu() {
+    public void displayUserMenu() {
         // TODO Update numbering
         System.out.println("[ORGANIZER MENU]");
         System.out.println("===================================");

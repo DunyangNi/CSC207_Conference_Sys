@@ -5,7 +5,7 @@ import presenters.Presenter;
 import java.util.ArrayList;
 import java.util.Set;
 
-public class AccountPresenter implements Presenter {
+public abstract class AccountPresenter implements Presenter {
     @Override
     public void startPrompt() {
         System.out.println("Logged in}");
@@ -20,6 +20,8 @@ public class AccountPresenter implements Presenter {
     public void invalidInputPrompt() {
         System.out.println("{Invalid input, please try again}");
     }
+
+    public abstract void displayUserMenu();
 
     public void displayAccountList(Set<String> accounts) {
         System.out.println("[USER LIST]");

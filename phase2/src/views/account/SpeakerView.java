@@ -3,17 +3,17 @@ package views.account;
 import controllers.account.AccountController;
 import enums.SpeakerMenuEnum;
 import enums.ViewEnum;
-import presenters.account.SpeakerPresenter;
+import presenters.account.AccountPresenter;
 import views.View;
 
 import java.util.Scanner;
 
 public class SpeakerView implements View {
     private final AccountController controller;
-    private final SpeakerPresenter presenter;
+    private final AccountPresenter presenter;
     private final Scanner userInput = new Scanner(System.in);
 
-    public SpeakerView(AccountController controller, SpeakerPresenter presenter) {
+    public SpeakerView(AccountController controller, AccountPresenter presenter) {
         this.controller = controller;
         this.presenter = presenter;
     }
@@ -21,7 +21,7 @@ public class SpeakerView implements View {
     @Override
     public ViewEnum runView() {
         presenter.startPrompt();
-        presenter.displaySpeakerMenu();
+        presenter.displayUserMenu();
         presenter.requestCommandPrompt();
 
         boolean loggedIn = true;
@@ -37,10 +37,11 @@ public class SpeakerView implements View {
                     presenter.displayAccountList(controller.getAccountList());
                     break;
                 case VIEW_MENU:
-                    presenter.displaySpeakerMenu();
+                    presenter.displayUserMenu();
                     break;
                 case INVALID:
                     presenter.invalidInputPrompt();
+                    break;
                 default:
                     ViewEnum viewEnum = ViewEnum.valueOf(speakerMenuEnum.name());
                     controller.getView(viewEnum).runView();
