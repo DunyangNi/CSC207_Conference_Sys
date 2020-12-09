@@ -12,7 +12,6 @@ import exceptions.conflict.LocationInUseException;
 import exceptions.conflict.SpeakerIsBusyException;
 import exceptions.not_found.AttendeeNotFoundException;
 import exceptions.not_found.EventNotFoundException;
-import exceptions.not_found.LocationNotFoundException;
 
 import java.io.Serializable;
 import java.text.DateFormat;
@@ -24,7 +23,6 @@ import java.util.*;
  */
 public class EventManager implements Serializable, HTMLWritable {
     private final HashMap<Integer, Event> events;
-    private final ArrayList<String> speakers;
     private final EventModifier eventModifier = new EventModifier();
     private final EventChecker eventChecker = new EventChecker();
     private final EventFactory eventFactory = new EventFactory();
@@ -34,54 +32,21 @@ public class EventManager implements Serializable, HTMLWritable {
     // Constructors
     //------------------------------------------------------------
 
-    /**
-     * Create an instance of <code>EventManager</code> given a HashMap of events, ArrayList of locations and speakers.
-     *
-     * @param events given <code>HashMap</code> of <code>Event</code> IDs to <code>Event</code> objects.
-     * @param speakers given <code>ArrayList</code> of speaker usernames
-     */
-    public EventManager(HashMap<Integer, Event> events, ArrayList<String> speakers, LocationManager locationManager) {
+    public EventManager(HashMap<Integer, Event> events) {
         this.events = events;
-        this.speakers = speakers;
     }
 
     //------------------------------------------------------------
     // Methods
     //------------------------------------------------------------
 
-    private boolean isFull(Integer id) {
+    private boolean eventIsFull(Integer id) {
         Event selectedEvent = events.get(id);
         return selectedEvent.getCapacity() == selectedEvent.getAttendees().size();
     }
 
-    /**
-     * @param speaker speaker to add
-     */
-    public void addSpeakerKey(String speaker) {
-        speakers.add(speaker);
-    }
-
-
-    // TODO: REVISE THIS
     public ArrayList<Event> fetchEventList() {
         return new ArrayList<>(events.values());
-    }
-
-    // TODO: REVISE THIS
-    public Talk fetchTalk(Integer id) {
-        Event selectedTalk = events.get(id);
-        return selectedTalk instanceof Talk ? (Talk) selectedTalk : null;
-    }
-
-    // TODO: REVISE THIS
-    public ArrayList<Talk> fetchTalkList() {
-        ArrayList<Talk> talks = new ArrayList<>();
-        for (Event e : fetchEventList()) { // get only Talks
-            if (e instanceof Talk) {
-                talks.add((Talk) e);
-            }
-        }
-        return talks;
     }
 
     /**
@@ -91,51 +56,38 @@ public class EventManager implements Serializable, HTMLWritable {
      * @throws EventNotFoundException upon <code>Event</code> not being found.
      */
     public ArrayList<String> fetchEventAttendeeList(Integer id) throws EventNotFoundException {
-        if (!events.containsKey(id))
-            throw new EventNotFoundException();
+        if (!events.containsKey(id)) throw new EventNotFoundException();
         return events.get(id).getAttendees();
     }
 
-    // TODO: REVISE THIS
-    public ArrayList<Event> fetchSpeakerTalks(String speaker) {
+    private ArrayList<Event> getSpeakerEvents(String speaker) {
         ArrayList<Event> speakerTalks = new ArrayList<>();
-        for (Talk e : fetchTalkList()) {    // get only talks which the speaker gives
-            if (e.getSpeaker().equals(speaker))
+        for (Event e : fetchEventList()) {
+            if ((e instanceof Talk && ((Talk) e).getSpeaker().equals(speaker)) | (e instanceof PanelDiscussion && ((PanelDiscussion) e).getSpeakers().contains(speaker)))
                 speakerTalks.add(e);
         }
         return speakerTalks;
     }
 
-    // TODO: REVISE THIS
-    public HashMap<String[], Calendar> fetchSortedTalks(ArrayList<Event> selectedTalks) {
-        // Converts from ArrayList to Array, and sorts the array
-        Event[] selectedTalksToSort = selectedTalks.toArray(new Event[0]);
+    private ArrayList<String> getSortedEvents(ArrayList<Event> selectedEvents) {
+        Event[] selectedTalksToSort = selectedEvents.toArray(new Event[0]);
         Arrays.sort(selectedTalksToSort);
-
-        // Creates a hashtable which key is string representation of a talk and value is its time
-        HashMap<String[], Calendar> sortedSelectedTalks = new HashMap<>();
-        String[] eventInfo;
+        ArrayList<String> sortedSelectedEvents = new ArrayList<>();
         for (Event e : selectedTalksToSort) {
-            eventInfo = new String[5];
-            eventInfo[0] = e.getTopic();
-            eventInfo[1] = "DOES NOT WORK";
-            eventInfo[2] = e.getLocation();
-            eventInfo[3] = e.getTime().getTime().toString();
-            eventInfo[4] = String.valueOf(e.getId());
-            sortedSelectedTalks.put(eventInfo, e.getTime());
+            if (Calendar.getInstance().compareTo(e.getTime()) < 0) sortedSelectedEvents.add(e.toString());
         }
-        return sortedSelectedTalks;
+        return sortedSelectedEvents;
     }
 
-    // TODO: REVISE THIS
-    public HashMap<String[], Calendar> fetchSortedTalks() {
-        return fetchSortedTalks(fetchEventList());
+    public ArrayList<String> getSortedEventsByID(ArrayList<Integer> eventIDs) {
+        ArrayList<Event> selectedEvents = new ArrayList<>();
+        for (Integer id : eventIDs) { selectedEvents.add(events.get(id)); }
+        return getSortedEvents(selectedEvents);
     }
 
-    // TODO: REVISE THIS
-    public HashMap<String[], Calendar> fetchSortedTalks(String speaker) {
-        return fetchSortedTalks(fetchSpeakerTalks(speaker));
-    }
+    public ArrayList<String> getAllSortedEvents() { return getSortedEvents(fetchEventList()); }
+
+    public ArrayList<String> getSpeakerSortedEvents(String speaker) { return getSortedEvents(getSpeakerEvents(speaker)); }
 
     public void addNewEvent(EventTypeEnum type, String topic, Calendar time, String location, String organizer, ArrayList<String> speakers, Integer capacity, int tables, int chairs, boolean hasInternet, boolean hasSoundSystem, boolean hasPresentationScreen, Boolean vipOnly) throws InvalidEventTypeException, OutOfScheduleException, LocationInUseException, SpeakerIsBusyException {
         checkValidEvent(time, location, speakers);
@@ -169,25 +121,14 @@ public class EventManager implements Serializable, HTMLWritable {
         eventChecker.checkValidEvent(time, location, speakers, fetchEventList());
     }
 
-    /**
-     * Validates if a given id is talk or not
-     *
-     * @param id id to check
-     * @return True if the id is associated with a talk. False otherwise.
-     */
+    // TODO: to be updated
     public boolean isTalk(Integer id) {
         return events.get(id) instanceof Talk;
     }
 
-    /**
-     * Validates if a speaker gives a talk associated with the given id
-     *
-     * @param id id to be used to find a talk
-     * @param speaker speaker to check
-     * @return True if the speaks gives a talk associated with the id. False otherwise
-     */
+    // TODO: to be updated
     public boolean isSpeakerOfTalk(Integer id, String speaker) {
-        return isTalk(id) && fetchTalk(id).getSpeaker().equals(speaker);
+        return isTalk(id) && ((Talk) events.get(id)).getSpeaker().equals(speaker);
     }
 
     /**
@@ -204,7 +145,7 @@ public class EventManager implements Serializable, HTMLWritable {
     public void addAttendee(Integer id, String attendee) throws EventIsFullException, EventNotFoundException, AlreadySignedUpException {
         if (!events.containsKey(id))
             throw new EventNotFoundException();
-        if (isFull(id))
+        if (eventIsFull(id))
             throw new EventIsFullException();
         if (isSignedUp(id, attendee))
             throw new AlreadySignedUpException();

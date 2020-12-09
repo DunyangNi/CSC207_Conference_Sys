@@ -1,10 +1,12 @@
 package views.event;
 
 import controllers.event.LocationController;
+import enums.ViewEnum;
 import presenters.event.LocationPresenter;
+import views.View;
 
 
-public class AllLocationsView {
+public class AllLocationsView implements View {
 
     private final LocationPresenter locationPresenter;
     private final LocationController locationController;
@@ -14,7 +16,8 @@ public class AllLocationsView {
         this.locationPresenter = locationPresenter;
     }
 
-    public void runView() {
+    public ViewEnum runView() {
         locationPresenter.displayLocations(locationController.getLocationsAsString());
+        return ViewEnum.VOID;
     }
 }

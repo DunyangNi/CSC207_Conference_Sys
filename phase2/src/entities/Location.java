@@ -1,4 +1,4 @@
-package entities.event;
+package entities;
 
 import java.io.Serializable;
 

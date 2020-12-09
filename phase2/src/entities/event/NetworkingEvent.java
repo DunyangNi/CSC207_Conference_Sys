@@ -24,11 +24,17 @@ public class NetworkingEvent extends Event implements Serializable {
      */
     @Override
     public boolean equals(Object other){
-        if (other instanceof NetworkingEvent) {
-            return super.equals(other);
-        }
-        else {
-            return false;
-        }
+        if (other instanceof NetworkingEvent) return super.equals(other);
+        else return false;
+    }
+
+    @Override
+    public String toString() {
+        return "Event ID: " + getId() + "\n" +
+                "Event Type: Networking Event\n" +
+                "Topic: " + getTopic() + "\n" +
+                "Location: " + getLocation() + "\n" +
+                "Time: " + getTime().getTime().toString() + "\n" +
+                "Organizer: " + getOrganizer();
     }
 }

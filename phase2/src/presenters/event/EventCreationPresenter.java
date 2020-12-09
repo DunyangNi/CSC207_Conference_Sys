@@ -42,8 +42,8 @@ public class EventCreationPresenter implements Presenter, InputErrorPresenter, E
         System.out.println("Please enter the usernames of all speakers on separate lines\n(press ENTER/RETURN twice to finish): ");
     }
 
-    public void invalidSpeakerPrompt(String speaker) {
-        System.out.println("The speaker " + speaker + " could not be found.");
+    public void invalidSpeakerPrompt() {
+        System.out.println("One or more speakers could not be found. Ensure you have entered registered speakers.");
     }
 
     public void notEnoughSpeakersPrompt() {

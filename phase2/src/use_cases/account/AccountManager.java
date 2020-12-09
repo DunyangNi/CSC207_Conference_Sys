@@ -5,6 +5,7 @@ import exceptions.already_exists.AccountAlreadyExistsException;
 import exceptions.already_exists.ObjectAlreadyExistsException;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -201,4 +202,6 @@ public class AccountManager implements Serializable {
     public void removeEventToAttend(Integer id, String attendee) {
         attendeeHashMap.get(attendee).getEventsAttending().remove(id);
     }
+
+    public ArrayList<Integer> getAttendeeEvents(String attendee) { return attendeeHashMap.get(attendee).getEventsAttending(); }
 }

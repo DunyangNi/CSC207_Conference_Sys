@@ -41,12 +41,12 @@ public class EventView {
 
     public void attendeeSchedule() {//replaced
         presenter.myEventsPrompt();
-        presenter.displayTalkSchedule(controller.getAttendeeEvents());
+        //presenter.displayTalkSchedule(controller.getAttendeeEvents());
     }
 
     public void allTalksSchedule() {//replaced
         presenter.allEventsPrompt();
-        presenter.displayTalkSchedule(controller.getAllEvents());
+        //presenter.displayTalkSchedule(controller.getAllEvents());
     }
 
     private Calendar collectTimeInfo() {

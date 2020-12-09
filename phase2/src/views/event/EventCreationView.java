@@ -4,19 +4,19 @@ import controllers.event.EventController;
 import controllers.event.LocationController;
 import controllers.event.SpeakerController;
 import enums.EventTypeEnum;
-import exceptions.InvalidEventTypeException;
-import exceptions.NoSuggestedLocationsException;
-import exceptions.OutOfScheduleException;
-import exceptions.PastTimeException;
+import enums.ViewEnum;
+import exceptions.*;
 import exceptions.conflict.LocationInUseException;
 import exceptions.conflict.SpeakerIsBusyException;
+import exceptions.not_found.SpeakerNotFoundException;
 import presenters.event.EventCreationPresenter;
+import views.View;
 
 import java.util.*;
 
 import static enums.EventTypeEnum.*;
 
-public class EventCreationView {
+public class EventCreationView implements View {
     private final EventController eventController;
     private final SpeakerController speakerController;
     private final EventCreationPresenter eventCreationPresenter;
@@ -31,7 +31,7 @@ public class EventCreationView {
         this.locationController = locationController;
     }
 
-    public void runView() {
+    public ViewEnum runView() {
         eventCreationPresenter.startPrompt();
 
         EventTypeEnum eventType = GENERAL_EVENT;
@@ -48,7 +48,12 @@ public class EventCreationView {
         boolean chosenSpeakers = false;
         while (!chosenSpeakers) {
             speakers = runSpeakerInputInteraction(eventType);
-            if (validSpeakerInput(eventType, speakers)) chosenSpeakers = true;
+            try {
+                speakerController.checkValidSpeaker(eventType, speakers);
+                chosenSpeakers = true;
+            }
+            catch (SpeakerNotFoundException e) { eventCreationPresenter.invalidSpeakerPrompt(); }
+            catch (NotEnoughSpeakersException e) { eventCreationPresenter.notEnoughSpeakersPrompt(); }
         }
 
         eventCreationPresenter.topicPrompt();
@@ -151,7 +156,7 @@ public class EventCreationView {
             suggestedLocationStrings = locationController.getSuggestedLocations(capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen);
         } catch (NoSuggestedLocationsException e) {
             eventCreationPresenter.noSuggestedLocationsPrompt();
-            return;
+            return null;
         }
         eventCreationPresenter.displaySuggestedLocations(suggestedLocationStrings);
 
@@ -169,7 +174,7 @@ public class EventCreationView {
         try {
             eventController.createEvent(eventType, topic, time, location, speakers, capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen, vipOnly);
             eventCreationPresenter.exitPrompt();
-            return;
+            return ViewEnum.VOID;
         } catch (InvalidEventTypeException e) {
             eventCreationPresenter.invalidEventTypePrompt();
         } catch (LocationInUseException e) {
@@ -180,6 +185,7 @@ public class EventCreationView {
             eventCreationPresenter.speakerIsBusyPrompt();
         }
         eventCreationPresenter.cancelExitPrompt();
+        return ViewEnum.VOID;
     }
 
     private ArrayList<String> runSpeakerInputInteraction(EventTypeEnum eventType) {
@@ -197,26 +203,5 @@ public class EventCreationView {
             }
         }
         return speakers;
-    }
-
-    private boolean validSpeakerInput(EventTypeEnum eventType, ArrayList<String> speakers) {
-        if (eventType == TALK) {
-            if (!speakerController.isValidSpeaker(speakers.get(0))) {
-                eventCreationPresenter.invalidSpeakerPrompt(speakers.get(0));
-                return false;
-            }
-        } else if (eventType == PANEL_DISCUSSION) {
-            if (speakers.size() < 2) {
-                eventCreationPresenter.notEnoughSpeakersPrompt();
-                return false;
-            }
-            for (String speaker : speakers) {
-                if (!speakerController.isValidSpeaker(speaker)) {
-                    eventCreationPresenter.invalidSpeakerPrompt(speaker);
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 }

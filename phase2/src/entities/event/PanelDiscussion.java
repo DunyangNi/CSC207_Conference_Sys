@@ -47,6 +47,17 @@ public class PanelDiscussion extends Event implements Serializable{
         return false;
     }
 
+    @Override
+    public String toString() {
+        return "Event ID: " + getId() + "\n" +
+                "Event Type: Panel Discussion\n" +
+                "Topic: " + getTopic() + "\n" +
+                "Speakers: " + String.join(", ", getSpeakers()) + "\n" +
+                "Location: " + getLocation() + "\n" +
+                "Time: " + getTime().getTime().toString() + "\n" +
+                "Organizer: " + getOrganizer();
+    }
+
     /**
      * @return speakers of this <code>PanelDiscussion</code>
      */

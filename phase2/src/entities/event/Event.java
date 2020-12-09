@@ -76,6 +76,16 @@ public class Event implements Serializable, Comparable<Event> {
         return topic.hashCode() / 10 + getOrganizer().hashCode() % 1000;
     }
 
+    @Override
+    public String toString() {
+        return "Event ID: " + this.id + "\n" +
+                "Event Type: Generic Event\n" +
+                "Topic: " + this.topic + "\n" +
+                "Location: " + this.location + "\n" +
+                "Time: " + this.time.getTime().toString() + "\n" +
+                "Organizer: " + this.organizer;
+    }
+
     /**
      * @return topic of this <code>Event</code>
      */

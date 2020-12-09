@@ -4,6 +4,7 @@ import enums.ViewEnum;
 import gateways.*;
 import presenters.StartPresenter;
 import use_cases.ConversationManager;
+import use_cases.RequestManager;
 import use_cases.account.AccountManager;
 import use_cases.account.ContactManager;
 import use_cases.event.EventManager;
@@ -34,14 +35,16 @@ public class ConferenceSystem {
         ConversationDataManager conversationDataManager = new ConversationDataManager();
         ContactDataManager contactDataManager = new ContactDataManager();
         LocationDataManager locationDataManager = new LocationDataManager();
+        RequestDataManager requestDataManager = new RequestDataManager();
 
         AccountManager am = accountDataManager.readManager();
         ContactManager fm = contactDataManager.readManager();
         ConversationManager cm = conversationDataManager.readManager();
         EventManager em = eventDataManager.readManager();
         LocationManager lm = locationDataManager.readManager();
+        RequestManager rm = requestDataManager.readManager();
 
-        DataManager dm = new DataManager(am, fm, cm, em, lm);
+        DataManager dm = new DataManager(am, fm, cm, em, lm, rm);
         ViewFactory viewFactory = new ViewFactory(dm);
 
         ViewEnum currentView = ViewEnum.START;

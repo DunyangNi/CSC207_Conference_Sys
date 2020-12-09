@@ -219,9 +219,9 @@ public class TextOldPresenter implements OldPresenter {
      * Uses <code>displayTalks</code> as a helper method.
      */
     public void displayTalkSchedule() {
-        HashMap<String[], Calendar> allTalks = eventmanager.fetchSortedTalks();
-        System.out.println("Schedule for all talks:\n");
-        displayTalks(allTalks);
+        //HashMap<String[], Calendar> allTalks = eventmanager.getAllSortedEvents();
+        //System.out.println("Schedule for all talks:\n");
+        //displayTalks(allTalks);
     }
 
     //Organizer methods
@@ -322,9 +322,9 @@ public class TextOldPresenter implements OldPresenter {
      * @param speaker The current speaker-user's username
      */
     public void displaySpeakerTalksSchedule(String speaker) {
-        HashMap<String[], Calendar> speakerTalks = eventmanager.fetchSortedTalks(speaker);
-        System.out.println("Schedule for talks you're speaking at:\n");
-        displayTalks(speakerTalks);
+        //HashMap<String[], Calendar> speakerTalks = eventmanager.getSpeakerSortedEvents(speaker);
+        //System.out.println("Schedule for talks you're speaking at:\n");
+        //displayTalks(speakerTalks);
     }
 
     //Attendee methods
@@ -382,16 +382,16 @@ public class TextOldPresenter implements OldPresenter {
      * @param attendee The current attendee-user's username
      */
     public void displayAttendeeTalkSchedule(String attendee) {
-        HashMap<String[], Calendar> attendeeTalks = eventmanager.fetchSortedTalks();
-        System.out.println("Talks you've signed up for:\n");
-        Calendar timeNow = Calendar.getInstance();
-        if (attendeeTalks.keySet().isEmpty()) System.out.println("Nothing!");
-        for(String[] eventInfo : attendeeTalks.keySet()) {
-            if(timeNow.compareTo(attendeeTalks.get(eventInfo)) < 0 &&
-                    eventmanager.isSignedUp(Integer.parseInt(eventInfo[4]), attendee)) {
-                displayTalkInfo(eventInfo);
-            }
-        }
+        //HashMap<String[], Calendar> attendeeTalks = eventmanager.getAllSortedEvents();
+        //System.out.println("Talks you've signed up for:\n");
+        //Calendar timeNow = Calendar.getInstance();
+        //if (attendeeTalks.keySet().isEmpty()) System.out.println("Nothing!");
+        //for(String[] eventInfo : attendeeTalks.keySet()) {
+            //if(timeNow.compareTo(attendeeTalks.get(eventInfo)) < 0 &&
+                    //eventmanager.isSignedUp(Integer.parseInt(eventInfo[4]), attendee)) {
+                //displayTalkInfo(eventInfo);
+            //}
+        //}
     }
 
     /**

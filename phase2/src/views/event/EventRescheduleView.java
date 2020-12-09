@@ -1,16 +1,18 @@
 package views.event;
 
 import controllers.event.EventController;
+import enums.ViewEnum;
 import exceptions.OutOfScheduleException;
 import exceptions.conflict.LocationInUseException;
 import exceptions.conflict.SpeakerIsBusyException;
 import exceptions.not_found.EventNotFoundException;
 import presenters.event.EventReschedulePresenter;
+import views.View;
 
 import java.util.Calendar;
 import java.util.Scanner;
 
-public class EventRescheduleView {
+public class EventRescheduleView implements View {
     private final EventController eventController;
     private final EventReschedulePresenter eventReschedulePresenter;
     private final Scanner userInput = new Scanner(System.in);
@@ -21,7 +23,7 @@ public class EventRescheduleView {
         this.eventReschedulePresenter = eventReschedulePresenter;
     }
 
-    public void runView() {
+    public ViewEnum runView() {
         eventReschedulePresenter.startPrompt();
 
         boolean chosenID = false;
@@ -39,7 +41,7 @@ public class EventRescheduleView {
         try {
             eventController.rescheduleTalk(id, newTime);
             eventReschedulePresenter.exitPrompt();
-            return;
+            return ViewEnum.VOID;
         } catch (LocationInUseException e) {
             eventReschedulePresenter.inUseLocationPrompt();
         } catch (SpeakerIsBusyException e) {
@@ -50,5 +52,6 @@ public class EventRescheduleView {
             eventReschedulePresenter.outOfSchedulePrompt();
         }
         eventReschedulePresenter.cancelExitPrompt();
+        return ViewEnum.VOID;
     }
 }

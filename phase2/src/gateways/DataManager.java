@@ -1,5 +1,6 @@
 package gateways;
 
+import use_cases.RequestManager;
 import use_cases.account.AccountManager;
 import use_cases.account.ContactManager;
 import use_cases.ConversationManager;
@@ -15,15 +16,17 @@ public class DataManager {
     protected ConversationManager conversationManager;
     protected EventManager eventManager;
     protected LocationManager locationManager;
+    protected RequestManager requestManager;
     protected String username;
 
 
-    public DataManager(AccountManager am, ContactManager fm, ConversationManager cm, EventManager em, LocationManager lm) {
+    public DataManager(AccountManager am, ContactManager fm, ConversationManager cm, EventManager em, LocationManager lm, RequestManager rm) {
         this.accountManager = am;
         this.contactManager = fm;
         this.conversationManager = cm;
         this.eventManager = em;
         this.locationManager = lm;
+        this.requestManager = rm;
     }
 
     /**
@@ -59,6 +62,8 @@ public class DataManager {
     }
 
     public LocationManager getLocationManager() { return locationManager; }
+
+    public RequestManager getRequestManager() { return requestManager; }
 
     /**
      * The getter of username

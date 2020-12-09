@@ -1,11 +1,13 @@
 package views.event;
 
 import controllers.event.LocationController;
+import enums.ViewEnum;
 import presenters.event.LocationPresenter;
+import views.View;
 
 import java.util.Scanner;
 
-public class AddLocationView {
+public class AddLocationView implements View {
     private final LocationPresenter locationPresenter;
     private final LocationController locationController;
     private final Scanner userInput = new Scanner(System.in);
@@ -15,7 +17,7 @@ public class AddLocationView {
         this.locationPresenter = locationPresenter;
     }
 
-    public void runView() {
+    public ViewEnum runView() {
         locationPresenter.startPrompt();
 
         boolean nameChosen = false;
@@ -107,6 +109,7 @@ public class AddLocationView {
 
         locationController.addNewLocation(name, capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen, furtherNotes);
         locationPresenter.exitPrompt();
+        return ViewEnum.VOID;
     }
 }
 

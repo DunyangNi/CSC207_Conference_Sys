@@ -1,12 +1,14 @@
 package views.event;
 
 import controllers.event.EventController;
+import enums.ViewEnum;
 import presenters.event.EventCancelPresenter;
 import exceptions.not_found.EventNotFoundException;
+import views.View;
 
 import java.util.Scanner;
 
-public class EventCancelView {
+public class EventCancelView implements View {
     private final EventController eventController;
     private final EventCancelPresenter eventCancelPresenter;
     Scanner userInput = new Scanner(System.in);
@@ -16,7 +18,7 @@ public class EventCancelView {
         eventCancelPresenter = presenter;
     }
 
-    public void runView(){
+    public ViewEnum runView(){
         eventCancelPresenter.startPrompt();
 
         boolean chosenID = false;
@@ -32,10 +34,11 @@ public class EventCancelView {
         try {
             eventController.cancelEvent(id);
             eventCancelPresenter.exitPrompt();
-            return;
+            return ViewEnum.VOID;
         } catch (EventNotFoundException e) {
             eventCancelPresenter.eventNotFoundPrompt();
         }
         eventCancelPresenter.cancelExitPrompt();
+        return ViewEnum.VOID;
     }
 }

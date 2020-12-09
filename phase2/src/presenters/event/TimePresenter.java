@@ -34,8 +34,6 @@ public class TimePresenter implements Presenter {
 
     public void pastTimePrompt() { System.out.println("The selected time takes place in the past."); }
 
-    public void outOfSchedulePrompt() { System.out.println("The selected time is not from 9 AM to 4 PM."); }
-
     @Override
     public void exitPrompt() { }
 }

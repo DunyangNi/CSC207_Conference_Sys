@@ -6,7 +6,7 @@ import use_cases.*;
 
 public class RequestHandleController {
     public final RequestManager rm;
-    //TODO: modify gateways to accomodate requestmanager
+
     public RequestHandleController(DataManager dm) {
         this.rm = dm.getRequestManager();
     }

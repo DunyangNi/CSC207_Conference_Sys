@@ -23,10 +23,10 @@ public class EventDataManager implements DataReader, DataSaver{
             return (EventManager) readObject(eventPath);
         } catch (IOException e) {
             System.out.println("Could not read EventManager, creating a new EventManager.");
-            return new EventManager(new HashMap<>(), new ArrayList<>(), new LocationManager());
+            return new EventManager(new HashMap<>());
         } catch (ClassNotFoundException e) {
             System.out.println("EventManager not found, creating a new EventManager.");
-            return new EventManager(new HashMap<>(), new ArrayList<>(), new LocationManager());
+            return new EventManager(new HashMap<>());
         }
     }
 }

@@ -1,11 +1,10 @@
 package use_cases.event;
 
-import entities.event.Location;
-import exceptions.NoSuggestedLocationsException;
+import entities.Location;
 import exceptions.RequirementMismatchException;
 import exceptions.already_exists.LocationAlreadyExistsException;
 import exceptions.not_found.LocationNotFoundException;
-import exceptions.not_found.ObjectNotFoundException;
+
 import java.io.Serializable;
 import java.util.*;
 import java.util.HashMap;

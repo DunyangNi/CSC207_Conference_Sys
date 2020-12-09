@@ -5,20 +5,18 @@ import enums.ViewEnum;
 import presenters.event.EventPresenter;
 import views.View;
 
-import java.util.Scanner;
-
-public class AllTalksScheduleView implements View {
+public class SpeakerScheduleView implements View {
     private final EventController controller;
     private final EventPresenter presenter;
 
-    public AllTalksScheduleView(EventController controller, EventPresenter presenter) {
+    public SpeakerScheduleView(EventController controller, EventPresenter presenter) {
         this.controller = controller;
         this.presenter = presenter;
     }
 
     public ViewEnum runView() {
-        presenter.allEventsPrompt();
-        presenter.displayEventSchedule(controller.getAllEvents());
+        presenter.myEventsPrompt();
+        presenter.displayEventSchedule(controller.getSpeakerEvents());
         return ViewEnum.VOID;
     }
 }

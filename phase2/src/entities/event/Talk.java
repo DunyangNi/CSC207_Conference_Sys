@@ -31,6 +31,17 @@ public class Talk extends Event implements Serializable {
         return false;
     }
 
+    @Override
+    public String toString() {
+        return "Event ID: " + getId() + "\n" +
+                "Event Type: Talk\n" +
+                "Topic: " + getTopic() + "\n" +
+                "Speaker: " + getSpeaker() + "\n" +
+                "Location: " + getLocation() + "\n" +
+                "Time: " + getTime().getTime().toString() + "\n" +
+                "Organizer: " + getOrganizer();
+    }
+
     /**
      * @return speaker of this <code>Talk</code>
      */

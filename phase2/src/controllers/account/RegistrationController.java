@@ -37,7 +37,6 @@ public class RegistrationController extends AccountController {
                 break;
             case SPEAKER:
                 am.addNewSpeaker(username, password, "", "");
-                addNewSpeakerKeys(username);
                 break;
             case ORGANIZER:
                 am.addNewOrganizer(username, password, "", "");
@@ -57,13 +56,8 @@ public class RegistrationController extends AccountController {
         cm.addAccountKey(username);
     }
 
-    private void addNewSpeakerKeys(String username) {
-        em.addSpeakerKey(username);
-    }
-
     public void createSpeakerAccount(String username, String password, String firstname, String lastname) throws ObjectAlreadyExistsException {
         this.am.addNewSpeaker(username, password, firstname, lastname);
-        addNewSpeakerKeys(username);
     }
 
     public void createAttendeeAccount(String username, String password, String firstname, String lastname) throws ObjectAlreadyExistsException {
