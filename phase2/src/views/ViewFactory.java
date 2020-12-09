@@ -58,20 +58,21 @@ public class ViewFactory {
                 view = new AccountView(accountController, accountPresenter);
                 break;
             case ATTENDEE:
+            case VIP: // TODO Decide how to implement this
                 accountController = new AccountController(dm);
                 accountPresenter = new AttendeePresenter();
                 view = new AccountView(accountController, accountPresenter);
                 break;
-            case VIP: // TODO Implement this
-                break;
 
             // Account
-            case EXIT: // TODO Consider removing this case
-            case VIEW_ALL_ACCOUNTS: // TODO Choose how to implement this
+            // TODO Consider removing these case
+            case EXIT:
+            case VIEW_ALL_ACCOUNTS:
             case INVALID:
             case VIEW_MENU:
             case VOID:
                 break;
+
             case ADD_CONTACT:
                 ContactController contactController = new ContactController(dm);
                 ContactPresenter contactPresenter = new ContactPresenter();
@@ -103,6 +104,7 @@ public class ViewFactory {
                 view = new EventScheduleView(eventController, eventPresenter);
                 break;
             case DOWNLOAD_SCHEDULE: // TODO Implement this
+//                view = new DownloadScheduleView();
                 break;
 
             // Organizer
@@ -172,8 +174,8 @@ public class ViewFactory {
                 break;
             case LEAVE_EVENT:
                 eventController = new EventController(dm);
-                CancelSignupPresenter cancelSignupPresenter = new CancelSignupPresenter();
-                view = new CancelSignupView(eventController, cancelSignupPresenter);
+                SignupCancelPresenter signupCancelPresenter = new SignupCancelPresenter();
+                view = new SignupCancelView(eventController, signupCancelPresenter);
                 break;
         }
         return view;

@@ -5,17 +5,17 @@ import controllers.event.EventController;
 import enums.ViewEnum;
 import exceptions.not_found.AttendeeNotFoundException;
 import exceptions.not_found.EventNotFoundException;
-import presenters.event.CancelSignupPresenter;
+import presenters.event.SignupCancelPresenter;
 import views.View;
 
 import java.util.Scanner;
 
-public class CancelSignupView implements View {
-    private final CancelSignupPresenter presenter;
+public class SignupCancelView implements View {
+    private final SignupCancelPresenter presenter;
     private final EventController controller;
     private final Scanner userInput = new Scanner(System.in);
 
-    public CancelSignupView(EventController controller, CancelSignupPresenter presenter) {
+    public SignupCancelView(EventController controller, SignupCancelPresenter presenter) {
         this.controller = controller;
         this.presenter = presenter;
     }

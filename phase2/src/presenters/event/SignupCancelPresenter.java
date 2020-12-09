@@ -3,7 +3,7 @@ package presenters.event;
 import presenters.InputErrorPresenter;
 import presenters.Presenter;
 
-public class CancelSignupPresenter implements Presenter, EventErrorPresenter, InputErrorPresenter {
+public class SignupCancelPresenter implements Presenter, EventErrorPresenter, InputErrorPresenter {
     @Override
     public void startPrompt() { System.out.println("[CANCEL SIGN UP FOR EVENT]\nPlease follow the prompts to cancel signing up for an event."); }
 
