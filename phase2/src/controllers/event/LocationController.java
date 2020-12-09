@@ -1,9 +1,6 @@
 package controllers.event;
 
-import exceptions.NoSuggestedLocationsException;
-import exceptions.RequirementMismatchException;
 import exceptions.already_exists.LocationAlreadyExistsException;
-import exceptions.not_found.LocationNotFoundException;
 import gateways.DataManager;
 import use_cases.event.LocationManager;
 

@@ -20,7 +20,7 @@ public class EventCreationView implements View {
     private final TimeView timeView = new TimeView();
     Scanner userInput = new Scanner(System.in);
 
-    public EventCreationView(EventController eventController, EventCreationPresenter presenter ) {
+    public EventCreationView(EventController eventController, EventCreationPresenter presenter) {
         this.eventController = eventController;
         eventCreationPresenter = presenter;
     }
@@ -150,7 +150,7 @@ public class EventCreationView implements View {
             suggestedLocationStrings = eventController.getSuggestedLocations(capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen);
         } catch (NoSuggestedLocationsException e) {
             eventCreationPresenter.noSuggestedLocationsPrompt();
-            return null;
+            return ViewEnum.VOID;
         }
         eventCreationPresenter.displaySuggestedLocations(suggestedLocationStrings);
 
@@ -160,7 +160,7 @@ public class EventCreationView implements View {
             eventCreationPresenter.locationPrompt();
             location = userInput.nextLine();
             if (!eventController.isExistingLocation(location)) eventCreationPresenter.invalidLocationPrompt();
-            else if (eventController.locationMeetsRequirements(location, capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen))
+            else if (!eventController.locationMeetsRequirements(location, capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen))
                 eventCreationPresenter.requirementMismatchPrompt();
             else chosenLocation = true;
         }
