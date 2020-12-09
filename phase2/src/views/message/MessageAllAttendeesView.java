@@ -27,8 +27,12 @@ public class MessageAllAttendeesView implements View {
         String message = userInput.nextLine();
         try {
             controller.messageAllAttendees(message);
-        } catch (AccountNotFoundException | NoRecipientsException e) {
-            e.printStackTrace();
+        }
+        catch (AccountNotFoundException e){
+            presenter.AccountNotFoundPrompt();
+        }
+        catch (NoRecipientsException e){
+            presenter.NoRecipientsPrompt();
         }
         return ViewEnum.VOID;
     }

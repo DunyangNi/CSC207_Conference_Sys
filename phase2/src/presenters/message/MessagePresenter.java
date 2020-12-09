@@ -1,5 +1,7 @@
 package presenters.message;
 
+import exceptions.NoRecipientsException;
+import exceptions.not_found.AccountNotFoundException;
 import presenters.Presenter;
 
 public class MessagePresenter implements Presenter {
@@ -29,6 +31,11 @@ public class MessagePresenter implements Presenter {
         System.out.println("Invalid ID. You are not speaking at this talk.");
     }
 
+    public void AccountNotFoundPrompt() { System.out.println("This account does not exist.");}
+
+    public void NoRecipientsPrompt() { System.out.println("There aren't any accounts of this type that you can message.");}
+
+    public void EventNotFoundPrompt() { System.out.println("This event does not exist.");}
     @Override
     public void exitPrompt() {
     }

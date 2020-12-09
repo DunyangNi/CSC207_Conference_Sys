@@ -39,7 +39,7 @@ public class RegistrationPresenter implements Presenter {
         System.out.println("Enter a password:");
     }
 
-    public void AccountAlreadyExistsPrompt() { System.out.println("This account already exists.")}
+    public void AccountAlreadyExistsPrompt() { System.out.println("This account already exists.");}
 
     @Override
     public void exitPrompt() {

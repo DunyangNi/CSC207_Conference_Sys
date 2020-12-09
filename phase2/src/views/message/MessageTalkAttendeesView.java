@@ -39,11 +39,11 @@ public class MessageTalkAttendeesView implements View {
         try {
             controller.messageTalkAttendees(selectedTalks, message);
         } catch (AccountNotFoundException e) {
-            e.printStackTrace();
+            presenter.AccountNotFoundPrompt();
         } catch (NoRecipientsException e) {
-            e.printStackTrace();
+            presenter.NoRecipientsPrompt();
         } catch (EventNotFoundException e) {
-            e.printStackTrace();
+            presenter.EventNotFoundPrompt();
         }
         return ViewEnum.VOID;
     }

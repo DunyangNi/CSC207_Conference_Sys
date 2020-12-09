@@ -27,7 +27,7 @@ public class MessageView implements View {
         try {
             controller.messageAccount(username, message);
         } catch (AccountNotFoundException e) {
-            e.printStackTrace();
+            presenter.AccountNotFoundPrompt();
         }
         return ViewEnum.VOID;
     }
