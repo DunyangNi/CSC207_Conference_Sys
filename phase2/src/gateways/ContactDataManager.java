@@ -4,7 +4,7 @@ import java.io.*;
 
 import use_cases.account.ContactManager;
 
-public class ContactDataManager implements DataReader, DataSaver{
+public class ContactDataManager implements DataReader, DataSaver {
     private final String friendPath;
 
     public ContactDataManager() {

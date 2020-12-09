@@ -34,7 +34,7 @@ public class EventView {
 
         try {
             controller.rescheduleTalk(id, time);
-        } catch (LocationInUseException | PastTimeException | SpeakerIsBusyException | LocationNotFoundException | InvalidTimeException | EventNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

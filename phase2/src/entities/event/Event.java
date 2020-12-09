@@ -14,20 +14,16 @@ public class Event implements Serializable, Comparable<Event> {
     private String organizer;
     private Boolean vipOnly;
     private Integer capacity;
+    private Integer tables;
+    private Integer chairs;
+    private Boolean requiresInternet;
+    private Boolean requiresSoundSystem;
+    private Boolean requiresPresentationScreen;
+
     private final ArrayList<String> attendees = new ArrayList<>();
     private final int id;
 
-    /**
-     * Creates an instance of <code>Event</code> with an assigned integer ID and given information.
-     * @param id assigned ID
-     * @param topic given topic
-     * @param time given time
-     * @param location id of event location
-     * @param organizer given <code>Organizer</code> username
-     * @param capacity given max number of Attendees that can attend
-     * @param vipOnly whether <code>Event</code> is only accessible to VIPs
-     */
-    public Event(Integer id, String topic, Calendar time, String location, String organizer, Integer capacity, Boolean vipOnly) {
+    public Event(Integer id, String topic, Calendar time, String location, String organizer, int capacity, int tables, int chairs, boolean requiresInternet, boolean requiresSoundSystem, boolean requiresPresentationScreen, Boolean vipOnly) {
         this.topic = topic;
         this.time = time;
         this.location = location;
@@ -35,6 +31,11 @@ public class Event implements Serializable, Comparable<Event> {
         this.id = id;
         this.vipOnly = vipOnly;
         this.capacity = capacity;
+        this.tables = tables;
+        this.chairs = chairs;
+        this.requiresInternet = requiresInternet;
+        this.requiresSoundSystem = requiresSoundSystem;
+        this.requiresPresentationScreen = requiresPresentationScreen;
     }
 
     /**
@@ -154,5 +155,45 @@ public class Event implements Serializable, Comparable<Event> {
     public void setVipOnly(Boolean newBoolean) { this.vipOnly = newBoolean; }
 
     public void setCapacity(Integer newCapacity) { this.capacity = newCapacity; }
+
+    public Integer getTables(){
+        return this.tables;
+    }
+
+    public Integer getChairs(){
+        return this.chairs;
+    }
+
+    public Boolean getRequiresInternet(){
+        return this.requiresInternet;
+    }
+
+    public Boolean getRequiresSoundSystem(){
+        return this.requiresSoundSystem;
+    }
+
+    public Boolean getRequiresPresentationScreen(){
+        return this.requiresPresentationScreen;
+    }
+
+    public void setTables(int newTables) {
+        this.tables = newTables;
+    }
+
+    public void setChairs(int newChairs) {
+        this.chairs = newChairs;
+    }
+
+    public void setRequiresInternet(boolean newHasInternet) {
+        this.requiresInternet = newHasInternet;
+    }
+
+    public void setRequiresSoundSystem(boolean newHasSoundSystem) {
+        this.requiresSoundSystem = newHasSoundSystem;
+    }
+
+    public void setRequiresPresentationScreen(boolean newHasPresentationScreen) {
+        this.requiresPresentationScreen = newHasPresentationScreen;
+    }
 }
 

@@ -1,11 +1,11 @@
 package use_cases.event;
 
-import exceptions.*;
+import entities.event.PanelDiscussion;
 import entities.event.Event;
 import entities.event.Talk;
+import exceptions.OutOfScheduleException;
 import exceptions.conflict.LocationInUseException;
 import exceptions.conflict.SpeakerIsBusyException;
-import exceptions.not_found.LocationNotFoundException;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,60 +20,18 @@ public class EventChecker implements Serializable {
     // Methods
     //------------------------------------------------------------
 
-    /**
-     * Validates information about an event
-     *
-     * @param time time for an event
-     * @param location location for an event
-     * @param locations a list of allowed event locations
-     * @param events a list of scheduled events
-     * @throws InvalidTimeException if an event time is past the current time or is not
-     * between 9 A.M and 4 P.M inclusive, or the same event has been already scheduled
-     * @throws LocationNotFoundException if the location for an event is not allowed
-     * @throws PastTimeException if the time have past
-     * @throws LocationInUseException if the location is being used at the time
-     */
-    public void checkValidEvent(Calendar time, String location, ArrayList<String> locations, ArrayList<Event> events) throws LocationNotFoundException, PastTimeException, InvalidTimeException, LocationInUseException {
-        Calendar currTime = Calendar.getInstance();
-
-        if (!locations.contains(location))  // is a valid location?
-            throw new LocationNotFoundException();
-
-        if (currTime.compareTo(time) >= 0)  // is time already past?
-            throw new PastTimeException();
-
-        // is time between 9 am to 4 pm inclusive?
-        if (!(9 <= time.get(Calendar.HOUR_OF_DAY) && time.get(Calendar.HOUR_OF_DAY) <= 16))
-            throw new InvalidTimeException();
-
-        for (Event event : events) {    // is the same event already scheduled?
-            if (event.getLocation().equals(location) && event.getTime().equals(time))
-                throw new LocationInUseException();
+    public void checkValidEvent(Calendar time, String location, ArrayList<String> speakers, ArrayList<Event> events) throws OutOfScheduleException, LocationInUseException, SpeakerIsBusyException {
+        if (!(9 <= time.get(Calendar.HOUR_OF_DAY) && time.get(Calendar.HOUR_OF_DAY) <= 16)) throw new OutOfScheduleException();
+        for (Event event : events) {
+            if (event.getTime().equals(time)) {
+                if (event.getLocation().equals(location)) throw new LocationInUseException();
+                if (event instanceof Talk && speakers.contains(((Talk) event).getSpeaker())) throw new SpeakerIsBusyException();
+                else if (event instanceof PanelDiscussion) {
+                    ArrayList<String> selectedSpeakers = new ArrayList<>(((PanelDiscussion) event).getSpeakers());
+                    selectedSpeakers.retainAll(speakers);
+                    if (!selectedSpeakers.isEmpty()) throw new SpeakerIsBusyException();
+                }
+            }
         }
-    }
-
-    /**
-     * Validates information about a talk event
-     *
-     * @param time time for a talk event
-     * @param location location for a talk event
-     * @param speaker speaker for a talk event
-     * @param locations location for a talk event
-     * @param talks a list of scheduled talks
-     * @param events a list of scheduled events
-     * @throws InvalidTimeException if an event time is past the current time or is not
-     * between 9 A.M and 4 P.M inclusive, or the same event has been already scheduled
-     * @throws LocationNotFoundException if the location for an event is not allowed
-     * @throws PastTimeException if the time have past
-     * @throws LocationInUseException if the location is being used at the time
-     * @throws SpeakerIsBusyException if the speaker have another talk at the time
-     */
-    public void checkValidTalk(Calendar time, String location, String speaker, ArrayList<String> locations, ArrayList<Talk> talks, ArrayList<Event> events) throws LocationNotFoundException, PastTimeException, InvalidTimeException, LocationInUseException, SpeakerIsBusyException {
-        // Check if the same talk is found from a list of scheduled talks
-        for (Talk t : talks) {
-            if (t.getSpeaker().equals(speaker) && t.getTime().equals(time))
-                throw new SpeakerIsBusyException();
-        }
-        checkValidEvent(time, location, locations, events);
     }
 }

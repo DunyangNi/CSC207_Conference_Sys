@@ -1,22 +1,20 @@
 package views.event;
 
 import controllers.event.LocationController;
-import gateways.DataManager;
 import presenters.event.LocationPresenter;
 
 
 public class AllLocationsView {
 
-    private final LocationPresenter presenter;
-    private final LocationController controller;
+    private final LocationPresenter locationPresenter;
+    private final LocationController locationController;
 
-    public AllLocationsView(LocationController controller, LocationPresenter presenter) {
-
-        this.controller = controller;
-        this.presenter = presenter;
+    public AllLocationsView(LocationController locationController, LocationPresenter locationPresenter) {
+        this.locationController = locationController;
+        this.locationPresenter = locationPresenter;
     }
 
     public void runView() {
-        presenter.displayRooms(controller.getLocations());
+        locationPresenter.displayLocations(locationController.getLocationsAsString());
     }
 }

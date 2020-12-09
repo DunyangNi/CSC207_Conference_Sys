@@ -10,8 +10,8 @@ public class Talk extends Event implements Serializable {
     private String speaker;
 
 
-    public Talk(Integer id, String topic, Calendar time, String location, String organizer, String speaker, Integer capacity, Boolean vipOnly) {
-        super(id, topic, time, location, organizer, capacity, vipOnly);
+    public Talk(Integer id, String topic, Calendar time, String location, String organizer, String speaker, Integer capacity, int tables, int chairs, boolean hasInternet, boolean hasSoundSystem, boolean hasPresentationScreen, Boolean vipOnly) {
+        super(id, topic, time, location, organizer, capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen, vipOnly);
         this.speaker = speaker;
     }
 

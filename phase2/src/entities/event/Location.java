@@ -4,109 +4,100 @@ import java.io.Serializable;
 
 public class Location implements Serializable {
     private final String name;
-    private final Integer id; //unique identifier
-    private Integer maxOccupancy;
-    private Integer numTables;
-    private Integer numChairs;
+    private Integer capacity;
+    private Integer tables;
+    private Integer chairs;
     private Boolean hasInternet;
     private Boolean hasSoundSystem;
-    private Boolean hasPresentationScreen; //for projectors/movie screens etc.
-    private String furtherNotes; //further notes the Organizer would like to add
+    private Boolean hasPresentationScreen;
+    private String furtherNotes;
 
-    public Location(String name, int id, int maxOccupancy, int numTables, int numChairs, boolean hasInternet, boolean hasSoundSystem, boolean hasPresentationScreen, String furtherNotes) {
+    public Location(String name, int capacity, int tables, int chairs, boolean hasInternet, boolean hasSoundSystem, boolean hasPresentationScreen, String furtherNotes) {
         this.name = name;
-        this.id = id;
-        this.maxOccupancy = maxOccupancy;
-        this.numTables = numTables;
-        this.numChairs = numChairs;
+        this.capacity = capacity;
+        this.tables = tables;
+        this.chairs = chairs;
         this.hasInternet = hasInternet;
         this.hasSoundSystem = hasSoundSystem;
         this.hasPresentationScreen = hasPresentationScreen;
         this.furtherNotes = furtherNotes;
     }
+
     public String getName(){
         return this.name;
     }
-    public Integer getId(){
-        return this.id;
+
+    public Integer getCapacity(){
+        return this.capacity;
     }
-    public Integer getMaxOccupancy(){
-        return this.maxOccupancy;
+
+    public Integer getTables(){
+        return this.tables;
     }
-    public Integer numTables(){
-        return this.numTables;
+
+    public Integer getChairs(){
+        return this.chairs;
     }
-    public Integer numChairs(){
-        return this.numChairs;
-    }
-    public Boolean hasInternet(){
+
+    public Boolean getHasInternet(){
         return this.hasInternet;
     }
-    public Boolean hasSoundSystem(){
+
+    public Boolean getHasSoundSystem(){
         return this.hasSoundSystem;
     }
-    public Boolean hasPresentationScreen(){
+
+    public Boolean getHasPresentationScreen(){
         return this.hasPresentationScreen;
     }
-    public String furtherNotes() {
+
+    public String getFurtherNotes() {
         return this.furtherNotes;
     }
-    public void setMaxOccupancy(int max) {
-        this.maxOccupancy = max;
+
+    public void setCapacity(int newCapacity) {
+        this.capacity = newCapacity;
     }
-    public void setNumTables(int num) {
-        this.numTables = num;
+
+    public void setTables(int newTables) {
+        this.tables = newTables;
     }
-    public void setNumChairs(int num) {
-        this.numChairs = num;
+
+    public void setChairs(int newChairs) {
+        this.chairs = newChairs;
     }
-    public void setHasInternet(boolean status) {
-        this.hasInternet = status;
+
+    public void setHasInternet(boolean newHasInternet) {
+        this.hasInternet = newHasInternet;
     }
-    public void setHasSoundSystem(boolean status) {
-        this.hasPresentationScreen = status;
+
+    public void setHasSoundSystem(boolean newHasSoundSystem) {
+        this.hasSoundSystem = newHasSoundSystem;
     }
-    public void setHasPresentationScreen(boolean status) {
-        this.hasPresentationScreen = status;
+
+    public void setHasPresentationScreen(boolean newHasPresentationScreen) {
+        this.hasPresentationScreen = newHasPresentationScreen;
     }
-    public void setFurtherNotes(String notes) {
-        this.furtherNotes = notes;
+
+    public void setFurtherNotes(String newFurtherNotes) {
+        this.furtherNotes = newFurtherNotes;
     }
+
     @Override
     public boolean equals(Object o) {
-        if(o instanceof Location){
-            return ((Location) o).id == this.id;
-        }
-        else{
-            return false;
-        }
+        if(o instanceof Location) return ((Location) o).name.equals(this.name);
+        return false;
     }
 
-    /**
-     * private int maxOccupancy;
-     *     private int numTables;
-     *     private int numChairs;
-     *     private boolean hasInternet;
-     *     private boolean hasSoundSystem;
-     *     private boolean hasPresentationScreen; //for projectors/movie screens etc.
-     *     private String furtherNotes; //further notes the Organizer would like to add
-     * @return
-     */
     @Override
-    public String toString(){
-        StringBuilder stringRep = new StringBuilder();
-        stringRep.append("Name: " + this.name + "\n");
-        stringRep.append("Location ID: " + this.id.toString() + "\n");
-        stringRep.append("Maximum Occupancy: " + this.maxOccupancy.toString() + "\n");
-        stringRep.append("Number of tables: " + this.numTables.toString() + "\n");
-        stringRep.append("Number of chairs: " + this.numChairs.toString() + "\n");
-        stringRep.append("Has internet?: " + this.hasInternet.toString() + "\n");
-        stringRep.append("Has sound system?: " + this.hasSoundSystem.toString() + "\n");
-        stringRep.append("Has a screen for presentations?: " + this.hasPresentationScreen + "\n");
-        stringRep.append("Further notes:" + "\n");
-        stringRep.append(this.furtherNotes);
-
-        String StringRep = stringRep.toString();
-        return StringRep;
+    public String toString() {
+        return "Location Name: " + this.name + "\n" +
+                "Capacity: " + this.capacity.toString() + "\n" +
+                "Number of tables: " + this.tables.toString() + "\n" +
+                "Number of chairs: " + this.chairs.toString() + "\n" +
+                "Internet Access: " + this.hasInternet.toString() + "\n" +
+                "Sound System: " + this.hasSoundSystem.toString() + "\n" +
+                "Presentation Screen: " + this.hasPresentationScreen + "\n" +
+                "Further notes:\n" + this.furtherNotes;
     }
 }

@@ -1,11 +1,11 @@
 package use_cases.event;
 
+import entities.event.PanelDiscussion;
 import enums.EventTypeEnum;
 import exceptions.*;
 import entities.event.Event;
 import entities.event.Talk;
 import gateways.HTMLWritable;
-import exceptions.already_exists.ObjectAlreadyExistsException;
 import exceptions.conflict.AlreadySignedUpException;
 import exceptions.conflict.EventIsFullException;
 import exceptions.conflict.LocationInUseException;
@@ -23,13 +23,12 @@ import java.util.*;
  * Represents the entire system of Events and their locations and speakers.
  */
 public class EventManager implements Serializable, HTMLWritable {
-    private HashMap<Integer, Event> events;
+    private final HashMap<Integer, Event> events;
     private final ArrayList<String> speakers;
     private final EventModifier eventModifier = new EventModifier();
     private final EventChecker eventChecker = new EventChecker();
     private final EventFactory eventFactory = new EventFactory();
     private int assignEventID;
-    private final EventLocationManager eventLocationManager;
 
     //------------------------------------------------------------
     // Constructors
@@ -41,9 +40,8 @@ public class EventManager implements Serializable, HTMLWritable {
      * @param events given <code>HashMap</code> of <code>Event</code> IDs to <code>Event</code> objects.
      * @param speakers given <code>ArrayList</code> of speaker usernames
      */
-    public EventManager(HashMap<Integer, Event> events, ArrayList<String> speakers, EventLocationManager eventLocationManager) {
+    public EventManager(HashMap<Integer, Event> events, ArrayList<String> speakers, LocationManager locationManager) {
         this.events = events;
-        this.eventLocationManager = eventLocationManager;
         this.speakers = speakers;
     }
 
@@ -63,50 +61,19 @@ public class EventManager implements Serializable, HTMLWritable {
         speakers.add(speaker);
     }
 
-    /**
-     * @return  <code>HashMap</code> for events
-     */
-    public HashMap<Integer, Event> getEvents() {
-        return events;
-    }
 
-    /**
-     * @param events a list of events to add
-     */
-    public void setEvents(HashMap<Integer, Event> events) {
-        this.events = events;
-    }
-
-    public void setEventCapacity(Integer id, Integer newCapacity) {
-        Event selectedEvent = events.get(id);
-        selectedEvent.setCapacity(newCapacity);
-    }
-
-
-    /**
-     * Gets a list of events without their ids.
-     * @return <code>ArrayList</code> for events
-     */
+    // TODO: REVISE THIS
     public ArrayList<Event> fetchEventList() {
         return new ArrayList<>(events.values());
     }
 
-    /**
-     * Gets the corresponding talk given an id
-     *
-     * @param id id to search
-     * @return <code>Talk</code> or null
-     */
+    // TODO: REVISE THIS
     public Talk fetchTalk(Integer id) {
         Event selectedTalk = events.get(id);
         return selectedTalk instanceof Talk ? (Talk) selectedTalk : null;
     }
 
-    /**
-     * Gets a list of talks
-     *
-     * @return <code>ArrayList</code> for talks
-     */
+    // TODO: REVISE THIS
     public ArrayList<Talk> fetchTalkList() {
         ArrayList<Talk> talks = new ArrayList<>();
         for (Event e : fetchEventList()) { // get only Talks
@@ -129,12 +96,7 @@ public class EventManager implements Serializable, HTMLWritable {
         return events.get(id).getAttendees();
     }
 
-    /**
-     * Gets a list of talks which a speaker gives
-     *
-     * @param speaker a speaker who will give talks
-     * @return <code>ArrayList</code> for talks
-     */
+    // TODO: REVISE THIS
     public ArrayList<Event> fetchSpeakerTalks(String speaker) {
         ArrayList<Event> speakerTalks = new ArrayList<>();
         for (Talk e : fetchTalkList()) {    // get only talks which the speaker gives
@@ -144,13 +106,7 @@ public class EventManager implements Serializable, HTMLWritable {
         return speakerTalks;
     }
 
-    /**
-     * Stores a list of talks to <code>Hashmap</code> in ascending order, which key is string
-     * representation of a talk and value is the talk event time.
-     *
-     * @param selectedTalks a list of talks to be added in ascending order
-     * @return <code>HashMap</code> for talks
-     */
+    // TODO: REVISE THIS
     public HashMap<String[], Calendar> fetchSortedTalks(ArrayList<Event> selectedTalks) {
         // Converts from ArrayList to Array, and sorts the array
         Event[] selectedTalksToSort = selectedTalks.toArray(new Event[0]);
@@ -171,69 +127,21 @@ public class EventManager implements Serializable, HTMLWritable {
         return sortedSelectedTalks;
     }
 
-    /**
-     * Gets talks in ascending order
-     *
-     * @return <code>HashMap</code> for talks
-     */
+    // TODO: REVISE THIS
     public HashMap<String[], Calendar> fetchSortedTalks() {
         return fetchSortedTalks(fetchEventList());
     }
 
-    /**
-     * Gets talks in ascending order which a speaker gives
-     *
-     * @param speaker to search
-     * @return <code>HashMap</code> for talks
-     */
+    // TODO: REVISE THIS
     public HashMap<String[], Calendar> fetchSortedTalks(String speaker) {
         return fetchSortedTalks(fetchSpeakerTalks(speaker));
     }
 
-    /**
-     * Adds a new event given its information
-     *
-     * @param type type of event
-     * @param topic topic for a new event
-     * @param time time for a new event
-     * @param location location for a new event
-     * @param organizer organizer for a new event
-     * @param speakers <code>ArrayList</code> of arbitrary usernames of speakers
-     * @param capacity maximum capacity for a new event
-     * @throws InvalidTimeException if an event time is past the current time or is not
-     * between 9 A.M and 4 P.M inclusive, or the same event has been already scheduled
-     * @throws LocationNotFoundException if the location for an event is not allowed
-     * @throws PastTimeException if the time have past
-     * @throws LocationInUseException if the location is being used at the time
-     * @throws SpeakerIsBusyException if the speaker is not available at the time
-     * @throws EventNotFoundException if the given event id is invalid
-     * @throws InvalidEventTypeException if the event type is not valid
-     */
-    public void addNewEvent(EventTypeEnum type, String topic, Calendar time, String location, String organizer, ArrayList<String> speakers, Integer capacity, Boolean vipOnly) throws InvalidEventTypeException, LocationNotFoundException, PastTimeException, InvalidTimeException, LocationInUseException {
-        checkValidEvent(time, location);
-        Event eventToAdd = eventFactory.CreateEvent(type, assignEventID++,topic, time, location, organizer, speakers, capacity, vipOnly);
+    public void addNewEvent(EventTypeEnum type, String topic, Calendar time, String location, String organizer, ArrayList<String> speakers, Integer capacity, int tables, int chairs, boolean hasInternet, boolean hasSoundSystem, boolean hasPresentationScreen, Boolean vipOnly) throws InvalidEventTypeException, OutOfScheduleException, LocationInUseException, SpeakerIsBusyException {
+        checkValidEvent(time, location, speakers);
+        Event eventToAdd = eventFactory.CreateEvent(type, assignEventID++,topic, time, location, organizer, speakers, capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen, vipOnly);
         events.put(eventToAdd.getId(), eventToAdd);
     }
-
-//    /**
-//     * Adds a new event given its information
-//     * @param topic topic for a new event
-//     * @param time time for a new event
-//     * @param location location for a new event
-//     * @param organizer organizer for a new event
-//     * @param speaker speaker for a new event
-//     * @return id for a new id which has been added
-//     * @throws ConflictException if <code>checkValidEvent</code> throws or a speaker is invalid
-//     * @throws ObjectNotFoundException if <code>checkValidEvent</code> throws
-//     */
-//    public Integer addNewTalk(String topic, Calendar time, String location, String organizer, String speaker) throws ConflictException, ObjectNotFoundException {
-//        if (!speakers.contains(speaker))
-//            throw new ObjectNotFoundException("Speaker " + speaker);
-//        checkValidTalk(time, location, speaker);
-//        Talk eventToAdd = new Talk(assignEventID++, topic, time, location, organizer, speaker);
-//        events.put(eventToAdd.getId(), eventToAdd);
-//        return eventToAdd.getId();
-//    }
 
     /**
      * Cancels a event given an id to search
@@ -241,116 +149,24 @@ public class EventManager implements Serializable, HTMLWritable {
      * @param id id to be cancelled
      * @throws EventNotFoundException if the id is invalid
      */
-    public void cancelEvent(Integer id) throws EventNotFoundException{
-        if (!events.containsKey(id))
-            throw new EventNotFoundException();
+    public void cancelEvent(Integer id) throws EventNotFoundException {
+        if (!events.containsKey(id)) throw new EventNotFoundException();
         Event talkToCancel = events.get(id);
-        if (!(Calendar.getInstance().compareTo(talkToCancel.getTime()) >= 0))
-            events.remove(id);
+        if (!(Calendar.getInstance().compareTo(talkToCancel.getTime()) >= 0)) events.remove(id);
     }
 
-    public void cancelTalk(Integer id) throws EventNotFoundException {
-        if (!(events.get(id) instanceof Talk))
-            throw new EventNotFoundException();
-        cancelEvent(id);
-    }
-
-    public void changeTopic(Integer id, String new_topic) throws EventNotFoundException {
-        if (!events.containsKey(id))
-            throw new EventNotFoundException();
-        eventModifier.ChangeTopic(events.get(id), new_topic);
-    }
-
-    /**
-     * Changes time to new time given an id to search
-     *
-     * @param id id to search
-     * @param newTime new time
-     * @throws InvalidTimeException if an event time is past the current time or is not
-     * between 9 A.M and 4 P.M inclusive, or the same event has been already scheduled
-     * @throws LocationNotFoundException if the location for an event is not allowed
-     * @throws PastTimeException if the time have past
-     * @throws LocationInUseException if the location is being used at the time
-     * @throws SpeakerIsBusyException if the speaker is not available at the time
-     * @throws EventNotFoundException if the given event id is invalid
-     */
-    public void changeTime(Integer id, Calendar newTime) throws SpeakerIsBusyException, LocationNotFoundException, PastTimeException, InvalidTimeException, LocationInUseException, EventNotFoundException {
-        // is id valid?
-        if (!events.containsKey(id))
-            throw new EventNotFoundException();
-
-        // Validation
+    public void changeTime(Integer id, Calendar newTime) throws OutOfScheduleException, LocationInUseException, SpeakerIsBusyException, EventNotFoundException {
+        if (!events.containsKey(id)) throw new EventNotFoundException();
         Event selectedEvent = events.get(id);
-        if (selectedEvent instanceof Talk)
-            checkValidTalk(newTime, selectedEvent.getLocation(), ((Talk) selectedEvent).getSpeaker());
-        else
-            checkValidEvent(newTime, selectedEvent.getLocation());
+        ArrayList<String> selectedSpeakers = new ArrayList<>();
+        if (selectedEvent instanceof Talk) selectedSpeakers.add(((Talk) selectedEvent).getSpeaker());
+        else if (selectedEvent instanceof PanelDiscussion) selectedSpeakers.addAll(((PanelDiscussion) selectedEvent).getSpeakers());
+        checkValidEvent(newTime, selectedEvent.getLocation(), selectedSpeakers);
         eventModifier.ChangeTime(events.get(id), newTime);
     }
 
-    /**
-     * Changes a location to a new location
-     * @param id id to search
-     * @throws InvalidTimeException if an event time is past the current time or is not
-     * between 9 A.M and 4 P.M inclusive, or the same event has been already scheduled
-     * @throws LocationNotFoundException if the location for an event is not allowed
-     * @throws PastTimeException if the time have past
-     * @throws LocationInUseException if the location is being used at the time
-     * @throws SpeakerIsBusyException if the speaker is not available at the time
-     * @throws EventNotFoundException if the given event id is invalid
-     */
-    public void changeLocation(Integer id, String newLocation) throws EventNotFoundException, SpeakerIsBusyException, LocationNotFoundException, PastTimeException, InvalidTimeException, LocationInUseException {
-        // is id valid?
-        if (!events.containsKey(id))
-            throw new EventNotFoundException();
-
-        // Validation
-        Event selectedEvent = events.get(id);
-        if (selectedEvent instanceof Talk)
-            checkValidTalk(selectedEvent.getTime(), newLocation, ((Talk) selectedEvent).getSpeaker());
-        else
-            checkValidEvent(selectedEvent.getTime(), newLocation);
-        eventModifier.ChangeLocation(events.get(id), newLocation);
-    }
-
-    public void changeOrganizer(Integer id, String new_organizer) throws EventNotFoundException {
-        if (!events.containsKey(id))
-            throw new EventNotFoundException();
-        eventModifier.ChangeOrganizer(events.get(id), new_organizer);
-    }
-
-    /**
-     * Validates given time and location
-     *
-     * @param time time to check
-     * @param location location to check
-     * @throws InvalidTimeException if an event time is past the current time or is not
-     * between 9 A.M and 4 P.M inclusive, or the same event has been already scheduled
-     * @throws LocationNotFoundException if the location for an event is not allowed
-     * @throws PastTimeException if the time have past
-     * @throws LocationInUseException if the location is being used at the time
-     */
-    public void checkValidEvent(Calendar time, String location) throws LocationNotFoundException, PastTimeException, InvalidTimeException, LocationInUseException {
-        ArrayList<String> locations = this.eventLocationManager.getNameList();
-        eventChecker.checkValidEvent(time, location, locations, fetchEventList());
-    }
-
-    /**
-     * Validates given time, location, and speaker
-     *
-     * @param time time to check
-     * @param location location to check
-     * @param speaker speaker to check
-     * @throws InvalidTimeException if an event time is past the current time or is not
-     * between 9 A.M and 4 P.M inclusive, or the same event has been already scheduled
-     * @throws LocationNotFoundException if the location for an event is not allowed
-     * @throws PastTimeException if the time have past
-     * @throws LocationInUseException if the location is being used at the time
-     * @throws SpeakerIsBusyException if the speaker have another talk at the time
-     */
-    public void checkValidTalk(Calendar time, String location, String speaker) throws SpeakerIsBusyException, LocationNotFoundException, PastTimeException, InvalidTimeException, LocationInUseException {
-        ArrayList<String> locations = this.eventLocationManager.getNameList();
-        eventChecker.checkValidTalk(time, location, speaker, locations, fetchTalkList(), fetchEventList());
+    public void checkValidEvent(Calendar time, String location, ArrayList<String> speakers) throws OutOfScheduleException, LocationInUseException, SpeakerIsBusyException {
+        eventChecker.checkValidEvent(time, location, speakers, fetchEventList());
     }
 
     /**
@@ -405,16 +221,6 @@ public class EventManager implements Serializable, HTMLWritable {
 
     public boolean getVipRestriction(Integer id){
         return events.get(id).getVipOnly();
-    }
-
-    // temp
-    public void addNewLocation(String location) throws NonPositiveIntegerException, ObjectAlreadyExistsException {
-        eventLocationManager.addNewLocation(location, 2, 2, 2, true, true, true, "");
-    }
-
-    // temp
-    public ArrayList<String> getLocations() {
-        return eventLocationManager.getLocations();
     }
 
     /**

@@ -1,15 +1,15 @@
 package views.event;
 
 import controllers.event.EventController;
+import controllers.event.LocationController;
 import controllers.event.SpeakerController;
-import entities.account.Speaker;
 import enums.EventTypeEnum;
 import exceptions.InvalidEventTypeException;
-import exceptions.InvalidTimeException;
+import exceptions.NoSuggestedLocationsException;
+import exceptions.OutOfScheduleException;
 import exceptions.PastTimeException;
 import exceptions.conflict.LocationInUseException;
-import exceptions.not_found.LocationNotFoundException;
-import gateways.DataManager;
+import exceptions.conflict.SpeakerIsBusyException;
 import presenters.event.EventCreationPresenter;
 
 import java.util.*;
@@ -20,12 +20,15 @@ public class EventCreationView {
     private final EventController eventController;
     private final SpeakerController speakerController;
     private final EventCreationPresenter eventCreationPresenter;
+    private final LocationController locationController;
+    private final TimeView timeView = new TimeView();
     Scanner userInput = new Scanner(System.in);
 
-    public EventCreationView(EventController controller, SpeakerController controller2, EventCreationPresenter presenter ) {
+    public EventCreationView(EventController controller, SpeakerController controller2, LocationController locationController, EventCreationPresenter presenter ) {
         eventController = controller;
         speakerController = controller2;
         eventCreationPresenter = presenter;
+        this.locationController = locationController;
     }
 
     public void runView() {
@@ -34,11 +37,11 @@ public class EventCreationView {
         EventTypeEnum eventType = GENERAL_EVENT;
         boolean eventNotChosen = true;
         eventCreationPresenter.eventTypeMenu();
-        eventCreationPresenter.eventTypePrompt();
         while(eventNotChosen) {
+            eventCreationPresenter.eventTypePrompt();
             eventType = EventTypeEnum.fromString(userInput.nextLine());
             if (eventType != INVALID) eventNotChosen = false;
-            else { eventCreationPresenter.invalidEventTypePrompt(); eventCreationPresenter.eventTypePrompt(); }
+            else { eventCreationPresenter.invalidEventTypePrompt(); }
         }
 
         ArrayList<String> speakers = null;
@@ -51,33 +54,10 @@ public class EventCreationView {
         eventCreationPresenter.topicPrompt();
         String topic = userInput.nextLine();
 
-        eventCreationPresenter.timePrompt();
-        boolean valid = false;
-        Calendar time = Calendar.getInstance();
-        while (!valid){
-            try {
-                time = parseTime();
-                valid = true;
-            } catch (Exception e) { eventCreationPresenter.invalidTimePrompt(); }
-        }
-
-        eventCreationPresenter.capacityPrompt();
-        valid = false;
-        int capacity = 0;
-        while (!valid){
-            try {
-                capacity = Integer.parseInt(userInput.nextLine());
-                if (capacity <= 0) {
-                    eventCreationPresenter.invalidCapacityPrompt();
-                    continue;
-                }
-                valid = true;
-            }
-            catch (NumberFormatException e) { eventCreationPresenter.invalidCapacityPrompt(); }
-        }
+        Calendar time = timeView.runTimeView();
 
         eventCreationPresenter.vipOnlyPrompt();
-        valid = false;
+        boolean valid = false;
         boolean vipOnly = false;
         while (!valid) {
             String input = userInput.nextLine();
@@ -86,27 +66,119 @@ public class EventCreationView {
                 valid = true;
             } else if (input.equals("N")) {
                 valid = true;
-            } else { eventCreationPresenter.invalidInputPrompt(); }
+            } else { eventCreationPresenter.invalidYesNoPrompt(); }
         }
 
-        // TODO: TO BE REDONE
-        eventCreationPresenter.locationPrompt();
-        String location = userInput.nextLine();
+        eventCreationPresenter.requirementsPrompt();
+
+        boolean capacityInput = false;
+        int capacity = 0;
+        eventCreationPresenter.capacityPrompt();
+        while (!capacityInput) {
+            try {
+                capacity = Integer.parseInt(userInput.nextLine());
+                if (capacity <= 0) eventCreationPresenter.invalidNumberPrompt();
+                else capacityInput = true;
+            }
+            catch (NumberFormatException e) { eventCreationPresenter.invalidNumberPrompt(); }
+        }
+
+        boolean tablesInput = false;
+        int tables = 0;
+        eventCreationPresenter.tablesPrompt();
+        while (!tablesInput) {
+            try {
+                tables = Integer.parseInt(userInput.nextLine());
+                if (tables < 0) eventCreationPresenter.invalidNumberPrompt();
+                else tablesInput = true;
+            }
+            catch (NumberFormatException e) { eventCreationPresenter.invalidNumberPrompt(); }
+        }
+
+        boolean chairsInput = false;
+        int chairs = 0;
+        eventCreationPresenter.chairsPrompt();
+        while (!chairsInput) {
+            try {
+                chairs = Integer.parseInt(userInput.nextLine());
+                if (chairs < 0) eventCreationPresenter.invalidNumberPrompt();
+                else chairsInput = true;
+            }
+            catch (NumberFormatException e) { eventCreationPresenter.invalidNumberPrompt(); }
+        }
+
+        boolean internetInput = false;
+        boolean hasInternet = false;
+        eventCreationPresenter.internetPrompt();
+        while (!internetInput) {
+            String input = userInput.nextLine();
+            if (input.equals("Y")) {
+                hasInternet = true;
+                internetInput = true;
+            } else if (input.equals("N")) {
+                internetInput = true;
+            } else { eventCreationPresenter.invalidYesNoPrompt(); }
+        }
+
+        boolean soundSystemInput = false;
+        boolean hasSoundSystem = false;
+        eventCreationPresenter.soundSystemPrompt();
+        while (!soundSystemInput) {
+            String input = userInput.nextLine();
+            if (input.equals("Y")) {
+                hasSoundSystem = true;
+                soundSystemInput = true;
+            } else if (input.equals("N")) {
+                soundSystemInput = true;
+            } else { eventCreationPresenter.invalidYesNoPrompt(); }
+        }
+
+        boolean presentationScreenInput = false;
+        boolean hasPresentationScreen = false;
+        eventCreationPresenter.presentationScreenPrompt();
+        while (!presentationScreenInput) {
+            String input = userInput.nextLine();
+            if (input.equals("Y")) {
+                hasPresentationScreen = true;
+                presentationScreenInput = true;
+            } else if (input.equals("N")) {
+                presentationScreenInput = true;
+            } else { eventCreationPresenter.invalidYesNoPrompt(); }
+        }
+
+        ArrayList<String> suggestedLocationStrings;
+        try {
+            suggestedLocationStrings = locationController.getSuggestedLocations(capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen);
+        } catch (NoSuggestedLocationsException e) {
+            eventCreationPresenter.noSuggestedLocationsPrompt();
+            return;
+        }
+        eventCreationPresenter.displaySuggestedLocations(suggestedLocationStrings);
+
+        boolean chosenLocation = false;
+        String location = "";
+        while (!chosenLocation) {
+            eventCreationPresenter.locationPrompt();
+            location = userInput.nextLine();
+            if (!locationController.isExistingLocation(location)) eventCreationPresenter.invalidLocationPrompt();
+            else if (locationController.locationMeetsRequirements(location, capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen))
+                eventCreationPresenter.requirementMismatchPrompt();
+            else chosenLocation = true;
+        }
 
         try {
-            eventController.createEvent(eventType, topic, time, location, speakers, capacity, vipOnly);
+            eventController.createEvent(eventType, topic, time, location, speakers, capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen, vipOnly);
             eventCreationPresenter.exitPrompt();
-        } catch (LocationNotFoundException e) {
-            eventCreationPresenter.invalidLocationPrompt();
         } catch (InvalidEventTypeException e) {
             eventCreationPresenter.invalidEventTypePrompt();
         } catch (LocationInUseException e) {
             eventCreationPresenter.inUseLocationPrompt();
-        } catch (PastTimeException e) {
-            eventCreationPresenter.pastTimePrompt();
-        } catch (InvalidTimeException e) {
-            eventCreationPresenter.invalidTimePrompt();
+        } catch (OutOfScheduleException e) {
+            eventCreationPresenter.outOfSchedulePrompt();
+        } catch (SpeakerIsBusyException e) {
+            eventCreationPresenter.speakerIsBusyPrompt();
         }
+        eventCreationPresenter.cancelExitPrompt();
     }
 
     private ArrayList<String> runSpeakerInputInteraction(EventTypeEnum eventType) {
@@ -145,21 +217,5 @@ public class EventCreationView {
             }
         }
         return true;
-    }
-
-    private Calendar parseTime() {
-        eventCreationPresenter.timeYearPrompt();
-        int year = Integer.parseInt(userInput.nextLine());
-        eventCreationPresenter.timeMonthPrompt();
-        int month = Integer.parseInt(userInput.nextLine()) - 1;
-        eventCreationPresenter.timeDayPrompt();
-        int day = Integer.parseInt(userInput.nextLine());
-        eventCreationPresenter.timeHourPrompt();
-        int hour = Integer.parseInt(userInput.nextLine());
-        Calendar newTime = Calendar.getInstance();
-        newTime.set(year, month, day, hour, 0, 0);
-        newTime.clear(Calendar.MILLISECOND);
-        eventCreationPresenter.selectedTimePrompt(newTime);
-        return newTime;
     }
 }

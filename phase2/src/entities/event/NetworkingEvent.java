@@ -10,9 +10,9 @@ import java.util.Calendar;
 public class NetworkingEvent extends Event implements Serializable {
     public NetworkingEvent(
             Integer id, String topic, Calendar time, String location,
-            String organizer, Integer capacity, Boolean vipOnly)
+            String organizer, Integer capacity, int tables, int chairs, boolean hasInternet, boolean hasSoundSystem, boolean hasPresentationScreen, Boolean vipOnly)
     {
-        super(id, topic, time, location, organizer, capacity, vipOnly);
+        super(id, topic, time, location, organizer, capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen, vipOnly);
     }
 
     /**

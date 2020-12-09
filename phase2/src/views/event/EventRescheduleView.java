@@ -1,57 +1,53 @@
 package views.event;
 
 import controllers.event.EventController;
-import exceptions.InvalidTimeException;
-import exceptions.PastTimeException;
+import exceptions.OutOfScheduleException;
 import exceptions.conflict.LocationInUseException;
 import exceptions.conflict.SpeakerIsBusyException;
 import exceptions.not_found.EventNotFoundException;
-import exceptions.not_found.LocationNotFoundException;
-import gateways.DataManager;
-import presenters.event.EventPresenter;
-import presenters.event.TimePresenter;
+import presenters.event.EventReschedulePresenter;
 
 import java.util.Calendar;
 import java.util.Scanner;
 
 public class EventRescheduleView {
-    private final EventController controller;
-    private final EventPresenter presenter;
+    private final EventController eventController;
+    private final EventReschedulePresenter eventReschedulePresenter;
     private final Scanner userInput = new Scanner(System.in);
-    private final TimeGetterView timeGetter= new TimeGetterView(new TimePresenter());
+    private final TimeView timeView = new TimeView();
 
-    public EventRescheduleView(EventController controller, EventPresenter presenter) {
-        this.controller = controller;
-        this.presenter = presenter;
-
-
+    public EventRescheduleView(EventController eventController, EventReschedulePresenter eventReschedulePresenter) {
+        this.eventController = eventController;
+        this.eventReschedulePresenter = eventReschedulePresenter;
     }
 
     public void runView() {
-        boolean valid = false;
-        int id = -1;
-        while(!valid) {
+        eventReschedulePresenter.startPrompt();
+
+        boolean chosenID = false;
+        int id = 0;
+        while (!chosenID) {
             try {
-                presenter.eventIdPrompt();
-                id = userInput.nextInt();
-            } catch (Exception e) {
-                presenter.GeneralInvalid();
-            }
+                eventReschedulePresenter.eventIDPrompt();
+                id = Integer.parseInt(userInput.nextLine());
+                chosenID = true;
+            } catch (NumberFormatException e) { eventReschedulePresenter.invalidIDPrompt(); }
         }
 
-        valid = false;
-        Calendar time = Calendar.getInstance();
-        while (!valid){
-            try {
-                time = timeGetter.collectTimeInfo();
-                valid = true;
-            } catch (Exception e) { timeGetter.errorMessage(); }
-        }
+        Calendar newTime = timeView.runTimeView();
 
         try {
-            controller.rescheduleTalk(id, time);
-        } catch (LocationInUseException | PastTimeException | SpeakerIsBusyException | LocationNotFoundException | InvalidTimeException | EventNotFoundException e) {
-            e.printStackTrace();
+            eventController.rescheduleTalk(id, newTime);
+            eventReschedulePresenter.exitPrompt();
+        } catch (LocationInUseException e) {
+            eventReschedulePresenter.inUseLocationPrompt();
+        } catch (SpeakerIsBusyException e) {
+            eventReschedulePresenter.speakerIsBusyPrompt();
+        } catch (EventNotFoundException e) {
+            eventReschedulePresenter.eventNotFoundPrompt();
+        } catch (OutOfScheduleException e) {
+            eventReschedulePresenter.outOfSchedulePrompt();
         }
+        eventReschedulePresenter.cancelExitPrompt();
     }
 }

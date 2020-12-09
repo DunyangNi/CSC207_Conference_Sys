@@ -1,14 +1,8 @@
 package deprecated;
 
 import controllers.event.LocationController;
-import exceptions.NonPositiveIntegerException;
-import exceptions.already_exists.ObjectAlreadyExistsException;
 import gateways.DataManager;
 import presenters.event.LocationPresenter;
-import use_cases.account.AccountManager;
-import use_cases.ConversationManager;
-import use_cases.event.EventManager;
-import use_cases.account.ContactManager;
 
 import java.util.Scanner;
 
@@ -23,17 +17,7 @@ public class LocationView {
         this.controller = new LocationController(dm);
     }
 
-    public void addRoom() {
-        presenter.addRoomPrompt();
-        String location = userInput.nextLine();
-        try {
-            controller.addNewLocation(location);
-        } catch (NonPositiveIntegerException | ObjectAlreadyExistsException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void rooms() {
-        presenter.displayRooms(controller.getLocations());
+        presenter.displayLocations(controller.getLocationsAsString());
     }
 }

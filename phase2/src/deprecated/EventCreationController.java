@@ -39,7 +39,7 @@ public class EventCreationController {
                             ArrayList<String> speakers, Integer capacity, Boolean vipOnly)
             throws LocationNotFoundException, PastTimeException, InvalidTimeException,
             LocationInUseException, InvalidEventTypeException {
-        eventManager.addNewEvent(type, topic, time, location, this.username, speakers, capacity, vipOnly);
+        // eventManager.addNewEvent(type, topic, time, location, this.username, speakers, capacity, vipOnly);
     }
 
     /**

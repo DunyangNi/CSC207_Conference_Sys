@@ -14,10 +14,10 @@ public class PanelDiscussion extends Event implements Serializable{
 
     public PanelDiscussion(
             Integer id, String topic, Calendar time, String location,
-            String organizer, ArrayList<String> speakers, Integer capacity,
+            String organizer, ArrayList<String> speakers, Integer capacity, int tables, int chairs, boolean hasInternet, boolean hasSoundSystem, boolean hasPresentationScreen,
             Boolean vipOnly)
     {
-        super(id, topic, time, location, organizer, capacity, vipOnly);
+        super(id, topic, time, location, organizer, capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen, vipOnly);
         setSpeakers(speakers);
     }
 

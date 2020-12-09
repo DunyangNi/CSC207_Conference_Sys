@@ -1,6 +1,6 @@
 package presenters;
 
-public class ErrorPresenter {
+public class AllErrorPresenter {
 
     public void EventIsFullPrompt(){
         System.out.println("This event is already full.");

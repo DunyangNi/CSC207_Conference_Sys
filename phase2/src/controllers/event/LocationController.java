@@ -1,28 +1,49 @@
 package controllers.event;
 
-import exceptions.already_exists.ObjectAlreadyExistsException;
-import exceptions.NonPositiveIntegerException;
+import exceptions.NoSuggestedLocationsException;
+import exceptions.RequirementMismatchException;
+import exceptions.already_exists.LocationAlreadyExistsException;
+import exceptions.not_found.LocationNotFoundException;
 import gateways.DataManager;
-import use_cases.event.EventManager;
+import use_cases.event.LocationManager;
 
 import java.util.ArrayList;
 
 public class LocationController {
-    private final EventManager em;
+    private final LocationManager locationManager;
     public LocationController(DataManager dm){
-        this.em = dm.getEventManager();
-    }
-    /**
-     * adds a new allowed location where events can take place to the database
-     * @param location location to be added
-     * @throws NonPositiveIntegerException if occupants or table/chairs are too small
-     * @throws ObjectAlreadyExistsException if the room name already exist
-     */
-    public void addNewLocation(String location) throws NonPositiveIntegerException, ObjectAlreadyExistsException {
-        this.em.addNewLocation(location);
+        this.locationManager = dm.getLocationManager();
     }
 
-    public ArrayList<String> getLocations() {
-        return em.getLocations();
+    public boolean isNewLocation(String name) {
+        try { locationManager.checkNewLocation(name); }
+        catch (LocationAlreadyExistsException e) { return false; }
+        return true;
+    }
+
+    public boolean isExistingLocation(String name) {
+        try { locationManager.checkExistingLocation(name); }
+        catch (LocationNotFoundException e) { return false; }
+        return true;
+    }
+    
+    public void addNewLocation(String name, int capacity, int tables, int chairs, boolean hasInternet, boolean hasSoundSystem, boolean hasPresentationScreen, String furtherNotes) {
+        this.locationManager.addNewLocation(name, capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen, furtherNotes);
+    }
+
+    public boolean locationMeetsRequirements(String name, int capacity, int tables, int chairs, boolean hasInternet, boolean hasSoundSystem, boolean hasPresentationScreen) {
+        try { locationManager.checkLocationMeetsRequirements(name, capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen); }
+        catch (RequirementMismatchException e) { return false; }
+        return true;
+    }
+
+    public ArrayList<String> getSuggestedLocations(int capacity, int tables, int chairs, boolean hasInternet, boolean hasSoundSystem, boolean hasPresentationScreen) throws NoSuggestedLocationsException {
+        ArrayList<String> suggestedLocations = locationManager.getSuggestedLocations(capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen);
+        if (suggestedLocations.isEmpty()) throw new NoSuggestedLocationsException();
+        return suggestedLocations;
+    }
+
+    public ArrayList<String> getLocationsAsString() {
+        return locationManager.getAllLocationsAsString();
     }
 }

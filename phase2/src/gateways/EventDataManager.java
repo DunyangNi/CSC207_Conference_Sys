@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import use_cases.event.EventLocationManager;
+import use_cases.event.LocationManager;
 import use_cases.event.EventManager;
 
 public class EventDataManager implements DataReader, DataSaver{
@@ -23,10 +23,10 @@ public class EventDataManager implements DataReader, DataSaver{
             return (EventManager) readObject(eventPath);
         } catch (IOException e) {
             System.out.println("Could not read EventManager, creating a new EventManager.");
-            return new EventManager(new HashMap<>(), new ArrayList<>(), new EventLocationManager());
+            return new EventManager(new HashMap<>(), new ArrayList<>(), new LocationManager());
         } catch (ClassNotFoundException e) {
             System.out.println("EventManager not found, creating a new EventManager.");
-            return new EventManager(new HashMap<>(), new ArrayList<>(), new EventLocationManager());
+            return new EventManager(new HashMap<>(), new ArrayList<>(), new LocationManager());
         }
     }
 }

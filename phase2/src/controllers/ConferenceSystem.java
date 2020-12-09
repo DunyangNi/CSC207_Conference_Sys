@@ -7,6 +7,7 @@ import use_cases.ConversationManager;
 import use_cases.account.AccountManager;
 import use_cases.account.ContactManager;
 import use_cases.event.EventManager;
+import use_cases.event.LocationManager;
 import views.StartView;
 import views.View;
 import views.ViewFactory;
@@ -32,13 +33,15 @@ public class ConferenceSystem {
         EventDataManager eventDataManager = new EventDataManager();
         ConversationDataManager conversationDataManager = new ConversationDataManager();
         ContactDataManager contactDataManager = new ContactDataManager();
+        LocationDataManager locationDataManager = new LocationDataManager();
 
         AccountManager am = accountDataManager.readManager();
         ContactManager fm = contactDataManager.readManager();
         ConversationManager cm = conversationDataManager.readManager();
         EventManager em = eventDataManager.readManager();
+        LocationManager lm = locationDataManager.readManager();
 
-        DataManager dm = new DataManager(am, fm, cm, em);
+        DataManager dm = new DataManager(am, fm, cm, em, lm);
         ViewFactory viewFactory = new ViewFactory(dm);
 
         View currentView = viewFactory.getView(ViewEnum.START);

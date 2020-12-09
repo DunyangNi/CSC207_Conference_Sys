@@ -1,10 +1,11 @@
 package presenters.event;
 
+import presenters.InputErrorPresenter;
 import presenters.Presenter;
 
-import java.util.Calendar;
+import java.util.ArrayList;
 
-public class EventCreationPresenter implements Presenter {
+public class EventCreationPresenter implements Presenter, InputErrorPresenter, EventErrorPresenter {
 
     @Override
     public void startPrompt() {
@@ -41,7 +42,6 @@ public class EventCreationPresenter implements Presenter {
         System.out.println("Please enter the usernames of all speakers on separate lines\n(press ENTER/RETURN twice to finish): ");
     }
 
-    // (NEW!)
     public void invalidSpeakerPrompt(String speaker) {
         System.out.println("The speaker " + speaker + " could not be found.");
     }
@@ -54,57 +54,43 @@ public class EventCreationPresenter implements Presenter {
         System.out.println("Please enter the topic / name of the event: ");
     }
 
-    public void timePrompt(){
-        System.out.println("You will now input a time slot. ");
-    }
-
-    public void timeYearPrompt() {
-        System.out.println("Input a year (YYYY): ");
-    }
-
-    public void timeMonthPrompt() {
-        System.out.println("Input a month (1-12): ");
-    }
-
-    public void timeDayPrompt() {
-        System.out.println("Input a day of month (1-31): ");
-    }
-
-    public void timeHourPrompt() {
-        System.out.println("Input an hour of day (9-16): ");
-    }
-
-    public void selectedTimePrompt(Calendar time) {
-        System.out.println("The time you have selected is " + time.getTime().toString());
-    }
-
-    // (NEW!)
-    public void capacityPrompt() { System.out.println("Please enter the capacity of the event: ");}
-
-    // (NEW!)
     public void vipOnlyPrompt() { System.out.println("Is this event restricted to VIPs (Y/N)?");}
 
+    public void requirementsPrompt() {
+        System.out.println("You will now be provided with suggested locations for your event. Please answer the following questions.");
+    }
 
-    // TODO: TO BE REDONE
     public void locationPrompt() {
-        System.out.println("Please enter the name of the location: ");
+        System.out.println("Please enter the name of a location: ");
     }
 
-    public void invalidLocationPrompt() { System.out.println("The selected location could not be found."); }
-
-    public void inUseLocationPrompt() { System.out.println("The selected location is busy at the specified time."); }
-
-    // (NEW!)
-    public void invalidEventTypePrompt() {
-        System.out.println("This type of event is invalid.");
+    public void noSuggestedLocationsPrompt() {
+        System.out.println("Sorry, there are currently no locations that meets the requirements of this event.");
     }
 
-    public void invalidTimePrompt() { System.out.println("The selected time is invalid, please enter a valid time slot."); }
+    public void capacityPrompt() { System.out.println("Please enter the capacity of the event: ");}
 
-    public void pastTimePrompt() { System.out.println("The selected time takes place in the past."); }
+    public void tablesPrompt() { System.out.println("Please enter the number of tables this event requires: ");}
 
-    public void invalidInputPrompt() { System.out.println("Invalid input, please enter again:");}
+    public void chairsPrompt() { System.out.println("Please enter the number of chairs this event requires: ");}
 
-    // (NEW!)
-    public void invalidCapacityPrompt() { System.out.println("The capacity is invalid, please enter a valid capacity: ");}
+    public void internetPrompt() { System.out.println("Does this event require access to Internet (Y/N)? "); }
+
+    public void soundSystemPrompt() { System.out.println("Does this event require a sound system (Y/N)? "); }
+
+    public void presentationScreenPrompt() { System.out.println("Does this event require a presentation screen (Y/N)? "); }
+
+    public void displaySuggestedLocations(ArrayList<String> locationStrings) {
+        System.out.println("[SUGGESTED LOCATIONS]");
+        System.out.println("=======================================================");
+        for (String locationString : locationStrings) {
+            System.out.println(locationString);
+            System.out.println();
+        }
+        System.out.println("=======================================================");
+    }
+
+    public void requirementMismatchPrompt() { System.out.println("Sorry, this location does not fit the requirements of your event."); }
+
+    public void cancelExitPrompt() { System.out.println(" Event Creation cancelled. :("); }
 }
