@@ -29,7 +29,7 @@ public class OrganizerView implements View {
             OrganizerMenuEnum organizerMenuEnum = OrganizerMenuEnum.fromString(userInput.nextLine());
             switch (organizerMenuEnum) {
                 case EXIT:
-                    return null;
+                    return ViewEnum.EXIT;
                 case LOGOUT:
                     loggedIn = false;
                     break;
@@ -46,7 +46,6 @@ public class OrganizerView implements View {
                     controller.getView(viewEnum).runView();
                     break;
             }
-
 //            switch (organizerMenuEnum) {
 ////                case EXIT:
 ////                    loggedIn = false;
@@ -119,11 +118,10 @@ public class OrganizerView implements View {
 //                case INVALID:
 //                    presenter.invalidInputPrompt();
 //            }
-
             controller.saveData(); // TODO Consider moving this to ConferenceSystem
             presenter.savedDataPrompt();
             presenter.requestCommandPrompt();
         }
-        return ViewEnum.START;
+        return ViewEnum.LOGOUT;
     }
 }

@@ -31,7 +31,7 @@ public class StartView implements View {
             case "2":
                 return ViewEnum.REGISTRATION;
             default: // "0"
-                return null;
+                return ViewEnum.EXIT;
         }
     }
 }

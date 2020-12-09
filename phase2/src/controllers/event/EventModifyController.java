@@ -31,7 +31,7 @@ public class EventModifyController {
      */
     public void rescheduleTalk(Integer id, Calendar newTime) throws
             LocationInUseException, PastTimeException, SpeakerIsBusyException, LocationNotFoundException,
-            InvalidTimeException, EventNotFoundException {
+            InvalidTimeException, EventNotFoundException, OutOfScheduleException {
         this.eventManager.changeTime(id, newTime);
     }
 }

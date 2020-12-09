@@ -44,9 +44,9 @@ public class ConferenceSystem {
         DataManager dm = new DataManager(am, fm, cm, em, lm);
         ViewFactory viewFactory = new ViewFactory(dm);
 
-        View currentView = viewFactory.getView(ViewEnum.START);
-        while (currentView != null) {
-            currentView = viewFactory.getView(currentView.runView());
+        ViewEnum currentView = ViewEnum.START;
+        while (currentView != ViewEnum.EXIT) {
+            currentView = viewFactory.getView(currentView).runView();
             // TODO Method call to save data here?
         }
     }

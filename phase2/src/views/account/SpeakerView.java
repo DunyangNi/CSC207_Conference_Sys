@@ -20,16 +20,16 @@ public class SpeakerView implements View {
 
     @Override
     public ViewEnum runView() {
-        boolean loggedIn = true;
-
         presenter.startPrompt();
         presenter.displaySpeakerMenu();
+        presenter.requestCommandPrompt();
 
+        boolean loggedIn = true;
         while (loggedIn) {
             SpeakerMenuEnum speakerMenuEnum = SpeakerMenuEnum.fromString(userInput.nextLine());
             switch (speakerMenuEnum) {
                 case EXIT:
-                    return null;
+                    return ViewEnum.EXIT;
                 case LOGOUT:
                     loggedIn = false;
                     break;
@@ -93,6 +93,6 @@ public class SpeakerView implements View {
             presenter.savedDataPrompt();
             presenter.requestCommandPrompt();
         }
-        return ViewEnum.START;
+        return ViewEnum.LOGOUT;
     }
 }

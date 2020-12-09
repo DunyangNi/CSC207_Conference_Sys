@@ -27,11 +27,14 @@ public class ViewFactory {
 
     public View getView(ViewEnum viewEnum) {
         View view = null;
+
         switch (viewEnum) {
-            // TODO Reduce amount of code either by extending ViewFactory in sub-classes for each Account type or by creating Controller + Presenter factories.
+            // TODO Reduce amount of code either by extending ViewFactory into sub-classes for each Account type or by creating Controller + Presenter factories.
             // Start
-            case START:
+            case EXIT: // TODO Consider removing this case
+                break;
             case LOGOUT:
+            case START:
                 StartPresenter startPresenter = new StartPresenter();
                 view = new StartView(startPresenter);
                 break;
@@ -64,8 +67,6 @@ public class ViewFactory {
                 break;
 
             // Account
-            case EXIT:
-                break;
             case VIEW_ALL_ACCOUNTS: // TODO Choose how to implement this
                 break;
             case ADD_CONTACT:
@@ -98,16 +99,16 @@ public class ViewFactory {
                 EventPresenter eventPresenter = new EventPresenter();
                 view = new AllTalksScheduleView(eventController, eventPresenter);
                 break;
-            case DOWNLOAD_SCHEDULE:
+            case DOWNLOAD_SCHEDULE: // TODO Implement this
                 break;
             case VIEW_MENU: // TODO Choose how to implement this
                 break;
             case INVALID: // TODO Choose how to implement this
                 break;
-
-            // Organizer
             case VOID:
                 break;
+
+            // Organizer
             case NEW_SPEAKER:
                 registrationController = new RegistrationController(dm);
                 registrationPresenter = new RegistrationPresenter();

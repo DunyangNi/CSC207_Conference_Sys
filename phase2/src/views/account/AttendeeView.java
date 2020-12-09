@@ -20,16 +20,16 @@ public class AttendeeView implements View {
 
     @Override
     public ViewEnum runView() {
-        boolean loggedIn = true;
-
         presenter.startPrompt();
         presenter.displayAttendeeMenu();
+        presenter.requestCommandPrompt();
 
+        boolean loggedIn = true;
         while (loggedIn) {
             AttendeeMenuEnum attendeeMenuEnum = AttendeeMenuEnum.fromString(userInput.nextLine());
             switch (attendeeMenuEnum) {
                 case EXIT:
-                    return null;
+                    return ViewEnum.EXIT;
                 case LOGOUT:
                     loggedIn = false;
                     break;
@@ -103,6 +103,6 @@ public class AttendeeView implements View {
             presenter.savedDataPrompt();
             presenter.requestCommandPrompt();
         }
-        return ViewEnum.START;
+        return ViewEnum.LOGOUT;
     }
 }
