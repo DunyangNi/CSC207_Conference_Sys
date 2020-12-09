@@ -169,6 +169,7 @@ public class EventCreationView {
         try {
             eventController.createEvent(eventType, topic, time, location, speakers, capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen, vipOnly);
             eventCreationPresenter.exitPrompt();
+            return;
         } catch (InvalidEventTypeException e) {
             eventCreationPresenter.invalidEventTypePrompt();
         } catch (LocationInUseException e) {

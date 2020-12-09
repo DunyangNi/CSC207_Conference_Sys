@@ -39,6 +39,7 @@ public class EventRescheduleView {
         try {
             eventController.rescheduleTalk(id, newTime);
             eventReschedulePresenter.exitPrompt();
+            return;
         } catch (LocationInUseException e) {
             eventReschedulePresenter.inUseLocationPrompt();
         } catch (SpeakerIsBusyException e) {
