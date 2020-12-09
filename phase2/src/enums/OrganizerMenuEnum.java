@@ -1,7 +1,7 @@
 package enums;
 
 public enum OrganizerMenuEnum {
-    // TODO: 12/07/20 Update numbering
+    // TODO: Update numbering after all extensions are implemented
     EXIT("00"),
     LOGOUT("0"),
     NEW_SPEAKER("1"),
@@ -14,6 +14,7 @@ public enum OrganizerMenuEnum {
     MESSAGE_ALL_ATTENDEES("8"),
     VIEW_CONVERSATION("9"),
     VIEW_EVENT_SCHEDULE("10"),
+    DOWNLOAD_SCHEDULE("16"),
     VIEW_LOCATIONS("11"),
     ADD_LOCATION("12"),
     ADD_EVENT("13"),
