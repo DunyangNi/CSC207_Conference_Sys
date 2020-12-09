@@ -14,4 +14,12 @@ public class RequestHandleController {
     public void resolveRequest(Integer requestID) throws ObjectNotFoundException {
         this.rm.resolveRequest(requestID);
     }
+
+    public String retrieveUnresolvedRequestListStringRep() {
+        return this.rm.unresolvedRequestListToString();
+    }
+
+    public String retrieveResolvedRequestListStringRep(){
+        return this.rm.resolvedRequestListToString();
+    }
 }
