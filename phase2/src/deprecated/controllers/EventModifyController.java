@@ -1,4 +1,4 @@
-package controllers.event;
+package deprecated.controllers;
 
 import exceptions.*;
 import exceptions.conflict.LocationInUseException;

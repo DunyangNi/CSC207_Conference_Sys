@@ -6,12 +6,12 @@ import presenters.event.LocationPresenter;
 import views.View;
 
 
-public class AllLocationsView implements View {
+public class LocationListView implements View {
 
     private final LocationPresenter locationPresenter;
     private final LocationController locationController;
 
-    public AllLocationsView(LocationController locationController, LocationPresenter locationPresenter) {
+    public LocationListView(LocationController locationController, LocationPresenter locationPresenter) {
         this.locationController = locationController;
         this.locationPresenter = locationPresenter;
     }

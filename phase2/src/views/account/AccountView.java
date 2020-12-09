@@ -24,8 +24,8 @@ public class AccountView implements View {
         presenter.requestCommandPrompt();
 
         ViewEnum viewEnum = null;
-
         AccountTypeEnum accountType = controller.getAccountType();
+
         while (viewEnum != ViewEnum.LOGOUT) {
             switch (accountType) {
                 case ORGANIZER:
@@ -39,10 +39,10 @@ public class AccountView implements View {
                     break;
             }
             controller.saveData(); // TODO Consider moving this to ConferenceSystem
-            presenter.savedDataPrompt();
+//            presenter.savedDataPrompt();
             presenter.requestCommandPrompt();
         }
-        return ViewEnum.LOGOUT;
+        return viewEnum;
     }
 
     protected <T> ViewEnum getView(T accountMenuEnum) {

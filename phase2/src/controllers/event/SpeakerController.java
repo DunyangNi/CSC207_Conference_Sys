@@ -15,13 +15,11 @@ import static enums.EventTypeEnum.TALK;
 /**
  * Check if a speaker is the speaker of a given event
  */
-public class SpeakerController {
-    private final EventManager eventManager;
+public class SpeakerController { // TODO Consider merging this with EventController
     private final AccountManager accountManager;
 
     public SpeakerController(DataManager dm){
         this.accountManager = dm.getAccountManager();
-        this.eventManager = dm.getEventManager();
     }
 
     public void checkValidSpeaker(EventTypeEnum eventType, ArrayList<String> speakers) throws SpeakerNotFoundException, NotEnoughSpeakersException {

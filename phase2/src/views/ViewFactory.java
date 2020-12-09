@@ -5,17 +5,20 @@ import controllers.account.ContactController;
 import controllers.account.LoginController;
 import controllers.account.RegistrationController;
 import controllers.event.EventController;
+import controllers.event.LocationController;
+import controllers.event.SignupController;
+import controllers.event.SpeakerController;
 import controllers.message.ConversationController;
 import controllers.message.MessageController;
 import enums.ViewEnum;
 import gateways.DataManager;
 import presenters.StartPresenter;
 import presenters.account.*;
-import presenters.event.EventPresenter;
+import presenters.event.*;
 import presenters.message.ConversationPresenter;
 import presenters.message.MessagePresenter;
 import views.account.*;
-import views.event.AllTalksScheduleView;
+import views.event.*;
 import views.message.*;
 
 public class ViewFactory {
@@ -31,8 +34,6 @@ public class ViewFactory {
         switch (viewEnum) {
             // TODO Reduce amount of code either by extending ViewFactory into sub-classes for each Account type or by creating Controller + Presenter factories.
             // Start
-            case EXIT: // TODO Consider removing this case
-                break;
             case LOGOUT:
             case START:
                 StartPresenter startPresenter = new StartPresenter();
@@ -60,14 +61,18 @@ public class ViewFactory {
                 break;
             case ATTENDEE:
                 accountController = new AccountController(dm);
-                AttendeePresenter attendeePresenter = new AttendeePresenter();
-                view = new AccountView(accountController, attendeePresenter);
+                accountPresenter = new AttendeePresenter();
+                view = new AccountView(accountController, accountPresenter);
                 break;
             case VIP: // TODO Implement this
                 break;
 
             // Account
+            case EXIT: // TODO Consider removing this case
             case VIEW_ALL_ACCOUNTS: // TODO Choose how to implement this
+            case INVALID:
+            case VIEW_MENU:
+            case VOID:
                 break;
             case ADD_CONTACT:
                 ContactController contactController = new ContactController(dm);
@@ -79,7 +84,7 @@ public class ViewFactory {
                 contactPresenter = new ContactPresenter();
                 view = new ContactRemoveView(contactController, contactPresenter);
                 break;
-            case VIEW_CONTACTS: // TODO Choose how to implement this
+            case VIEW_CONTACTS:
                 contactController = new ContactController(dm);
                 contactPresenter = new ContactPresenter();
                 view = new ContactListView(contactController, contactPresenter);
@@ -94,18 +99,12 @@ public class ViewFactory {
                 ConversationPresenter conversationPresenter = new ConversationPresenter();
                 view = new ConversationView(conversationController, conversationPresenter);
                 break;
-            case VIEW_EVENT_SCHEDULE: // TODO Choose how to implement this
+            case VIEW_EVENT_SCHEDULE:
                 EventController eventController = new EventController(dm);
                 EventPresenter eventPresenter = new EventPresenter();
-                view = new AllTalksScheduleView(eventController, eventPresenter);
+                view = new EventScheduleView(eventController, eventPresenter);
                 break;
             case DOWNLOAD_SCHEDULE: // TODO Implement this
-                break;
-            case VIEW_MENU: // TODO Choose how to implement this
-                break;
-            case INVALID: // TODO Choose how to implement this
-                break;
-            case VOID:
                 break;
 
             // Organizer
@@ -124,16 +123,32 @@ public class ViewFactory {
                 messagePresenter = new MessagePresenter();
                 view = new MessageAllAttendeesView(messageController, messagePresenter);
                 break;
-            // TODO Implement the following:
-            case ADD_ROOM:
-                break;
             case VIEW_ROOMS:
+                LocationController locationController = new LocationController(dm);
+                LocationPresenter locationPresenter = new LocationPresenter();
+                view = new LocationListView(locationController, locationPresenter);
+                break;
+            case ADD_ROOM:
+                locationController = new LocationController(dm);
+                locationPresenter = new LocationPresenter();
+                view = new LocationAddView(locationController, locationPresenter);
                 break;
             case ADD_EVENT:
+                eventController= new EventController(dm);
+                SpeakerController speakerController = new SpeakerController(dm);
+                locationController = new LocationController(dm);
+                EventCreationPresenter eventCreationPresenter = new EventCreationPresenter();
+                view = new EventCreationView(eventController, speakerController, locationController,  eventCreationPresenter);
                 break;
             case CANCEL_EVENT:
+                eventController = new EventController(dm);
+                EventCancelPresenter eventCancelPresenter = new EventCancelPresenter();
+                view = new EventCancelView(eventController, eventCancelPresenter);
                 break;
             case RESCHEDULE_EVENT:
+                eventController = new EventController(dm);
+                EventReschedulePresenter eventReschedulePresenter = new EventReschedulePresenter();
+                view = new EventRescheduleView(eventController, eventReschedulePresenter);
                 break;
 
             // Speaker
@@ -142,15 +157,27 @@ public class ViewFactory {
                 messagePresenter = new MessagePresenter();
                 view = new MessageTalkAttendeesView(messageController, messagePresenter);
                 break;
-            case VIEW_SPEAKER_SCHEDULE: // TODO Choose how to implement this
+            case VIEW_SPEAKER_SCHEDULE:
+                eventController = new EventController(dm);
+                eventPresenter = new EventPresenter();
+                view = new SpeakerScheduleView(eventController, eventPresenter);
                 break;
 
             // Attendee
-            case VIEW_SIGNUP_SCHEDULE: // TODO Choose how to implement this
+            case VIEW_SIGNUP_SCHEDULE:
+                eventController = new EventController(dm);
+                eventPresenter = new EventPresenter();
+                view = new AttendeeScheduleView(eventController, eventPresenter);
                 break;
             case SIGNUP_EVENT:
+                SignupController signupController = new SignupController(dm);
+                SignupPresenter signupPresenter = new SignupPresenter();
+                // TODO
                 break;
             case LEAVE_EVENT:
+                signupController = new SignupController(dm);
+                signupPresenter = new SignupPresenter();
+                // TODO
                 break;
         }
         return view;

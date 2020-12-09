@@ -7,12 +7,12 @@ import views.View;
 
 import java.util.Scanner;
 
-public class AddLocationView implements View {
+public class LocationAddView implements View {
     private final LocationPresenter locationPresenter;
     private final LocationController locationController;
     private final Scanner userInput = new Scanner(System.in);
 
-    public AddLocationView(LocationController locationController, LocationPresenter locationPresenter) {
+    public LocationAddView(LocationController locationController, LocationPresenter locationPresenter) {
         this.locationController = locationController;
         this.locationPresenter = locationPresenter;
     }

@@ -11,7 +11,7 @@ import use_cases.event.EventManager;
 
 import java.util.Calendar;
 import java.util.HashMap;
-// TODO: 12/04/20 Merge this class with EventController
+// TODO: 12/04/20 Consider merging this class with EventController
 /**
  * Allows the <code>Attendee</code> user to sign up or cancel signing up for a <code>Event</code>.
  */

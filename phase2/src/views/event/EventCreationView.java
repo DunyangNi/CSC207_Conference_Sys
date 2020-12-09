@@ -24,9 +24,10 @@ public class EventCreationView implements View {
     private final TimeView timeView = new TimeView();
     Scanner userInput = new Scanner(System.in);
 
-    public EventCreationView(EventController controller, SpeakerController controller2, LocationController locationController, EventCreationPresenter presenter ) {
-        eventController = controller;
-        speakerController = controller2;
+    // TODO All other Views only use one Controller and Presenter each.
+    public EventCreationView(EventController eventController, SpeakerController speakerController, LocationController locationController, EventCreationPresenter presenter ) {
+        this.eventController = eventController;
+        this.speakerController = speakerController;
         eventCreationPresenter = presenter;
         this.locationController = locationController;
     }

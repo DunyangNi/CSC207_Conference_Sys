@@ -7,11 +7,11 @@ import views.View;
 
 import java.util.Scanner;
 
-public class AllTalksScheduleView implements View {
+public class EventScheduleView implements View {
     private final EventController controller;
     private final EventPresenter presenter;
 
-    public AllTalksScheduleView(EventController controller, EventPresenter presenter) {
+    public EventScheduleView(EventController controller, EventPresenter presenter) {
         this.controller = controller;
         this.presenter = presenter;
     }
