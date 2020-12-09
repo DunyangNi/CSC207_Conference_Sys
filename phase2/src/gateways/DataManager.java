@@ -23,14 +23,14 @@ public class DataManager {
     protected String username;
 
 
-    public DataManager(AccountManager am, ContactManager fm, ConversationManager cm, EventManager em, LocationManager lm, RequestManager rm, HTMLManager hm) {
+    public DataManager(AccountManager am, ContactManager fm, ConversationManager cm, EventManager em, LocationManager lm, RequestManager rm) {
         this.accountManager = am;
         this.contactManager = fm;
         this.conversationManager = cm;
         this.eventManager = em;
         this.locationManager = lm;
         this.requestManager = rm;
-        this.htmlManager = hm;
+        this.htmlManager = new HTMLManager(em);
     }
 
     /**
