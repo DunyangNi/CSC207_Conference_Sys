@@ -1,6 +1,7 @@
 package gateways;
 
-import exceptions.HTMLWriteErrorException;
+import exceptions.html.OpenBrowserException;
+import exceptions.html.HTMLWriteException;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -13,10 +14,10 @@ import java.net.URI;
  * Handles HTML writing
  */
 public class HTMLManager {
-    private String htmlFileName;
-    private String htmlTitle;
-    private String htmlBody;
-    private String currDir;
+    private final String htmlFileName;
+    private final String htmlTitle;
+    private final String htmlBody;
+    private final String htmlPath;
 
     /**
      * Constructs a HTMLManager object
@@ -24,8 +25,7 @@ public class HTMLManager {
      */
     public HTMLManager(HTMLWritable hw){
         String sep = System.getProperty("file.separator");
-        currDir = System.getProperty("user.dir") + sep;
-
+        htmlPath = System.getProperty("user.dir") + sep;
         htmlFileName =  hw.getHTMLFileName();
         htmlTitle = hw.getHTMLFileName();
         htmlBody = hw.getHTMLBody();
@@ -36,14 +36,14 @@ public class HTMLManager {
      * @return an absolute path to a downloaded HTML file
      */
     public String getDownloadLocation(){
-        return currDir + htmlFileName;
+        return htmlPath + htmlFileName;
     }
 
     /**
      * Generates HTML contents
-     * @throws HTMLWriteErrorException is thrown if a HTML file cannot be created
+     * @throws HTMLWriteException is thrown if a HTML file cannot be created
      */
-    public void generateHTML() throws HTMLWriteErrorException {
+    public void generateHTML() throws HTMLWriteException {
         String fullHTML =
             "<html>" +
             "<head>" +
@@ -53,38 +53,26 @@ public class HTMLManager {
             "<body> " + htmlBody + "</body>" +
             "</html>";
 
-        BufferedWriter bw = null;
-
         try {
-            bw = new BufferedWriter(new FileWriter(htmlFileName));
-            bw.write(fullHTML) ;
-        } catch (IOException e) {
-            throw new HTMLWriteErrorException();
-        } finally{
-            try {
-                bw.close();
-            } catch (IOException e){
-                throw new HTMLWriteErrorException();
-            }
-        }
+            BufferedWriter bw = new BufferedWriter(new FileWriter(htmlFileName));
+            bw.write(fullHTML);
+            bw.close();
+        } catch (IOException e) { throw new HTMLWriteException(); }
     }
 
     /**
      * Tries to open a created HTML in a browser
-     * @throws HTMLWriteErrorException is thrown if a HTML file location is invalid
+     * @throws HTMLWriteException is thrown if a HTML file location is invalid
      */
-    public void openHTML() throws HTMLWriteErrorException {
-
+    public void openHTML() throws HTMLWriteException, OpenBrowserException {
         // output a html in a browser
         try {
             URI uri = new URI(htmlFileName);
             Desktop desktop = Desktop.getDesktop();
             desktop.browse(uri);
-        } catch (URISyntaxException e) {
-            throw new HTMLWriteErrorException();
-        } catch (IOException e){
-            // Fail to open a browser. Nothing to do.
         }
+        catch (URISyntaxException e) { throw new HTMLWriteException(); }
+        catch (IOException e){ throw new OpenBrowserException(); }
     }
 }
 

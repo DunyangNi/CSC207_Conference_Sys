@@ -7,6 +7,8 @@ import use_cases.ConversationManager;
 import use_cases.event.EventManager;
 import use_cases.event.LocationManager;
 
+import javax.swing.text.html.HTML;
+
 /**
  * The parameter objects that store all of the instances of use case classes
  */
@@ -17,16 +19,18 @@ public class DataManager {
     protected EventManager eventManager;
     protected LocationManager locationManager;
     protected RequestManager requestManager;
+    protected HTMLManager htmlManager;
     protected String username;
 
 
-    public DataManager(AccountManager am, ContactManager fm, ConversationManager cm, EventManager em, LocationManager lm, RequestManager rm) {
+    public DataManager(AccountManager am, ContactManager fm, ConversationManager cm, EventManager em, LocationManager lm, RequestManager rm, HTMLManager hm) {
         this.accountManager = am;
         this.contactManager = fm;
         this.conversationManager = cm;
         this.eventManager = em;
         this.locationManager = lm;
         this.requestManager = rm;
+        this.htmlManager = hm;
     }
 
     /**
@@ -64,6 +68,8 @@ public class DataManager {
     public LocationManager getLocationManager() { return locationManager; }
 
     public RequestManager getRequestManager() { return requestManager; }
+
+    public HTMLManager getHtmlManager() { return htmlManager; }
 
     /**
      * The getter of username
