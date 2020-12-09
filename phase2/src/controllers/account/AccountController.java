@@ -1,5 +1,6 @@
 package controllers.account;
 
+import enums.AccountTypeEnum;
 import enums.ViewEnum;
 import gateways.*;
 import use_cases.ConversationManager;
@@ -27,6 +28,16 @@ public class AccountController {
         this.cm = dm.getConversationManager();
         this.em = dm.getEventManager();
         this.username = dm.getUsername();
+    }
+
+    public AccountTypeEnum getAccountType() {
+        if (am.containsAttendee(username)) {
+            return AccountTypeEnum.ATTENDEE;
+        } else if (am.containsSpeaker(username)) {
+            return AccountTypeEnum.SPEAKER;
+        } else {
+            return AccountTypeEnum.ORGANIZER;
+        }
     }
 
     public boolean usernameExists(String username) {
