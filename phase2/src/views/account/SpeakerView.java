@@ -1,17 +1,10 @@
 package views.account;
 
 import controllers.account.AccountController;
-import entities.account.Speaker;
-import enums.OrganizerMenuEnum;
 import enums.SpeakerMenuEnum;
 import enums.ViewEnum;
-import gateways.*;
 import presenters.account.SpeakerPresenter;
 import views.View;
-import views.event.AllTalksScheduleView;
-import views.message.ConversationView;
-import views.message.MessageTalkAttendeesView;
-import views.message.MessageView;
 
 import java.util.Scanner;
 
@@ -42,9 +35,6 @@ public class SpeakerView implements View {
                     break;
                 case VIEW_ALL_ACCOUNTS:
                     presenter.displayAccountList(controller.getAccountList());
-                    break;
-                case VIEW_CONTACTS:
-                    presenter.displayContactList(controller.getContactList());
                     break;
                 case VIEW_MENU:
                     presenter.displaySpeakerMenu();

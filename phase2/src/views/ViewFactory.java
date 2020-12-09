@@ -2,8 +2,8 @@ package views;
 
 import controllers.account.AccountController;
 import controllers.account.ContactController;
-import controllers.account.RegistrationController;
 import controllers.account.LoginController;
+import controllers.account.RegistrationController;
 import controllers.event.EventController;
 import controllers.message.ConversationController;
 import controllers.message.MessageController;
@@ -20,6 +20,7 @@ import views.message.*;
 
 public class ViewFactory {
     private final DataManager dm;
+
     public ViewFactory(DataManager dm) {
         this.dm = dm;
     }
@@ -27,6 +28,7 @@ public class ViewFactory {
     public View getView(ViewEnum viewEnum) {
         View view = null;
         switch (viewEnum) {
+            // TODO Reduce amount of code either by extending ViewFactory in sub-classes for each Account type or by creating Controller + Presenter factories.
             // Start
             case START:
             case LOGOUT:
@@ -77,6 +79,9 @@ public class ViewFactory {
                 view = new ContactRemoveView(contactController, contactPresenter);
                 break;
             case VIEW_CONTACTS: // TODO Choose how to implement this
+                contactController = new ContactController(dm);
+                contactPresenter = new ContactPresenter();
+                view = new ContactListView(contactController, contactPresenter);
                 break;
             case MESSAGE:
                 MessageController messageController = new MessageController(dm);

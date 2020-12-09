@@ -36,9 +36,6 @@ public class OrganizerView implements View {
                 case VIEW_ALL_ACCOUNTS:
                     presenter.displayAccountList(controller.getAccountList());
                     break;
-                case VIEW_CONTACTS:
-                    presenter.displayContactList(controller.getContactList());
-                    break;
                 case VIEW_MENU:
                     presenter.displayOrganizerMenu();
                     break;
