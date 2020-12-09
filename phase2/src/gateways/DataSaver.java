@@ -13,7 +13,7 @@ public interface DataSaver {
         file.close();
     }
 
-    default void saveManager(String managerName, String filePath, Serializable manager) {
+    default void saveManager(String filePath, Serializable manager) {
         try {
             saveSerializable(filePath, manager);
 //            System.out.println("Saved " + managerName);

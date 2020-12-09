@@ -11,6 +11,7 @@ public class TimeView {
     private final Scanner userInput = new Scanner(System.in);
     
     protected Calendar runTimeView() {
+        timePresenter.startPrompt();
         boolean valid = false;
         Calendar newTime = Calendar.getInstance();
         while (!valid) {

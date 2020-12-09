@@ -1,5 +1,6 @@
 package presenters.event;
 
+import presenters.EventErrorPresenter;
 import presenters.Presenter;
 
 public class EventCancelPresenter implements Presenter, EventErrorPresenter {

@@ -3,12 +3,13 @@ package use_cases;
 import entities.Request;
 import exceptions.not_found.ObjectNotFoundException;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Arrays;
 
-public class RequestManager {
+public class RequestManager implements Serializable {
     private HashMap<Integer, Request> unresolvedRequests;
     private HashMap<Integer, Request> resolvedRequests;
     private static Integer nextRequestID = 0;

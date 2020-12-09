@@ -1,6 +1,7 @@
 package entities;
+import java.io.Serializable;
 import java.util.*;
-public class Request implements Comparable {
+public class Request implements Comparable, Serializable {
     private Calendar timeOfRequest;
     private String senderUsername;
     private String requestSubjectLine;

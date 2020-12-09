@@ -4,9 +4,11 @@ import enums.AccountTypeEnum;
 import enums.ViewEnum;
 import gateways.*;
 import use_cases.ConversationManager;
+import use_cases.RequestManager;
 import use_cases.account.AccountManager;
 import use_cases.account.ContactManager;
 import use_cases.event.EventManager;
+import use_cases.event.LocationManager;
 import views.View;
 import views.ViewFactory;
 
@@ -19,6 +21,8 @@ public class AccountController {
     private final ContactManager fm;
     private final ConversationManager cm;
     private final EventManager em;
+    private final LocationManager lm;
+    private final RequestManager rm;
     private final String username;
 
     public AccountController(DataManager dm) {
@@ -27,6 +31,8 @@ public class AccountController {
         this.fm = dm.getContactManager();
         this.cm = dm.getConversationManager();
         this.em = dm.getEventManager();
+        this.lm = dm.getLocationManager();
+        this.rm = dm.getRequestManager();
         this.username = dm.getUsername();
     }
 
@@ -62,10 +68,14 @@ public class AccountController {
         ContactDataManager contactDataManager = new ContactDataManager();
         ConversationDataManager conversationDataManager = new ConversationDataManager();
         EventDataManager eventDataManager = new EventDataManager();
+        LocationDataManager locationDataManager = new LocationDataManager();
+        RequestDataManager requestDataManager = new RequestDataManager();
 
-        accountDataManager.saveManager("AccountManager", "AccountManager", am);
-        contactDataManager.saveManager("ContactManager", "ContactManager", fm);
-        conversationDataManager.saveManager("ConversationManager", "ConversationManager", cm);
-        eventDataManager.saveManager("EventManager", "EventManager", em);
+        accountDataManager.saveManager("AccountManager", am);
+        contactDataManager.saveManager("ContactManager", fm);
+        conversationDataManager.saveManager("ConversationManager", cm);
+        eventDataManager.saveManager("EventManager", em);
+        locationDataManager.saveManager("LocationManager", lm);
+        requestDataManager.saveManager("RequestManager", rm);
     }
 }
