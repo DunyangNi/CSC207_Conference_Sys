@@ -4,6 +4,7 @@ import controllers.account.AccountController;
 import controllers.account.ContactController;
 import controllers.account.LoginController;
 import controllers.account.RegistrationController;
+import controllers.event.DownloadScheduleController;
 import controllers.event.EventController;
 import controllers.event.LocationController;
 import controllers.message.ConversationController;
@@ -103,8 +104,10 @@ public class ViewFactory {
                 EventPresenter eventPresenter = new EventPresenter();
                 view = new EventScheduleView(eventController, eventPresenter);
                 break;
-            case DOWNLOAD_SCHEDULE: // TODO Implement this
-//                view = new DownloadScheduleView();
+            case DOWNLOAD_SCHEDULE:
+                DownloadScheduleController downloadScheduleController = new DownloadScheduleController(dm);
+                DownloadSchedulePresenter downloadSchedulePresenter = new DownloadSchedulePresenter();
+                view = new DownloadScheduleView(downloadScheduleController, downloadSchedulePresenter);
                 break;
 
             // Organizer

@@ -38,5 +38,5 @@ public class LocationPresenter implements Presenter, InputErrorPresenter {
     }
 
     @Override
-    public void exitPrompt() { System.out.println("Event Creation successful! Thank you! :)"); }
+    public void exitPrompt() { System.out.println("Location Creation successful! Thank you! :)"); }
 }
