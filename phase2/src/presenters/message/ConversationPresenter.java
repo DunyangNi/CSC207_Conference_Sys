@@ -36,6 +36,20 @@ public class ConversationPresenter implements Presenter {
         }
     }
 
+    public void InputMismatchPrompt() {System.out.println("Error: Input mismatch.");}
+
+    public void NonPositiveIntegerPrompt() {System.out.println("Don't enter a negative number. It doesn't make sense");}
+
+    public void NullPointerExceptionPrompt() {System.out.println("Something went wrong and we recived a NullPointerException.");}
+
+    public void UserNotFoundPrompt() {System.out.println("This account does not exist.");}
+
+    public void RecipientNotFoundPrompt() {System.out.println("This recipient does not exist.");}
+
+    public void NoMessagesPrompt() {System.out.println("There are no messages with this account.");}
+
+    public void MessageNotFoundPrompt() {System.out.println("Could not find this message.");}
+
     @Override
     public void exitPrompt() {
 

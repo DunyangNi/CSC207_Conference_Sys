@@ -34,15 +34,27 @@ public class SignupView {
             try {
                 controller.signupForEvent(id);
             }
-            catch (VipRestrictionException | AlreadySignedUpException | EventIsFullException | EventNotFoundException e) {
-                e.printStackTrace();
+            catch (VipRestrictionException e) {
+                presenter.VipRestrictionPrompt();
+            }
+            catch (EventIsFullException e){
+                presenter.EventIsFullPrompt();
+            }
+            catch (EventNotFoundException e){
+                presenter.EventNotFoundPrompt();
+            } catch (AlreadySignedUpException e) {
+                presenter.AlreadySignedUpPrompt();
             }
         }
         if (command.equals(AttendeeMenuEnum.LEAVE_EVENT)) {
             try {
                 controller.cancelSignupForEvent(id);
-            } catch (EventNotFoundException | AttendeeNotFoundException e) {
-                e.printStackTrace();
+            }
+            catch (EventNotFoundException e){
+                presenter.EventNotFoundPrompt();
+            }
+            catch (AttendeeNotFoundException e){
+                presenter.AttendeeNotFoundPrompt();
             }
         }
     }

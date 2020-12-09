@@ -4,7 +4,10 @@ import controllers.message.ConversationController;
 import enums.ViewEnum;
 import exceptions.NoMessagesException;
 import exceptions.NonPositiveIntegerException;
+import exceptions.not_found.MessageNotFoundException;
 import exceptions.not_found.ObjectNotFoundException;
+import exceptions.not_found.RecipientNotFoundException;
+import exceptions.not_found.UserNotFoundException;
 import gateways.DataManager;
 import presenters.message.ConversationPresenter;
 import use_cases.account.AccountManager;
@@ -40,9 +43,23 @@ public class ConversationView implements View {
             int numMessages = Integer.parseInt(userInput.nextLine());
 
             presenter.conversationMessages(controller.viewMessagesFrom(recipient, numMessages));
-
-        } catch (InputMismatchException | ObjectNotFoundException | NullPointerException | NonPositiveIntegerException | NoMessagesException e) {
-            e.printStackTrace();
+        }
+        catch (InputMismatchException e){
+            presenter.InputMismatchPrompt();
+        }
+        catch (NullPointerException e){
+            presenter.NullPointerExceptionPrompt();
+        }
+        catch (NonPositiveIntegerException e){
+            presenter.NonPositiveIntegerPrompt();
+        } catch (MessageNotFoundException e) {
+            presenter.MessageNotFoundPrompt();
+        } catch (UserNotFoundException e) {
+            presenter.UserNotFoundPrompt();
+        } catch (RecipientNotFoundException e) {
+            presenter.RecipientNotFoundPrompt();
+        } catch (NoMessagesException e) {
+            presenter.NoMessagesPrompt();
         }
         return ViewEnum.VOID;
     }
