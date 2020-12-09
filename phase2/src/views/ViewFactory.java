@@ -51,19 +51,19 @@ public class ViewFactory {
             case ORGANIZER:
                 AccountController accountController = new AccountController(dm);
                 AccountPresenter accountPresenter = new OrganizerPresenter();
-                view = new OrganizerView(accountController, accountPresenter);
+                view = new AccountView(accountController, accountPresenter);
                 break;
             case SPEAKER:
                 accountController = new AccountController(dm);
                 accountPresenter = new SpeakerPresenter();
-                view = new SpeakerView(accountController, accountPresenter);
-                break;
-            case VIP: // TODO Implement this
+                view = new AccountView(accountController, accountPresenter);
                 break;
             case ATTENDEE:
                 accountController = new AccountController(dm);
                 AttendeePresenter attendeePresenter = new AttendeePresenter();
-                view = new AttendeeView(accountController, attendeePresenter);
+                view = new AccountView(accountController, attendeePresenter);
+                break;
+            case VIP: // TODO Implement this
                 break;
 
             // Account

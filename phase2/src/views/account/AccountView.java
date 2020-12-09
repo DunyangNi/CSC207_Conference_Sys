@@ -1,12 +1,13 @@
 package views.account;
 
 import controllers.account.AccountController;
-import enums.ViewEnum;
+import enums.*;
 import presenters.account.AccountPresenter;
+import views.View;
 
 import java.util.Scanner;
 
-public class AccountView {
+public class AccountView implements View {
     private final AccountController controller;
     private final AccountPresenter presenter;
     private final Scanner userInput = new Scanner(System.in);
@@ -16,25 +17,53 @@ public class AccountView {
         this.presenter = presenter;
     }
 
-    public <T> ViewEnum getView(T menuEnum) {
-            switch (menuEnum.toString()) {
-                case "EXIT":
-                    return ViewEnum.EXIT;
-                case "LOGOUT":
-                    return ViewEnum.LOGOUT;
-                case "VIEW_ALL_ACCOUNTS":
-                    presenter.displayAccountList(controller.getAccountList());
+    @Override
+    public ViewEnum runView() {
+        presenter.startPrompt();
+        presenter.displayUserMenu();
+        presenter.requestCommandPrompt();
+
+        ViewEnum viewEnum = null;
+
+        AccountTypeEnum accountType = controller.getAccountType();
+        while (viewEnum != ViewEnum.LOGOUT) {
+            switch (accountType) {
+                case ORGANIZER:
+                    viewEnum = this.getView(OrganizerMenuEnum.fromString(userInput.nextLine()));
                     break;
-                case "VIEW_MENU":
-                    presenter.displayUserMenu();
+                case SPEAKER:
+                    viewEnum = this.getView(SpeakerMenuEnum.fromString(userInput.nextLine()));
                     break;
-                case "INVALID":
-                    presenter.invalidInputPrompt();
+                case ATTENDEE:
+                    viewEnum = this.getView(AttendeeMenuEnum.fromString(userInput.nextLine()));
                     break;
-                default:
-                    return controller.getView(ViewEnum.valueOf(menuEnum.toString())).runView();
             }
-            return ViewEnum.VOID;
+            controller.saveData(); // TODO Consider moving this to ConferenceSystem
+            presenter.savedDataPrompt();
+            presenter.requestCommandPrompt();
+        }
+        return ViewEnum.LOGOUT;
+    }
+
+    protected <T> ViewEnum getView(T accountMenuEnum) {
+        switch (accountMenuEnum.toString()) {
+            case "EXIT":
+                return ViewEnum.EXIT;
+            case "LOGOUT":
+                return ViewEnum.LOGOUT;
+            case "VIEW_ALL_ACCOUNTS":
+                presenter.displayAccountList(controller.getAccountList());
+                break;
+            case "VIEW_MENU":
+                presenter.displayUserMenu();
+                break;
+            case "INVALID":
+                presenter.invalidInputPrompt();
+                break;
+            default:
+                return controller.getView(ViewEnum.valueOf(accountMenuEnum.toString())).runView();
+        }
+        return ViewEnum.VOID;
     }
 
 }

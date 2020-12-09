@@ -27,7 +27,7 @@ public class RegistrationView implements View {
         registrationCodeView(enumCommand);
         accountInfoView(enumCommand);
 
-        controller.saveData();
+        controller.saveData(); // TODO Consider moving this into RegistrationController
 
         return ViewEnum.START;
     }
