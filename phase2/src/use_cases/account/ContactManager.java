@@ -58,7 +58,7 @@ public class ContactManager implements Serializable {
             throw new FriendNotFoundException();
         if (contactLists.get(currentUser).contains(friendToAdd))
             throw new AlreadyFriendException();
-        contactLists.get(currentUser).add(friendToAdd); // TODO: 12/07/20 Not working
+        contactLists.get(currentUser).add(friendToAdd);
     }
 
     /**

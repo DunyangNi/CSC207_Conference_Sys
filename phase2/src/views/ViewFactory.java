@@ -27,9 +27,7 @@ public class ViewFactory {
     public View getView(ViewEnum viewEnum) {
         View view = null;
         switch (viewEnum) {
-            // Common
-            case EXIT:
-                break;
+            // Start
             case START:
             case LOGOUT:
                 StartPresenter startPresenter = new StartPresenter();
@@ -62,18 +60,11 @@ public class ViewFactory {
                 AttendeePresenter attendeePresenter = new AttendeePresenter();
                 view = new AttendeeView(accountController, attendeePresenter);
                 break;
-            case VIEW_ALL_ACCOUNTS: // TODO Choose how to implement this
-                break;
-            case VIEW_MENU: // TODO Choose how to implement this
-                break;
-            case INVALID: // TODO Choose how to implement this
-                break;
 
-            // Organizer
-            case NEW_SPEAKER:
-                registrationController = new RegistrationController(dm);
-                registrationPresenter = new RegistrationPresenter();
-                view = new AccountCreationView(registrationController, registrationPresenter);
+            // Account
+            case EXIT:
+                break;
+            case VIEW_ALL_ACCOUNTS: // TODO Choose how to implement this
                 break;
             case ADD_CONTACT:
                 ContactController contactController = new ContactController(dm);
@@ -92,6 +83,28 @@ public class ViewFactory {
                 MessagePresenter messagePresenter = new MessagePresenter();
                 view = new MessageView(messageController, messagePresenter);
                 break;
+            case VIEW_CONVERSATION:
+                ConversationController conversationController = new ConversationController(dm);
+                ConversationPresenter conversationPresenter = new ConversationPresenter();
+                view = new ConversationView(conversationController, conversationPresenter);
+                break;
+            case VIEW_EVENT_SCHEDULE: // TODO Choose how to implement this
+                break;
+            case DOWNLOAD_SCHEDULE:
+                break;
+            case VIEW_MENU: // TODO Choose how to implement this
+                break;
+            case INVALID: // TODO Choose how to implement this
+                break;
+
+            // Organizer
+            case VOID:
+                break;
+            case NEW_SPEAKER:
+                registrationController = new RegistrationController(dm);
+                registrationPresenter = new RegistrationPresenter();
+                view = new AccountCreationView(registrationController, registrationPresenter);
+                break;
             case MESSAGE_ALL_SPEAKERS:
                 messageController = new MessageController(dm);
                 messagePresenter = new MessagePresenter();
@@ -102,11 +115,6 @@ public class ViewFactory {
                 messagePresenter = new MessagePresenter();
                 view = new MessageAllAttendeesView(messageController, messagePresenter);
                 break;
-            case VIEW_CONVERSATION:
-                ConversationController conversationController = new ConversationController(dm);
-                ConversationPresenter conversationPresenter = new ConversationPresenter();
-                view = new ConversationView(conversationController, conversationPresenter);
-                break;
             // TODO Implement the following:
             case ADD_ROOM:
                 break;
@@ -114,11 +122,23 @@ public class ViewFactory {
                 break;
             case ADD_EVENT:
                 break;
-            case VIEW_EVENT_SCHEDULE:
-                break;
             case CANCEL_EVENT:
                 break;
             case RESCHEDULE_EVENT:
+                break;
+
+            // Speaker
+            case MESSAGE_TALK_ATTENDEES:
+                break;
+            case VIEW_SPEAKER_SCHEDULE: // TODO Choose how to implement this
+                break;
+
+            // Attendee
+            case VIEW_SIGNUP_SCHEDULE: // TODO Choose how to implement this
+                break;
+            case SIGNUP_EVENT:
+                break;
+            case LEAVE_EVENT:
                 break;
         }
         return view;

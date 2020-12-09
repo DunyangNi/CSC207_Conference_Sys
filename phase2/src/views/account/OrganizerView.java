@@ -51,7 +51,6 @@ public class OrganizerView implements View {
             }
 
 //            switch (organizerMenuEnum) {
-//                // TODO: 12/04/20 Enable exit
 ////                case EXIT:
 ////                    loggedIn = false;
 ////                    break;
@@ -124,7 +123,7 @@ public class OrganizerView implements View {
 //                    presenter.invalidInputPrompt();
 //            }
 
-            controller.saveData();
+            controller.saveData(); // TODO Consider moving this to ConferenceSystem
             presenter.savedDataPrompt();
             presenter.requestCommandPrompt();
         }

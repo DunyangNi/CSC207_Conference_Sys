@@ -27,6 +27,7 @@ public class ConferenceSystem {
      * Runs the entire conference program starting with the login screen
      */
     public void run() {
+        // TODO Encapsulate this in DataManager method "readData()"?
         AccountDataManager accountDataManager = new AccountDataManager();
         EventDataManager eventDataManager = new EventDataManager();
         ConversationDataManager conversationDataManager = new ConversationDataManager();
@@ -44,6 +45,7 @@ public class ConferenceSystem {
 
         while (currentView != null) {
             currentView = viewFactory.getView(currentView.runView());
+            // TODO Method call to save data here?
         }
     }
 }

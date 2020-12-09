@@ -34,7 +34,6 @@ public class SpeakerView implements View {
         while (loggedIn) {
             SpeakerMenuEnum enumCommand = SpeakerMenuEnum.fromString(userInput.nextLine());
 //            switch (enumCommand) {
-//                // TODO: 12/04/20 Enable exit
 ////                case EXIT:
 ////                    loggedIn = false;
 ////                    break;

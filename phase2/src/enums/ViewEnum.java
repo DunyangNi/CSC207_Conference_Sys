@@ -1,9 +1,7 @@
 package enums;
 
 public enum ViewEnum {
-    // Common
-    EXIT,
-    LOGOUT,
+    // Start
     START,
     LOGIN,
     REGISTRATION,
@@ -11,6 +9,10 @@ public enum ViewEnum {
     SPEAKER,
     VIP,
     ATTENDEE,
+
+    // Account
+    EXIT,
+    LOGOUT,
     VIEW_ALL_ACCOUNTS,
     ADD_CONTACT,
     REMOVE_CONTACT,
@@ -18,11 +20,12 @@ public enum ViewEnum {
     MESSAGE,
     VIEW_CONVERSATION,
     VIEW_EVENT_SCHEDULE,
+    DOWNLOAD_SCHEDULE,
     VIEW_MENU,
     INVALID,
     VOID,
 
-    // Organizer,
+    // Organizer
     NEW_SPEAKER,
     MESSAGE_ALL_SPEAKERS,
     MESSAGE_ALL_ATTENDEES,
@@ -30,6 +33,14 @@ public enum ViewEnum {
     ADD_ROOM,
     ADD_EVENT,
     CANCEL_EVENT,
-    RESCHEDULE_EVENT
+    RESCHEDULE_EVENT,
 
+    // Speaker
+    MESSAGE_TALK_ATTENDEES,
+    VIEW_SPEAKER_SCHEDULE,
+
+    // Attendee,
+    VIEW_SIGNUP_SCHEDULE,
+    SIGNUP_EVENT,
+    LEAVE_EVENT,
 }

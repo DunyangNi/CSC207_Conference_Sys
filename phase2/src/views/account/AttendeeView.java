@@ -32,7 +32,6 @@ public class AttendeeView implements View {
         while (loggedIn) {
             AttendeeMenuEnum enumCommand = AttendeeMenuEnum.fromString(userInput.nextLine());
 //            switch (enumCommand) {
-//                // TODO: 12/04/20 Enable exit
 ////                case EXIT:
 ////                    loggedIn = false;
 ////                    break;
