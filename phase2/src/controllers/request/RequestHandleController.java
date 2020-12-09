@@ -4,10 +4,10 @@ import exceptions.not_found.ObjectNotFoundException;
 import gateways.DataManager;
 import use_cases.*;
 
-public class RequestRetrieveController {
+public class RequestHandleController {
     public final RequestManager rm;
     //TODO: modify gateways to accomodate requestmanager
-    public RequestRetrieveController(DataManager dm) {
+    public RequestHandleController(DataManager dm) {
         this.rm = dm.getRequestManager();
     }
 
