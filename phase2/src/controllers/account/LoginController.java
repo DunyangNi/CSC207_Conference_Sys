@@ -1,6 +1,9 @@
 package controllers.account;
 
 import enums.ViewEnum;
+import exceptions.already_exists.AccountAlreadyExistsException;
+import exceptions.conflict.IncorrectPasswordException;
+import exceptions.not_found.UserNotFoundException;
 import gateways.DataManager;
 import use_cases.account.AccountManager;
 
@@ -18,7 +21,19 @@ public class LoginController extends AccountController {
         this.am = dm.getAccountManager();
     }
 
-    public ViewEnum login(String username) {
+    public ViewEnum login(String username, String password) throws IncorrectPasswordException, UserNotFoundException {
+        if (!usernameExists(username)){
+            throw new UserNotFoundException();
+        }
+        if (!isCorrectPassword(username, password)){
+            throw new IncorrectPasswordException();
+        }
+        return loginHelper(username);
+
+    }
+
+
+    public ViewEnum loginHelper(String username) {
         ViewEnum view;
         if (am.containsOrganizer(username)) {
             view = ViewEnum.ORGANIZER;

@@ -3,6 +3,8 @@ package views.account;
 import controllers.account.LoginController;
 import enums.AccountTypeEnum;
 import enums.ViewEnum;
+import exceptions.conflict.IncorrectPasswordException;
+import exceptions.not_found.UserNotFoundException;
 import presenters.account.LoginPresenter;
 import views.View;
 
@@ -22,28 +24,45 @@ public class LoginView implements View {
         presenter.startPrompt();
         presenter.usernamePrompt();
         String username = userInput.nextLine();
-
-        while (!controller.usernameExists(username)) {
-            if (username.equals("*")) {
-                return ViewEnum.START;
-            }
-            presenter.dneUsernamePrompt();
-            username = userInput.nextLine();
-        }
-
         presenter.passwordPrompt();
         String password = userInput.nextLine();
 
-        while (!controller.isCorrectPassword(username, password)) {
-            if (password.equals("*")) {
-                return ViewEnum.START;
-            }
+        try{
+            ViewEnum viewEnum = controller.login(username, password);
+            presenter.exitPrompt();
+            return viewEnum;
+        } catch (UserNotFoundException e) {
+            presenter.dneUsernamePrompt();
+        } catch (IncorrectPasswordException e) {
             presenter.incorrectPasswordPrompt();
-            password = userInput.nextLine();
         }
+        presenter.failedPrompt();
+        String input = userInput.nextLine();
+        if (input.equals("Y")) {
+            return ViewEnum.LOGIN;
+        } else {
+            return ViewEnum.START;
+        }
+//        while (!controller.usernameExists(username)) {
+//            if (username.equals("*")) {
+//                return ViewEnum.START;
+//            }
+//            presenter.dneUsernamePrompt();
+//            username = userInput.nextLine();
+//        }
 
-        presenter.exitPrompt();
 
-        return controller.login(username);
+
+//        while (!controller.isCorrectPassword(username, password)) {
+//            if (password.equals("*")) {
+//                return ViewEnum.START;
+//            }
+//            presenter.incorrectPasswordPrompt();
+//            password = userInput.nextLine();
+//       }
+
+//        presenter.exitPrompt();
+
+//        return controller.login(username);
     }
 }
