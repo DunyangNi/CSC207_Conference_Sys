@@ -56,94 +56,34 @@ public class EventCreationView implements View {
         Calendar time = timeView.runTimeView();
 
         eventCreationPresenter.vipOnlyPrompt();
-        boolean valid = false;
-        boolean vipOnly = false;
-        while (!valid) {
-            String input = userInput.nextLine();
-            if (input.equals("Y")) {
-                vipOnly = true;
-                valid = true;
-            } else if (input.equals("N")) {
-                valid = true;
-            } else { eventCreationPresenter.invalidYesNoPrompt(); }
-        }
+        boolean vipOnly = getVipOnly();
 
         eventCreationPresenter.requirementsPrompt();
 
-        boolean capacityInput = false;
-        int capacity = 0;
+
         eventCreationPresenter.capacityPrompt();
-        while (!capacityInput) {
-            try {
-                capacity = Integer.parseInt(userInput.nextLine());
-                if (capacity <= 0) eventCreationPresenter.positiveNumberPrompt();
-                else capacityInput = true;
-            }
-            catch (NumberFormatException e) { eventCreationPresenter.invalidNumberPrompt(); }
-        }
+        int capacity = getPositiveNumber();
 
-        boolean tablesInput = false;
-        int tables = 0;
+
         eventCreationPresenter.tablesPrompt();
-        while (!tablesInput) {
-            try {
-                tables = Integer.parseInt(userInput.nextLine());
-                if (tables < 0) eventCreationPresenter.nonNegativeNumberPrompt();
-                else tablesInput = true;
-            }
-            catch (NumberFormatException e) { eventCreationPresenter.invalidNumberPrompt(); }
-        }
+        int tables = getNonNegativeNumber();
 
-        boolean chairsInput = false;
-        int chairs = 0;
+
         eventCreationPresenter.chairsPrompt();
-        while (!chairsInput) {
-            try {
-                chairs = Integer.parseInt(userInput.nextLine());
-                if (chairs < 0) eventCreationPresenter.nonNegativeNumberPrompt();
-                else chairsInput = true;
-            }
-            catch (NumberFormatException e) { eventCreationPresenter.invalidNumberPrompt(); }
-        }
+        int chairs = getNonNegativeNumber();
 
-        boolean internetInput = false;
-        boolean hasInternet = false;
+
         eventCreationPresenter.internetPrompt();
-        while (!internetInput) {
-            String input = userInput.nextLine();
-            if (input.equals("Y")) {
-                hasInternet = true;
-                internetInput = true;
-            } else if (input.equals("N")) {
-                internetInput = true;
-            } else { eventCreationPresenter.invalidYesNoPrompt(); }
-        }
+        boolean hasInternet = getBoolean();
 
-        boolean soundSystemInput = false;
-        boolean hasSoundSystem = false;
+
         eventCreationPresenter.soundSystemPrompt();
-        while (!soundSystemInput) {
-            String input = userInput.nextLine();
-            if (input.equals("Y")) {
-                hasSoundSystem = true;
-                soundSystemInput = true;
-            } else if (input.equals("N")) {
-                soundSystemInput = true;
-            } else { eventCreationPresenter.invalidYesNoPrompt(); }
-        }
+        boolean hasSoundSystem = getBoolean();
 
-        boolean presentationScreenInput = false;
-        boolean hasPresentationScreen = false;
+
         eventCreationPresenter.presentationScreenPrompt();
-        while (!presentationScreenInput) {
-            String input = userInput.nextLine();
-            if (input.equals("Y")) {
-                hasPresentationScreen = true;
-                presentationScreenInput = true;
-            } else if (input.equals("N")) {
-                presentationScreenInput = true;
-            } else { eventCreationPresenter.invalidYesNoPrompt(); }
-        }
+        boolean hasPresentationScreen = getBoolean();
+
 
         ArrayList<String> suggestedLocationStrings;
         try {
@@ -181,6 +121,65 @@ public class EventCreationView implements View {
         eventCreationPresenter.cancelExitPrompt();
         return ViewEnum.VOID;
     }
+
+    private boolean getVipOnly(){
+        boolean valid = false;
+        boolean vipOnly = false;
+        while (!valid) {
+            String input = userInput.nextLine();
+            if (input.equals("Y")) {
+                vipOnly = true;
+                valid = true;
+            } else if (input.equals("N")) {
+                valid = true;
+            } else { eventCreationPresenter.invalidYesNoPrompt(); }
+        }
+        return vipOnly;
+    }
+
+    private int getPositiveNumber(){
+        boolean Input = false;
+        int number = 0;
+        while (!Input) {
+            try {
+                number = Integer.parseInt(userInput.nextLine());
+                if (number <= 0) eventCreationPresenter.positiveNumberPrompt();
+                else Input = true;
+            }
+            catch (NumberFormatException e) { eventCreationPresenter.invalidNumberPrompt(); }
+        }
+        return number;
+    }
+
+    private int getNonNegativeNumber(){
+        boolean Input = false;
+        int number = 0;
+        while (!Input) {
+            try {
+                number = Integer.parseInt(userInput.nextLine());
+                if (number < 0) eventCreationPresenter.nonNegativeNumberPrompt();
+                else Input = true;
+            }
+            catch (NumberFormatException e) { eventCreationPresenter.invalidNumberPrompt(); }
+        }
+        return number;
+    }
+
+    private boolean getBoolean(){
+        boolean Input = false;
+        boolean result = false;
+        while (!Input) {
+            String input = userInput.nextLine();
+            if (input.equals("Y")) {
+                result = true;
+                Input = true;
+            } else if (input.equals("N")) {
+                Input = true;
+            } else { eventCreationPresenter.invalidYesNoPrompt(); }
+        }
+        return result;
+    }
+
 
     private ArrayList<String> runSpeakerInputInteraction(EventTypeEnum eventType) {
         ArrayList<String> speakers = new ArrayList<>();
