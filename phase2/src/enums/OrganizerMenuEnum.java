@@ -4,7 +4,7 @@ public enum OrganizerMenuEnum {
     // TODO: Update numbering after all extensions are implemented
     EXIT("00"),
     LOGOUT("0"),
-    NEW_SPEAKER("1"),
+    CREATE_ACCOUNT("1"),
     VIEW_ALL_ACCOUNTS("2"),
     ADD_CONTACT("3"),
     REMOVE_CONTACT("4"),
@@ -17,7 +17,7 @@ public enum OrganizerMenuEnum {
     DOWNLOAD_SCHEDULE("16"),
     VIEW_LOCATIONS("11"),
     ADD_LOCATION("12"),
-    ADD_EVENT("13"),
+    CREATE_EVENT("13"),
     CANCEL_EVENT("14"),
     RESCHEDULE_EVENT("15"),
     VIEW_MENU("*"),

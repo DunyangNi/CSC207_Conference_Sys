@@ -26,7 +26,8 @@ public class AccountView implements View {
         ViewEnum viewEnum = null;
         AccountTypeEnum accountType = controller.getAccountType();
 
-        while (viewEnum != ViewEnum.LOGOUT) {
+        while (viewEnum != ViewEnum.LOGOUT && viewEnum != ViewEnum.EXIT) {
+            // TODO Consider surrounding switch statement with try/catch for "View not found" exception
             switch (accountType) {
                 case ORGANIZER:
                     viewEnum = this.getView(OrganizerMenuEnum.fromString(userInput.nextLine()));
@@ -38,14 +39,11 @@ public class AccountView implements View {
                     viewEnum = this.getView(AttendeeMenuEnum.fromString(userInput.nextLine()));
                     break;
             }
-            controller.saveData(); // TODO Consider moving this to ConferenceSystem
-//            presenter.savedDataPrompt();
-            presenter.requestCommandPrompt();
         }
         return viewEnum;
     }
 
-    protected <T> ViewEnum getView(T accountMenuEnum) {
+    private <T> ViewEnum getView(T accountMenuEnum) {
         switch (accountMenuEnum.toString()) {
             case "EXIT":
                 return ViewEnum.EXIT;
@@ -63,7 +61,8 @@ public class AccountView implements View {
             default:
                 return controller.getView(ViewEnum.valueOf(accountMenuEnum.toString())).runView();
         }
+        controller.saveData();
+        presenter.requestCommandPrompt();
         return ViewEnum.VOID;
     }
-
 }

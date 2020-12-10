@@ -111,7 +111,7 @@ public class ViewFactory {
                 break;
 
             // Organizer
-            case NEW_SPEAKER:
+            case CREATE_ACCOUNT:
                 registrationController = new RegistrationController(dm);
                 registrationPresenter = new RegistrationPresenter();
                 view = new AccountCreationView(registrationController, registrationPresenter);
@@ -136,7 +136,7 @@ public class ViewFactory {
                 locationPresenter = new LocationPresenter();
                 view = new LocationAddView(locationController, locationPresenter);
                 break;
-            case ADD_EVENT:
+            case CREATE_EVENT:
                 eventController = new EventController(dm);
                 EventCreationPresenter eventCreationPresenter = new EventCreationPresenter();
                 view = new EventCreationView(eventController, eventCreationPresenter);

@@ -20,7 +20,7 @@ public class OrganizerPresenter extends AccountPresenter {
         System.out.println("6  = Message a user");
         System.out.println("7  = Message all speakers");//MessageSpeakerController - messageAllSpeakers
         System.out.println("8  = Message all attendees");//MessageAttendeeController - messageAllAttendees
-        System.out.println("9 = View your conversations");//same as others
+        System.out.println("9  = View your conversations");//same as others
         System.out.println();
         System.out.println("[EVENTS]");
         System.out.println("10 = View event schedule");//use presenters
