@@ -9,9 +9,7 @@ public class EventCancelPresenter implements Presenter, EventErrorPresenter {
     public void startPrompt() { }
 
     @Override
-    public void exitPrompt() {
-        System.out.println("Event successfully cancelled! :)");
-    }
+    public void exitPrompt() { }
 
     public void cancelEventHeader()  {
         System.out.println("[CANCEL EVENT]");
