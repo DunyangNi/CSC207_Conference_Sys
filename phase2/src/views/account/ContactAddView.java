@@ -2,9 +2,8 @@ package views.account;
 
 import controllers.account.ContactController;
 import enums.ViewEnum;
-import exceptions.conflict.AlreadyFriendException;
-import exceptions.not_found.FriendNotFoundException;
-import exceptions.not_found.UserNotFoundException;
+import exceptions.conflict.AlreadyContactException;
+import exceptions.not_found.AccountNotFoundException;
 import presenters.account.ContactPresenter;
 import views.View;
 
@@ -21,19 +20,20 @@ public class ContactAddView implements View {
     }
 
     public ViewEnum runView() {
+        presenter.addContactHeader();
         presenter.addContactPrompt();
-        String username = userInput.nextLine();
+        String contactToAdd = userInput.nextLine();
         try {
-            controller.addFriend(username);
+            controller.addContact(contactToAdd);
+            presenter.addContactSuccessNotification(contactToAdd);
         }
-        catch (UserNotFoundException e) {
-            presenter.UserNotFoundPrompt();
+        catch (AccountNotFoundException e) {
+            presenter.accountNotFoundNotification();
+            presenter.addContactFailureNotification();
         }
-        catch (AlreadyFriendException e) {
-            presenter.AlreadyFriendPrompt();
-        }
-        catch (FriendNotFoundException e) {
-            presenter.FriendNotFoundPrompt();
+        catch (AlreadyContactException e) {
+            presenter.alreadyContactNotification();
+            presenter.addContactFailureNotification();
         }
         return ViewEnum.VOID;
     }

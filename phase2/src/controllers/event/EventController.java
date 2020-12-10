@@ -14,7 +14,6 @@ import use_cases.event.LocationManager;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 
 import static enums.EventTypeEnum.PANEL_DISCUSSION;
 import static enums.EventTypeEnum.TALK;
@@ -68,9 +67,9 @@ public class EventController {
      *
      * @param id given ID of <code>Event</code>
      */
-    public void signupForEvent(Integer id) throws VipRestrictionException, EventNotFoundException,
+    public void signupForEvent(Integer id) throws VipRestrictedException, EventNotFoundException,
             EventIsFullException, AlreadySignedUpException {
-        if ((!accountManager.getVipStatus(username)) && eventManager.getVipRestriction(id)) { throw new VipRestrictionException(); }
+        if ((!accountManager.getVipStatus(username)) && eventManager.getVipRestriction(id)) { throw new VipRestrictedException(); }
         else {
             eventManager.addAttendee(id, username);
             accountManager.addEventToAttend(id, username);

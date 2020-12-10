@@ -1,9 +1,8 @@
 package controllers.account;
 
-import exceptions.conflict.AlreadyFriendException;
-import exceptions.not_found.FriendNotFoundException;
-import exceptions.not_found.ObjectNotFoundException;
-import exceptions.not_found.UserNotFoundException;
+import exceptions.conflict.AlreadyContactException;
+import exceptions.not_found.AccountNotFoundException;
+import exceptions.not_found.ContactNotFoundException;
 import gateways.DataManager;
 import use_cases.account.ContactManager;
 
@@ -11,38 +10,22 @@ import java.util.ArrayList;
 
 public class ContactController {
     protected String username;
-    protected ContactManager fm;
+    protected ContactManager contactManager;
 
-    /**
-     * Instantiates a ContactController which
-     * manages friend/contact related functionality for the current user
-     * @param dm
-     */
-    public ContactController(DataManager dm){
-        this.username = dm.getUsername();
-        this.fm = dm.getContactManager();
+    public ContactController(DataManager dataManager) {
+        username = dataManager.getUsername();
+        contactManager = dataManager.getContactManager();
     }
 
-    /**
-     * adds new contact with given username
-     * @param friendToAdd username of friend to add
-     */
-    public void addFriend(String friendToAdd) throws UserNotFoundException, FriendNotFoundException, AlreadyFriendException {
-        fm.addFriend(username, friendToAdd);
+    public void addContact(String contactToAdd) throws AccountNotFoundException, AlreadyContactException {
+        contactManager.addContact(username, contactToAdd);
     }
 
-    /**
-     * removes a friend from contacts list
-     * @param friendToRemove friend to remove
-     */
-    public void removeFriend(String friendToRemove) throws ObjectNotFoundException {
-        fm.removeFriend(username, friendToRemove);
+    public void removeContact(String contactToRemove) throws AccountNotFoundException, ContactNotFoundException {
+        contactManager.removeContact(username, contactToRemove);
     }
 
-    /**
-     * displays friend list
-     */
     public ArrayList<String> getContactList() {
-        return fm.getFriendList(username);
+        return contactManager.getContactList(username);
     }
 }

@@ -4,7 +4,7 @@ public class AttendeePresenter extends AccountPresenter {
     public void displayUserMenu() {
         // TODO Update numbering
         System.out.println("[ATTENDEE MENU]");
-        System.out.println("===================================");
+        System.out.println("====================================");
         System.out.println("[ACCOUNT]");
         System.out.println("00 = Logout and exit program");
         System.out.println("0  = Logout");
@@ -21,10 +21,10 @@ public class AttendeePresenter extends AccountPresenter {
         System.out.println();
         System.out.println("[EVENTS]");
         System.out.println("7  = View event schedule");//USe OldPresenter
-        System.out.println("11 = Download event schedule as HTML");
-        System.out.println("8  = View your sign-up schedule");//Use OldPresenter
-        System.out.println("9  = Sign-up for an event");//SignUpController
-        System.out.println("10 = Cancel a sign-up");
-        System.out.println("===================================");
+        System.out.println("8  = Download event schedule as HTML");
+        System.out.println("9  = View your sign-up schedule");//Use OldPresenter
+        System.out.println("10 = Sign-up for an event");//SignUpController
+        System.out.println("11 = Cancel a sign-up");
+        System.out.println("====================================");
     }
 }

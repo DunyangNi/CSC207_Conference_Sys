@@ -2,7 +2,8 @@ package views.account;
 
 import controllers.account.ContactController;
 import enums.ViewEnum;
-import exceptions.not_found.ObjectNotFoundException;
+import exceptions.not_found.AccountNotFoundException;
+import exceptions.not_found.ContactNotFoundException;
 import presenters.account.ContactPresenter;
 import views.View;
 
@@ -19,12 +20,18 @@ public class ContactRemoveView implements View {
     }
 
     public ViewEnum runView() {
+        presenter.removeContactHeader();
         presenter.removeContactPrompt();
-        String username = userInput.nextLine();
+        String contactToRemove = userInput.nextLine();
         try {
-            controller.removeFriend(username);
-        } catch (ObjectNotFoundException e) {
-            presenter.ObjectNotFoundPrompt();
+            controller.removeContact(contactToRemove);
+            presenter.removeContactSuccessNotification(contactToRemove);
+        } catch (ContactNotFoundException e) {
+            presenter.contactNotFoundNotification();
+            presenter.removeContactFailureNotification();
+        } catch (AccountNotFoundException e) {
+            presenter.accountNotFoundNotification();
+            presenter.removeContactFailureNotification();
         }
         return ViewEnum.VOID;
     }

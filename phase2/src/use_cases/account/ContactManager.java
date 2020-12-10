@@ -4,25 +4,24 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import exceptions.conflict.AlreadyFriendException;
-import exceptions.not_found.FriendNotFoundException;
-import exceptions.not_found.ObjectNotFoundException;
-import exceptions.not_found.UserNotFoundException;
+import exceptions.conflict.AlreadyContactException;
+import exceptions.not_found.AccountNotFoundException;
+import exceptions.not_found.ContactNotFoundException;
 
 /**
  * Represents the entire system of Friend relationships between <code>Accounts</code>.
  */
 public class ContactManager implements Serializable {
-    private final HashMap<String, ArrayList<String>> contactLists;
+    private final HashMap<String, ArrayList<String>> contacts;
 
     /**
      * Creates a <code>ContactManager</code> with a given <code>HashMap</code>
      * of <code>Account</code> to <code>ArrayList</code> of friends.
      *
-     * @param contactLists given <code>HashMap</code> of Account to ArrayList of friends.
+     * @param contacts given <code>HashMap</code> of Account to ArrayList of friends.
      */
-    public ContactManager(HashMap<String, ArrayList<String>> contactLists) {
-        this.contactLists = contactLists;
+    public ContactManager(HashMap<String, ArrayList<String>> contacts) {
+        this.contacts = contacts;
     }
 
     /**
@@ -38,40 +37,28 @@ public class ContactManager implements Serializable {
      * @param user given username
      * @return <code>ArrayList</code> of usernames of Accounts that are friends with user.
      */
-    public ArrayList<String> getFriendList(String user) {
-        return contactLists.get(user);
+    public ArrayList<String> getContactList(String user) {
+        return contacts.get(user);
     }
 
     /**
      * Adds a new key a user of an associated <code>Account</code>.
      *
-     * @param user given user of associated <code>Account</code>
+     * @param account given user of associated <code>Account</code>
      */
-    public void addAccountKey(String user) {
-        contactLists.put(user, new ArrayList<>());
+    public void addAccountKey(String account) {
+        contacts.put(account, new ArrayList<>());
     }
 
-    public void addFriend(String currentUser, String friendToAdd) throws UserNotFoundException, FriendNotFoundException, AlreadyFriendException {
-        if (!contactLists.containsKey(currentUser))
-            throw new UserNotFoundException();
-        if (!contactLists.containsKey(friendToAdd))
-            throw new FriendNotFoundException();
-        if (contactLists.get(currentUser).contains(friendToAdd))
-            throw new AlreadyFriendException();
-        contactLists.get(currentUser).add(friendToAdd);
+    public void addContact(String user, String contactToAdd) throws AccountNotFoundException, AlreadyContactException {
+        if (!contacts.containsKey(contactToAdd)) throw new AccountNotFoundException();
+        if (contacts.get(user).contains(contactToAdd)) throw new AlreadyContactException();
+        contacts.get(user).add(contactToAdd);
     }
 
-    /**
-     * Attempts to remove a friend
-     * @param user given username of User
-     * @param friendToRemove given username of friend
-     * @throws ObjectNotFoundException upon friend not being in User's friends
-     */
-    public void removeFriend(String user, String friendToRemove) throws UserNotFoundException, FriendNotFoundException {
-        if (!contactLists.containsKey(user))
-            throw new UserNotFoundException();
-        if (!contactLists.containsKey(friendToRemove))
-            throw new FriendNotFoundException();
-        contactLists.get(user).remove(friendToRemove);
+    public void removeContact(String user, String contactToRemove) throws AccountNotFoundException, ContactNotFoundException {
+        if (!contacts.containsKey(contactToRemove)) throw new AccountNotFoundException();
+        if (!contacts.get(user).contains(contactToRemove)) throw new ContactNotFoundException();
+        contacts.get(user).remove(contactToRemove);
     }
 }

@@ -55,7 +55,7 @@ public class AccountController {
     }
 
     public ArrayList<String> getContactList() {
-        return fm.getFriendList(username);
+        return fm.getContactList(username);
     }
 
     public View getView(ViewEnum viewEnum) {

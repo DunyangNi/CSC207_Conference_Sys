@@ -5,12 +5,9 @@ import enums.ViewEnum;
 import presenters.account.ContactPresenter;
 import views.View;
 
-import java.util.Scanner;
-
 public class ContactListView implements View {
     private final ContactController controller;
     private final ContactPresenter presenter;
-    private final Scanner userInput = new Scanner(System.in);
 
     public ContactListView(ContactController controller, ContactPresenter presenter) {
         this.presenter = presenter;
@@ -18,7 +15,7 @@ public class ContactListView implements View {
     }
 
     public ViewEnum runView() {
-        presenter.contactListPrompt(controller.getContactList());
+        presenter.displayContactList(controller.getContactList());
         return ViewEnum.VOID;
     }
 }

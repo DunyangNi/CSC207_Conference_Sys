@@ -11,10 +11,10 @@ public enum AttendeeMenuEnum {
     MESSAGE("5"),
     VIEW_CONVERSATION("6"),
     VIEW_EVENT_SCHEDULE("7"),
-    DOWNLOAD_SCHEDULE("11"),
-    VIEW_SIGNUP_SCHEDULE("8"),
-    SIGNUP_EVENT("9"),
-    LEAVE_EVENT("10"),
+    DOWNLOAD_SCHEDULE("8"),
+    VIEW_SIGNUP_SCHEDULE("9"),
+    SIGNUP_EVENT("10"),
+    LEAVE_EVENT("11"),
     VIEW_MENU("*"),
     INVALID(null);
 

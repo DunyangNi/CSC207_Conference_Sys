@@ -1,12 +1,10 @@
 package views.event;
 
 import controllers.event.EventController;
-import enums.AttendeeMenuEnum;
 import enums.ViewEnum;
 import exceptions.conflict.AlreadySignedUpException;
 import exceptions.conflict.EventIsFullException;
-import exceptions.conflict.VipRestrictionException;
-import exceptions.not_found.AttendeeNotFoundException;
+import exceptions.conflict.VipRestrictedException;
 import exceptions.not_found.EventNotFoundException;
 import presenters.event.SignupPresenter;
 import views.View;
@@ -32,7 +30,7 @@ public class SignupView implements View {
             presenter.exitPrompt();
             return ViewEnum.VOID;
         }
-        catch (VipRestrictionException e) { presenter.vipRestrictionPrompt(); }
+        catch (VipRestrictedException e) { presenter.vipRestrictionPrompt(); }
         catch (EventIsFullException e){ presenter.eventIsFullPrompt(); }
         catch (EventNotFoundException e){ presenter.eventNotFoundPrompt(); }
         catch (AlreadySignedUpException e) { presenter.alreadySignedUpPrompt(); }

@@ -8,7 +8,7 @@ public class RequestDataManager implements DataReader, DataSaver {
     private final String requestPath;
 
     public RequestDataManager() {
-        this("LocationManager");
+        this("RequestManager");
     }
 
     public RequestDataManager(String requestPath) {
