@@ -43,13 +43,13 @@ public class EventRescheduleView implements View {
             eventReschedulePresenter.exitPrompt();
             return ViewEnum.VOID;
         } catch (LocationInUseException e) {
-            eventReschedulePresenter.inUseLocationPrompt();
+            eventReschedulePresenter.inUseLocationNotification();
         } catch (SpeakerIsBusyException e) {
-            eventReschedulePresenter.speakerIsBusyPrompt();
+            eventReschedulePresenter.speakerIsBusyNotification();
         } catch (EventNotFoundException e) {
-            eventReschedulePresenter.eventNotFoundPrompt();
+            eventReschedulePresenter.eventNotFoundNotification();
         } catch (OutOfScheduleException e) {
-            eventReschedulePresenter.outOfSchedulePrompt();
+            eventReschedulePresenter.outOfScheduleNotification();
         }
         eventReschedulePresenter.cancelExitPrompt();
         return ViewEnum.VOID;

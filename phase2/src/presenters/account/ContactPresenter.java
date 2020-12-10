@@ -41,7 +41,7 @@ public class ContactPresenter implements Presenter {
     public void displayContactList(ArrayList<String> contacts) {
         System.out.println("[MY CONTACTS]");
         System.out.println("====================================");
-        if (contacts.isEmpty()) System.out.println("{Empty}");
+        if (contacts.isEmpty()) System.out.println("{No contacts}");
         else for (String contact : contacts) { System.out.println(contact); }
         System.out.println("====================================");
     }

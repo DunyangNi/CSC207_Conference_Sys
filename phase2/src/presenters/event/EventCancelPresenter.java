@@ -6,20 +6,24 @@ import presenters.Presenter;
 public class EventCancelPresenter implements Presenter, EventErrorPresenter {
 
     @Override
-    public void startPrompt() {
-        System.out.println("[CANCEL EVENT]");
-    }
+    public void startPrompt() { }
 
     @Override
     public void exitPrompt() {
         System.out.println("Event successfully cancelled! :)");
     }
 
-    public void eventIDPrompt() { System.out.println("Please enter the ID of an event to cancel: "); }
-
-    public void invalidIDPrompt() {
-        System.out.println("The ID entered could not be recognized. Ensure the input is a non-negative number.");
+    public void cancelEventHeader()  {
+        System.out.println("[CANCEL EVENT]");
     }
 
-    public void cancelExitPrompt() { System.out.println("No events were cancelled. :(");}
+    public void cancelEventFailureNotification() { System.out.println("{No events were cancelled.}"); }
+
+    public void cancelEventSuccessNotification() { System.out.println("{Successfully cancelled event!}"); }
+
+    public void eventIDPrompt() { System.out.println("Please enter the ID of an event to cancel: "); }
+
+    public void invalidIDNotification() {
+        System.out.println("{The ID entered could not be recognized.}");
+    }
 }

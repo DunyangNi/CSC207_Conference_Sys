@@ -32,7 +32,7 @@ public class SignupView implements View {
         }
         catch (VipRestrictedException e) { presenter.vipRestrictionPrompt(); }
         catch (EventIsFullException e){ presenter.eventIsFullPrompt(); }
-        catch (EventNotFoundException e){ presenter.eventNotFoundPrompt(); }
+        catch (EventNotFoundException e){ presenter.eventNotFoundNotification(); }
         catch (AlreadySignedUpException e) { presenter.alreadySignedUpPrompt(); }
         catch (NumberFormatException e) { presenter.invalidNumberPrompt(); }
         presenter.cancelExitPrompt();

@@ -12,22 +12,18 @@ public class EventPresenter implements Presenter {
 
     public void myEventsPrompt() {
         System.out.println("[MY EVENTS SCHEDULE]");
-        System.out.println("===================================");
+        System.out.println("====================================");
     }
 
     public void allEventsPrompt() {
         System.out.println("[ALL EVENTS SCHEDULE]");
-        System.out.println("===================================");
+        System.out.println("====================================");
     }
 
     public void displayEventSchedule(ArrayList<String> selectedEvents) {
-        if (selectedEvents.isEmpty()) System.out.println("No scheduled events");
+        if (selectedEvents.isEmpty()) System.out.println("{No scheduled events}");
         for(String eventString : selectedEvents) { System.out.println(eventString); System.out.println(); }
-        System.out.println("===================================");
-    }
-
-    public void eventIdPrompt(){
-        System.out.println("Enter the ID of the event.");
+        System.out.println("====================================");
     }
 
     @Override

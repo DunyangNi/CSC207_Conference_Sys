@@ -9,36 +9,30 @@ import views.View;
 import java.util.Scanner;
 
 public class EventCancelView implements View {
-    private final EventController eventController;
-    private final EventCancelPresenter eventCancelPresenter;
+    private final EventController controller;
+    private final EventCancelPresenter presenter;
     Scanner userInput = new Scanner(System.in);
 
-    public EventCancelView(EventController controller, EventCancelPresenter presenter){
-        eventController = controller;
-        eventCancelPresenter = presenter;
+    public EventCancelView(EventController controller, EventCancelPresenter presenter) {
+        this.controller = controller;
+        this.presenter = presenter;
     }
 
     public ViewEnum runView(){
-        eventCancelPresenter.startPrompt();
-
-        boolean chosenID = false;
-        int id = 0;
-        while (!chosenID) {
-            try {
-                eventCancelPresenter.eventIDPrompt();
-                id = Integer.parseInt(userInput.nextLine());
-                chosenID = true;
-            } catch (NumberFormatException e) { eventCancelPresenter.invalidIDPrompt(); }
-        }
-
+        presenter.cancelEventHeader();
         try {
-            eventController.cancelEvent(id);
-            eventCancelPresenter.exitPrompt();
-            return ViewEnum.VOID;
+            presenter.eventIDPrompt();
+            int id = Integer.parseInt(userInput.nextLine());
+            controller.cancelEvent(id);
+            presenter.cancelEventSuccessNotification();
+            presenter.exitPrompt();
+        } catch (NumberFormatException e) {
+            presenter.invalidIDNotification();
+            presenter.cancelEventFailureNotification();
         } catch (EventNotFoundException e) {
-            eventCancelPresenter.eventNotFoundPrompt();
+            presenter.eventNotFoundNotification();
+            presenter.cancelEventFailureNotification();
         }
-        eventCancelPresenter.cancelExitPrompt();
         return ViewEnum.VOID;
     }
 }

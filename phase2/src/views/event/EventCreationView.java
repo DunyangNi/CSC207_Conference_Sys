@@ -35,7 +35,7 @@ public class EventCreationView implements View {
             eventCreationPresenter.eventTypePrompt();
             eventType = EventTypeEnum.fromString(userInput.nextLine());
             if (eventType != INVALID) eventNotChosen = false;
-            else { eventCreationPresenter.invalidEventTypePrompt(); }
+            else { eventCreationPresenter.invalidEventTypeNotification(); }
         }
 
         ArrayList<String> speakers = null;
@@ -159,7 +159,7 @@ public class EventCreationView implements View {
         while (!chosenLocation) {
             eventCreationPresenter.locationPrompt();
             location = userInput.nextLine();
-            if (!eventController.isExistingLocation(location)) eventCreationPresenter.invalidLocationPrompt();
+            if (!eventController.isExistingLocation(location)) eventCreationPresenter.invalidLocationNotification();
             else if (!eventController.locationMeetsRequirements(location, capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen))
                 eventCreationPresenter.requirementMismatchPrompt();
             else chosenLocation = true;
@@ -170,13 +170,13 @@ public class EventCreationView implements View {
             eventCreationPresenter.exitPrompt();
             return ViewEnum.VOID;
         } catch (InvalidEventTypeException e) {
-            eventCreationPresenter.invalidEventTypePrompt();
+            eventCreationPresenter.invalidEventTypeNotification();
         } catch (LocationInUseException e) {
-            eventCreationPresenter.inUseLocationPrompt();
+            eventCreationPresenter.inUseLocationNotification();
         } catch (OutOfScheduleException e) {
-            eventCreationPresenter.outOfSchedulePrompt();
+            eventCreationPresenter.outOfScheduleNotification();
         } catch (SpeakerIsBusyException e) {
-            eventCreationPresenter.speakerIsBusyPrompt();
+            eventCreationPresenter.speakerIsBusyNotification();
         }
         eventCreationPresenter.cancelExitPrompt();
         return ViewEnum.VOID;

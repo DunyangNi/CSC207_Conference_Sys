@@ -54,10 +54,6 @@ public class AccountController {
         return dm.getAccountManager().getAccountHashMap().keySet();
     }
 
-    public ArrayList<String> getContactList() {
-        return fm.getContactList(username);
-    }
-
     public View getView(ViewEnum viewEnum) {
         ViewFactory viewFactory = new ViewFactory(dm);
         return viewFactory.getView(viewEnum);
