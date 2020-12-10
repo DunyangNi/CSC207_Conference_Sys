@@ -1,17 +1,18 @@
 package presenters.message;
 
+import presenters.InputErrorPresenter;
 import presenters.Presenter;
 
 import java.util.ArrayList;
 import java.util.Set;
 
-public class ConversationPresenter implements Presenter {
+public class ConversationPresenter implements Presenter, InputErrorPresenter {
     @Override
     public void startPrompt() {
 
     }
 
-    public void conversationsPrompt(Set<String> recipients) {
+    public void displayConversations(Set<String> recipients) {
         if (recipients.isEmpty()) {
             System.out.println("You have no conversations.");
         } else {
@@ -22,7 +23,7 @@ public class ConversationPresenter implements Presenter {
         }
     }
 
-    public void usernamePrompt() {
+    public void recipientPrompt() {
         System.out.println("To access a conversation, please enter the recipient's username:");
     }
 
@@ -30,25 +31,19 @@ public class ConversationPresenter implements Presenter {
         System.out.println("How many past messages would you like to see?");
     }
 
-    public void conversationMessages(ArrayList<String> messages) {
+    public void displayConversationMessages(ArrayList<String> messages) {
         for (String message : messages) {
             System.out.println(message);
         }
     }
 
-    public void InputMismatchPrompt() {System.out.println("Error: Input mismatch.");}
+    public void inputMismatchNotification() {System.out.println("{Sorry, the input entered was not recognized.}");}
 
-    public void NonPositiveIntegerPrompt() {System.out.println("Don't enter a negative number. It doesn't make sense");}
+    public void recipientNotFoundNotification() {System.out.println("{This recipient does not exist.}");}
 
-    public void NullPointerExceptionPrompt() {System.out.println("Something went wrong and we recived a NullPointerException.");}
+    public void noMessagesNotification() {System.out.println("{You have no messages with this account.}");}
 
-    public void UserNotFoundPrompt() {System.out.println("This account does not exist.");}
-
-    public void RecipientNotFoundPrompt() {System.out.println("This recipient does not exist.");}
-
-    public void NoMessagesPrompt() {System.out.println("There are no messages with this account.");}
-
-    public void MessageNotFoundPrompt() {System.out.println("Could not find this message.");}
+    public void messageNotFoundNotification() {System.out.println("{Sorry, a message could not be found.}");}
 
     @Override
     public void exitPrompt() {

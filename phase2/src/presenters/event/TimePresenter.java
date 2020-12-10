@@ -26,13 +26,13 @@ public class TimePresenter implements Presenter {
         System.out.println("Input an hour of day (9-16): ");
     }
 
-    public void selectedTimePrompt(Calendar time) {
-        System.out.println("The time you have selected is " + time.getTime().toString());
+    public void selectedTimeNotification(Calendar time) {
+        System.out.println("{The time you have selected is " + time.getTime().toString() + " }");
     }
 
-    public void invalidTimePrompt() { System.out.println("The selected time is invalid, please enter a valid time slot."); }
+    public void invalidTimeNotification() { System.out.println("{The selected time is invalid, please enter a valid time slot.}"); }
 
-    public void pastTimePrompt() { System.out.println("The selected time takes place in the past."); }
+    public void pastTimeNotification() { System.out.println("{The selected time takes place in the past.}"); }
 
     @Override
     public void exitPrompt() { }

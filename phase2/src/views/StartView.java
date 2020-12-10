@@ -1,10 +1,7 @@
 package views;
 
 import enums.ViewEnum;
-import gateways.DataManager;
 import presenters.StartPresenter;
-import views.account.LoginView;
-import views.account.RegistrationView;
 
 import java.util.Scanner;
 
@@ -21,7 +18,7 @@ public class StartView implements View {
         String command = userInput.nextLine();
 
         while (!command.matches("[0-2]")) {
-            presenter.invalidCommandPrompt();
+            presenter.invalidCommandNotification();
             command = userInput.nextLine();
         }
 

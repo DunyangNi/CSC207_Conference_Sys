@@ -12,14 +12,10 @@ public class EventReschedulePresenter implements Presenter, InputErrorPresenter,
 
     @Override
     public void exitPrompt() {
-        System.out.println("Event Rescheduling successful! Thank you! :)");
+        System.out.println("{Event Rescheduling successful!}");
     }
 
     public void eventIDPrompt() { System.out.println("Please enter the ID of an event to reschedule: "); }
 
-    public void invalidIDPrompt() {
-        System.out.println("The ID entered could not be recognized. Ensure the input is a non-negative number.");
-    }
-
-    public void cancelExitPrompt() { System.out.println("Event Rescheduling cancelled. :("); }
+    public void eventRescheduleFailureNotification() { System.out.println("{Event rescheduling cancelled.}"); }
 }

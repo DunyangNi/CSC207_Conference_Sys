@@ -11,7 +11,7 @@ public class LocationPresenter implements Presenter, InputErrorPresenter {
 
     public void namePrompt() { System.out.println("Please enter a name for this location: "); }
 
-    public void nameTakenPrompt() { System.out.println("Sorry, that name is already taken. Please enter another name: "); }
+    public void nameTakenNotification() { System.out.println("{Sorry, that name is already taken. Please enter another name.}"); }
 
     public void capacityPrompt() { System.out.println("Please enter the capacity of this location: "); }
 
@@ -38,5 +38,5 @@ public class LocationPresenter implements Presenter, InputErrorPresenter {
     }
 
     @Override
-    public void exitPrompt() { System.out.println("Location Creation successful! Thank you! :)"); }
+    public void exitPrompt() { System.out.println("{Location creation successful!}"); }
 }

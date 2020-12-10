@@ -36,20 +36,20 @@ public class DownloadScheduleView implements View {
                 downloadChosen = true;
             } else if (input.equals("N")) {
                 downloadChosen = true;
-            } else { presenter.invalidYesNoPrompt(); }
+            } else { presenter.invalidYesNoNotification(); }
         }
         if (answer) {
             try {
                 this.controller.downloadSchedule();
-                this.presenter.downloadSuccessful(controller.getPath());
+                this.presenter.downloadSuccessNotification(controller.getPath());
                 return ViewEnum.VOID;
             } catch (HTMLWriteException e) { // wrong while processing HTML
-                presenter.htmlWriteErrorPrompt();
+                presenter.htmlWriteErrorNotification();
             } catch (OpenBrowserException e) {
-                presenter.openBrowserErrorPrompt();
+                presenter.openBrowserErrorNotification();
             }
         }
-        this.presenter.downloadAborted();
+        this.presenter.downloadFailureNotification();
         return ViewEnum.VOID;
     }
 }

@@ -21,20 +21,20 @@ public class DownloadSchedulePresenter implements Presenter, InputErrorPresenter
      * Displays successful downloading
      * @param loc location of a downloaded file
      */
-    public void downloadSuccessful(String loc) {
-        System.out.println("Successful! Downloaded to: " + loc);
+    public void downloadSuccessNotification(String loc) {
+        System.out.println("{Successful! Downloaded to: " + loc + "}");
     }
 
     /**
      * Displays unsuccessful downloading
      */
-    public void downloadAborted(){
-        System.out.println("Download aborted.");
+    public void downloadFailureNotification(){
+        System.out.println("{Download aborted.}");
     }
 
-    public void htmlWriteErrorPrompt() { System.out.println("Sorry, something went wrong during downloading."); }
+    public void htmlWriteErrorNotification() { System.out.println("{Sorry, something went wrong during downloading.}"); }
 
-    public void openBrowserErrorPrompt() { System.out.println("Sorry, something went wrong trying to open the schedule.");}
+    public void openBrowserErrorNotification() { System.out.println("{Sorry, something went wrong trying to open the schedule.}");}
 
     @Override public void exitPrompt() {
     }

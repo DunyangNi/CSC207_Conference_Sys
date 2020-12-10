@@ -28,7 +28,7 @@ public class LocationAddView implements View {
         while (!nameChosen) {
             name = userInput.nextLine();
             if (locationController.isNewLocation(name)) nameChosen = true;
-            else locationPresenter.nameTakenPrompt();
+            else locationPresenter.nameTakenNotification();
         }
 
 

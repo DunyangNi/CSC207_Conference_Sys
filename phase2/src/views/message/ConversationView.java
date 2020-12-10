@@ -5,15 +5,8 @@ import enums.ViewEnum;
 import exceptions.NoMessagesException;
 import exceptions.NonPositiveIntegerException;
 import exceptions.not_found.MessageNotFoundException;
-import exceptions.not_found.ObjectNotFoundException;
 import exceptions.not_found.RecipientNotFoundException;
-import exceptions.not_found.UserNotFoundException;
-import gateways.DataManager;
 import presenters.message.ConversationPresenter;
-import use_cases.account.AccountManager;
-import use_cases.ConversationManager;
-import use_cases.event.EventManager;
-import use_cases.account.ContactManager;
 import views.View;
 
 import java.util.InputMismatchException;
@@ -34,32 +27,25 @@ public class ConversationView implements View {
     public ViewEnum runView() {
         try {
             Set<String> recipients = controller.getAllUserConversationRecipients();
-            presenter.conversationsPrompt(recipients);
+            presenter.displayConversations(recipients);
 
-            presenter.usernamePrompt();
+            presenter.recipientPrompt();
             String recipient = userInput.nextLine();
 
             presenter.numMessagesPrompt();
             int numMessages = Integer.parseInt(userInput.nextLine());
 
-            presenter.conversationMessages(controller.viewMessagesFrom(recipient, numMessages));
-        }
-        catch (InputMismatchException e){
-            presenter.InputMismatchPrompt();
-        }
-        catch (NullPointerException e){
-            presenter.NullPointerExceptionPrompt();
-        }
-        catch (NonPositiveIntegerException e){
-            presenter.NonPositiveIntegerPrompt();
+            presenter.displayConversationMessages(controller.viewMessagesFrom(recipient, numMessages));
+        } catch (InputMismatchException e){
+            presenter.inputMismatchNotification();
+        } catch (NonPositiveIntegerException | NumberFormatException e) {
+            presenter.positiveNumberNotification();
         } catch (MessageNotFoundException e) {
-            presenter.MessageNotFoundPrompt();
-        } catch (UserNotFoundException e) {
-            presenter.UserNotFoundPrompt();
+            presenter.messageNotFoundNotification();
         } catch (RecipientNotFoundException e) {
-            presenter.RecipientNotFoundPrompt();
+            presenter.recipientNotFoundNotification();
         } catch (NoMessagesException e) {
-            presenter.NoMessagesPrompt();
+            presenter.noMessagesNotification();
         }
         return ViewEnum.VOID;
     }

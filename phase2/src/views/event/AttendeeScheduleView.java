@@ -15,7 +15,7 @@ public class AttendeeScheduleView implements View {
     }
 
     public ViewEnum runView() {
-        presenter.myEventsPrompt();
+        presenter.myEventsHeader();
         presenter.displayEventSchedule(controller.getAttendeeEvents());
         return ViewEnum.VOID;
     }

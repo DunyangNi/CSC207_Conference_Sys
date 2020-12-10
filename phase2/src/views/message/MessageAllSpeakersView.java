@@ -4,7 +4,6 @@ import controllers.message.MessageController;
 import enums.ViewEnum;
 import exceptions.NoRecipientsException;
 import exceptions.not_found.AccountNotFoundException;
-import gateways.DataManager;
 import presenters.message.MessagePresenter;
 import views.View;
 
@@ -27,10 +26,10 @@ public class MessageAllSpeakersView implements View {
             controller.messageAllSpeakers(message);
         }
         catch ( AccountNotFoundException e ){
-            presenter.AccountNotFoundPrompt();
+            presenter.accountNotFoundNotification();
         }
         catch ( NoRecipientsException e){
-            presenter.NoRecipientsPrompt();
+            presenter.noRecipientsNotification();
         }
         return ViewEnum.VOID;
     }

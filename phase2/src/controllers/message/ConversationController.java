@@ -21,17 +21,17 @@ public class ConversationController {
     }
 
     public boolean isEmpty() throws UserNotFoundException {
-        myConversations = cm.getAllUserConversationRecipients(username);
+        myConversations = cm.getAllConversationRecipients(username);
         return myConversations.isEmpty();
     }
 
-    public Set<String> getAllUserConversationRecipients() throws UserNotFoundException {
-        return cm.getAllUserConversationRecipients(username);
+    public Set<String> getAllUserConversationRecipients() {
+        return cm.getAllConversationRecipients(username);
     }
 
 
     public ArrayList<String> viewMessagesFrom(String recipient, int numMessagesRequested) throws NonPositiveIntegerException,
-            NoMessagesException, UserNotFoundException, MessageNotFoundException, RecipientNotFoundException {
+            NoMessagesException, MessageNotFoundException, RecipientNotFoundException {
         ArrayList<String> messagesRetrieved;
         if (numMessagesRequested < 0) {
             throw new NonPositiveIntegerException();

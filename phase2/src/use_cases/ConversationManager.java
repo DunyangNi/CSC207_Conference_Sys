@@ -27,27 +27,14 @@ public class ConversationManager implements Serializable {
         return "(" + sender + ") : " + content;
     }
 
-    public ArrayList<Integer> getConversationMessages(String sender, String recipient) throws UserNotFoundException, RecipientNotFoundException {
-        if (!conversations.containsKey(sender)) {
-            throw new UserNotFoundException();
-        }
+    public ArrayList<Integer> getConversationMessages(String sender, String recipient) throws RecipientNotFoundException {
         if (!conversations.containsKey(recipient)) {
             throw new RecipientNotFoundException();
         }
         return conversations.get(sender).get(recipient).getMessages();
     }
 
-    /**
-     * Attempts to return all Accounts who have had Conversations with the given Account.
-     *
-     * @param user given username
-     * @return Set of usernames associated with recipient Accounts
-     * @throws UserNotFoundException upon User not being found.
-     */
-    public Set<String> getAllUserConversationRecipients(String user) throws UserNotFoundException {
-        if (!conversations.containsKey(user)) {
-            throw new UserNotFoundException();
-        }
+    public Set<String> getAllConversationRecipients(String user) {
         Set<String> recipients = this.conversations.get(user).keySet();
         return recipients.isEmpty() ? Collections.emptySet() : recipients;
     }

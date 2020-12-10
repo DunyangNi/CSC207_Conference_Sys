@@ -15,7 +15,7 @@ public class SpeakerScheduleView implements View {
     }
 
     public ViewEnum runView() {
-        presenter.myEventsPrompt();
+        presenter.myEventsHeader();
         presenter.displayEventSchedule(controller.getSpeakerEvents());
         return ViewEnum.VOID;
     }

@@ -9,8 +9,8 @@ public class StartPresenter implements Presenter {
         System.out.println("2 = Register a new account:");
     }
 
-    public void invalidCommandPrompt() {
-        System.out.println("Invalid input, please try again:");
+    public void invalidCommandNotification() {
+        System.out.println("{Invalid input, please try again.}");
     }
 
     @Override

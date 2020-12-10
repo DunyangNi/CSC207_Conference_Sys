@@ -11,19 +11,19 @@ public class LoginPresenter implements Presenter {
         System.out.println("Enter your username:");
     }
 
-    public void dneUsernamePrompt() {
-        System.out.println("{This username does not exist, please try again}");
+    public void usernameNotFoundNotification() {
+        System.out.println("{This username does not exist, please try again.}");
     }
 
     public void passwordPrompt() {
         System.out.println("Enter your password:");
     }
 
-    public void incorrectPasswordPrompt() {
-        System.out.println("{Incorrect password, please try again}");
+    public void incorrectPasswordNotification() {
+        System.out.println("{Incorrect password, please try again.}");
     }
 
-    public void failedPrompt() {System.out.println("Do you still want to login(Enter 'Y' to continue login, otherwise return to Start Menu):");}
+    public void failedPrompt() {System.out.println("Continue logging in (Y)?");}
 
     @Override
     public void exitPrompt() {

@@ -33,7 +33,7 @@ public class EventRescheduleView implements View {
                 eventReschedulePresenter.eventIDPrompt();
                 id = Integer.parseInt(userInput.nextLine());
                 chosenID = true;
-            } catch (NumberFormatException e) { eventReschedulePresenter.invalidIDPrompt(); }
+            } catch (NumberFormatException e) { eventReschedulePresenter.nonNegativeNumberNotification(); }
         }
 
         Calendar newTime = timeView.runTimeView();
@@ -51,7 +51,7 @@ public class EventRescheduleView implements View {
         } catch (OutOfScheduleException e) {
             eventReschedulePresenter.outOfScheduleNotification();
         }
-        eventReschedulePresenter.cancelExitPrompt();
+        eventReschedulePresenter.eventRescheduleFailureNotification();
         return ViewEnum.VOID;
     }
 }

@@ -30,12 +30,12 @@ public class TimeView {
                 if (Calendar.getInstance().compareTo(newTime) >= 0) throw new PastTimeException();
                 valid = true;
             } catch (NumberFormatException e) {
-                timePresenter.invalidTimePrompt();
+                timePresenter.invalidTimeNotification();
             } catch (PastTimeException e) {
-                timePresenter.pastTimePrompt();
+                timePresenter.pastTimeNotification();
             }
         }
-        timePresenter.selectedTimePrompt(newTime);
+        timePresenter.selectedTimeNotification(newTime);
         return newTime;
     }
 }

@@ -43,12 +43,12 @@ public class EventCreationPresenter implements Presenter, InputErrorPresenter, E
         System.out.println("Please enter the usernames of all speakers on separate lines\n(press ENTER/RETURN twice to finish): ");
     }
 
-    public void invalidSpeakerPrompt() {
-        System.out.println("One or more speakers could not be found. Ensure you have entered registered speakers.");
+    public void invalidSpeakerNotification() {
+        System.out.println("{One or more speakers could not be found. Ensure you have entered registered speakers.}");
     }
 
-    public void notEnoughSpeakersPrompt() {
-        System.out.println("Less than two speakers were entered.");
+    public void notEnoughSpeakersNotification() {
+        System.out.println("{Less than two speakers were entered.}");
     }
 
     public void topicPrompt(){
@@ -65,8 +65,8 @@ public class EventCreationPresenter implements Presenter, InputErrorPresenter, E
         System.out.println("Please enter the name of a location: ");
     }
 
-    public void noSuggestedLocationsPrompt() {
-        System.out.println("Sorry, there are currently no locations that meets the requirements of this event.");
+    public void noSuggestedLocationsNotification() {
+        System.out.println("{Sorry, there are currently no locations that meets the requirements of this event.}");
     }
 
     public void capacityPrompt() { System.out.println("Please enter the capacity of the event: ");}
@@ -91,7 +91,7 @@ public class EventCreationPresenter implements Presenter, InputErrorPresenter, E
         System.out.println("=======================================================");
     }
 
-    public void requirementMismatchPrompt() { System.out.println("Sorry, this location does not fit the requirements of your event."); }
+    public void requirementMismatchNotification() { System.out.println("{Sorry, this location does not fit the requirements of your event.}"); }
 
-    public void cancelExitPrompt() { System.out.println(" Event Creation cancelled. :("); }
+    public void eventCreationFailureNotification() { System.out.println("{Event creation cancelled.}"); }
 }

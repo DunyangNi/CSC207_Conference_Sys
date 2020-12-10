@@ -1,7 +1,6 @@
 package views.account;
 
 import controllers.account.LoginController;
-import enums.AccountTypeEnum;
 import enums.ViewEnum;
 import exceptions.conflict.IncorrectPasswordException;
 import exceptions.not_found.UserNotFoundException;
@@ -32,9 +31,9 @@ public class LoginView implements View {
             presenter.exitPrompt();
             return viewEnum;
         } catch (UserNotFoundException e) {
-            presenter.dneUsernamePrompt();
+            presenter.usernameNotFoundNotification();
         } catch (IncorrectPasswordException e) {
-            presenter.incorrectPasswordPrompt();
+            presenter.incorrectPasswordNotification();
         }
         presenter.failedPrompt();
         String input = userInput.nextLine();

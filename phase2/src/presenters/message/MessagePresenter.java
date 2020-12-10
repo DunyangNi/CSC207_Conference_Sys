@@ -18,24 +18,20 @@ public class MessagePresenter implements Presenter {
     }
 
     public void eventIdPrompt() {
-        System.out.println("Please enter the ID of the Talk whose attendees you wish to message:");
+        System.out.println("Please enter the ID of the Event whose attendees you wish to message:");
     }
 
     public void nextEventIdPrompt() {
-        System.out.println("Add another Talk?");
+        System.out.println("Add another Event?");
         System.out.println("0 = No:");
         System.out.println("1 = Yes:");
     }
 
-    public void invalidIdPrompt() {
-        System.out.println("Invalid ID. You are not speaking at this talk.");
-    }
+    public void accountNotFoundNotification() { System.out.println("This account does not exist.");}
 
-    public void AccountNotFoundPrompt() { System.out.println("This account does not exist.");}
+    public void noRecipientsNotification() { System.out.println("There aren't any accounts of this type that you can message.");}
 
-    public void NoRecipientsPrompt() { System.out.println("There aren't any accounts of this type that you can message.");}
-
-    public void EventNotFoundPrompt() { System.out.println("This event does not exist.");}
+    public void eventNotFoundNotification() { System.out.println("This event does not exist.");}
     @Override
     public void exitPrompt() {
     }

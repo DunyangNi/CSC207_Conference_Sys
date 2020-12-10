@@ -4,12 +4,9 @@ import controllers.message.MessageController;
 import enums.ViewEnum;
 import exceptions.NoRecipientsException;
 import exceptions.not_found.AccountNotFoundException;
-import exceptions.not_found.EventNotFoundException;
-import gateways.DataManager;
 import presenters.message.MessagePresenter;
 import views.View;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MessageAllAttendeesView implements View {
@@ -29,10 +26,10 @@ public class MessageAllAttendeesView implements View {
             controller.messageAllAttendees(message);
         }
         catch (AccountNotFoundException e){
-            presenter.AccountNotFoundPrompt();
+            presenter.accountNotFoundNotification();
         }
         catch (NoRecipientsException e){
-            presenter.NoRecipientsPrompt();
+            presenter.noRecipientsNotification();
         }
         return ViewEnum.VOID;
     }

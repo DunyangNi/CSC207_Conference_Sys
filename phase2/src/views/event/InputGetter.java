@@ -1,15 +1,8 @@
 package views.event;
 
-import controllers.event.EventController;
-import enums.EventTypeEnum;
 import presenters.InputErrorPresenter;
-import presenters.event.EventCreationPresenter;
 
-import java.util.ArrayList;
 import java.util.Scanner;
-
-import static enums.EventTypeEnum.PANEL_DISCUSSION;
-import static enums.EventTypeEnum.TALK;
 
 public class InputGetter {
     private final InputErrorPresenter inputErrorPresenter;
@@ -25,10 +18,10 @@ public class InputGetter {
         while (!Input) {
             try {
                 number = Integer.parseInt(userInput.nextLine());
-                if (number <= 0) inputErrorPresenter.positiveNumberPrompt();
+                if (number <= 0) inputErrorPresenter.positiveNumberNotification();
                 else Input = true;
             }
-            catch (NumberFormatException e) { inputErrorPresenter.invalidNumberPrompt(); }
+            catch (NumberFormatException e) { inputErrorPresenter.invalidNumberNotification(); }
         }
         return number;
     }
@@ -39,10 +32,10 @@ public class InputGetter {
         while (!Input) {
             try {
                 number = Integer.parseInt(userInput.nextLine());
-                if (number < 0) inputErrorPresenter.nonNegativeNumberPrompt();
+                if (number < 0) inputErrorPresenter.nonNegativeNumberNotification();
                 else Input = true;
             }
-            catch (NumberFormatException e) { inputErrorPresenter.invalidNumberPrompt(); }
+            catch (NumberFormatException e) { inputErrorPresenter.invalidNumberNotification(); }
         }
         return number;
     }
@@ -57,7 +50,7 @@ public class InputGetter {
                 Input = true;
             } else if (input.equals("N")) {
                 Input = true;
-            } else { inputErrorPresenter.invalidYesNoPrompt(); }
+            } else { inputErrorPresenter.invalidYesNoNotification(); }
         }
         return result;
     }

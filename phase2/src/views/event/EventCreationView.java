@@ -48,8 +48,8 @@ public class EventCreationView implements View {
                 eventController.checkValidSpeaker(eventType, speakers);
                 chosenSpeakers = true;
             }
-            catch (SpeakerNotFoundException e) { eventCreationPresenter.invalidSpeakerPrompt(); }
-            catch (NotEnoughSpeakersException e) { eventCreationPresenter.notEnoughSpeakersPrompt(); }
+            catch (SpeakerNotFoundException e) { eventCreationPresenter.invalidSpeakerNotification(); }
+            catch (NotEnoughSpeakersException e) { eventCreationPresenter.notEnoughSpeakersNotification(); }
         }
 
         eventCreationPresenter.topicPrompt();
@@ -91,7 +91,7 @@ public class EventCreationView implements View {
         try {
             suggestedLocationStrings = eventController.getSuggestedLocations(capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen);
         } catch (NoSuggestedLocationsException e) {
-            eventCreationPresenter.noSuggestedLocationsPrompt();
+            eventCreationPresenter.noSuggestedLocationsNotification();
             return ViewEnum.VOID;
         }
         eventCreationPresenter.displaySuggestedLocations(suggestedLocationStrings);
@@ -103,7 +103,7 @@ public class EventCreationView implements View {
             location = userInput.nextLine();
             if (!eventController.isExistingLocation(location)) eventCreationPresenter.invalidLocationNotification();
             else if (!eventController.locationMeetsRequirements(location, capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen))
-                eventCreationPresenter.requirementMismatchPrompt();
+                eventCreationPresenter.requirementMismatchNotification();
             else chosenLocation = true;
         }
 
@@ -120,7 +120,7 @@ public class EventCreationView implements View {
         } catch (SpeakerIsBusyException e) {
             eventCreationPresenter.speakerIsBusyNotification();
         }
-        eventCreationPresenter.cancelExitPrompt();
+        eventCreationPresenter.eventCreationFailureNotification();
         return ViewEnum.VOID;
     }
 

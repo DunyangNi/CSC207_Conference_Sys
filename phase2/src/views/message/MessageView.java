@@ -3,7 +3,6 @@ package views.message;
 import controllers.message.MessageController;
 import enums.ViewEnum;
 import exceptions.not_found.AccountNotFoundException;
-import gateways.DataManager;
 import presenters.message.MessagePresenter;
 import views.View;
 
@@ -27,7 +26,7 @@ public class MessageView implements View {
         try {
             controller.messageAccount(username, message);
         } catch (AccountNotFoundException e) {
-            presenter.AccountNotFoundPrompt();
+            presenter.accountNotFoundNotification();
         }
         return ViewEnum.VOID;
     }

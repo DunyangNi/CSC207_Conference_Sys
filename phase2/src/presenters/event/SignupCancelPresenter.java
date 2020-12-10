@@ -12,10 +12,10 @@ public class SignupCancelPresenter implements Presenter, EventErrorPresenter, In
         System.out.println("Please enter the ID of an event you no longer wish to sign up for: ");
     }
 
-    public void attendeeNotFoundPrompt() { System.out.println("Sorry, this attendee could not be found.");}
+    public void attendeeNotFoundNotification() { System.out.println("{Sorry, this attendee could not be found.}");}
 
-    public void cancelExitPrompt() { System.out.println("Cancel signing up cancelled. :(");}
+    public void signupCancelFailureNotification() { System.out.println("{No sign-ups were cancelled.}");}
 
     @Override
-    public void exitPrompt() { System.out.println("Successfully cancelled signing up for the event! :)"); }
+    public void exitPrompt() { System.out.println("{Successfully cancelled signing up for the event!}"); }
 }

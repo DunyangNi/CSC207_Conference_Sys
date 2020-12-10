@@ -10,12 +10,12 @@ public class EventPresenter implements Presenter {
     @Override
     public void startPrompt() { }
 
-    public void myEventsPrompt() {
+    public void myEventsHeader() {
         System.out.println("[MY EVENTS SCHEDULE]");
         System.out.println("====================================");
     }
 
-    public void allEventsPrompt() {
+    public void allEventsHeader() {
         System.out.println("[ALL EVENTS SCHEDULE]");
         System.out.println("====================================");
     }

@@ -11,8 +11,8 @@ public class RegistrationPresenter implements Presenter {
         System.out.println("3 = Register an Organizer account:");
     }
 
-    public void invalidCommandPrompt() {
-        System.out.println("{Invalid input, please try again}");
+    public void invalidCommandNotification() {
+        System.out.println("{Invalid input, please try again.}");
     }
 
     public void organizerCodePrompt() {
@@ -23,23 +23,23 @@ public class RegistrationPresenter implements Presenter {
         System.out.println("Enter the Speaker registration code:");
     }
 
-    public void invalidCodePrompt() {
-        System.out.println("{Incorrect code, please try again}");
+    public void invalidCodeNotification() {
+        System.out.println("{Incorrect code, please try again.}");
     }
 
     public void usernamePrompt() {
         System.out.println("Enter a username:");
     }
 
-    public void takenUsernamePrompt() {
-        System.out.println("{This username is already taken, please try again}");
+    public void usernameIsTakenNotification() {
+        System.out.println("{This username is already taken, please try again.}");
     }
 
     public void passwordPrompt() {
         System.out.println("Enter a password:");
     }
 
-    public void AccountAlreadyExistsPrompt() { System.out.println("This account already exists.");}
+    public void accountAlreadyExistsNotification() { System.out.println("{This account already exists.}");}
 
     @Override
     public void exitPrompt() {

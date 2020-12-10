@@ -36,7 +36,7 @@ public class RegistrationView implements View {
         AccountTypeEnum enumCommand = AccountTypeEnum.fromString(userInput.nextLine());
 
         while (enumCommand.equals(AccountTypeEnum.INVALID)) {
-            presenter.invalidCommandPrompt();
+            presenter.invalidCommandNotification();
             enumCommand = AccountTypeEnum.fromString(userInput.nextLine());
         }
 
@@ -62,7 +62,7 @@ public class RegistrationView implements View {
         String codeInput = userInput.nextLine();
 
         while (!codeInput.equals(code)) {
-            presenter.invalidCodePrompt();
+            presenter.invalidCodeNotification();
             codeInput = userInput.nextLine();
         }
     }
@@ -72,7 +72,7 @@ public class RegistrationView implements View {
         String username = userInput.nextLine();
 
         while (controller.usernameExists(username)) {
-            presenter.takenUsernamePrompt();
+            presenter.usernameIsTakenNotification();
             username = userInput.nextLine();
         }
 
@@ -83,7 +83,7 @@ public class RegistrationView implements View {
             controller.register(accountType, username, password);
             presenter.exitPrompt();
         } catch (AccountAlreadyExistsException e) {
-            presenter.AccountAlreadyExistsPrompt();
+            presenter.accountAlreadyExistsNotification();
         }
     }
 }

@@ -30,8 +30,8 @@ public class SignupCancelView implements View {
             return ViewEnum.VOID;
         }
         catch (EventNotFoundException e){ presenter.eventNotFoundNotification(); }
-        catch (AttendeeNotFoundException e) { presenter.attendeeNotFoundPrompt(); }
-        presenter.cancelExitPrompt();
+        catch (AttendeeNotFoundException e) { presenter.attendeeNotFoundNotification(); }
+        presenter.signupCancelFailureNotification();
         return ViewEnum.VOID;
     }
 }
