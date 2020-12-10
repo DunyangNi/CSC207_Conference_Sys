@@ -17,12 +17,14 @@ import static enums.EventTypeEnum.*;
 public class EventCreationView implements View {
     private final EventController eventController;
     private final EventCreationPresenter eventCreationPresenter;
+    private final InputGetter inputGetter;
     private final TimeView timeView = new TimeView();
     Scanner userInput = new Scanner(System.in);
 
     public EventCreationView(EventController eventController, EventCreationPresenter presenter) {
         this.eventController = eventController;
         eventCreationPresenter = presenter;
+        inputGetter = new InputGetter(presenter);
     }
 
     public ViewEnum runView() {
@@ -56,33 +58,33 @@ public class EventCreationView implements View {
         Calendar time = timeView.runTimeView();
 
         eventCreationPresenter.vipOnlyPrompt();
-        boolean vipOnly = getVipOnly();
+        boolean vipOnly = inputGetter.getBoolean();
 
         eventCreationPresenter.requirementsPrompt();
 
 
         eventCreationPresenter.capacityPrompt();
-        int capacity = getPositiveNumber();
+        int capacity = inputGetter.getPositiveNumber();
 
 
         eventCreationPresenter.tablesPrompt();
-        int tables = getNonNegativeNumber();
+        int tables = inputGetter.getNonNegativeNumber();
 
 
         eventCreationPresenter.chairsPrompt();
-        int chairs = getNonNegativeNumber();
+        int chairs = inputGetter.getNonNegativeNumber();
 
 
         eventCreationPresenter.internetPrompt();
-        boolean hasInternet = getBoolean();
+        boolean hasInternet = inputGetter.getBoolean();
 
 
         eventCreationPresenter.soundSystemPrompt();
-        boolean hasSoundSystem = getBoolean();
+        boolean hasSoundSystem = inputGetter.getBoolean();
 
 
         eventCreationPresenter.presentationScreenPrompt();
-        boolean hasPresentationScreen = getBoolean();
+        boolean hasPresentationScreen = inputGetter.getBoolean();
 
 
         ArrayList<String> suggestedLocationStrings;
@@ -122,66 +124,8 @@ public class EventCreationView implements View {
         return ViewEnum.VOID;
     }
 
-    private boolean getVipOnly(){
-        boolean valid = false;
-        boolean vipOnly = false;
-        while (!valid) {
-            String input = userInput.nextLine();
-            if (input.equals("Y")) {
-                vipOnly = true;
-                valid = true;
-            } else if (input.equals("N")) {
-                valid = true;
-            } else { eventCreationPresenter.invalidYesNoPrompt(); }
-        }
-        return vipOnly;
-    }
 
-    private int getPositiveNumber(){
-        boolean Input = false;
-        int number = 0;
-        while (!Input) {
-            try {
-                number = Integer.parseInt(userInput.nextLine());
-                if (number <= 0) eventCreationPresenter.positiveNumberPrompt();
-                else Input = true;
-            }
-            catch (NumberFormatException e) { eventCreationPresenter.invalidNumberPrompt(); }
-        }
-        return number;
-    }
-
-    private int getNonNegativeNumber(){
-        boolean Input = false;
-        int number = 0;
-        while (!Input) {
-            try {
-                number = Integer.parseInt(userInput.nextLine());
-                if (number < 0) eventCreationPresenter.nonNegativeNumberPrompt();
-                else Input = true;
-            }
-            catch (NumberFormatException e) { eventCreationPresenter.invalidNumberPrompt(); }
-        }
-        return number;
-    }
-
-    private boolean getBoolean(){
-        boolean Input = false;
-        boolean result = false;
-        while (!Input) {
-            String input = userInput.nextLine();
-            if (input.equals("Y")) {
-                result = true;
-                Input = true;
-            } else if (input.equals("N")) {
-                Input = true;
-            } else { eventCreationPresenter.invalidYesNoPrompt(); }
-        }
-        return result;
-    }
-
-
-    private ArrayList<String> runSpeakerInputInteraction(EventTypeEnum eventType) {
+    public ArrayList<String> runSpeakerInputInteraction(EventTypeEnum eventType) {
         ArrayList<String> speakers = new ArrayList<>();
         if (eventType == TALK) {
             eventCreationPresenter.singleSpeakerPrompt();
