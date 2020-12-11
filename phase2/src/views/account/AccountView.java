@@ -31,6 +31,7 @@ public class AccountView implements View {
                 case ORGANIZER -> viewEnum = getViewEnum(OrganizerMenuEnum.fromString(userInput.nextLine()));
                 case SPEAKER -> viewEnum = getViewEnum(SpeakerMenuEnum.fromString(userInput.nextLine()));
                 case ATTENDEE -> viewEnum = getViewEnum(AttendeeMenuEnum.fromString(userInput.nextLine()));
+                case VIP_ATTENDEE -> viewEnum = getViewEnum(VipAttendeeMenuEnum.fromString(userInput.nextLine()));
             }
         }
         return viewEnum;

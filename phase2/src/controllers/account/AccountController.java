@@ -22,7 +22,12 @@ public class AccountController {
 
     public AccountTypeEnum getAccountType() {
         if (am.containsAttendee(username)) {
-            return AccountTypeEnum.ATTENDEE;
+            if (am.getVipStatus(username)) {
+                return AccountTypeEnum.VIP_ATTENDEE;
+            }
+            else {
+                return AccountTypeEnum.ATTENDEE;
+                }
         } else if (am.containsSpeaker(username)) {
             return AccountTypeEnum.SPEAKER;
         } else {

@@ -1,6 +1,6 @@
 package enums;
 
-public enum AttendeeMenuEnum {
+public enum VipAttendeeMenuEnum {
     EXIT("00"),
     LOGOUT("0"),
     VIEW_ALL_ACCOUNTS("1"),
@@ -20,14 +20,14 @@ public enum AttendeeMenuEnum {
 
     public final String stringValue;
 
-    AttendeeMenuEnum(String stringValue) {
+    VipAttendeeMenuEnum(String stringValue) {
         this.stringValue = stringValue;
     }
 
-    public static AttendeeMenuEnum fromString(String stringValue) {
-        for (AttendeeMenuEnum attendeeMenuEnum : AttendeeMenuEnum.values()) {
-            if (attendeeMenuEnum.stringValue != null && attendeeMenuEnum.stringValue.equals(stringValue)) {
-                return attendeeMenuEnum;
+    public static VipAttendeeMenuEnum fromString(String stringValue) {
+        for (VipAttendeeMenuEnum vipAttendeeMenuEnum : VipAttendeeMenuEnum.values()) {
+            if (vipAttendeeMenuEnum.stringValue != null && vipAttendeeMenuEnum.stringValue.equals(stringValue)) {
+                return vipAttendeeMenuEnum;
             }
         }
         return INVALID;
