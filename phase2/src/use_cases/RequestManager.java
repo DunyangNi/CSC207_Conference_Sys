@@ -12,15 +12,14 @@ import java.util.Arrays;
 public class RequestManager implements Serializable {
     private final HashMap<Integer, Request> unresolvedRequests = new HashMap<>();
     private final HashMap<Integer, Request> resolvedRequests = new HashMap<>();
-    private static Integer nextRequestID = 0;
+    private int assignRequestID = 0;
 
     public void sendRequest(String senderUsername, String requestSubjectLine, String request) {
         Calendar timesent = Calendar.getInstance();
-        Request Request = new Request(timesent, senderUsername, request, nextRequestID);
+        Request Request = new Request(timesent, senderUsername, request, assignRequestID);
+        this.unresolvedRequests.put(assignRequestID, Request);
 
-        Integer id = this.nextRequestID;
-        this.nextRequestID = this.nextRequestID + 1;
-        this.unresolvedRequests.put(id, Request);
+        this.assignRequestID = this.assignRequestID + 1;
     }
 
     //Organizer should send message to request sender when they are done (done outside of this class)
