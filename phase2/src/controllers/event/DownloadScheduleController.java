@@ -10,6 +10,12 @@ import gateways.HTMLManager;
 public class DownloadScheduleController {
     protected HTMLManager hm;
 
+    /**
+     * Creates an instance of <code>DownloadScheduleController </code> with given parameters.
+     *
+     * @param dm Datamanager containing the needed HTMLManager
+     */
+
     public DownloadScheduleController(DataManager dm) {
         this.hm = dm.getHtmlManager();
     }
@@ -24,6 +30,9 @@ public class DownloadScheduleController {
         hm.openHTML();
     }
 
+    /**
+     * @return the download path of the html.
+     */
     public String getPath() {
         return hm.getDownloadLocation();
     }
