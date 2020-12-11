@@ -30,11 +30,11 @@ public class OrganizerPresenter extends AccountPresenter {
         System.out.println("14 = Cancel an event");
         System.out.println("15 = Reschedule an event");
         System.out.println("16 = Download event schedule as HTML");
+        System.out.println();
         System.out.println("[REQUESTS]");
         System.out.println("17 = View list of unresolved requests");
         System.out.println("18 = View list of resolved requests");
         System.out.println("19 = Resolve a request");
-
         System.out.println("============================================================");
     }
 }
