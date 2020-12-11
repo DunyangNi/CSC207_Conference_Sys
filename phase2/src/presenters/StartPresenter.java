@@ -1,7 +1,11 @@
 package presenters;
 
 public class StartPresenter {
-    public void startHeader() { System.out.println("[START MENU]"); }
+    public void startHeader() {
+        System.out.println();
+        System.out.println("[START MENU]");
+    }
+
     public void startMenu() {
         System.out.println("============================================================");
         System.out.println("0 = Exit program");

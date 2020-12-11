@@ -7,6 +7,7 @@ import presenters.Presenter;
 public class SignupCancelPresenter implements Presenter, EventErrorPresenter, InputErrorPresenter {
     @Override
     public void startPrompt() {
+        System.out.println();
         System.out.println("[CANCEL SIGN UP FOR EVENT]");
     }
 
