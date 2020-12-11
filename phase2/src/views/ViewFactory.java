@@ -164,14 +164,17 @@ public class ViewFactory {
                 RequestController requestController = new RequestController(dm);
                 PendingRequestsPresenter unresolvedRequestPresenter = new PendingRequestsPresenter();
                 view = new PendingRequestsListView(requestController, unresolvedRequestPresenter);
+                break;
             case VIEW_RESOLVED_REQUEST:
                 requestController = new RequestController(dm);
                 ResolvedRequestsPresenter resolvedRequestPresenter = new ResolvedRequestsPresenter();
                 view = new ResolvedRequestsListView(requestController, resolvedRequestPresenter);
+                break;
             case RESOLVE_REQUEST:
                 requestController = new RequestController(dm);
                 RequestResolutionPresenter requestResolutionPresenter = new RequestResolutionPresenter();
                 view = new RequestResolveView(requestController, requestResolutionPresenter);
+                break;
 
             // Speaker
             case MESSAGE_TALK_ATTENDEES:
