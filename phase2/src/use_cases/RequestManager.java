@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class RequestManager implements Serializable {
     private final HashMap<Integer, Request> unresolvedRequests = new HashMap<>();
     private final HashMap<Integer, Request> resolvedRequests = new HashMap<>();
-    private int assignRequestID = 0;
+    private int assignRequestID;
 
     public void sendRequest(String senderUsername, String requestSubjectLine, String request) {
         Calendar timesent = Calendar.getInstance();
