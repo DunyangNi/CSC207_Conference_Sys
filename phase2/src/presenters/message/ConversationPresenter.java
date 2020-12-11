@@ -13,14 +13,17 @@ public class ConversationPresenter implements Presenter, InputErrorPresenter {
     }
 
     public void displayConversations(Set<String> recipients) {
+        System.out.println();
+        System.out.println("[CONVERSATION RECIPIENTS]");
+        System.out.println("============================================================");
         if (recipients.isEmpty()) {
-            System.out.println("You have no conversations.");
+            System.out.println("{You have no conversations.}");
         } else {
-            System.out.println("[CONVERSATION RECIPIENTS]");
             for (String recipient : recipients) {
                 System.out.println(recipient);
             }
         }
+        System.out.println("============================================================");
     }
 
     public void recipientPrompt() {
@@ -37,15 +40,25 @@ public class ConversationPresenter implements Presenter, InputErrorPresenter {
         }
     }
 
-    public void inputMismatchNotification() {System.out.println("{Sorry, the input entered was not recognized.}");}
+    public void inputMismatchNotification() {
+        System.out.println("{Sorry, the input entered was not recognized.}");
+    }
 
-    public void recipientNotFoundNotification() {System.out.println("{This recipient does not exist.}");}
+    public void recipientNotFoundNotification() {
+        System.out.println("{This recipient does not exist.}");
+    }
 
-    public void noMessagesNotification() {System.out.println("{You have no messages with this account.}");}
+    public void noMessagesNotification() {
+        System.out.println("{You have no messages with this account.}");
+    }
 
-    public void messageNotFoundNotification() {System.out.println("{Sorry, a message could not be found.}");}
+    public void messageNotFoundNotification() {
+        System.out.println("{Sorry, a message could not be found.}");
+    }
 
-    public void notInContactNotification() {System.out.println("[This user is not in your Contact List.]");}
+    public void notInContactNotification() {
+        System.out.println("{This user is not in your Contact List.}");
+    }
 
     @Override
     public void exitPrompt() {

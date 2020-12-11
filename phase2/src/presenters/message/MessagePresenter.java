@@ -1,7 +1,5 @@
 package presenters.message;
 
-import exceptions.NoRecipientsException;
-import exceptions.not_found.AccountNotFoundException;
 import presenters.Presenter;
 
 public class MessagePresenter implements Presenter {
@@ -27,13 +25,22 @@ public class MessagePresenter implements Presenter {
         System.out.println("1 = Yes:");
     }
 
-    public void accountNotFoundNotification() { System.out.println("This account does not exist.");}
+    public void accountNotFoundNotification() {
+        System.out.println("This account does not exist.");
+    }
 
-    public void notInContactNotification() {System.out.println("This user is not in your contact list.");}
+    public void notInContactNotification() {
+        System.out.println("This user is not in your contact list.");
+    }
 
-    public void noRecipientsNotification() { System.out.println("There aren't any accounts of this type that you can message.");}
+    public void noRecipientsNotification() {
+        System.out.println("There aren't any accounts of this type that you can message.");
+    }
 
-    public void eventNotFoundNotification() { System.out.println("This event does not exist.");}
+    public void eventNotFoundNotification() {
+        System.out.println("This event does not exist.");
+    }
+
     @Override
     public void exitPrompt() {
     }
