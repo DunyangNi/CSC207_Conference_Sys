@@ -1,9 +1,10 @@
 package controllers.message;
 
 import exceptions.NoRecipientsException;
-import exceptions.NotInContactException;
 import exceptions.not_found.AccountNotFoundException;
+import exceptions.not_found.ContactNotFoundException;
 import exceptions.not_found.EventNotFoundException;
+import exceptions.not_found.RecipientNotFoundException;
 import gateways.DataManager;
 import use_cases.ConversationManager;
 import use_cases.account.AccountManager;
@@ -33,37 +34,15 @@ public class MessageController {
         this.username = dm.getUsername();
     }
 
-    public void messageAccount(String accountUsername, String message) throws AccountNotFoundException {
-        if (am.containsAttendee(username) && am.containsAttendee(accountUsername)){
-            boolean validToSend = false;
-            if (ctm.getContactList(username).contains(accountUsername)){
-                validToSend = true;
-            }
-            if (cm.getAllConversationRecipients(username).contains(accountUsername)){
-                validToSend = true;
-            }
-            if (!validToSend) {
-                throw new NotInContactException();
-            }
+    public void messageAccount(String recipient, String message) throws RecipientNotFoundException, ContactNotFoundException {
+        if (am.containsAttendee(username) && am.containsAttendee(recipient)) {
+            boolean canSend = ctm.getContactList(username).contains(recipient) ||
+                    cm.getAllConversationRecipients(username).contains(recipient);
+            if (!canSend) throw new ContactNotFoundException();
         }
-        if (!am.containsAccount(accountUsername)) {
-            throw new AccountNotFoundException();
-        }
-        cm.sendMessage(username, accountUsername, message);
+        if (!am.containsAccount(recipient)) throw new RecipientNotFoundException();
+        cm.sendMessage(username, recipient, message);
     }
-
-//    /**
-//     * sends a message to attendee with specified username
-//     *
-//     * @param message          message to be send
-//     * @param attendeeUsername attendee username
-//     */
-//    public void messageAttendee(String message, String attendeeUsername) throws AccountNotFoundException {
-//        if (!am.containsAttendee(attendeeUsername)) {
-//            throw new AttendeeNotFoundException();
-//        }
-//        messageAccount(message, attendeeUsername);
-//    }
 
     /**
      * sends a message to all registered attendees
@@ -72,50 +51,25 @@ public class MessageController {
      */
     public void messageAllAttendees(String message) throws AccountNotFoundException, NoRecipientsException {
         Iterator<String> attendeeUsernameIterator = this.am.attendeeUsernameIterator();
-        if (!attendeeUsernameIterator.hasNext())
-            throw new NoRecipientsException();
-        while (attendeeUsernameIterator.hasNext()) {
-            messageAccount(attendeeUsernameIterator.next(), message);
-        }
+        if (!attendeeUsernameIterator.hasNext()) throw new NoRecipientsException();
+        while (attendeeUsernameIterator.hasNext()) { messageAccount(attendeeUsernameIterator.next(), message); }
     }
 
     /**
      * if the current user is a speaker, this method sends a given message to all attendees
      * at selected talks the current user is giving
      *
-     * @param selectedTalks selected talks that the current user is speaking in
+     * @param selectedEvents selected talks that the current user is speaking in
      * @param message              message to be sent to attendees attending these talks
      */
-    public void messageTalkAttendees(ArrayList<Integer> selectedTalks, String message) throws AccountNotFoundException, NoRecipientsException, EventNotFoundException {
+    public void messageEventAttendees(ArrayList<Integer> selectedEvents, String message) throws RecipientNotFoundException, ContactNotFoundException, NoRecipientsException, EventNotFoundException {
         ArrayList<String> selectedAttendees = new ArrayList<>();
-
-        for (Integer id : selectedTalks) {
-            if (em.isSpeakerOfEvent(id, this.username)) {
-                selectedAttendees.addAll(em.fetchEventAttendeeList(id));
-            }
+        for (Integer id : selectedEvents) {
+            if (em.isSpeakerOfEvent(id, this.username)) selectedAttendees.addAll(em.fetchEventAttendeeList(id));
         }
-
-        if (selectedAttendees.isEmpty()) {
-            throw new NoRecipientsException();
-        } else {
-            for (String attendee : selectedAttendees) {
-                messageAccount(attendee, message);
-            }
-        }
+        if (selectedAttendees.isEmpty()) throw new NoRecipientsException();
+        else for (String attendee : selectedAttendees) { messageAccount(attendee, message); }
     }
-
-//    /**
-//     * sends a message to speaker with specified username
-//     *
-//     * @param message message to be sent
-//     * @param speaker speaker username
-//     */
-//    public void messageSpeaker(String message, String speaker) throws AccountNotFoundException {
-//        if (!am.containsSpeaker(speaker)) {
-//            throw new SpeakerNotFoundException();
-//        }
-//        messageAccount(message, speaker);
-//    }
 
     /**
      * sends a message to all registered speakers
@@ -123,12 +77,8 @@ public class MessageController {
      * @param message message to be sent
      */
     public void messageAllSpeakers(String message) throws AccountNotFoundException, NoRecipientsException {
-
         Iterator<String> speakerUsernameIterator = this.am.speakerUsernameIterator();
-        if (!speakerUsernameIterator.hasNext())
-            throw new NoRecipientsException();
-        while (speakerUsernameIterator.hasNext()) {
-            messageAccount(speakerUsernameIterator.next(), message);
-        }
+        if (!speakerUsernameIterator.hasNext()) throw new NoRecipientsException();
+        while (speakerUsernameIterator.hasNext()) { messageAccount(speakerUsernameIterator.next(), message); }
     }
 }

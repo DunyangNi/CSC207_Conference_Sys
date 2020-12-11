@@ -4,6 +4,7 @@ import controllers.message.MessageController;
 import enums.ViewEnum;
 import exceptions.NoRecipientsException;
 import exceptions.not_found.AccountNotFoundException;
+import exceptions.not_found.RecipientNotFoundException;
 import presenters.message.MessagePresenter;
 import views.View;
 
@@ -20,17 +21,17 @@ public class MessageAllSpeakersView implements View {
     }
 
     public ViewEnum runView() {
+        presenter.messageAllSpeakersHeader();
         presenter.messagePrompt();
         String message = userInput.nextLine();
         try {
             controller.messageAllSpeakers(message);
+            presenter.messageAllSpeakersSuccessNotification();
+            return ViewEnum.VOID;
         }
-        catch ( AccountNotFoundException e ){
-            presenter.accountNotFoundNotification();
-        }
-        catch ( NoRecipientsException e){
-            presenter.noRecipientsNotification();
-        }
+        catch (AccountNotFoundException e){ presenter.recipientNotFoundNotification(); }
+        catch (NoRecipientsException e){ presenter.noRecipientsNotification(); }
+        presenter.messageAllSpeakersFailureNotification();
         return ViewEnum.VOID;
     }
 }

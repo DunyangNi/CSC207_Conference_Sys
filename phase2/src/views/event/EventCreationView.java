@@ -34,8 +34,7 @@ public class EventCreationView implements View {
     }
 
     public ViewEnum runView() {
-        presenter.startPrompt();
-
+        presenter.eventCreationHeader();
         EventTypeEnum eventType = GENERAL_EVENT;
         boolean eventNotChosen = true;
         presenter.eventTypeMenu();
@@ -115,7 +114,7 @@ public class EventCreationView implements View {
 
         try {
             controller.createEvent(eventType, topic, time, location, speakers, capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen, vipOnly);
-            presenter.exitPrompt();
+            presenter.eventCreationSuccessNotification();
             return ViewEnum.VOID;
         } catch (InvalidEventTypeException e) {
             presenter.invalidEventTypeNotification();
