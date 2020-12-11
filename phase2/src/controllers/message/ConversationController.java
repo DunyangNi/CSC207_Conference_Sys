@@ -12,12 +12,28 @@ import use_cases.account.ContactManager;
 import java.util.ArrayList;
 import java.util.Set;
 
+/**
+ * A controller that manages conversations
+ *
+ * Fields:
+ * cm: Stores conversation information
+ * am: Stores account information
+ * ctm: Stores contact information
+ * username: username of the user of the program
+ */
+
 public class ConversationController {
     private final ConversationManager cm;
     private final AccountManager am;
     private final ContactManager ctm;
     private final String username;
     Set<String> myConversations;
+
+    /**
+     * Creates an instance of <code>ConversationController </code> with given parameters.
+     *
+     * @param dm Datamanager containing all needed managers.
+     */
 
     public ConversationController(DataManager dm){
         this.am = dm.getAccountManager();
@@ -26,14 +42,27 @@ public class ConversationController {
         this.username = dm.getUsername();
     }
 
+    /**
+     * @return True iff the user does not have any conversations
+     * @throws UserNotFoundException if a non-existent user is referred to in the process
+     */
+
     public boolean isEmpty() throws UserNotFoundException {
         myConversations = cm.getAllConversationRecipients(username);
         return myConversations.isEmpty();
     }
 
+    /**
+     * @return A list of usernames of all recipients in conversations that the user participates in.
+     */
+
     public Set<String> getAllUserConversationRecipients() {
         return cm.getAllConversationRecipients(username);
     }
+
+    /**
+     * @return True iff the recipient is eligible to be contacted by the user.
+     */
 
     public boolean contactable(String recipient){
         if (am.containsAttendee(username) && am.containsAttendee(recipient)) {
@@ -44,14 +73,26 @@ public class ConversationController {
         return true;
     }
 
-    public ArrayList<String> viewMessagesFrom(String recipient, int numMessagesRequested) throws NonPositiveIntegerException,
+    /**
+     * Attemps to return a list of *numMessagesRequested* messages from sender.
+     * Returns all messages if too many messages are requested.
+     * @param sender Desired sender
+     * @param numMessagesRequested Number of messages requested to view
+     * @throws NonPositiveIntegerException when numMessagesRequested is non-positive
+     * @throws NoMessagesException when there are no messages from sender
+     * @throws MessageNotFoundException when a non-existent message is looked up
+     * @throws RecipientNotFoundException when sender does not exist
+     */
+
+    public ArrayList<String> viewMessagesFrom(String sender, int numMessagesRequested) throws
+            NonPositiveIntegerException,
             NoMessagesException, MessageNotFoundException, RecipientNotFoundException {
         ArrayList<String> messagesRetrieved;
         if (numMessagesRequested < 0) {
             throw new NonPositiveIntegerException();
         } else {
             String message;
-            ArrayList<Integer> conversation = cm.getConversationMessages(this.username, recipient);
+            ArrayList<Integer> conversation = cm.getConversationMessages(this.username, sender);
             messagesRetrieved = new ArrayList<>();
             int numMessagesRetrieved = Math.min(numMessagesRequested, conversation.size());
             for (int i = numMessagesRetrieved; i > 0; i--) {

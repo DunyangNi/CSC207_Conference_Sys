@@ -36,6 +36,9 @@ public class ConferenceSystem {
         }
     }
 
+    /**
+     * Read data from the datamanagers to create use cases which will be used in the program.
+     */
     private DataManager readData() {
         AccountDataManager accountDataManager = new AccountDataManager();
         EventDataManager eventDataManager = new EventDataManager();
