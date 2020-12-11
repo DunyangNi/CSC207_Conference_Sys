@@ -33,11 +33,10 @@ public class ConferenceSystem {
         ViewEnum viewEnum = ViewEnum.START;
         while (viewEnum != ViewEnum.EXIT) {
             viewEnum = viewFactory.getView(viewEnum).runView();
-            // TODO Method call to save data here?
         }
     }
 
-    private DataManager readData(){
+    private DataManager readData() {
         AccountDataManager accountDataManager = new AccountDataManager();
         EventDataManager eventDataManager = new EventDataManager();
         ConversationDataManager conversationDataManager = new ConversationDataManager();

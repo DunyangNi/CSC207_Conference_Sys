@@ -60,18 +60,6 @@ public class AccountController {
     }
 
     public void saveData() {
-        AccountDataManager accountDataManager = new AccountDataManager();
-        ContactDataManager contactDataManager = new ContactDataManager();
-        ConversationDataManager conversationDataManager = new ConversationDataManager();
-        EventDataManager eventDataManager = new EventDataManager();
-        LocationDataManager locationDataManager = new LocationDataManager();
-        RequestDataManager requestDataManager = new RequestDataManager();
-
-        accountDataManager.saveManager("AccountManager", am);
-        contactDataManager.saveManager("ContactManager", fm);
-        conversationDataManager.saveManager("ConversationManager", cm);
-        eventDataManager.saveManager("EventManager", em);
-        locationDataManager.saveManager("LocationManager", lm);
-        requestDataManager.saveManager("RequestManager", rm);
+        dm.saveData();
     }
 }
