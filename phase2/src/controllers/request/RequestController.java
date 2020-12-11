@@ -6,17 +6,20 @@ import use_cases.*;
 
 public class RequestController {
     public final RequestManager rm;
+    public final String username;
 
     public RequestController(DataManager dm) {
+
         this.rm = dm.getRequestManager();
+        this.username = dm.getUsername();
     }
 
     public void resolveRequest(Integer requestID) throws ObjectNotFoundException {
         this.rm.resolveRequest(requestID);
     }
 
-    public void sendRequest(String senderUsername, String requestSubjectLine, String request) {
-        this.rm.sendRequest(senderUsername, requestSubjectLine, request);
+    public void sendRequest(String requestSubjectLine, String request) {
+        this.rm.sendRequest(this.username, requestSubjectLine, request);
     }
 
     public String retrieveUnresolvedRequestListStringRep() {
