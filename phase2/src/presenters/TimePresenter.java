@@ -1,7 +1,5 @@
 package presenters;
 
-import presenters.Presenter;
-
 import java.util.Calendar;
 
 public interface TimePresenter {
