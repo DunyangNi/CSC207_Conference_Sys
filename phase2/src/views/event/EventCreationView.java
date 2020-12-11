@@ -30,7 +30,7 @@ public class EventCreationView implements View {
         this.controller = controller;
         this.presenter = presenter;
         getInputView = new GetInputView(presenter);
-        getTimeView = new GetTimeView();
+        getTimeView = new GetTimeView(presenter);
     }
 
     public ViewEnum runView() {

@@ -14,7 +14,8 @@ public class StartView implements View {
     }
 
     public ViewEnum runView() {
-        presenter.startPrompt();
+        presenter.startHeader();
+        presenter.startMenu();
         String command = userInput.nextLine();
 
         while (!command.matches("[0-2]")) {
@@ -22,11 +23,13 @@ public class StartView implements View {
             command = userInput.nextLine();
         }
 
-        return switch (command) {
-            case "1" -> ViewEnum.LOGIN;
-            case "2" -> ViewEnum.REGISTRATION;
-// "0"
-            default -> ViewEnum.EXIT;
-        };
+        switch (command) {
+            case "1":
+                return ViewEnum.LOGIN;
+            case "2":
+                return ViewEnum.REGISTRATION;
+            default:
+                return ViewEnum.EXIT;
+        }
     }
 }
