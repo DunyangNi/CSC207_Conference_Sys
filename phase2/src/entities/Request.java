@@ -9,9 +9,11 @@ public class Request implements Comparable, Serializable {
     private Boolean resolved = false;
     private Integer requestID;
 
-    public Request(Calendar timeOfRequest, String senderUsername, String request, Integer requestID) {
+    public Request(Calendar timeOfRequest, String senderUsername, String requestSubjectLine,
+                   String request, Integer requestID) {
         this.timeOfRequest = timeOfRequest;
         this.senderUsername = senderUsername;
+        this.requestSubjectLine = requestSubjectLine;
         this.request = request;
         this.requestID = requestID;
     }

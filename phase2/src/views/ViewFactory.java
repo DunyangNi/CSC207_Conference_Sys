@@ -44,39 +44,25 @@ public class ViewFactory {
             // Start
             case LOGOUT:
             case START:
-                StartPresenter startPresenter = new StartPresenter();
-                view = new StartView(startPresenter);
+                view = new StartView(new StartPresenter());
                 break;
             case REGISTRATION:
-                RegistrationController registrationController = new RegistrationController(dm);
-                RegistrationPresenter registrationPresenter = new RegistrationPresenter();
-                view = new RegistrationView(registrationController, registrationPresenter);
+                view = new RegistrationView(new RegistrationController(dm), new RegistrationPresenter());
                 break;
             case LOGIN:
-                LoginController loginController = new LoginController(dm);
-                LoginPresenter loginPresenter = new LoginPresenter();
-                view = new LoginView(loginController, loginPresenter);
+                view = new LoginView(new LoginController(dm), new LoginPresenter());
                 break;
             case ORGANIZER:
-                AccountController accountController = new AccountController(dm);
-                AccountPresenter accountPresenter = new OrganizerPresenter();
-                view = new AccountView(accountController, accountPresenter);
+                view = new AccountView(new AccountController(dm), new OrganizerPresenter());
                 break;
             case SPEAKER:
-                accountController = new AccountController(dm);
-                accountPresenter = new SpeakerPresenter();
-                view = new AccountView(accountController, accountPresenter);
+                view = new AccountView(new AccountController(dm), new SpeakerPresenter());
                 break;
             case ATTENDEE:
-                accountController = new AccountController(dm);
-                accountPresenter = new AttendeePresenter();
-                view = new AccountView(accountController, accountPresenter);
+                view = new AccountView(new AccountController(dm), new AttendeePresenter());
                 break;
-
             case VIP:
-                accountController = new AccountController(dm);
-                accountPresenter = new VipAttendeePresenter();
-                view = new AccountView(accountController, accountPresenter);
+                view = new AccountView(new AccountController(dm), new VipAttendeePresenter());
                 break;
 
             // Account
@@ -89,130 +75,82 @@ public class ViewFactory {
                 break;
 
             case ADD_CONTACT:
-                ContactController contactController = new ContactController(dm);
-                ContactPresenter contactPresenter = new ContactPresenter();
-                view = new ContactAddView(contactController, contactPresenter);
+                view = new ContactAddView(new ContactController(dm), new ContactPresenter());
                 break;
             case REMOVE_CONTACT:
-                contactController = new ContactController(dm);
-                contactPresenter = new ContactPresenter();
-                view = new ContactRemoveView(contactController, contactPresenter);
+                view = new ContactRemoveView(new ContactController(dm), new ContactPresenter());
                 break;
             case VIEW_CONTACTS:
-                contactController = new ContactController(dm);
-                contactPresenter = new ContactPresenter();
-                view = new ContactListView(contactController, contactPresenter);
+                view = new ContactListView(new ContactController(dm), new ContactPresenter());
                 break;
             case MESSAGE:
-                MessageController messageController = new MessageController(dm);
-                MessagePresenter messagePresenter = new MessagePresenter();
-                view = new MessageView(messageController, messagePresenter);
+                view = new MessageView(new MessageController(dm), new MessagePresenter());
                 break;
             case VIEW_CONVERSATION:
-                ConversationController conversationController = new ConversationController(dm);
-                ConversationPresenter conversationPresenter = new ConversationPresenter();
-                view = new ConversationView(conversationController, conversationPresenter);
+                view = new ConversationView(new ConversationController(dm), new ConversationPresenter());
                 break;
             case VIEW_EVENT_SCHEDULE:
-                EventController eventController = new EventController(dm);
-                EventPresenter eventPresenter = new EventPresenter();
-                view = new EventScheduleView(eventController, eventPresenter);
+                view = new EventScheduleView(new EventController(dm), new EventPresenter());
                 break;
             case DOWNLOAD_SCHEDULE:
-                DownloadScheduleController downloadScheduleController = new DownloadScheduleController(dm);
-                DownloadSchedulePresenter downloadSchedulePresenter = new DownloadSchedulePresenter();
-                view = new DownloadScheduleView(downloadScheduleController, downloadSchedulePresenter);
+                view = new DownloadScheduleView(new DownloadScheduleController(dm), new DownloadSchedulePresenter());
                 break;
 
             // Organizer
             case CREATE_ACCOUNT:
-                registrationController = new RegistrationController(dm);
-                registrationPresenter = new RegistrationPresenter();
-                view = new AccountCreationView(registrationController, registrationPresenter);
+                view = new AccountCreationView(new RegistrationController(dm), new RegistrationPresenter());
                 break;
             case MESSAGE_ALL_SPEAKERS:
-                messageController = new MessageController(dm);
-                messagePresenter = new MessagePresenter();
-                view = new MessageAllSpeakersView(messageController, messagePresenter);
+                view = new MessageAllSpeakersView(new MessageController(dm), new MessagePresenter());
                 break;
             case MESSAGE_ALL_ATTENDEES:
-                messageController = new MessageController(dm);
-                messagePresenter = new MessagePresenter();
-                view = new MessageAllAttendeesView(messageController, messagePresenter);
+                view = new MessageAllAttendeesView(new MessageController(dm), new MessagePresenter());
                 break;
             case VIEW_LOCATIONS:
-                LocationController locationController = new LocationController(dm);
-                LocationPresenter locationPresenter = new LocationPresenter();
-                view = new LocationListView(locationController, locationPresenter);
+                view = new LocationListView(new LocationController(dm), new LocationPresenter());
                 break;
             case ADD_LOCATION:
-                locationController = new LocationController(dm);
-                locationPresenter = new LocationPresenter();
-                view = new LocationAddView(locationController, locationPresenter);
+                view = new LocationAddView(new LocationController(dm), new LocationPresenter());
                 break;
             case CREATE_EVENT:
-                eventController = new EventController(dm);
-                EventCreationPresenter eventCreationPresenter = new EventCreationPresenter();
-                view = new EventCreationView(eventController, eventCreationPresenter);
+                view = new EventCreationView(new EventController(dm), new EventCreationPresenter());
                 break;
             case CANCEL_EVENT:
-                eventController = new EventController(dm);
-                EventCancelPresenter eventCancelPresenter = new EventCancelPresenter();
-                view = new EventCancelView(eventController, eventCancelPresenter);
+                view = new EventCancelView(new EventController(dm), new EventCancelPresenter());
                 break;
             case RESCHEDULE_EVENT:
-                eventController = new EventController(dm);
-                EventReschedulePresenter eventReschedulePresenter = new EventReschedulePresenter();
-                view = new EventRescheduleView(eventController, eventReschedulePresenter);
+                view = new EventRescheduleView(new EventController(dm), new EventReschedulePresenter());
                 break;
             case VIEW_UNRESOLVED_REQUEST:
-                RequestController requestController = new RequestController(dm);
-                PendingRequestsPresenter unresolvedRequestPresenter = new PendingRequestsPresenter();
-                view = new PendingRequestsListView(requestController, unresolvedRequestPresenter);
+                view = new PendingRequestsListView(new RequestController(dm), new PendingRequestsPresenter());
                 break;
             case VIEW_RESOLVED_REQUEST:
-                requestController = new RequestController(dm);
-                ResolvedRequestsPresenter resolvedRequestPresenter = new ResolvedRequestsPresenter();
-                view = new ResolvedRequestsListView(requestController, resolvedRequestPresenter);
+                view = new ResolvedRequestsListView(new RequestController(dm), new ResolvedRequestsPresenter());
                 break;
             case RESOLVE_REQUEST:
-                requestController = new RequestController(dm);
-                RequestResolutionPresenter requestResolutionPresenter = new RequestResolutionPresenter();
-                view = new RequestResolveView(requestController, requestResolutionPresenter);
+                view = new RequestResolveView(new RequestController(dm), new RequestResolutionPresenter());
                 break;
 
             // Speaker
             case MESSAGE_TALK_ATTENDEES:
-                messageController = new MessageController(dm);
-                messagePresenter = new MessagePresenter();
-                view = new MessageTalkAttendeesView(messageController, messagePresenter);
+                view = new MessageTalkAttendeesView(new MessageController(dm), new MessagePresenter());
                 break;
             case VIEW_SPEAKER_SCHEDULE:
-                eventController = new EventController(dm);
-                eventPresenter = new EventPresenter();
-                view = new SpeakerScheduleView(eventController, eventPresenter);
+                view = new SpeakerScheduleView(new EventController(dm), new EventPresenter());
                 break;
 
             // Attendee
             case VIEW_SIGNUP_SCHEDULE:
-                eventController = new EventController(dm);
-                eventPresenter = new EventPresenter();
-                view = new AttendeeScheduleView(eventController, eventPresenter);
+                view = new AttendeeScheduleView(new EventController(dm), new EventPresenter());
                 break;
             case SIGNUP_EVENT:
-                eventController = new EventController(dm);
-                SignupPresenter signupPresenter = new SignupPresenter();
-                view = new SignupView(eventController, signupPresenter);
+                view = new SignupView(new EventController(dm), new SignupPresenter());
                 break;
             case LEAVE_EVENT:
-                eventController = new EventController(dm);
-                SignupCancelPresenter signupCancelPresenter = new SignupCancelPresenter();
-                view = new SignupCancelView(eventController, signupCancelPresenter);
+                view = new SignupCancelView(new EventController(dm), new SignupCancelPresenter());
                 break;
             case SEND_REQUEST:
-                requestController = new RequestController(dm);
-                RequestSendPresenter requestSendPresenter = new RequestSendPresenter();
-                view = new RequestSendView(requestController, requestSendPresenter);
+                view = new RequestSendView(new RequestController(dm), new RequestSendPresenter());
                 break;
         }
         return view;

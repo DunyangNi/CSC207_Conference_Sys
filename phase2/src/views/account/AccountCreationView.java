@@ -16,7 +16,7 @@ public class AccountCreationView extends RegistrationView{
         presenter.startPrompt();
         AccountTypeEnum enumCommand = getAccountType();
 
-        accountInfoView(enumCommand);
+        getAccountInfo(enumCommand);
 
         controller.saveData();
 

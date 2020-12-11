@@ -1,5 +1,6 @@
 package presenters.account;
 
+import enums.AccountTypeEnum;
 import presenters.Presenter;
 
 public class RegistrationPresenter implements Presenter {
@@ -16,16 +17,20 @@ public class RegistrationPresenter implements Presenter {
         System.out.println("{Invalid input, please try again.}");
     }
 
-    public void organizerCodePrompt() {
-        System.out.println("Enter the Organizer registration code:");
-    }
-
-    public void speakerCodePrompt() {
-        System.out.println("Enter the Speaker registration code:");
-    }
-
-    public void vipCodePrompt() {
-        System.out.println("Enter the Vip Attendee registration code:");
+    public void displayCodePrompt(AccountTypeEnum accountTypeEnum) {
+        switch (accountTypeEnum) {
+            case SPEAKER:
+                System.out.println("Enter the Speaker registration code:");
+                break;
+            case ORGANIZER:
+                System.out.println("Enter the Organizer registration code:");
+                break;
+            case VIPATTENDEE:
+                System.out.println("Enter the Vip Attendee registration code:");
+                break;
+            default:
+                break;
+        }
     }
 
     public void invalidCodeNotification() {
