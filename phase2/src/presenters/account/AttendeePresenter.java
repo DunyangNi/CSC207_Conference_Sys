@@ -2,7 +2,7 @@ package presenters.account;
 
 public class AttendeePresenter extends AccountPresenter {
     public void displayUserMenu() {
-        displayMenuHeader();
+        System.out.println("[ATTENDEE MENU]");
         System.out.println("============================================================");
         System.out.println("[ACCOUNT]");
         System.out.println("00 = Exit");
@@ -28,10 +28,6 @@ public class AttendeePresenter extends AccountPresenter {
         System.out.println("[REQUESTS]");
         System.out.println("12 = Create a request");
         System.out.println("============================================================");
-    }
-
-    public void displayMenuHeader(){
-        System.out.println("[ATTENDEE MENU]");
     }
 
 }
