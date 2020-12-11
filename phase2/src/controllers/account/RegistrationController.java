@@ -7,6 +7,18 @@ import use_cases.ConversationManager;
 import use_cases.account.AccountManager;
 import use_cases.account.ContactManager;
 
+/**
+ * Manages account registration functionality of the program
+ *
+ * Fields:
+ * ORGANIZER_CODE: Code required to register an organizer
+ * SPEAKER_CODE: Code required to register a speaker
+ * VIP_CODE: Code required to register a VIP attendee
+ * AccountManager: stores account information
+ * ContactManager: stores contact information
+ * ConversationManager: stores conversation information
+ */
+
 public class RegistrationController extends AccountController {
     public final String ORGANIZER_CODE = "123456";
     public final String SPEAKER_CODE = "123456";
@@ -16,7 +28,9 @@ public class RegistrationController extends AccountController {
     private final ConversationManager cm;
 
     /**
-     * handles the creation of new organizer and attendee accounts for registration
+     * Creates an instance of <code>RegistrationController</code> with given parameters..
+     *
+     * @param dm Datamanager containing all needed managers
      */
     public RegistrationController(DataManager dm) {
         super(dm);
@@ -25,7 +39,18 @@ public class RegistrationController extends AccountController {
         this.cm = dm.getConversationManager();
     }
 
-    public void register(AccountTypeEnum accountType, String username, String password) throws AccountAlreadyExistsException {
+    /**
+     * Attempts to register an account.
+     *
+     * @param accountType an enum representing the type of account to be registered
+     * @param username username to register
+     * @param password password to register
+     *
+     * @throws AccountAlreadyExistsException when username is taken
+     */
+
+    public void register(AccountTypeEnum accountType, String username, String password)
+            throws AccountAlreadyExistsException {
         switch (accountType) {
             case ATTENDEE:
                 am.addNewAttendee(username, password);
@@ -42,6 +67,13 @@ public class RegistrationController extends AccountController {
         addNewAccountKeys(username);
         saveData();
     }
+
+    /**
+     * Gets the relevant registration code base on account type.
+     *
+     * @param accountType an enum representing the type of account to be registered
+     * @return the registration code for the corresponding account type if it exists. otherwise return null
+     */
 
     public String getRegistrationCode(AccountTypeEnum accountType) {
         switch (accountType) {
