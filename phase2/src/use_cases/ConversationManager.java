@@ -17,6 +17,12 @@ public class ConversationManager implements Serializable {
     private final HashMap<Integer, Message> messages = new HashMap<>();
     private int assignMessageID;
 
+    /**
+     * @return a string representation of the message
+     * @param id ID of desired message
+     * @throws MessageNotFoundException if id is invalid
+     */
+
     public String messageToString(Integer id) throws MessageNotFoundException {
         if (!this.messages.containsKey(id)) {
             throw new MessageNotFoundException();
@@ -27,12 +33,24 @@ public class ConversationManager implements Serializable {
         return "(" + sender + ") : " + content;
     }
 
+    /**
+     * @return list of IDs of messages from sender to recipient
+     * @param sender username of desired sender
+     * @param recipient username of desired recipient
+     * @throws RecipientNotFoundException when recipient does not exist
+     */
+
     public ArrayList<Integer> getConversationMessages(String sender, String recipient) throws RecipientNotFoundException {
         if (!conversations.containsKey(recipient)) {
             throw new RecipientNotFoundException();
         }
         return conversations.get(sender).get(recipient).getMessages();
     }
+
+    /**
+     * @return list of usernames of recipients in the conversations that user is involved in
+     * @param user username of desired account
+     */
 
     public Set<String> getAllConversationRecipients(String user) {
         Set<String> recipients = this.conversations.get(user).keySet();
@@ -67,6 +85,12 @@ public class ConversationManager implements Serializable {
         senderConversations.put(recipient, givenConversation);
         recipientConversations.put(sender, givenConversation);
     }
+
+    /**
+     * Adds a message to a conversation
+     * @param conversation Desired conversation
+     * @param message Desired Message
+     */
 
     private void addMessageToConversation(Conversation conversation, Message message) {
         ArrayList<Integer> existingMessages = conversation.getMessages();
