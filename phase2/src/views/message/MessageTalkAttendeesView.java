@@ -33,6 +33,7 @@ public class MessageTalkAttendeesView implements View { // TODO Needs update to 
                 selectedTalks.add(userInput.nextInt());
                 presenter.nextEventIdPrompt();
                 another = userInput.nextInt() != 0;
+                userInput.nextLine();
             } while (another);
 
             presenter.messagePrompt();
