@@ -15,7 +15,6 @@ public class GetTimeView {
     }
 
     protected Calendar runTimeView() {
-        presenter.startPrompt();
         boolean valid = false;
         Calendar newTime = Calendar.getInstance();
         while (!valid) {

@@ -14,7 +14,6 @@ public class EventCreationPresenter implements InputErrorPresenter, EventErrorPr
     }
 
     public void eventTypeMenu() {
-        System.out.println("[EVENT TYPES]");
         System.out.println("============================================================");
         System.out.println("1 = Networking Event      (No special requirements)");
         System.out.println("2 = Talk                  (Requires 1 speaker)");

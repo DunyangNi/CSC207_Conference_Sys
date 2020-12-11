@@ -1,5 +1,4 @@
 package views.request;
-import java.util.Scanner;
 import controllers.request.RequestController;
 import presenters.request.PendingRequestsPresenter;
 import views.View;
@@ -16,12 +15,10 @@ public class PendingRequestsListView implements View{
     }
 
     public ViewEnum runView(){
-        presenter.startPrompt();
+        String pendingRequestList = controller.getPendingRequestListString();
 
-        String unresolvedList = controller.retrieveUnresolvedRequestListStringRep();
-        presenter.pendingRequestListDisplay(unresolvedList);
+        presenter.displayPendingRequestList(pendingRequestList);
 
-        presenter.exitPrompt();
         return ViewEnum.VOID;
     }
 }

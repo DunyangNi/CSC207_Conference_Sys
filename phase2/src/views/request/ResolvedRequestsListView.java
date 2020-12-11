@@ -15,12 +15,10 @@ public class ResolvedRequestsListView implements View{
     }
 
     public ViewEnum runView(){
-        presenter.startPrompt();
+        String resolvedList = controller.getResolvedRequestsString();
 
-        String resolvedList = controller.retrieveResolvedRequestListStringRep();
-        presenter.resolvedRequestListDisplay(resolvedList);
+        presenter.displayResolvedRequestList(resolvedList);
 
-        presenter.exitPrompt();
         return ViewEnum.VOID;
     }
 }
