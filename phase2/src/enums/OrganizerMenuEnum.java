@@ -20,6 +20,9 @@ public enum OrganizerMenuEnum {
     CANCEL_EVENT("14"),
     RESCHEDULE_EVENT("15"),
     DOWNLOAD_SCHEDULE("16"),
+    VIEW_UNRESOLVED_REQUEST("17"),
+    VIEW_RESOLVED_REQUEST("18"),
+    RESOLVE_REQUEST("19"),
     VIEW_MENU("*"),
     INVALID(null);
 

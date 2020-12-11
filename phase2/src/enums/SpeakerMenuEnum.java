@@ -12,8 +12,8 @@ public enum SpeakerMenuEnum {
     MESSAGE_TALK_ATTENDEES("6"),
     VIEW_CONVERSATION("7"),
     VIEW_EVENT_SCHEDULE("8"),
-    DOWNLOAD_SCHEDULE("10"),
     VIEW_SPEAKER_SCHEDULE("9"),
+    DOWNLOAD_SCHEDULE("10"),
     VIEW_MENU("*"),
     INVALID(null);
 

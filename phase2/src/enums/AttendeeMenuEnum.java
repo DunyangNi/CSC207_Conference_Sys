@@ -15,6 +15,7 @@ public enum AttendeeMenuEnum {
     VIEW_SIGNUP_SCHEDULE("9"),
     SIGNUP_EVENT("10"),
     LEAVE_EVENT("11"),
+    SEND_REQUEST("12"),
     VIEW_MENU("*"),
     INVALID(null);
 
