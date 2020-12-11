@@ -9,6 +9,7 @@ public class RegistrationPresenter implements Presenter {
         System.out.println("1 = Register an Attendee account:");
         System.out.println("2 = Register an Speaker account:");
         System.out.println("3 = Register an Organizer account:");
+        System.out.println("4 = Register a Vip Attendee account:");
     }
 
     public void invalidCommandNotification() {
@@ -21,6 +22,10 @@ public class RegistrationPresenter implements Presenter {
 
     public void speakerCodePrompt() {
         System.out.println("Enter the Speaker registration code:");
+    }
+
+    public void vipCodePrompt() {
+        System.out.println("Enter the Vip Attendee registration code:");
     }
 
     public void invalidCodeNotification() {

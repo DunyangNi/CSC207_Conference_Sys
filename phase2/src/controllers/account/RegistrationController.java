@@ -17,6 +17,7 @@ public class RegistrationController extends AccountController {
     private final EventManager em;
     public final String ORGANIZER_CODE = "123456";
     public final String SPEAKER_CODE = "123456";
+    public final String VIP_CODE = "123456";
 
     /**
      * handles the creation of new organizer and attendee accounts for registration
