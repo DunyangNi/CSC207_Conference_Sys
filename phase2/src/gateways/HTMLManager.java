@@ -15,9 +15,8 @@ import java.net.URI;
  */
 public class HTMLManager {
     private final String htmlFileName;
-    private final String htmlTitle;
-    private final String htmlBody;
     private final String htmlPath;
+    private final HTMLWritable hw;
 
     /**
      * Constructs a HTMLManager object
@@ -25,10 +24,9 @@ public class HTMLManager {
      */
     public HTMLManager(HTMLWritable hw){
         String sep = System.getProperty("file.separator");
+        this.hw = hw;
         htmlPath = System.getProperty("user.dir") + sep;
         htmlFileName =  hw.getHTMLFileName();
-        htmlTitle = hw.getHTMLFileName();
-        htmlBody = hw.getHTMLBody();
     }
 
     /**
@@ -44,6 +42,8 @@ public class HTMLManager {
      * @throws HTMLWriteException is thrown if a HTML file cannot be created
      */
     public void generateHTML() throws HTMLWriteException {
+        String htmlTitle = hw.getHTMLFileName();
+        String htmlBody = hw.getHTMLBody();
         String fullHTML =
             "<html>" +
             "<head>" +
@@ -64,7 +64,7 @@ public class HTMLManager {
      * Tries to open a created HTML in a browser
      * @throws HTMLWriteException is thrown if a HTML file location is invalid
      */
-    public void openHTML() throws HTMLWriteException, OpenBrowserException {
+    public void openHTML() throws HTMLWriteException{
         // output a html in a browser
         try {
             URI uri = new URI(htmlFileName);
@@ -72,7 +72,11 @@ public class HTMLManager {
             desktop.browse(uri);
         }
         catch (URISyntaxException e) { throw new HTMLWriteException(); }
-        catch (IOException e){ throw new OpenBrowserException(); }
+        catch (IOException e){
+            // Mac does not open a browser due to the security policy
+            // Nothing to do
+            //throw new OpenBrowserException();
+        }
     }
 }
 

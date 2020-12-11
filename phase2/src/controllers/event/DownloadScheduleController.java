@@ -19,7 +19,7 @@ public class DownloadScheduleController {
      * Downloads a HTML and opens it in a browswer
      * @throws HTMLWriteException is thrown if a HTML fails to be generated
      */
-    public void downloadSchedule() throws HTMLWriteException, OpenBrowserException {
+    public void downloadSchedule() throws HTMLWriteException {
         hm.generateHTML();
         hm.openHTML();
     }

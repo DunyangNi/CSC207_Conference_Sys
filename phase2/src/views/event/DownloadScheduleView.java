@@ -31,10 +31,7 @@ public class DownloadScheduleView implements View {
             this.presenter.downloadSuccessNotification(controller.getPath());
         } catch (HTMLWriteException e) { // wrong while processing HTML
             presenter.htmlWriteErrorNotification();
-        } catch (OpenBrowserException e) {
-            presenter.openBrowserErrorNotification();
         }
-
         return ViewEnum.VOID;
     }
 }

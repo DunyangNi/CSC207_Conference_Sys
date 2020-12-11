@@ -189,27 +189,61 @@ public class EventManager implements Serializable, HTMLWritable {
      * @return body for a generated HTML
      */
     @Override public String getHTMLBody() {
-        DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+        DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm");
         String html = "";
         html += "<table border='1' style='border-collapse:collapse'>";
         html += "<caption>" + getHTMLTitle() + "</caption>";
         html += "<tr>";
         html += "<th> ID        </th>";
+        html += "<th> SPEAKER   </th>";
+        html += "<th> TYPE      </th>";
         html += "<th> TOPIC     </th>";
         html += "<th> LOCATION  </th>";
         html += "<th> TIME      </th>";
         html += "<th> CAPACITY  </th>";
         html += "<th> VIP ONLY  </th>";
+        html += "<th> CAPACITY  </th>";
+        html += "<th> TABLE     </th>";
+        html += "<th> INTERNET  </th>";
+        html += "<th> SOUND     </th>";
+        html += "<th> SCREEN    </th>";
         html += "<th> ORGANIZER </th>";
         html += "</tr>";
         for (Event evt: fetchEventList()){
+            String eventType  = "";
+            String speaker = "";
+            if (evt instanceof Talk)   {
+                speaker = ((Talk) evt).getSpeaker();
+                eventType  = "Talk";
+            }
+            else if (evt instanceof Panel)  {
+                for (String eachSpeaker: ((Panel) evt).getSpeakers()){
+                    if (speaker.equals("")) {
+                        speaker += eachSpeaker;
+                    }
+                    else {
+                        speaker += ", " + eachSpeaker;
+                    }
+                }
+                eventType  = "Panel";
+            }
+            else {
+                eventType  = "Networking";
+            }
             html += "<tr>";
             html += "<td>" + evt.getId()        + "</td>";
+            html += "<td>" + speaker            + "</td>";
+            html += "<td>" + eventType          + "</td>";
             html += "<td>" + evt.getTopic()     + "</td>";
             html += "<td>" + evt.getLocation()  + "</td>";
             html += "<td>" + df.format(evt.getTime().getTime()) + "</td>";
             html += "<td>" + evt.getCapacity()  + "</td>";
             html += "<td>" + evt.getVipOnly()   + "</td>";
+            html += "<td>" + evt.getCapacity()  + "</td>";
+            html += "<td>" + evt.getTables()    + "</td>";
+            html += "<td>" + evt.getRequiresInternet()    + "</td>";
+            html += "<td>" + evt.getRequiresSoundSystem() + "</td>";
+            html += "<td>" + evt.getRequiresPresentationScreen()   + "</td>";
             html += "<td>" + evt.getOrganizer() + "</td>";
             html += "</tr>";
         }
