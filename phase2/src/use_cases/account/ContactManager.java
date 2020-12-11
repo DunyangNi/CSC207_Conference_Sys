@@ -51,13 +51,32 @@ public class ContactManager implements Serializable {
         contacts.put(account, new ArrayList<>());
     }
 
+    /**
+     * Adds a an account to another account's contact list
+     *
+     * @param user username of account who wants a new contact
+     * @param contactToAdd username of user's new contact
+     * @throws AccountNotFoundException if there is no account with the username ContactToAdd
+     * @throws AlreadyContactException if contactToAdd is already a contact of user
+     */
+
     public void addContact(String user, String contactToAdd) throws AccountNotFoundException, AlreadyContactException {
         if (!contacts.containsKey(contactToAdd)) throw new AccountNotFoundException();
         if (contacts.get(user).contains(contactToAdd)) throw new AlreadyContactException();
         contacts.get(user).add(contactToAdd);
     }
 
-    public void removeContact(String user, String contactToRemove) throws AccountNotFoundException, ContactNotFoundException {
+    /**
+     * Removes an account from another account's contactlist
+     *
+     * @param user username of account who wants less contacts
+     * @param contactToRemove username of contact to be removed
+     * @throws AccountNotFoundException if there is no account with the username ContactToRemove
+     * @throws ContactNotFoundException if ContactToRemove is not a contact of user
+     */
+
+    public void removeContact(String user, String contactToRemove) throws AccountNotFoundException,
+            ContactNotFoundException {
         if (!contacts.containsKey(contactToRemove)) throw new AccountNotFoundException();
         if (!contacts.get(user).contains(contactToRemove)) throw new ContactNotFoundException();
         contacts.get(user).remove(contactToRemove);
