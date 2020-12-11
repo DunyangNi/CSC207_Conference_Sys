@@ -135,7 +135,7 @@ public class AccountManager implements Serializable {
     }
 
     public boolean getVipStatus(String username) {
-        return getAccountHashMap().get(username) instanceof Vip;
+        return getAccountHashMap().get(username) instanceof VipAttendee;
     }
 
     /**
@@ -150,6 +150,12 @@ public class AccountManager implements Serializable {
     public void addNewAttendee(String username, String password, String firstName, String lastName) throws AccountAlreadyExistsException {
         if (getAccountHashMap().containsKey(username)) throw new AccountAlreadyExistsException();
         Attendee newAttendee = new Attendee(username, password, firstName, lastName);
+        attendeeHashMap.put(username, newAttendee);
+    }
+
+    public void addNewVipAttendee(String username, String password, String firstName, String lastName) throws AccountAlreadyExistsException {
+        if (getAccountHashMap().containsKey(username)) throw new AccountAlreadyExistsException();
+        VipAttendee newAttendee = new VipAttendee(username, password, firstName, lastName);
         attendeeHashMap.put(username, newAttendee);
     }
 
