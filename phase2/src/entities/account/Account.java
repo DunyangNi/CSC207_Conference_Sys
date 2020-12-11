@@ -3,13 +3,11 @@ package entities.account;
 import java.io.Serializable;
 
 /**
- * Represents an account in the conference.
+ * Represents an <code> Account </code> in the conference.
  *
  * Fields:
  * username: represents the account's username, which cannot be changed.
  * password: represents the account's password.
- * lastName: represents the account's user's last name.
- * firstName: represents the account's user's first name.
  */
 public class Account implements Serializable {
     private final String username;
@@ -64,5 +62,4 @@ public class Account implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-
 }

@@ -1,5 +1,8 @@
 package entities.account;
 
+/**
+ * Represents a <code>VIP Attendee Account</code> in the system.
+ */
 public class VipAttendee extends Attendee{
 
     /**
