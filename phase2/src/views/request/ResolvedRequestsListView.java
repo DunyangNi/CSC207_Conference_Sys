@@ -9,7 +9,6 @@ public class ResolvedRequestsListView implements View{
 
     private final RequestController controller;
     private final ResolvedRequestsPresenter presenter;
-    private final Scanner userInput = new Scanner(System.in);
 
     public ResolvedRequestsListView(RequestController controller, ResolvedRequestsPresenter presenter){
         this.controller = controller;

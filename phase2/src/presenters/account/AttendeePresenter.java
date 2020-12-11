@@ -25,6 +25,8 @@ public class AttendeePresenter extends AccountPresenter {
         System.out.println("9  = View your sign-up schedule");
         System.out.println("10 = Sign-up for an event");
         System.out.println("11 = Cancel a sign-up");
+        System.out.println("[REQUESTS]");
+        System.out.println("12 = Send a request");
         System.out.println("============================================================");
     }
 }
