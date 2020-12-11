@@ -25,7 +25,7 @@ public class RegistrationPresenter implements Presenter {
             case ORGANIZER:
                 System.out.println("Enter the Organizer registration code:");
                 break;
-            case VIPATTENDEE:
+            case VIP_ATTENDEE:
                 System.out.println("Enter the Vip Attendee registration code:");
                 break;
             default:
