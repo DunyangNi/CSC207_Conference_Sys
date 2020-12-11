@@ -31,9 +31,12 @@ public class EventController {
         this.locationManager = dm.getLocationManager();
     }
 
-    public void createEvent(EventTypeEnum type, String topic, Calendar time, String location, ArrayList<String> speakers, Integer capacity, int tables, int chairs, boolean hasInternet, boolean hasSoundSystem, boolean hasPresentationScreen, Boolean vipOnly)
+    public void createEvent(EventTypeEnum type, String topic, Calendar time, String location,
+                            ArrayList<String> speakers, Integer capacity, int tables, int chairs, boolean hasInternet,
+                            boolean hasSoundSystem, boolean hasPresentationScreen, Boolean vipOnly)
             throws OutOfScheduleException, SpeakerIsBusyException, InvalidEventTypeException, LocationInUseException {
-        eventManager.addNewEvent(type, topic, time, location, this.username, speakers, capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen, vipOnly);
+        eventManager.addNewEvent(type, topic, time, location, this.username, speakers,
+                capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen, vipOnly);
     }
 
     public void rescheduleEvent(Integer id, Calendar newTime) throws OutOfScheduleException, SpeakerIsBusyException, LocationInUseException, EventNotFoundException {

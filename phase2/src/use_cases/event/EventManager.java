@@ -90,9 +90,15 @@ public class EventManager implements Serializable, HTMLWritable {
 
     public ArrayList<String> getSpeakerSortedEvents(String speaker) { return getSortedEvents(getSpeakerEvents(speaker)); }
 
-    public void addNewEvent(EventTypeEnum type, String topic, Calendar time, String location, String organizer, ArrayList<String> speakers, Integer capacity, int tables, int chairs, boolean hasInternet, boolean hasSoundSystem, boolean hasPresentationScreen, Boolean vipOnly) throws InvalidEventTypeException, OutOfScheduleException, LocationInUseException, SpeakerIsBusyException {
+    public void addNewEvent(EventTypeEnum type,
+                            String topic, Calendar time, String location, String organizer,
+                            ArrayList<String> speakers, Integer capacity, int tables, int chairs,
+                            boolean hasInternet, boolean hasSoundSystem, boolean hasPresentationScreen,
+                            Boolean vipOnly) throws InvalidEventTypeException, OutOfScheduleException,
+            LocationInUseException, SpeakerIsBusyException {
         checkValidEvent(time, location, speakers);
-        Event eventToAdd = eventFactory.CreateEvent(type, assignEventID++,topic, time, location, organizer, speakers, capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen, vipOnly);
+        Event eventToAdd = eventFactory.CreateEvent(type, assignEventID++,topic, time, location, organizer, speakers,
+                capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen, vipOnly);
         events.put(eventToAdd.getId(), eventToAdd);
     }
 
