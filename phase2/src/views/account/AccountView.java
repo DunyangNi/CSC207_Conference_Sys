@@ -26,16 +26,11 @@ public class AccountView implements View {
         AccountTypeEnum accountType = controller.getAccountType();
 
         while (viewEnum != ViewEnum.LOGOUT && viewEnum != ViewEnum.EXIT) {
-            switch (accountType) { // TODO Consider surrounding switch statement with try/catch for "View not found" exception
-                case ORGANIZER:
-                    viewEnum = getViewEnum(OrganizerMenuEnum.fromString(userInput.nextLine()));
-                    break;
-                case SPEAKER:
-                    viewEnum = getViewEnum(SpeakerMenuEnum.fromString(userInput.nextLine()));
-                    break;
-                case ATTENDEE:
-                    viewEnum = getViewEnum(AttendeeMenuEnum.fromString(userInput.nextLine()));
-                    break;
+            // TODO Consider surrounding switch statement with try/catch for "View not found" exception
+            switch (accountType) {
+                case ORGANIZER -> viewEnum = getViewEnum(OrganizerMenuEnum.fromString(userInput.nextLine()));
+                case SPEAKER -> viewEnum = getViewEnum(SpeakerMenuEnum.fromString(userInput.nextLine()));
+                case ATTENDEE -> viewEnum = getViewEnum(AttendeeMenuEnum.fromString(userInput.nextLine()));
             }
         }
         return viewEnum;

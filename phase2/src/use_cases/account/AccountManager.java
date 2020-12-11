@@ -163,7 +163,7 @@ public class AccountManager implements Serializable {
      * and store it in <code>speakerHashMap</code>.
      * @param username given username
      * @param password given password
-     * @throws ObjectAlreadyExistsException upon finding an existing Speaker with the same username
+     * @throws AccountAlreadyExistsException upon finding an existing Speaker with the same username
      */
     public void addNewSpeaker(String username, String password) throws AccountAlreadyExistsException {
         if (getAccountHashMap().containsKey(username)) throw new AccountAlreadyExistsException();

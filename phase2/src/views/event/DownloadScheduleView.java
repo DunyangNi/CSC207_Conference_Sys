@@ -3,7 +3,6 @@ package views.event;
 import controllers.event.DownloadScheduleController;
 import enums.ViewEnum;
 import exceptions.html.HTMLWriteException;
-import exceptions.html.OpenBrowserException;
 import presenters.event.DownloadSchedulePresenter;
 import views.View;
 
@@ -16,7 +15,6 @@ public class DownloadScheduleView implements View {
 
     private final DownloadScheduleController controller;
     private final DownloadSchedulePresenter presenter;
-    private final Scanner userInput = new Scanner(System.in);
 
     public DownloadScheduleView(DownloadScheduleController controller, DownloadSchedulePresenter presenter) {
         this.controller = controller;

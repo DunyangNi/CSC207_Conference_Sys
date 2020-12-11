@@ -1,5 +1,4 @@
 package views.request;
-import java.util.Scanner;
 import controllers.request.RequestController;
 import views.View;
 import presenters.request.ResolvedRequestsPresenter;

@@ -22,13 +22,11 @@ public class StartView implements View {
             command = userInput.nextLine();
         }
 
-        switch (command) {
-            case "1":
-                return ViewEnum.LOGIN;
-            case "2":
-                return ViewEnum.REGISTRATION;
-            default: // "0"
-                return ViewEnum.EXIT;
-        }
+        return switch (command) {
+            case "1" -> ViewEnum.LOGIN;
+            case "2" -> ViewEnum.REGISTRATION;
+// "0"
+            default -> ViewEnum.EXIT;
+        };
     }
 }

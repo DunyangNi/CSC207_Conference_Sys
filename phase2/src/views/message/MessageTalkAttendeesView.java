@@ -3,7 +3,6 @@ package views.message;
 import controllers.message.MessageController;
 import enums.ViewEnum;
 import exceptions.NoRecipientsException;
-import exceptions.NonPositiveIntegerException;
 import exceptions.not_found.AccountNotFoundException;
 import exceptions.not_found.EventNotFoundException;
 import presenters.message.MessagePresenter;

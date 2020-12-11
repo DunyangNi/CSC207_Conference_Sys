@@ -9,7 +9,6 @@ public class PendingRequestsListView implements View{
 
     private final RequestController controller;
     private final PendingRequestsPresenter presenter;
-    private final Scanner userInput = new Scanner(System.in);
 
     public PendingRequestsListView(RequestController controller, PendingRequestsPresenter presenter){
         this.controller = controller;
