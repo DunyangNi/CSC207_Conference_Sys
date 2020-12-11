@@ -27,6 +27,8 @@ public class RequestSendView implements View {
 
         controller.sendRequest(subjectToSend, contentToSend);
 
+        presenter.exitPrompt();
+
         return ViewEnum.VOID;
     }
 }
