@@ -1,10 +1,7 @@
 package presenters;
 
 public class StartPresenter {
-    public void startHeader() {
-        System.out.println();
-        System.out.println("[START MENU]");
-    }
+    public void startHeader() { System.out.println("\n[START MENU]"); }
 
     public void startMenu() {
         System.out.println("============================================================");
@@ -14,7 +11,5 @@ public class StartPresenter {
         System.out.println("============================================================");
     }
 
-    public void invalidCommandNotification() {
-        System.out.println("{Invalid input, please try again.}");
-    }
+    public void invalidCommandNotification() { System.out.println("{Invalid input, please try again.}"); }
 }

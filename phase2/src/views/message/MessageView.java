@@ -2,7 +2,7 @@ package views.message;
 
 import controllers.message.MessageController;
 import enums.ViewEnum;
-import exceptions.NotInContactException;
+import exceptions.not_found.ContactNotFoundException;
 import exceptions.not_found.AccountNotFoundException;
 import presenters.message.MessagePresenter;
 import views.View;
@@ -20,16 +20,18 @@ public class MessageView implements View {
     }
 
     public ViewEnum runView() {
-        presenter.usernamePrompt();
+        presenter.messageHeader();
+        presenter.recipientPrompt();
         String username = userInput.nextLine();
         presenter.messagePrompt();
         String message = userInput.nextLine();
         try {
             controller.messageAccount(username, message);
-        } catch (NotInContactException e){
-            presenter.notInContactNotification();
+            presenter.messageSuccessNotification();
+        } catch (ContactNotFoundException e){
+            presenter.contactNotFoundNotification();
         } catch (AccountNotFoundException e) {
-            presenter.accountNotFoundNotification();
+            presenter.recipientNotFoundNotification();
         }
         return ViewEnum.VOID;
     }

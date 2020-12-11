@@ -133,7 +133,7 @@ public class ViewFactory {
 
             // Speaker
             case MESSAGE_TALK_ATTENDEES:
-                view = new MessageTalkAttendeesView(new MessageController(dm), new MessagePresenter());
+                view = new MessageEventAttendeesView(new MessageController(dm), new MessagePresenter());
                 break;
             case VIEW_SPEAKER_SCHEDULE:
                 view = new SpeakerScheduleView(new EventController(dm), new EventPresenter());

@@ -2,18 +2,12 @@ package presenters.event;
 
 import presenters.EventErrorPresenter;
 import presenters.InputErrorPresenter;
-import presenters.Presenter;
 import presenters.TimePresenter;
 
 import java.util.ArrayList;
 
-public class EventCreationPresenter implements Presenter, InputErrorPresenter, EventErrorPresenter, TimePresenter {
-
-    @Override
-    public void startPrompt() {
-        System.out.println();
-        System.out.println("[CREATE EVENT]");
-    }
+public class EventCreationPresenter implements InputErrorPresenter, EventErrorPresenter, TimePresenter {
+    public void eventCreationHeader() { System.out.println("\n[CREATE EVENT]"); }
 
     public void eventTypePrompt() {
         System.out.println("Please enter the type of event you wish to create (1-3):");
@@ -102,8 +96,7 @@ public class EventCreationPresenter implements Presenter, InputErrorPresenter, E
         System.out.println("{Event creation cancelled.}");
     }
 
-    @Override
-    public void exitPrompt() {
+    public void eventCreationSuccessNotification() {
         System.out.println("{Event created.}");
     }
 }
