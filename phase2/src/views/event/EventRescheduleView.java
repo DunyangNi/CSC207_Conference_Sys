@@ -16,7 +16,7 @@ public class EventRescheduleView implements View {
     private final EventController eventController;
     private final EventReschedulePresenter eventReschedulePresenter;
     private final Scanner userInput = new Scanner(System.in);
-    private final TimeView timeView = new TimeView();
+    private final GetTimeView getTimeView = new GetTimeView();
 
     public EventRescheduleView(EventController eventController, EventReschedulePresenter eventReschedulePresenter) {
         this.eventController = eventController;
@@ -36,7 +36,7 @@ public class EventRescheduleView implements View {
             } catch (NumberFormatException e) { eventReschedulePresenter.nonNegativeNumberNotification(); }
         }
 
-        Calendar newTime = timeView.runTimeView();
+        Calendar newTime = getTimeView.runTimeView();
 
         try {
             eventController.rescheduleEvent(id, newTime);

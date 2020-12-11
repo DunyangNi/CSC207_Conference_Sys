@@ -6,10 +6,8 @@ import exceptions.html.HTMLWriteException;
 import presenters.event.DownloadSchedulePresenter;
 import views.View;
 
-import java.util.Scanner;
-
 /**
- *  Represents a view for Downloading event schedules
+ * Represents a view for Downloading event schedules
  */
 public class DownloadScheduleView implements View {
 
@@ -27,9 +25,10 @@ public class DownloadScheduleView implements View {
         try {
             this.controller.downloadSchedule();
             this.presenter.downloadSuccessNotification(controller.getPath());
-        } catch (HTMLWriteException e) { // wrong while processing HTML
+        } catch (HTMLWriteException e) {
             presenter.htmlWriteErrorNotification();
         }
+
         return ViewEnum.VOID;
     }
 }

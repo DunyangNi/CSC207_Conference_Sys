@@ -4,15 +4,15 @@ import presenters.InputErrorPresenter;
 
 import java.util.Scanner;
 
-public class InputGetter {
+public class GetInputView {
     private final InputErrorPresenter inputErrorPresenter;
     Scanner userInput = new Scanner(System.in);
 
-    public InputGetter(InputErrorPresenter presenter) {
+    public GetInputView(InputErrorPresenter presenter) {
         inputErrorPresenter = presenter;
     }
 
-    public int getPositiveNumber(){
+    public int getPositiveNumber() {
         boolean Input = false;
         int number = 0;
         while (!Input) {
@@ -20,13 +20,14 @@ public class InputGetter {
                 number = Integer.parseInt(userInput.nextLine());
                 if (number <= 0) inputErrorPresenter.positiveNumberNotification();
                 else Input = true;
+            } catch (NumberFormatException e) {
+                inputErrorPresenter.positiveNumberNotification();
             }
-            catch (NumberFormatException e) { inputErrorPresenter.positiveNumberNotification(); }
         }
         return number;
     }
 
-    public int getNonNegativeNumber(){
+    public int getNonNegativeNumber() {
         boolean Input = false;
         int number = 0;
         while (!Input) {
@@ -34,13 +35,14 @@ public class InputGetter {
                 number = Integer.parseInt(userInput.nextLine());
                 if (number < 0) inputErrorPresenter.nonNegativeNumberNotification();
                 else Input = true;
+            } catch (NumberFormatException e) {
+                inputErrorPresenter.nonNegativeNumberNotification();
             }
-            catch (NumberFormatException e) { inputErrorPresenter.nonNegativeNumberNotification(); }
         }
         return number;
     }
 
-    public boolean getBoolean(){
+    public boolean getBoolean() {
         boolean Input = false;
         boolean result = false;
         while (!Input) {
@@ -50,7 +52,9 @@ public class InputGetter {
                 Input = true;
             } else if (input.equals("N")) {
                 Input = true;
-            } else { inputErrorPresenter.invalidYesNoNotification(); }
+            } else {
+                inputErrorPresenter.invalidYesNoNotification();
+            }
         }
         return result;
     }

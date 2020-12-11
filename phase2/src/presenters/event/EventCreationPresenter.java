@@ -10,20 +10,14 @@ public class EventCreationPresenter implements Presenter, InputErrorPresenter, E
 
     @Override
     public void startPrompt() {
+        System.out.println();
         System.out.println("[CREATE EVENT]");
     }
 
-    @Override
-    public void exitPrompt() {
-        System.out.println("Event Creation successful! Thank you! :)");
-    }
-
-    // (NEW!)
     public void eventTypePrompt() {
         System.out.println("Please enter the type of event you wish to create (1-3):");
     }
 
-    // (NEW!)
     public void eventTypeMenu() {
         System.out.println("[EVENT TYPES]");
         System.out.println("============================================================");
@@ -33,16 +27,14 @@ public class EventCreationPresenter implements Presenter, InputErrorPresenter, E
         System.out.println("============================================================");
     }
 
-    // (NEW!)
     public void singleSpeakerPrompt() {
         System.out.println("Please enter the username of the speaker: ");
     }
 
-    // (NEW!)
     public void multiSpeakerPrompt() {
-        System.out.println("Please enter the usernames of all speakers on separate lines\n(press ENTER/RETURN twice to finish): ");
+        System.out.println("Please enter the usernames of all speakers on separate lines: ");
+        System.out.println("(Press ENTER/RETURN twice to finish)");
     }
-
     public void invalidSpeakerNotification() {
         System.out.println("{One or more speakers could not be found. Ensure you have entered registered speakers.}");
     }
@@ -52,15 +44,11 @@ public class EventCreationPresenter implements Presenter, InputErrorPresenter, E
     }
 
     public void topicPrompt() {
-        System.out.println("Please enter the topic / name of the event: ");
+        System.out.println("Please enter the topic/name of the event: ");
     }
 
     public void vipOnlyPrompt() {
         System.out.println("Is this event restricted to VIPs (Y/N)?");
-    }
-
-    public void requirementsPrompt() {
-        System.out.println("You will now be provided with suggested locations for your event. Please answer the following questions.");
     }
 
     public void locationPrompt() {
@@ -111,5 +99,10 @@ public class EventCreationPresenter implements Presenter, InputErrorPresenter, E
 
     public void eventCreationFailureNotification() {
         System.out.println("{Event creation cancelled.}");
+    }
+
+    @Override
+    public void exitPrompt() {
+        System.out.println("{Event created.}");
     }
 }

@@ -6,7 +6,6 @@ import exceptions.not_found.UserNotFoundException;
 import gateways.DataManager;
 import use_cases.account.AccountManager;
 
-// TODO: 12/07/20 Consider merging with AccountController
 public class LoginController extends AccountController {
     private final AccountManager am;
     private final DataManager dm;

@@ -9,11 +9,8 @@ public class EventCancelPresenter implements Presenter, EventErrorPresenter {
     public void startPrompt() {
     }
 
-    @Override
-    public void exitPrompt() {
-    }
-
     public void cancelEventHeader() {
+        System.out.println();
         System.out.println("[CANCEL EVENT]");
     }
 
@@ -31,5 +28,9 @@ public class EventCancelPresenter implements Presenter, EventErrorPresenter {
 
     public void invalidIDNotification() {
         System.out.println("{Invalid event ID}");
+    }
+
+    @Override
+    public void exitPrompt() {
     }
 }
