@@ -1,11 +1,13 @@
 package controllers.message;
 
 import exceptions.NoRecipientsException;
+import exceptions.NotInContactException;
 import exceptions.not_found.AccountNotFoundException;
 import exceptions.not_found.EventNotFoundException;
 import gateways.DataManager;
 import use_cases.ConversationManager;
 import use_cases.account.AccountManager;
+import use_cases.account.ContactManager;
 import use_cases.event.EventManager;
 
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ public class MessageController {
     protected String username;
     protected AccountManager am;
     protected ConversationManager cm;
+    protected ContactManager ctm;
     protected EventManager em;
 
     /**
@@ -26,10 +29,23 @@ public class MessageController {
         this.am = dm.getAccountManager();
         this.cm = dm.getConversationManager();
         this.em = dm.getEventManager();
+        this.ctm = dm.getContactManager();
         this.username = dm.getUsername();
     }
 
     public void messageAccount(String accountUsername, String message) throws AccountNotFoundException {
+        if (am.containsAttendee(username) && am.containsAttendee(accountUsername)){
+            boolean validToSend = false;
+            if (ctm.getContactList(username).contains(accountUsername)){
+                validToSend = true;
+            }
+            if (cm.getAllConversationRecipients(username).contains(accountUsername)){
+                validToSend = true;
+            }
+            if (!validToSend) {
+                throw new NotInContactException();
+            }
+        }
         if (!am.containsAccount(accountUsername)) {
             throw new AccountNotFoundException();
         }
