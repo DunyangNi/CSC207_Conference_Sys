@@ -78,7 +78,7 @@ public class RequestManager implements Serializable {
 
     public String getRequestInfo(Request request) {
         StringBuilder requestinfo = new StringBuilder();
-        requestinfo.append("Time of request: " + request.getTimeOfRequest().toString() + "\n");
+        requestinfo.append("Time of request: " + request.getTimeOfRequest().getTime().toString() + "\n");
         requestinfo.append("Sender username: " +  request.getSenderUsername() + "\n");
         requestinfo.append("Subject: " + request.getRequestSubjectLine() + "\n");
         requestinfo.append("Body: " + request.getRequest() + "\n");
