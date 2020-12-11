@@ -2,33 +2,28 @@ package controllers.account;
 
 import enums.AccountTypeEnum;
 import exceptions.already_exists.AccountAlreadyExistsException;
-import exceptions.already_exists.ObjectAlreadyExistsException;
-import gateways.*;
+import gateways.DataManager;
+import use_cases.ConversationManager;
 import use_cases.account.AccountManager;
 import use_cases.account.ContactManager;
-import use_cases.ConversationManager;
-import use_cases.event.EventManager;
 
 // TODO: 12/07/20 Consider merging with AccountController
 public class RegistrationController extends AccountController {
-    private final AccountManager am;
-    private final ContactManager fm;
-    private final ConversationManager cm;
-    private final EventManager em;
     public final String ORGANIZER_CODE = "123456";
     public final String SPEAKER_CODE = "123456";
     public final String VIP_CODE = "123456";
+    private final AccountManager am;
+    private final ContactManager fm;
+    private final ConversationManager cm;
 
     /**
      * handles the creation of new organizer and attendee accounts for registration
-     *
      */
     public RegistrationController(DataManager dm) {
         super(dm);
         this.am = dm.getAccountManager();
-        this.cm = dm.getConversationManager();
         this.fm = dm.getContactManager();
-        this.em = dm.getEventManager();
+        this.cm = dm.getConversationManager();
     }
 
     public void register(AccountTypeEnum accountType, String username, String password) throws AccountAlreadyExistsException {
@@ -37,7 +32,7 @@ public class RegistrationController extends AccountController {
                 am.addNewAttendee(username, password, "", "");
                 break;
             case VIP_ATTENDEE:
-                am.addNewVipAttendee(username, password, "","");
+                am.addNewVipAttendee(username, password, "", "");
             case SPEAKER:
                 am.addNewSpeaker(username, password, "", "");
                 break;
@@ -50,19 +45,15 @@ public class RegistrationController extends AccountController {
     }
 
     public String getRegistrationCode(AccountTypeEnum accountType) {
-        String code = null;
         switch (accountType) {
             case VIP_ATTENDEE:
-                code = VIP_CODE;
-                break;
+                return VIP_CODE;
             case SPEAKER:
-                code = SPEAKER_CODE;
-                break;
+                return SPEAKER_CODE;
             case ORGANIZER:
-                code = ORGANIZER_CODE;
-                break;
+                return ORGANIZER_CODE;
         }
-        return code;
+        return null;
     }
 
     /**
@@ -74,19 +65,5 @@ public class RegistrationController extends AccountController {
     private void addNewAccountKeys(String username) {
         fm.addAccountKey(username);
         cm.addAccountKey(username);
-    }
-
-    public void createSpeakerAccount(String username, String password, String firstname, String lastname) throws ObjectAlreadyExistsException {
-        this.am.addNewSpeaker(username, password, firstname, lastname);
-    }
-
-    public void createAttendeeAccount(String username, String password, String firstname, String lastname) throws ObjectAlreadyExistsException {
-        this.am.addNewAttendee(username, password, firstname, lastname);
-        addNewAttendeeKeys(username);
-    }
-
-    private void addNewAttendeeKeys(String username){
-        cm.addAccountKey(username);
-        fm.addAccountKey(username);
     }
 }

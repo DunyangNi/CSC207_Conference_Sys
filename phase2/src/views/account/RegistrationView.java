@@ -22,13 +22,12 @@ public class RegistrationView implements View {
     @Override
     public ViewEnum runView() {
         presenter.startPrompt();
-        AccountTypeEnum accountTypeEnum = getAccountType();
+        AccountTypeEnum accountTypeEnum = getAccountTypeEnum();
+        String registrationCode = controller.getRegistrationCode(accountTypeEnum);
 
-        presenter.displayCodePrompt(accountTypeEnum);
+        presenter.registrationCodePrompt(accountTypeEnum);
         if (!accountTypeEnum.equals(AccountTypeEnum.ATTENDEE)) {
-            String code = controller.getRegistrationCode(accountTypeEnum);
-            String codeInput = userInput.nextLine();
-            validateCode(codeInput, code);
+            validateCode(userInput.nextLine(), registrationCode);
         }
 
         getAccountInfo(accountTypeEnum);
@@ -36,7 +35,7 @@ public class RegistrationView implements View {
         return ViewEnum.START;
     }
 
-    protected AccountTypeEnum getAccountType(){
+    protected AccountTypeEnum getAccountTypeEnum() {
         AccountTypeEnum accountTypeEnum = AccountTypeEnum.fromString(userInput.nextLine());
 
         while (accountTypeEnum.equals(AccountTypeEnum.INVALID)) {
@@ -59,7 +58,7 @@ public class RegistrationView implements View {
         String username = userInput.nextLine();
 
         while (controller.usernameExists(username)) {
-            presenter.usernameIsTakenNotification();
+            presenter.takenUsernameNotification();
             username = userInput.nextLine();
         }
 

@@ -10,14 +10,14 @@ public class RegistrationPresenter implements Presenter {
         System.out.println("1 = Register an Attendee account:");
         System.out.println("2 = Register an Speaker account:");
         System.out.println("3 = Register an Organizer account:");
-        System.out.println("4 = Register a Vip Attendee account:");
+        System.out.println("4 = Register a VIP Attendee account:");
     }
 
     public void invalidCommandNotification() {
         System.out.println("{Invalid input, please try again.}");
     }
 
-    public void displayCodePrompt(AccountTypeEnum accountTypeEnum) {
+    public void registrationCodePrompt(AccountTypeEnum accountTypeEnum) {
         switch (accountTypeEnum) {
             case SPEAKER:
                 System.out.println("Enter the Speaker registration code:");
@@ -41,8 +41,8 @@ public class RegistrationPresenter implements Presenter {
         System.out.println("Enter a username:");
     }
 
-    public void usernameIsTakenNotification() {
-        System.out.println("{This username is already taken, please try again.}");
+    public void takenUsernameNotification() {
+        System.out.println("{This username is taken, please try again.}");
     }
 
     public void passwordPrompt() {
