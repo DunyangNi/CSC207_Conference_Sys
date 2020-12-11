@@ -23,7 +23,9 @@ public class LoginPresenter implements Presenter {
         System.out.println("{Incorrect password, please try again.}");
     }
 
-    public void failedPrompt() {System.out.println("Continue logging in (Y)?");}
+    public void failedPrompt() {
+        System.out.println("Try again? (Y/N)");
+    }
 
     @Override
     public void exitPrompt() {

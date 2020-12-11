@@ -2,7 +2,7 @@ package controllers.account;
 
 import enums.AccountTypeEnum;
 import enums.ViewEnum;
-import gateways.*;
+import gateways.DataManager;
 import use_cases.ConversationManager;
 import use_cases.RequestManager;
 import use_cases.account.AccountManager;
@@ -12,27 +12,16 @@ import use_cases.event.LocationManager;
 import views.View;
 import views.ViewFactory;
 
-import java.util.ArrayList;
 import java.util.Set;
 
 public class AccountController {
     private final DataManager dm;
     private final AccountManager am;
-    private final ContactManager fm;
-    private final ConversationManager cm;
-    private final EventManager em;
-    private final LocationManager lm;
-    private final RequestManager rm;
     private final String username;
 
     public AccountController(DataManager dm) {
         this.dm = dm;
         this.am = dm.getAccountManager();
-        this.fm = dm.getContactManager();
-        this.cm = dm.getConversationManager();
-        this.em = dm.getEventManager();
-        this.lm = dm.getLocationManager();
-        this.rm = dm.getRequestManager();
         this.username = dm.getUsername();
     }
 
@@ -54,7 +43,7 @@ public class AccountController {
         return dm.getAccountManager().getAccountHashMap().keySet();
     }
 
-    public View getView(ViewEnum viewEnum) {
+    public View getView(ViewEnum viewEnum) { // TODO find more appropriate place. ATM, Controller is interacting with View
         ViewFactory viewFactory = new ViewFactory(dm);
         return viewFactory.getView(viewEnum);
     }

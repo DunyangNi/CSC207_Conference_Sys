@@ -1,7 +1,6 @@
 package controllers.account;
 
 import enums.ViewEnum;
-import exceptions.already_exists.AccountAlreadyExistsException;
 import exceptions.conflict.IncorrectPasswordException;
 import exceptions.not_found.UserNotFoundException;
 import gateways.DataManager;
@@ -22,16 +21,14 @@ public class LoginController extends AccountController {
     }
 
     public ViewEnum login(String username, String password) throws IncorrectPasswordException, UserNotFoundException {
-        if (!usernameExists(username)){
+        if (!usernameExists(username)) {
             throw new UserNotFoundException();
         }
-        if (!isCorrectPassword(username, password)){
+        if (!isCorrectPassword(username, password)) {
             throw new IncorrectPasswordException();
         }
         return loginHelper(username);
-
     }
-
 
     public ViewEnum loginHelper(String username) {
         ViewEnum view;
@@ -42,7 +39,7 @@ public class LoginController extends AccountController {
         } else {
             view = ViewEnum.ATTENDEE;
         }
-        dm.setUsername(username); // TODO find more appropriate place to call this?
+        dm.setUsername(username);
         return view;
     }
 

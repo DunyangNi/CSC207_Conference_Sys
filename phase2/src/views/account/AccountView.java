@@ -27,16 +27,15 @@ public class AccountView implements View {
         AccountTypeEnum accountType = controller.getAccountType();
 
         while (viewEnum != ViewEnum.LOGOUT && viewEnum != ViewEnum.EXIT) {
-            // TODO Consider surrounding switch statement with try/catch for "View not found" exception
-            switch (accountType) {
+            switch (accountType) { // TODO Consider surrounding switch statement with try/catch for "View not found" exception
                 case ORGANIZER:
-                    viewEnum = this.getView(OrganizerMenuEnum.fromString(userInput.nextLine()));
+                    viewEnum = getView(OrganizerMenuEnum.fromString(userInput.nextLine()));
                     break;
                 case SPEAKER:
-                    viewEnum = this.getView(SpeakerMenuEnum.fromString(userInput.nextLine()));
+                    viewEnum = getView(SpeakerMenuEnum.fromString(userInput.nextLine()));
                     break;
                 case ATTENDEE:
-                    viewEnum = this.getView(AttendeeMenuEnum.fromString(userInput.nextLine()));
+                    viewEnum = getView(AttendeeMenuEnum.fromString(userInput.nextLine()));
                     break;
             }
         }
@@ -44,7 +43,8 @@ public class AccountView implements View {
     }
 
     private <T> ViewEnum getView(T accountMenuEnum) {
-        switch (accountMenuEnum.toString()) {
+        String stringMenuEnum = accountMenuEnum.toString();
+        switch (stringMenuEnum) {
             case "EXIT":
                 return ViewEnum.EXIT;
             case "LOGOUT":
@@ -59,7 +59,7 @@ public class AccountView implements View {
                 presenter.invalidInputPrompt();
                 break;
             default:
-                controller.getView(ViewEnum.valueOf(accountMenuEnum.toString())).runView();
+                controller.getView(ViewEnum.valueOf(stringMenuEnum)).runView();
         }
         controller.saveData();
         presenter.requestCommandPrompt();
