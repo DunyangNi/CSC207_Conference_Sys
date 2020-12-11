@@ -13,45 +13,46 @@ import java.util.Calendar;
 import java.util.Scanner;
 
 public class EventRescheduleView implements View {
-    private final EventController eventController;
-    private final EventReschedulePresenter eventReschedulePresenter;
+    private final EventController controller;
+    private final EventReschedulePresenter presenter;
     private final Scanner userInput = new Scanner(System.in);
-    private final GetTimeView getTimeView = new GetTimeView();
+    private final GetTimeView getTimeView;
 
-    public EventRescheduleView(EventController eventController, EventReschedulePresenter eventReschedulePresenter) {
-        this.eventController = eventController;
-        this.eventReschedulePresenter = eventReschedulePresenter;
+    public EventRescheduleView(EventController controller, EventReschedulePresenter presenter) {
+        this.controller = controller;
+        this.presenter = presenter;
+        getTimeView =  new GetTimeView(presenter);
     }
 
     public ViewEnum runView() {
-        eventReschedulePresenter.startPrompt();
+        presenter.startPrompt();
 
         boolean chosenID = false;
         int id = 0;
         while (!chosenID) {
             try {
-                eventReschedulePresenter.eventIDPrompt();
+                presenter.eventIDPrompt();
                 id = Integer.parseInt(userInput.nextLine());
                 chosenID = true;
-            } catch (NumberFormatException e) { eventReschedulePresenter.nonNegativeNumberNotification(); }
+            } catch (NumberFormatException e) { presenter.nonNegativeNumberNotification(); }
         }
 
         Calendar newTime = getTimeView.runTimeView();
 
         try {
-            eventController.rescheduleEvent(id, newTime);
-            eventReschedulePresenter.exitPrompt();
+            controller.rescheduleEvent(id, newTime);
+            presenter.exitPrompt();
             return ViewEnum.VOID;
         } catch (LocationInUseException e) {
-            eventReschedulePresenter.inUseLocationNotification();
+            presenter.inUseLocationNotification();
         } catch (SpeakerIsBusyException e) {
-            eventReschedulePresenter.speakerIsBusyNotification();
+            presenter.speakerIsBusyNotification();
         } catch (EventNotFoundException e) {
-            eventReschedulePresenter.eventNotFoundNotification();
+            presenter.eventNotFoundNotification();
         } catch (OutOfScheduleException e) {
-            eventReschedulePresenter.outOfScheduleNotification();
+            presenter.outOfScheduleNotification();
         }
-        eventReschedulePresenter.eventRescheduleFailureNotification();
+        presenter.eventRescheduleFailureNotification();
         return ViewEnum.VOID;
     }
 }

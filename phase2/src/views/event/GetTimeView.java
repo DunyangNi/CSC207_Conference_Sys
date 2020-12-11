@@ -1,28 +1,32 @@
 package views.event;
 
 import exceptions.PastTimeException;
-import presenters.event.TimePresenter;
+import presenters.TimePresenter;
 
 import java.util.Calendar;
 import java.util.Scanner;
 
 public class GetTimeView {
-    private final TimePresenter timePresenter = new TimePresenter();
+    private final TimePresenter presenter;
     private final Scanner userInput = new Scanner(System.in);
-    
+
+    public GetTimeView(TimePresenter presenter) {
+        this.presenter = presenter;
+    }
+
     protected Calendar runTimeView() {
-        timePresenter.startPrompt();
+        presenter.startPrompt();
         boolean valid = false;
         Calendar newTime = Calendar.getInstance();
         while (!valid) {
             try {
-                timePresenter.timeYearPrompt();
+                presenter.timeYearPrompt();
                 int year = Integer.parseInt(userInput.nextLine());
-                timePresenter.timeMonthPrompt();
+                presenter.timeMonthPrompt();
                 int month = Integer.parseInt(userInput.nextLine()) - 1;
-                timePresenter.timeDayPrompt();
+                presenter.timeDayPrompt();
                 int day = Integer.parseInt(userInput.nextLine());
-                timePresenter.timeHourPrompt();
+                presenter.timeHourPrompt();
                 int hour = Integer.parseInt(userInput.nextLine());
                 newTime = Calendar.getInstance();
                 newTime.set(year, month, day, hour, 0, 0);
@@ -30,12 +34,12 @@ public class GetTimeView {
                 if (Calendar.getInstance().compareTo(newTime) >= 0) throw new PastTimeException();
                 valid = true;
             } catch (NumberFormatException e) {
-                timePresenter.invalidTimeNotification();
+                presenter.invalidTimeNotification();
             } catch (PastTimeException e) {
-                timePresenter.pastTimeNotification();
+                presenter.pastTimeNotification();
             }
         }
-        timePresenter.selectedTimeNotification(newTime);
+        presenter.selectedTimeNotification(newTime);
         return newTime;
     }
 }

@@ -3,10 +3,11 @@ package presenters.event;
 import presenters.EventErrorPresenter;
 import presenters.InputErrorPresenter;
 import presenters.Presenter;
+import presenters.TimePresenter;
 
 import java.util.ArrayList;
 
-public class EventCreationPresenter implements Presenter, InputErrorPresenter, EventErrorPresenter {
+public class EventCreationPresenter implements Presenter, InputErrorPresenter, EventErrorPresenter, TimePresenter {
 
     @Override
     public void startPrompt() {
