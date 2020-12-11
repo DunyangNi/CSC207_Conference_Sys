@@ -18,7 +18,7 @@ import presenters.event.*;
 import presenters.message.ConversationPresenter;
 import presenters.message.MessagePresenter;
 import presenters.request.PendingRequestsPresenter;
-import presenters.request.RequestResolutionPresenter;
+import presenters.request.RequestResolvePresenter;
 import presenters.request.RequestSendPresenter;
 import presenters.request.ResolvedRequestsPresenter;
 import views.account.*;
@@ -128,7 +128,7 @@ public class ViewFactory {
                 view = new ResolvedRequestsListView(new RequestController(dm), new ResolvedRequestsPresenter());
                 break;
             case RESOLVE_REQUEST:
-                view = new RequestResolveView(new RequestController(dm), new RequestResolutionPresenter());
+                view = new RequestResolveView(new RequestController(dm), new RequestResolvePresenter());
                 break;
 
             // Speaker

@@ -2,17 +2,17 @@ package views.request;
 import java.util.Scanner;
 import controllers.request.RequestController;
 import exceptions.not_found.ObjectNotFoundException;
-import presenters.request.RequestResolutionPresenter;
+import presenters.request.RequestResolvePresenter;
 import enums.ViewEnum;
 import views.View;
 
 public class RequestResolveView implements View {
 
     private final RequestController controller;
-    private final RequestResolutionPresenter presenter;
+    private final RequestResolvePresenter presenter;
     private final Scanner userInput = new Scanner(System.in);
 
-    public RequestResolveView(RequestController controller, RequestResolutionPresenter presenter){
+    public RequestResolveView(RequestController controller, RequestResolvePresenter presenter){
         this.controller = controller;
         this.presenter = presenter;
     }

@@ -1,20 +1,22 @@
 package presenters.request;
-import presenters.*;
 
-public class RequestSendPresenter implements Presenter{
-    public void startPrompt(){
-        System.out.println("\n[SEND US A SUGGESTION/REQUEST] \n");
+import presenters.Presenter;
+
+public class RequestSendPresenter implements Presenter {
+    public void startPrompt() {
+        System.out.println();
+        System.out.println("[CREATE A REQUEST]");
     }
 
     public void subjectLinePrompt() {
-        System.out.println("Please enter subject line here:");
+        System.out.println("Please enter a subject line:");
     }
 
     public void requestContentPrompt() {
-        System.out.println("What can we help you with?\nEnter your suggestion/request below:");
+        System.out.println("Enter your suggestion/request below:");
     }
 
-    public void exitPrompt(){
-        System.out.println("\nThank you. Your request will be considered shortly. \n");
+    public void exitPrompt() {
+        System.out.println("{Request sent.}");
     }
 }

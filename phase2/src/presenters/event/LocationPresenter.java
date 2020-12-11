@@ -52,6 +52,9 @@ public class LocationPresenter implements Presenter, InputErrorPresenter {
         System.out.println();
         System.out.println("[LOCATION DIRECTORY]");
         System.out.println("============================================================");
+        if (locationStrings.isEmpty()) {
+            System.out.println("{No locations available}");
+        }
         for (String locationString : locationStrings) {
             System.out.println(locationString);
             System.out.println();
