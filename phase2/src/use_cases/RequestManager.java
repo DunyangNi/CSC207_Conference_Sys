@@ -10,8 +10,8 @@ import java.util.HashMap;
 import java.util.Arrays;
 
 public class RequestManager implements Serializable {
-    private HashMap<Integer, Request> unresolvedRequests = new HashMap<>();
-    private HashMap<Integer, Request> resolvedRequests = new HashMap<>();
+    private final HashMap<Integer, Request> unresolvedRequests = new HashMap<>();
+    private final HashMap<Integer, Request> resolvedRequests = new HashMap<>();
     private static Integer nextRequestID = 0;
 
     public void sendRequest(String senderUsername, String requestSubjectLine, String request) {
@@ -20,7 +20,6 @@ public class RequestManager implements Serializable {
 
         Integer id = this.nextRequestID;
         this.nextRequestID = this.nextRequestID + 1;
-
         this.unresolvedRequests.put(id, Request);
     }
 
