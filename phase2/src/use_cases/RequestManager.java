@@ -8,20 +8,33 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Arrays;
 
+/**
+ * Represents the entire system of Requests
+ */
 public class RequestManager implements Serializable {
     private final HashMap<Integer, Request> unresolvedRequests = new HashMap<>();
     private final HashMap<Integer, Request> resolvedRequests = new HashMap<>();
     private int assignRequestID;
 
-    public void sendRequest(String senderUsername, String requestSubjectLine, String request) {
+    /**
+     * Sends a request.
+     * @param senderUsername username of sender
+     * @param requestSubjectLine subject of request
+     * @param requestContent content of request
+     */
+    public void sendRequest(String senderUsername, String requestSubjectLine, String requestContent) {
         Calendar timesent = Calendar.getInstance();
-        Request Request = new Request(timesent, senderUsername, requestSubjectLine, request, assignRequestID);
+        Request Request = new Request(timesent, senderUsername, requestSubjectLine, requestContent, assignRequestID);
         this.unresolvedRequests.put(assignRequestID, Request);
 
         this.assignRequestID = this.assignRequestID + 1;
     }
 
-    //Organizer should send message to request sender when they are done (done outside of this class)
+    /**
+     * Attempts to resolve a request.
+     * @param requestID ID of desired request
+     * @throws ObjectNotFoundException when requestID is invalid
+     */
     public void resolveRequest(Integer requestID) throws ObjectNotFoundException{
         try{
             Request request = this.unresolvedRequests.get(requestID);
@@ -35,6 +48,9 @@ public class RequestManager implements Serializable {
         }
     }
 
+    /**
+     * @return String representation of all unresolved requests
+     */
     public String unresolvedRequestListToString() {
         Request[] requestArray = new Request[this.unresolvedRequests.size()];
         int updateIndex = 0;
@@ -55,7 +71,9 @@ public class RequestManager implements Serializable {
 
     }
 
-    //oldest first, recent last
+    /**
+     * @return String representation of all resolved requests
+     */
     public String resolvedRequestListToString() {
         Request[] requestArray = new Request[this.resolvedRequests.size()];
         int updateIndex = 0;
@@ -75,6 +93,10 @@ public class RequestManager implements Serializable {
         return stringrep.toString();
     }
 
+    /**
+     * @return String representation of a request
+     * @param request desired Request
+     */
     public String getRequestInfo(Request request) {
         StringBuilder requestinfo = new StringBuilder();
         requestinfo.append("Time of request: " + request.getTimeOfRequest().getTime().toString() + "\n");
