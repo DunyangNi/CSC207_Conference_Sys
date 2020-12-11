@@ -59,7 +59,7 @@ public class AccountView implements View {
                 presenter.invalidInputPrompt();
                 break;
             default:
-                return controller.getView(ViewEnum.valueOf(accountMenuEnum.toString())).runView();
+                controller.getView(ViewEnum.valueOf(accountMenuEnum.toString())).runView();
         }
         controller.saveData();
         presenter.requestCommandPrompt();
