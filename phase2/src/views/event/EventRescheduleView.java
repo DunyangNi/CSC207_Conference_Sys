@@ -15,8 +15,8 @@ import java.util.Scanner;
 public class EventRescheduleView implements View {
     private final EventController controller;
     private final EventReschedulePresenter presenter;
-    private final Scanner userInput = new Scanner(System.in);
     private final GetTimeView getTimeView;
+    private final Scanner userInput = new Scanner(System.in);
 
     public EventRescheduleView(EventController controller, EventReschedulePresenter presenter) {
         this.controller = controller;
