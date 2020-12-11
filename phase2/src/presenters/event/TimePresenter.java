@@ -30,10 +30,15 @@ public class TimePresenter implements Presenter {
         System.out.println("{The time you have selected is " + time.getTime().toString() + " }");
     }
 
-    public void invalidTimeNotification() { System.out.println("{The selected time is invalid, please enter a valid time slot.}"); }
+    public void invalidTimeNotification() {
+        System.out.println("{The selected time is invalid, please enter a valid time slot.}");
+    }
 
-    public void pastTimeNotification() { System.out.println("{The selected time takes place in the past.}"); }
+    public void pastTimeNotification() {
+        System.out.println("{The selected time takes place in the past.}");
+    }
 
     @Override
-    public void exitPrompt() { }
+    public void exitPrompt() {
+    }
 }

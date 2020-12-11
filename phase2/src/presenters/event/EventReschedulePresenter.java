@@ -15,7 +15,11 @@ public class EventReschedulePresenter implements Presenter, InputErrorPresenter,
         System.out.println("{Event Rescheduling successful!}");
     }
 
-    public void eventIDPrompt() { System.out.println("Please enter the ID of an event to reschedule: "); }
+    public void eventIDPrompt() {
+        System.out.println("Please enter the ID of an event to reschedule: ");
+    }
 
-    public void eventRescheduleFailureNotification() { System.out.println("{Event rescheduling cancelled.}"); }
+    public void eventRescheduleFailureNotification() {
+        System.out.println("{Event rescheduling cancelled.}");
+    }
 }

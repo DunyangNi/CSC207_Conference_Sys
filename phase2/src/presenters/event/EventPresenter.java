@@ -12,18 +12,18 @@ public class EventPresenter implements Presenter {
 
     public void myEventsHeader() {
         System.out.println("[MY EVENTS SCHEDULE]");
-        System.out.println("====================================");
+        System.out.println("============================================================");
     }
 
     public void allEventsHeader() {
         System.out.println("[ALL EVENTS SCHEDULE]");
-        System.out.println("====================================");
+        System.out.println("============================================================");
     }
 
     public void displayEventSchedule(ArrayList<String> selectedEvents) {
         if (selectedEvents.isEmpty()) System.out.println("{No scheduled events}");
         for(String eventString : selectedEvents) { System.out.println(eventString); System.out.println(); }
-        System.out.println("====================================");
+        System.out.println("============================================================");
     }
 
     @Override
