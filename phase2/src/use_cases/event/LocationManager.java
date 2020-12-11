@@ -31,12 +31,12 @@ public class LocationManager implements Serializable {
     }
 
     private boolean locationMeetsRequirements(Location location, int capacity, int tables, int chairs, boolean hasInternet, boolean hasSoundSystem, boolean hasPresentationScreen) {
-        return location.getCapacity() >= capacity |
-                location.getTables() >= tables |
-                location.getChairs() >= chairs |
-                location.getHasInternet().equals(hasInternet) |
-                location.getHasSoundSystem().equals(hasSoundSystem) |
-                location.getHasPresentationScreen().equals(hasPresentationScreen);
+        return location.getCapacity() >= capacity &&
+                location.getTables() >= tables &&
+                location.getChairs() >= chairs &&
+                (!hasInternet || location.getHasInternet().equals(true)) &&
+                (!hasSoundSystem || location.getHasSoundSystem().equals(true)) &&
+                (!hasPresentationScreen || location.getHasPresentationScreen().equals(true));
     }
 
     public void checkLocationMeetsRequirements(String name, int capacity, int tables, int chairs, boolean hasInternet, boolean hasSoundSystem, boolean hasPresentationScreen) throws RequirementMismatchException {
