@@ -37,7 +37,7 @@ public class LoginController extends AccountController {
         } else if (am.containsSpeaker(username)) {
             view = ViewEnum.SPEAKER;
         } else {
-            if (am.getVipStatus(username)) {
+            if (am.isVipAttendee(username)) {
                 view = ViewEnum.VIP_ATTENDEE;
             } else {
                 view = ViewEnum.ATTENDEE;

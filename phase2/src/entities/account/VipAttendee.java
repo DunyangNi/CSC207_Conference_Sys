@@ -1,6 +1,6 @@
 package entities.account;
 
-public class VipAttendee extends Attendee{
+public class VipAttendee extends Attendee {
 
     /**
      * Constructs an instance of <code>Attendee</code> based on Strings of information
@@ -11,4 +11,7 @@ public class VipAttendee extends Attendee{
     public VipAttendee(String username, String password) {
         super(username, password);
     }
+
+    @Override
+    public boolean accept(VipVisitor v) { return v.visit(this); }
 }

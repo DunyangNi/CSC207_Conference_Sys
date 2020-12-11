@@ -1,11 +1,13 @@
 package entities.account;
 
+import entities.event.VipAcceptor;
+
 import java.util.ArrayList;
 
 /**
  * Represents a <code>Attendee Account</code> in the system.
  */
-public class Attendee extends Account {
+public class Attendee extends Account implements VipAcceptor {
     private final ArrayList<Integer> eventsAttending = new ArrayList<>();
 
     /**
@@ -23,4 +25,6 @@ public class Attendee extends Account {
      */
     public ArrayList<Integer> getEventsAttending() { return eventsAttending; }
 
+    @Override
+    public boolean accept(VipVisitor v) { return v.visit(this); }
 }
