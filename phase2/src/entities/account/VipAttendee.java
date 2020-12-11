@@ -7,10 +7,8 @@ public class VipAttendee extends Attendee{
      *
      * @param username given username
      * @param password given password
-     * @param firstName given first name
-     * @param lastName given last name
      */
-    public VipAttendee(String username, String password, String firstName, String lastName) {
-        super(username, password, firstName, lastName);
+    public VipAttendee(String username, String password) {
+        super(username, password);
     }
 }

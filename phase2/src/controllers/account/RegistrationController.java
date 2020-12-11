@@ -29,15 +29,15 @@ public class RegistrationController extends AccountController {
     public void register(AccountTypeEnum accountType, String username, String password) throws AccountAlreadyExistsException {
         switch (accountType) {
             case ATTENDEE:
-                am.addNewAttendee(username, password, "", "");
+                am.addNewAttendee(username, password);
                 break;
             case VIP_ATTENDEE:
-                am.addNewVipAttendee(username, password, "", "");
+                am.addNewVipAttendee(username, password);
             case SPEAKER:
-                am.addNewSpeaker(username, password, "", "");
+                am.addNewSpeaker(username, password);
                 break;
             case ORGANIZER:
-                am.addNewOrganizer(username, password, "", "");
+                am.addNewOrganizer(username, password);
                 break;
         }
         addNewAccountKeys(username);

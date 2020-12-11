@@ -14,22 +14,16 @@ import java.io.Serializable;
 public class Account implements Serializable {
     private final String username;
     private String password;
-    private String lastName;
-    private String firstName;
 
     /**
      * Creates an instance of <code>Account</code> with given String information.
      *
      * @param username given username
      * @param password given password
-     * @param firstName given first name
-     * @param lastName given last name
      */
-    public Account(String username, String password, String firstName, String lastName) {
+    public Account(String username, String password) {
         this.username = username;
         this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
     }
 
     /**
@@ -59,18 +53,6 @@ public class Account implements Serializable {
      */
     public String getPassword() { return password; }
 
-    /**
-     * @return lastName
-     */
-    public String getLastName() { return lastName; }
-
-    /**
-     * @return firstName
-     */
-    public String getFirstName() {
-        return firstName;
-    }
-
     //------------------------------------------------------------
     // Setters
     //------------------------------------------------------------
@@ -83,19 +65,4 @@ public class Account implements Serializable {
         this.password = password;
     }
 
-    /**
-     * sets lastName
-     * @param lastName the intended new last name
-     */
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    /**
-     * sets firstName
-     * @param firstName the intended new first name
-     */
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
 }

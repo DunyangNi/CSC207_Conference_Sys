@@ -31,7 +31,8 @@ public class AccountManager implements Serializable {
      * @param organizerHashMap given <code>Organizer HashMap</code>
      * @param speakerHashMap given <code>Speaker HashMap</code>
      */
-    public AccountManager(HashMap<String, Attendee> attendeeHashMap, HashMap<String, Organizer> organizerHashMap, HashMap<String, Speaker> speakerHashMap) {
+    public AccountManager(HashMap<String, Attendee> attendeeHashMap, HashMap<String, Organizer> organizerHashMap,
+                          HashMap<String, Speaker> speakerHashMap) {
         this.attendeeHashMap = attendeeHashMap;
         this.organizerHashMap = organizerHashMap;
         this.speakerHashMap = speakerHashMap;
@@ -144,18 +145,16 @@ public class AccountManager implements Serializable {
      *
      * @param username given username
      * @param password given password
-     * @param firstName given first name
-     * @param lastName given last name
      */
-    public void addNewAttendee(String username, String password, String firstName, String lastName) throws AccountAlreadyExistsException {
+    public void addNewAttendee(String username, String password) throws AccountAlreadyExistsException {
         if (getAccountHashMap().containsKey(username)) throw new AccountAlreadyExistsException();
-        Attendee newAttendee = new Attendee(username, password, firstName, lastName);
+        Attendee newAttendee = new Attendee(username, password);
         attendeeHashMap.put(username, newAttendee);
     }
 
-    public void addNewVipAttendee(String username, String password, String firstName, String lastName) throws AccountAlreadyExistsException {
+    public void addNewVipAttendee(String username, String password) throws AccountAlreadyExistsException {
         if (getAccountHashMap().containsKey(username)) throw new AccountAlreadyExistsException();
-        VipAttendee newAttendee = new VipAttendee(username, password, firstName, lastName);
+        VipAttendee newAttendee = new VipAttendee(username, password);
         attendeeHashMap.put(username, newAttendee);
     }
 
@@ -164,28 +163,23 @@ public class AccountManager implements Serializable {
      * and store it in <code>speakerHashMap</code>.
      * @param username given username
      * @param password given password
-     * @param firstName given first name
-     * @param lastName given last name
      * @throws ObjectAlreadyExistsException upon finding an existing Speaker with the same username
      */
-    public void addNewSpeaker(String username, String password, String firstName, String lastName) throws AccountAlreadyExistsException {
+    public void addNewSpeaker(String username, String password) throws AccountAlreadyExistsException {
         if (getAccountHashMap().containsKey(username)) throw new AccountAlreadyExistsException();
-        Speaker newSpeaker = new Speaker(username, password, firstName, lastName);
+        Speaker newSpeaker = new Speaker(username, password);
         speakerHashMap.put(username, newSpeaker);
     }
 
     /**
      * Creates a new <code>Organizer Account</code> with given information
      * and stores it in <code>organizerHashmap</code>.
-     *
-     * @param username given username
+     *  @param username given username
      * @param password given password
-     * @param firstName given first name
-     * @param lastName given last name
      */
-    public void addNewOrganizer(String username, String password, String firstName, String lastName) throws AccountAlreadyExistsException {
+    public void addNewOrganizer(String username, String password) throws AccountAlreadyExistsException {
         if (getAccountHashMap().containsKey(username)) throw new AccountAlreadyExistsException();
-        Organizer newOrganizer = new Organizer(username, password, firstName, lastName);
+        Organizer newOrganizer = new Organizer(username, password);
         organizerHashMap.put(username, newOrganizer);
     }
 
@@ -209,5 +203,7 @@ public class AccountManager implements Serializable {
         attendeeHashMap.get(attendee).getEventsAttending().remove(id);
     }
 
-    public ArrayList<Integer> getAttendeeEvents(String attendee) { return attendeeHashMap.get(attendee).getEventsAttending(); }
+    public ArrayList<Integer> getAttendeeEvents(String attendee) {
+        return attendeeHashMap.get(attendee).getEventsAttending();
+    }
 }
