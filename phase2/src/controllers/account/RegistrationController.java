@@ -7,7 +7,6 @@ import use_cases.ConversationManager;
 import use_cases.account.AccountManager;
 import use_cases.account.ContactManager;
 
-// TODO: 12/07/20 Consider merging with AccountController
 public class RegistrationController extends AccountController {
     public final String ORGANIZER_CODE = "123456";
     public final String SPEAKER_CODE = "123456";

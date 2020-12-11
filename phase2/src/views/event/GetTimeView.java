@@ -6,7 +6,7 @@ import presenters.event.TimePresenter;
 import java.util.Calendar;
 import java.util.Scanner;
 
-public class TimeView {
+public class GetTimeView {
     private final TimePresenter timePresenter = new TimePresenter();
     private final Scanner userInput = new Scanner(System.in);
     

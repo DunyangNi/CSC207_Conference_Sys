@@ -10,13 +10,13 @@ import java.util.Scanner;
 public class LocationAddView implements View {
     private final LocationPresenter locationPresenter;
     private final LocationController locationController;
-    private final InputGetter inputGetter;
+    private final GetInputView getInputView;
     private final Scanner userInput = new Scanner(System.in);
 
     public LocationAddView(LocationController locationController, LocationPresenter locationPresenter) {
         this.locationController = locationController;
         this.locationPresenter = locationPresenter;
-        inputGetter = new InputGetter(locationPresenter);
+        getInputView = new GetInputView(locationPresenter);
     }
 
     public ViewEnum runView() {
@@ -33,27 +33,27 @@ public class LocationAddView implements View {
 
 
         locationPresenter.capacityPrompt();
-        int capacity = inputGetter.getPositiveNumber();
+        int capacity = getInputView.getPositiveNumber();
 
 
         locationPresenter.tablesPrompt();
-        int tables = inputGetter.getNonNegativeNumber();
+        int tables = getInputView.getNonNegativeNumber();
 
 
         locationPresenter.chairsPrompt();
-        int chairs = inputGetter.getNonNegativeNumber();
+        int chairs = getInputView.getNonNegativeNumber();
 
 
         locationPresenter.internetPrompt();
-        boolean hasInternet = inputGetter.getBoolean();
+        boolean hasInternet = getInputView.getBoolean();
 
 
         locationPresenter.soundSystemPrompt();
-        boolean hasSoundSystem = inputGetter.getBoolean();
+        boolean hasSoundSystem = getInputView.getBoolean();
 
 
         locationPresenter.presentationScreenPrompt();
-        boolean hasPresentationScreen = inputGetter.getBoolean();
+        boolean hasPresentationScreen = getInputView.getBoolean();
 
         locationPresenter.furtherNotesPrompt();
         String furtherNotes = userInput.nextLine();

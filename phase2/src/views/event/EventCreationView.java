@@ -3,41 +3,49 @@ package views.event;
 import controllers.event.EventController;
 import enums.EventTypeEnum;
 import enums.ViewEnum;
-import exceptions.*;
+import exceptions.InvalidEventTypeException;
+import exceptions.NoSuggestedLocationsException;
+import exceptions.NotEnoughSpeakersException;
+import exceptions.OutOfScheduleException;
 import exceptions.conflict.LocationInUseException;
 import exceptions.conflict.SpeakerIsBusyException;
 import exceptions.not_found.SpeakerNotFoundException;
 import presenters.event.EventCreationPresenter;
 import views.View;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Scanner;
 
 import static enums.EventTypeEnum.*;
 
 public class EventCreationView implements View {
-    private final EventController eventController;
-    private final EventCreationPresenter eventCreationPresenter;
-    private final InputGetter inputGetter;
-    private final TimeView timeView = new TimeView();
+    private final EventController controller;
+    private final EventCreationPresenter presenter;
+    private final GetInputView getInputView;
+    private final GetTimeView getTimeView;
     Scanner userInput = new Scanner(System.in);
 
-    public EventCreationView(EventController eventController, EventCreationPresenter presenter) {
-        this.eventController = eventController;
-        eventCreationPresenter = presenter;
-        inputGetter = new InputGetter(presenter);
+    public EventCreationView(EventController controller, EventCreationPresenter presenter) {
+        this.controller = controller;
+        this.presenter = presenter;
+        getInputView = new GetInputView(presenter);
+        getTimeView = new GetTimeView();
     }
 
     public ViewEnum runView() {
-        eventCreationPresenter.startPrompt();
+        presenter.startPrompt();
 
         EventTypeEnum eventType = GENERAL_EVENT;
         boolean eventNotChosen = true;
-        eventCreationPresenter.eventTypeMenu();
-        while(eventNotChosen) {
-            eventCreationPresenter.eventTypePrompt();
+        presenter.eventTypeMenu();
+        while (eventNotChosen) {
+            presenter.eventTypePrompt();
             eventType = EventTypeEnum.fromString(userInput.nextLine());
             if (eventType != INVALID) eventNotChosen = false;
-            else { eventCreationPresenter.invalidEventTypeNotification(); }
+            else {
+                presenter.invalidEventTypeNotification();
+            }
         }
 
         ArrayList<String> speakers = null;
@@ -45,82 +53,80 @@ public class EventCreationView implements View {
         while (!chosenSpeakers) {
             speakers = runSpeakerInputInteraction(eventType);
             try {
-                eventController.checkValidSpeaker(eventType, speakers);
+                controller.checkValidSpeaker(eventType, speakers);
                 chosenSpeakers = true;
+            } catch (SpeakerNotFoundException e) {
+                presenter.invalidSpeakerNotification();
+            } catch (NotEnoughSpeakersException e) {
+                presenter.notEnoughSpeakersNotification();
             }
-            catch (SpeakerNotFoundException e) { eventCreationPresenter.invalidSpeakerNotification(); }
-            catch (NotEnoughSpeakersException e) { eventCreationPresenter.notEnoughSpeakersNotification(); }
         }
 
-        eventCreationPresenter.topicPrompt();
+        presenter.topicPrompt();
         String topic = userInput.nextLine();
 
-        Calendar time = timeView.runTimeView();
+        Calendar time = getTimeView.runTimeView();
 
-        eventCreationPresenter.vipOnlyPrompt();
-        boolean vipOnly = inputGetter.getBoolean();
+        presenter.vipOnlyPrompt();
+        boolean vipOnly = getInputView.getBoolean();
 
-        eventCreationPresenter.requirementsPrompt();
+        presenter.capacityPrompt();
+        int capacity = getInputView.getPositiveNumber();
 
-
-        eventCreationPresenter.capacityPrompt();
-        int capacity = inputGetter.getPositiveNumber();
-
-
-        eventCreationPresenter.tablesPrompt();
-        int tables = inputGetter.getNonNegativeNumber();
+        presenter.tablesPrompt();
+        int tables = getInputView.getNonNegativeNumber();
 
 
-        eventCreationPresenter.chairsPrompt();
-        int chairs = inputGetter.getNonNegativeNumber();
+        presenter.chairsPrompt();
+        int chairs = getInputView.getNonNegativeNumber();
 
 
-        eventCreationPresenter.internetPrompt();
-        boolean hasInternet = inputGetter.getBoolean();
+        presenter.internetPrompt();
+        boolean hasInternet = getInputView.getBoolean();
 
 
-        eventCreationPresenter.soundSystemPrompt();
-        boolean hasSoundSystem = inputGetter.getBoolean();
+        presenter.soundSystemPrompt();
+        boolean hasSoundSystem = getInputView.getBoolean();
 
 
-        eventCreationPresenter.presentationScreenPrompt();
-        boolean hasPresentationScreen = inputGetter.getBoolean();
+        presenter.presentationScreenPrompt();
+        boolean hasPresentationScreen = getInputView.getBoolean();
 
 
         ArrayList<String> suggestedLocationStrings;
         try {
-            suggestedLocationStrings = eventController.getSuggestedLocations(capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen);
+            suggestedLocationStrings = controller.getSuggestedLocations(capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen);
         } catch (NoSuggestedLocationsException e) {
-            eventCreationPresenter.noSuggestedLocationsNotification();
+            presenter.noSuggestedLocationsNotification();
             return ViewEnum.VOID;
         }
-        eventCreationPresenter.displaySuggestedLocations(suggestedLocationStrings);
+        presenter.displaySuggestedLocations(suggestedLocationStrings);
 
         boolean chosenLocation = false;
         String location = "";
         while (!chosenLocation) {
-            eventCreationPresenter.locationPrompt();
+            presenter.locationPrompt();
             location = userInput.nextLine();
-            if (!eventController.isExistingLocation(location)) eventCreationPresenter.invalidLocationNotification();
-            else if (!eventController.locationMeetsRequirements(location, capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen))
-                eventCreationPresenter.requirementMismatchNotification();
+            if (!controller.isExistingLocation(location)) presenter.invalidLocationNotification();
+            else if (!controller.locationMeetsRequirements(location, capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen))
+                presenter.requirementMismatchNotification();
             else chosenLocation = true;
         }
 
         try {
-            eventController.createEvent(eventType, topic, time, location, speakers, capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen, vipOnly);
-            eventCreationPresenter.exitPrompt();
+            controller.createEvent(eventType, topic, time, location, speakers, capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen, vipOnly);
+            presenter.exitPrompt();
             return ViewEnum.VOID;
         } catch (InvalidEventTypeException e) {
-            eventCreationPresenter.invalidEventTypeNotification();
+            presenter.invalidEventTypeNotification();
         } catch (LocationInUseException e) {
-            eventCreationPresenter.inUseLocationNotification();
+            presenter.inUseLocationNotification();
         } catch (OutOfScheduleException e) {
-            eventCreationPresenter.outOfScheduleNotification();
+            presenter.outOfScheduleNotification();
         } catch (SpeakerIsBusyException e) {
-            eventCreationPresenter.speakerIsBusyNotification();
+            presenter.speakerIsBusyNotification();
         }
-        eventCreationPresenter.eventCreationFailureNotification();
+        presenter.eventCreationFailureNotification();
         return ViewEnum.VOID;
     }
 
@@ -128,11 +134,11 @@ public class EventCreationView implements View {
     public ArrayList<String> runSpeakerInputInteraction(EventTypeEnum eventType) {
         ArrayList<String> speakers = new ArrayList<>();
         if (eventType == TALK) {
-            eventCreationPresenter.singleSpeakerPrompt();
+            presenter.singleSpeakerPrompt();
             speakers.add(userInput.nextLine());
         } else if (eventType == PANEL_DISCUSSION) {
             boolean inputSpeakers = true;
-            eventCreationPresenter.multiSpeakerPrompt();
+            presenter.multiSpeakerPrompt();
             while (inputSpeakers) {
                 String speaker = userInput.nextLine();
                 if (speaker.equals("")) inputSpeakers = false;
