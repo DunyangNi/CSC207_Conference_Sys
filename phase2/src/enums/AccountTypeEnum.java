@@ -4,6 +4,7 @@ public enum AccountTypeEnum {
     ATTENDEE("1"),
     SPEAKER("2"),
     ORGANIZER("3"),
+    VIPATTENDEE("4"),
     INVALID(null);
 
     public final String stringValue;
