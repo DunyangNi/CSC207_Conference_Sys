@@ -42,7 +42,7 @@ public class RegistrationController extends AccountController {
             case ORGANIZER:
                 am.addNewOrganizer(username, password, "", "");
                 break;
-            case VIPATTENDEE:
+            case VIP_ATTENDEE:
                 am.addNewVipAttendee(username, password, "","");
         }
         addNewAccountKeys(username);

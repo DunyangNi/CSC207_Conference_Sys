@@ -7,7 +7,7 @@ public enum ViewEnum {
     REGISTRATION,
     ORGANIZER,
     SPEAKER,
-    VIP,
+    VIP_ATTENDEE,
     ATTENDEE,
 
     // Account

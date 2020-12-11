@@ -55,7 +55,7 @@ public class RegistrationView implements View {
                 presenter.organizerCodePrompt();
                 code = controller.ORGANIZER_CODE;
                 break;
-            case VIPATTENDEE:
+            case VIP_ATTENDEE:
                 presenter.vipCodePrompt();
                 code = controller.VIP_CODE;
                 break;
