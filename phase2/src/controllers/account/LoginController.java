@@ -6,12 +6,21 @@ import exceptions.not_found.UserNotFoundException;
 import gateways.DataManager;
 import use_cases.account.AccountManager;
 
+/**
+ * Manages login functionality for the program
+ *
+ * Fields:
+ * AccountManager: Stores account in program
+ * DataManager: Stores all data of program
+ */
 public class LoginController extends AccountController {
     private final AccountManager am;
     private final DataManager dm;
 
     /**
-     * Manages login functionality for the program
+     * Creates an instance of <code>LoginController</code> with given parameters..
+     *
+     * @param dm Datamanager containing the desired AccountManager
      */
     public LoginController(DataManager dm) {
         super(dm);
@@ -19,6 +28,14 @@ public class LoginController extends AccountController {
         this.am = dm.getAccountManager();
     }
 
+
+    /**
+     * Attempts to log in an account with given username and password
+     *
+     * @return an enum representing the account type for the username provided
+     * @param username login username
+     * @param password login password
+     */
     public ViewEnum login(String username, String password) throws IncorrectPasswordException, UserNotFoundException {
         if (!usernameExists(username)) {
             throw new UserNotFoundException();
@@ -29,6 +46,11 @@ public class LoginController extends AccountController {
         return loginHelper(username);
     }
 
+    /**
+     * Login Helper function.
+     * @return an enum representing the account type for the username provided
+     * @param username desired username
+     */
     public ViewEnum loginHelper(String username) {
         ViewEnum view;
         if (am.containsOrganizer(username)) {
@@ -46,6 +68,13 @@ public class LoginController extends AccountController {
         return view;
     }
 
+    /**
+     * Verifies a login attempt.
+     *
+     * @param username desired username
+     * @param password desired password
+     * @return True iff username is in AccountManager and the password is valid.
+     */
     public boolean isCorrectPassword(String username, String password) {
         return password.equals(am.getAccountHashMap().get(username).getPassword());
     }
