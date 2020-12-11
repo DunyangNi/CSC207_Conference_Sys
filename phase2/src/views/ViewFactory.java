@@ -68,9 +68,14 @@ public class ViewFactory {
                 view = new AccountView(accountController, accountPresenter);
                 break;
             case ATTENDEE:
-            case VIP: // TODO Decide how to implement this
                 accountController = new AccountController(dm);
                 accountPresenter = new AttendeePresenter();
+                view = new AccountView(accountController, accountPresenter);
+                break;
+
+            case VIP:
+                accountController = new AccountController(dm);
+                accountPresenter = new VipAttendeePresenter();
                 view = new AccountView(accountController, accountPresenter);
                 break;
 

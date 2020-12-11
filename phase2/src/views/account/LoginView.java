@@ -42,26 +42,5 @@ public class LoginView implements View {
         } else {
             return ViewEnum.START;
         }
-//        while (!controller.usernameExists(username)) {
-//            if (username.equals("*")) {
-//                return ViewEnum.START;
-//            }
-//            presenter.dneUsernamePrompt();
-//            username = userInput.nextLine();
-//        }
-
-
-
-//        while (!controller.isCorrectPassword(username, password)) {
-//            if (password.equals("*")) {
-//                return ViewEnum.START;
-//            }
-//            presenter.incorrectPasswordPrompt();
-//            password = userInput.nextLine();
-//       }
-
-//        presenter.exitPrompt();
-
-//        return controller.login(username);
     }
 }
