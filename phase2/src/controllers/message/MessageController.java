@@ -2,18 +2,14 @@ package controllers.message;
 
 import exceptions.NoRecipientsException;
 import exceptions.not_found.AccountNotFoundException;
-import exceptions.not_found.AttendeeNotFoundException;
 import exceptions.not_found.EventNotFoundException;
-import exceptions.not_found.SpeakerNotFoundException;
 import gateways.DataManager;
 import use_cases.ConversationManager;
 import use_cases.account.AccountManager;
 import use_cases.event.EventManager;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
 
 public class MessageController {
     protected String username;
@@ -78,7 +74,7 @@ public class MessageController {
         ArrayList<String> selectedAttendees = new ArrayList<>();
 
         for (Integer id : selectedTalks) {
-            if (em.isTalk(id) && em.isSpeakerOfTalk(id, this.username)) {
+            if (em.isSpeakerOfEvent(id, this.username)) {
                 selectedAttendees.addAll(em.fetchEventAttendeeList(id));
             }
         }

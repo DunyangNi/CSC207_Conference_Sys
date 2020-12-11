@@ -132,10 +132,18 @@ public class EventManager implements Serializable, HTMLWritable {
     public boolean isTalk(Integer id) {
         return events.get(id) instanceof Talk;
     }
+    public boolean isPanel(Integer id) { return events.get(id) instanceof Panel;}
 
     // TODO: to be updated
-    public boolean isSpeakerOfTalk(Integer id, String speaker) {
-        return isTalk(id) && ((Talk) events.get(id)).getSpeaker().equals(speaker);
+    public boolean isSpeakerOfEvent(Integer id, String speaker) {
+        Boolean result;
+        if (isTalk(id)){
+            return ((Talk) events.get(id)).getSpeaker().equals(speaker);
+        }
+        if (isPanel(id)){
+            return ((Panel) events.get(id)).getSpeakers().contains(speaker);
+        }
+        return false;
     }
 
     /**
