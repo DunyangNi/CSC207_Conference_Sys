@@ -131,9 +131,15 @@ public class AccountManager implements Serializable {
      * @param username given username
      * @return username is associated with a <code>Account</code>.
      */
+
     public boolean containsAccount(String username) {
         return getAccountHashMap().containsKey(username);
     }
+
+    /**
+     * @param username username of account
+     * @return True iff the accound with the given username is a VIP attendee
+     */
 
     public boolean isVipAttendee(String username) {
         VipVisitor visitor = new VipHelper();
@@ -141,11 +147,12 @@ public class AccountManager implements Serializable {
     }
 
     /**
-     * Creates a new <code>Attendee Account</code> with given information
+     * Attempts to create a new <code>Attendee Account</code> with given information
      * and stores it in <code>attendeeHashMap</code>.
      *
      * @param username given username
      * @param password given password
+     * @throws AccountAlreadyExistsException when there is already an account with the given username
      */
     public void addNewAttendee(String username, String password) throws AccountAlreadyExistsException {
         if (getAccountHashMap().containsKey(username)) throw new AccountAlreadyExistsException();
@@ -153,6 +160,14 @@ public class AccountManager implements Serializable {
         attendeeHashMap.put(username, newAttendee);
     }
 
+    /**
+     * Attempts to create a new <code>VIP Attendee Account</code> with given information
+     * and stores it in <code>attendeeHashMap</code>.
+     *
+     * @param username given username
+     * @param password given password
+     * @throws AccountAlreadyExistsException when there is already an account with the given username
+     */
     public void addNewVipAttendee(String username, String password) throws AccountAlreadyExistsException {
         if (getAccountHashMap().containsKey(username)) throw new AccountAlreadyExistsException();
         VipAttendee newAttendee = new VipAttendee(username, password);
@@ -164,7 +179,7 @@ public class AccountManager implements Serializable {
      * and store it in <code>speakerHashMap</code>.
      * @param username given username
      * @param password given password
-     * @throws AccountAlreadyExistsException upon finding an existing Speaker with the same username
+     * @throws AccountAlreadyExistsException upon finding an existing account with the same username
      */
     public void addNewSpeaker(String username, String password) throws AccountAlreadyExistsException {
         if (getAccountHashMap().containsKey(username)) throw new AccountAlreadyExistsException();
@@ -175,8 +190,9 @@ public class AccountManager implements Serializable {
     /**
      * Creates a new <code>Organizer Account</code> with given information
      * and stores it in <code>organizerHashmap</code>.
-     *  @param username given username
+     * @param username given username
      * @param password given password
+     * @throws AccountAlreadyExistsException when there is already an account with the given username
      */
     public void addNewOrganizer(String username, String password) throws AccountAlreadyExistsException {
         if (getAccountHashMap().containsKey(username)) throw new AccountAlreadyExistsException();
@@ -204,6 +220,10 @@ public class AccountManager implements Serializable {
         attendeeHashMap.get(attendee).getEventsAttending().remove(id);
     }
 
+    /**
+     * @param attendee given username of <code>Attendee</code>
+     * @return a list of the IDs of events that the <code>Attendee</code> is attending
+     */
     public ArrayList<Integer> getAttendeeEvents(String attendee) {
         return attendeeHashMap.get(attendee).getEventsAttending();
     }
