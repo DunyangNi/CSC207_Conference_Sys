@@ -16,7 +16,7 @@ public class RequestManager implements Serializable {
 
     public void sendRequest(String senderUsername, String requestSubjectLine, String request) {
         Calendar timesent = Calendar.getInstance();
-        Request Request = new Request(timesent, senderUsername, request, assignRequestID);
+        Request Request = new Request(timesent, senderUsername, requestSubjectLine, request, assignRequestID);
         this.unresolvedRequests.put(assignRequestID, Request);
 
         this.assignRequestID = this.assignRequestID + 1;
