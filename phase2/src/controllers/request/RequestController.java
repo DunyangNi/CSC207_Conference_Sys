@@ -4,15 +4,19 @@ import exceptions.not_found.ObjectNotFoundException;
 import gateways.DataManager;
 import use_cases.*;
 
-public class RequestHandleController {
+public class RequestController {
     public final RequestManager rm;
 
-    public RequestHandleController(DataManager dm) {
+    public RequestController(DataManager dm) {
         this.rm = dm.getRequestManager();
     }
 
     public void resolveRequest(Integer requestID) throws ObjectNotFoundException {
         this.rm.resolveRequest(requestID);
+    }
+
+    public void sendRequest(String senderUsername, String requestSubjectLine, String request) {
+        this.rm.sendRequest(senderUsername, requestSubjectLine, request);
     }
 
     public String retrieveUnresolvedRequestListStringRep() {
