@@ -38,6 +38,7 @@ public class ContactManager implements Serializable {
      * @return <code>ArrayList</code> of usernames of Accounts that are friends with user.
      */
     public ArrayList<String> getContactList(String user) {
+
         return contacts.get(user);
     }
 

@@ -9,6 +9,7 @@ import exceptions.not_found.RecipientNotFoundException;
 import presenters.message.ConversationPresenter;
 import views.View;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Set;
@@ -35,7 +36,11 @@ public class ConversationView implements View {
             presenter.numMessagesPrompt();
             int numMessages = Integer.parseInt(userInput.nextLine());
 
-            presenter.displayConversationMessages(controller.viewMessagesFrom(recipient, numMessages));
+            ArrayList<String> messages = controller.viewMessagesFrom(recipient, numMessages);
+            if(!controller.contactable(recipient)){
+                presenter.notInContactNotification();
+            }
+            presenter.displayConversationMessages(messages);
         } catch (InputMismatchException e){
             presenter.inputMismatchNotification();
         } catch (NonPositiveIntegerException | NumberFormatException e) {

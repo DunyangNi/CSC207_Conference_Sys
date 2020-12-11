@@ -29,6 +29,8 @@ public class MessagePresenter implements Presenter {
 
     public void accountNotFoundNotification() { System.out.println("This account does not exist.");}
 
+    public void notInContactNotification() {System.out.println("This user is not in your contact list.");}
+
     public void noRecipientsNotification() { System.out.println("There aren't any accounts of this type that you can message.");}
 
     public void eventNotFoundNotification() { System.out.println("This event does not exist.");}

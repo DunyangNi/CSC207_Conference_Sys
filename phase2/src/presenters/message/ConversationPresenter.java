@@ -45,6 +45,8 @@ public class ConversationPresenter implements Presenter, InputErrorPresenter {
 
     public void messageNotFoundNotification() {System.out.println("{Sorry, a message could not be found.}");}
 
+    public void notInContactNotification() {System.out.println("[This user is not in your Contact List.]");}
+
     @Override
     public void exitPrompt() {
 
