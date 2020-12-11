@@ -3,12 +3,14 @@ package views.message;
 import controllers.message.MessageController;
 import enums.ViewEnum;
 import exceptions.NoRecipientsException;
+import exceptions.NonPositiveIntegerException;
 import exceptions.not_found.AccountNotFoundException;
 import exceptions.not_found.EventNotFoundException;
 import presenters.message.MessagePresenter;
 import views.View;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MessageTalkAttendeesView implements View {
@@ -25,23 +27,26 @@ public class MessageTalkAttendeesView implements View {
         ArrayList<Integer> selectedTalks = new ArrayList<>();
         boolean another;
 
-        do {
-            presenter.eventIdPrompt();
-            selectedTalks.add(userInput.nextInt());
-            presenter.nextEventIdPrompt();
-            another = userInput.nextInt() != 0;
-        } while (another);
-
-        presenter.messagePrompt();
-        String message = userInput.nextLine();
-
         try {
+            do {
+                presenter.eventIdPrompt();
+                selectedTalks.add(userInput.nextInt());
+                presenter.nextEventIdPrompt();
+                another = userInput.nextInt() != 0;
+            } while (another);
+
+            presenter.messagePrompt();
+            String message = userInput.nextLine();
+
             controller.messageTalkAttendees(selectedTalks, message);
-        } catch (AccountNotFoundException e) {
+        }
+        catch (AccountNotFoundException e) {
             presenter.accountNotFoundNotification();
-        } catch (NoRecipientsException e) {
+        }
+        catch (NoRecipientsException e) {
             presenter.noRecipientsNotification();
-        } catch (EventNotFoundException e) {
+        }
+        catch (EventNotFoundException | InputMismatchException e) {
             presenter.eventNotFoundNotification();
         }
         return ViewEnum.VOID;

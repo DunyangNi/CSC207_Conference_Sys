@@ -3,12 +3,7 @@ package controllers.account;
 import enums.AccountTypeEnum;
 import enums.ViewEnum;
 import gateways.DataManager;
-import use_cases.ConversationManager;
-import use_cases.RequestManager;
 import use_cases.account.AccountManager;
-import use_cases.account.ContactManager;
-import use_cases.event.EventManager;
-import use_cases.event.LocationManager;
 import views.View;
 import views.ViewFactory;
 
