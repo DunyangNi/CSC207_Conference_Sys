@@ -1,11 +1,8 @@
 package use_cases.event;
 
-import entities.event.EventFactory;
-import entities.event.Panel;
+import entities.event.*;
 import enums.EventTypeEnum;
 import exceptions.*;
-import entities.event.Event;
-import entities.event.Talk;
 import gateways.HTMLWritable;
 import exceptions.conflict.AlreadySignedUpException;
 import exceptions.conflict.EventIsFullException;
@@ -63,10 +60,8 @@ public class EventManager implements Serializable, HTMLWritable {
 
     private ArrayList<Event> getSpeakerEvents(String speaker) {
         ArrayList<Event> speakerTalks = new ArrayList<>();
-        for (Event e : fetchEventList()) {
-            if ((e instanceof Talk && ((Talk) e).getSpeaker().equals(speaker)) | (e instanceof Panel && ((Panel) e).getSpeakers().contains(speaker)))
-                speakerTalks.add(e);
-        }
+        EventVisitor visitor = new EventHelper();
+        for (Event e : fetchEventList()) { if (e.acceptSpeakers(visitor).contains(speaker)) speakerTalks.add(e); }
         return speakerTalks;
     }
 
@@ -97,7 +92,7 @@ public class EventManager implements Serializable, HTMLWritable {
                             Boolean vipOnly) throws InvalidEventTypeException, OutOfScheduleException,
             LocationInUseException, SpeakerIsBusyException {
         checkValidEvent(time, location, speakers);
-        Event eventToAdd = eventFactory.CreateEvent(type, assignEventID++,topic, time, location, organizer, speakers,
+        Event eventToAdd = eventFactory.getEvent(type, assignEventID++,topic, time, location, organizer, speakers,
                 capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen, vipOnly);
         events.put(eventToAdd.getId(), eventToAdd);
     }
@@ -117,9 +112,8 @@ public class EventManager implements Serializable, HTMLWritable {
     public void changeTime(Integer id, Calendar newTime) throws OutOfScheduleException, LocationInUseException, SpeakerIsBusyException, EventNotFoundException {
         if (!events.containsKey(id)) throw new EventNotFoundException();
         Event selectedEvent = events.get(id);
-        ArrayList<String> selectedSpeakers = new ArrayList<>();
-        if (selectedEvent instanceof Talk) selectedSpeakers.add(((Talk) selectedEvent).getSpeaker());
-        else if (selectedEvent instanceof Panel) selectedSpeakers.addAll(((Panel) selectedEvent).getSpeakers());
+        EventVisitor visitor = new EventHelper();
+        ArrayList<String> selectedSpeakers = new ArrayList<>(selectedEvent.acceptSpeakers(visitor));
         checkValidEvent(newTime, selectedEvent.getLocation(), selectedSpeakers);
         eventModifier.ChangeTime(events.get(id), newTime);
     }
@@ -128,22 +122,9 @@ public class EventManager implements Serializable, HTMLWritable {
         eventChecker.checkValidEvent(time, location, speakers, fetchEventList());
     }
 
-    // TODO: to be updated
-    public boolean isTalk(Integer id) {
-        return events.get(id) instanceof Talk;
-    }
-    public boolean isPanel(Integer id) { return events.get(id) instanceof Panel;}
-
-    // TODO: to be updated
     public boolean isSpeakerOfEvent(Integer id, String speaker) {
-        Boolean result;
-        if (isTalk(id)){
-            return ((Talk) events.get(id)).getSpeaker().equals(speaker);
-        }
-        if (isPanel(id)){
-            return ((Panel) events.get(id)).getSpeakers().contains(speaker);
-        }
-        return false;
+        EventVisitor visitor = new EventHelper();
+        return events.get(id).acceptSpeakers(visitor).contains(speaker);
     }
 
     /**
@@ -198,64 +179,49 @@ public class EventManager implements Serializable, HTMLWritable {
      */
     @Override public String getHTMLBody() {
         DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-        String html = "";
-        html += "<table border='1' style='border-collapse:collapse'>";
-        html += "<caption>" + getHTMLTitle() + "</caption>";
-        html += "<tr>";
-        html += "<th> ID        </th>";
-        html += "<th> SPEAKER   </th>";
-        html += "<th> TYPE      </th>";
-        html += "<th> TOPIC     </th>";
-        html += "<th> LOCATION  </th>";
-        html += "<th> TIME      </th>";
-        html += "<th> CAPACITY  </th>";
-        html += "<th> VIP ONLY  </th>";
-        html += "<th> CAPACITY  </th>";
-        html += "<th> TABLE     </th>";
-        html += "<th> INTERNET  </th>";
-        html += "<th> SOUND     </th>";
-        html += "<th> SCREEN    </th>";
-        html += "<th> ORGANIZER </th>";
-        html += "</tr>";
-        for (Event evt: fetchEventList()){
-            String eventType  = "";
-            String speaker = "";
-            if (evt instanceof Talk)   {
-                speaker = ((Talk) evt).getSpeaker();
-                eventType  = "Talk";
-            }
-            else if (evt instanceof Panel)  {
-                for (String eachSpeaker: ((Panel) evt).getSpeakers()){
-                    if (speaker.equals("")) {
-                        speaker += eachSpeaker;
-                    }
-                    else {
-                        speaker += ", " + eachSpeaker;
-                    }
-                }
-                eventType  = "Panel";
-            }
-            else {
-                eventType  = "Networking";
-            }
-            html += "<tr>";
-            html += "<td>" + evt.getId()        + "</td>";
-            html += "<td>" + speaker            + "</td>";
-            html += "<td>" + eventType          + "</td>";
-            html += "<td>" + evt.getTopic()     + "</td>";
-            html += "<td>" + evt.getLocation()  + "</td>";
-            html += "<td>" + df.format(evt.getTime().getTime()) + "</td>";
-            html += "<td>" + evt.getCapacity()  + "</td>";
-            html += "<td>" + evt.getVipOnly()   + "</td>";
-            html += "<td>" + evt.getCapacity()  + "</td>";
-            html += "<td>" + evt.getTables()    + "</td>";
-            html += "<td>" + evt.getRequiresInternet()    + "</td>";
-            html += "<td>" + evt.getRequiresSoundSystem() + "</td>";
-            html += "<td>" + evt.getRequiresPresentationScreen()   + "</td>";
-            html += "<td>" + evt.getOrganizer() + "</td>";
-            html += "</tr>";
+        StringBuilder html = new StringBuilder();
+        html.append("<table border='1' style='border-collapse:collapse'>");
+        html.append("<caption>").append(getHTMLTitle()).append("</caption>");
+        html.append("<tr>");
+        html.append("<th> ID        </th>");
+        html.append("<th> SPEAKER   </th>");
+        html.append("<th> TYPE      </th>");
+        html.append("<th> TOPIC     </th>");
+        html.append("<th> LOCATION  </th>");
+        html.append("<th> TIME      </th>");
+        html.append("<th> CAPACITY  </th>");
+        html.append("<th> VIP ONLY  </th>");
+        html.append("<th> CAPACITY  </th>");
+        html.append("<th> TABLE     </th>");
+        html.append("<th> INTERNET  </th>");
+        html.append("<th> SOUND     </th>");
+        html.append("<th> SCREEN    </th>");
+        html.append("<th> ORGANIZER </th>");
+        html.append("</tr>");
+        for (Event evt: fetchEventList()) {
+            EventVisitor visitor = new EventHelper();
+            String eventType = evt.acceptType(visitor);
+            StringBuilder eventSpeakers = new StringBuilder();
+            for (String speaker : evt.acceptSpeakers(visitor)) { eventSpeakers.append(speaker).append(", "); }
+            if (eventSpeakers.length() != 0) eventSpeakers.delete(eventSpeakers.length()-2, eventSpeakers.length());
+            html.append("<tr>");
+            html.append("<td>").append(evt.getId()).append("</td>");
+            html.append("<td>").append(eventSpeakers).append("</td>");
+            html.append("<td>").append(eventType).append("</td>");
+            html.append("<td>").append(evt.getTopic()).append("</td>");
+            html.append("<td>").append(evt.getLocation()).append("</td>");
+            html.append("<td>").append(df.format(evt.getTime().getTime())).append("</td>");
+            html.append("<td>").append(evt.getCapacity()).append("</td>");
+            html.append("<td>").append(evt.getVipOnly()).append("</td>");
+            html.append("<td>").append(evt.getCapacity()).append("</td>");
+            html.append("<td>").append(evt.getTables()).append("</td>");
+            html.append("<td>").append(evt.getRequiresInternet()).append("</td>");
+            html.append("<td>").append(evt.getRequiresSoundSystem()).append("</td>");
+            html.append("<td>").append(evt.getRequiresPresentationScreen()).append("</td>");
+            html.append("<td>").append(evt.getOrganizer()).append("</td>");
+            html.append("</tr>");
         }
-        html += "</table>";
-        return html;
+        html.append("</table>");
+        return html.toString();
     }
 }

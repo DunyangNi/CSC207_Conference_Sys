@@ -1,13 +1,14 @@
 package entities.event;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 /*
     Represents any Networking event in the system, where a Networking event
     is a type of event without a speaker.
  */
-public class Networking extends Event implements Serializable {
+public class Networking extends Event implements Serializable, EventAcceptor {
     public Networking(
             Integer id, String topic, Calendar time, String location,
             String organizer, Integer capacity, int tables, int chairs, boolean hasInternet, boolean hasSoundSystem, boolean hasPresentationScreen, Boolean vipOnly)
@@ -32,9 +33,20 @@ public class Networking extends Event implements Serializable {
     public String toString() {
         return "Event ID: " + getId() + "\n" +
                 "Event Type: Networking Event\n" +
+                "VIPs Only: " + getVipOnly() + "\n" +
                 "Topic: " + getTopic() + "\n" +
                 "Location: " + getLocation() + "\n" +
                 "Time: " + getTime().getTime().toString() + "\n" +
                 "Organizer: " + getOrganizer();
+    }
+
+    @Override
+    public ArrayList<String> acceptSpeakers(EventVisitor e) {
+        return e.visitSpeakers(this);
+    }
+
+    @Override
+    public String acceptType(EventVisitor e) {
+        return e.visitType(this);
     }
 }

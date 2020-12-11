@@ -7,7 +7,7 @@ import java.util.Calendar;
 /**
  * Represents any event in the system.
  */
-public class Event implements Serializable, Comparable<Event> {
+public class Event implements Serializable, Comparable<Event>, EventAcceptor {
     private String topic;
     private String location;
     private Calendar time;
@@ -204,6 +204,16 @@ public class Event implements Serializable, Comparable<Event> {
 
     public void setRequiresPresentationScreen(boolean newHasPresentationScreen) {
         this.requiresPresentationScreen = newHasPresentationScreen;
+    }
+
+    @Override
+    public ArrayList<String> acceptSpeakers(EventVisitor e) {
+        return e.visitSpeakers(this);
+    }
+
+    @Override
+    public String acceptType(EventVisitor e) {
+        return e.visitType(this);
     }
 }
 

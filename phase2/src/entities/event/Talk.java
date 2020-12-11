@@ -1,12 +1,13 @@
 package entities.event;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
  * Represents any talk in the system, where a talk is a type of event.
  */
-public class Talk extends Event implements Serializable {
+public class Talk extends Event implements Serializable, EventAcceptor {
     private String speaker;
 
 
@@ -35,6 +36,7 @@ public class Talk extends Event implements Serializable {
     public String toString() {
         return "Event ID: " + getId() + "\n" +
                 "Event Type: Talk\n" +
+                "VIPs Only: " + getVipOnly() + "\n" +
                 "Topic: " + getTopic() + "\n" +
                 "Speaker: " + getSpeaker() + "\n" +
                 "Location: " + getLocation() + "\n" +
@@ -56,5 +58,15 @@ public class Talk extends Event implements Serializable {
      */
     public void setSpeaker(String speaker) {
         this.speaker = speaker;
+    }
+
+    @Override
+    public ArrayList<String> acceptSpeakers(EventVisitor e) {
+        return e.visitSpeakers(this);
+    }
+
+    @Override
+    public String acceptType(EventVisitor e) {
+        return e.visitType(this);
     }
 }

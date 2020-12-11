@@ -21,7 +21,7 @@ public class InputGetter {
                 if (number <= 0) inputErrorPresenter.positiveNumberNotification();
                 else Input = true;
             }
-            catch (NumberFormatException e) { inputErrorPresenter.invalidNumberNotification(); }
+            catch (NumberFormatException e) { inputErrorPresenter.positiveNumberNotification(); }
         }
         return number;
     }
@@ -35,7 +35,7 @@ public class InputGetter {
                 if (number < 0) inputErrorPresenter.nonNegativeNumberNotification();
                 else Input = true;
             }
-            catch (NumberFormatException e) { inputErrorPresenter.invalidNumberNotification(); }
+            catch (NumberFormatException e) { inputErrorPresenter.nonNegativeNumberNotification(); }
         }
         return number;
     }

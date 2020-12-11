@@ -9,7 +9,7 @@ import java.util.Collections;
     Represents any Panel Discussion in the system, where a Panel discussion
     is a type of event with multiple speakers.
  */
-public class Panel extends Event implements Serializable{
+public class Panel extends Event implements Serializable, EventAcceptor {
     private ArrayList<String> speakers;
 
     public Panel(
@@ -51,6 +51,7 @@ public class Panel extends Event implements Serializable{
     public String toString() {
         return "Event ID: " + getId() + "\n" +
                 "Event Type: Panel Discussion\n" +
+                "VIPs Only: " + getVipOnly() + "\n" +
                 "Topic: " + getTopic() + "\n" +
                 "Speakers: " + String.join(", ", getSpeakers()) + "\n" +
                 "Location: " + getLocation() + "\n" +
@@ -88,35 +89,13 @@ public class Panel extends Event implements Serializable{
      */
     public void removeSpeaker(String speaker) { speakers.remove(speaker); }
 
-    /*
-
-    // TEST
-    public static void main(String args[]){
-        Calendar c = Calendar.getInstance();
-        Panel p1 = new Panel(
-        1, "t1", c, "l1", "o1", null, 3, false);
-        Panel p2 = new Panel(
-        1, "t1", c, "l1", "o1", null, 3, false);
-
-        p1.appendSpeaker("a3");
-        p1.appendSpeaker("a2");
-        p1.appendSpeaker("a1");
-
-        p2.appendSpeaker("a2");
-        p2.appendSpeaker("a3");
-        p2.appendSpeaker("a1");
-
-        System.out.println(p1.equals(p2));
-        System.out.println("p1: " + p1.getSpeakers());
-        System.out.println("p2: " + p2.getSpeakers());
-
-        p1.appendSpeaker("a3");
-        p1.appendSpeaker("a4");
-        System.out.println("p1: " + p1.getSpeakers());
-
-        p1.removeSpeaker("a3");
-        p1.removeSpeaker("a9");
-        System.out.println("p1: " + p1.getSpeakers());
+    @Override
+    public ArrayList<String> acceptSpeakers(EventVisitor e) {
+        return e.visitSpeakers(this);
     }
-    */
+
+    @Override
+    public String acceptType(EventVisitor e) {
+        return e.visitType(this);
+    }
 }
