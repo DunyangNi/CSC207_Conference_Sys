@@ -1,11 +1,11 @@
 package views.request;
 import java.util.Scanner;
 import controllers.request.RequestController;
-import presenters.request.PendingRequestsPresenter;
+import views.View;
 import presenters.request.ResolvedRequestsPresenter;
 import enums.ViewEnum;
 
-public class ResolvedRequestsListView {
+public class ResolvedRequestsListView implements View{
 
     private final RequestController controller;
     private final ResolvedRequestsPresenter presenter;

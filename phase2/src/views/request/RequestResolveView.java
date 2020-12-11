@@ -4,8 +4,9 @@ import controllers.request.RequestController;
 import exceptions.not_found.ObjectNotFoundException;
 import presenters.request.RequestResolutionPresenter;
 import enums.ViewEnum;
+import views.View;
 
-public class RequestResolveView {
+public class RequestResolveView implements View {
 
     private final RequestController controller;
     private final RequestResolutionPresenter presenter;

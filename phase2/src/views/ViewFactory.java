@@ -9,6 +9,7 @@ import controllers.event.EventController;
 import controllers.event.LocationController;
 import controllers.message.ConversationController;
 import controllers.message.MessageController;
+import controllers.request.RequestController;
 import enums.ViewEnum;
 import gateways.DataManager;
 import presenters.StartPresenter;
@@ -16,9 +17,17 @@ import presenters.account.*;
 import presenters.event.*;
 import presenters.message.ConversationPresenter;
 import presenters.message.MessagePresenter;
+import presenters.request.PendingRequestsPresenter;
+import presenters.request.RequestResolutionPresenter;
+import presenters.request.RequestSendPresenter;
+import presenters.request.ResolvedRequestsPresenter;
 import views.account.*;
 import views.event.*;
 import views.message.*;
+import views.request.PendingRequestsListView;
+import views.request.RequestResolveView;
+import views.request.RequestSendView;
+import views.request.ResolvedRequestsListView;
 
 public class ViewFactory {
     private final DataManager dm;
@@ -151,6 +160,18 @@ public class ViewFactory {
                 EventReschedulePresenter eventReschedulePresenter = new EventReschedulePresenter();
                 view = new EventRescheduleView(eventController, eventReschedulePresenter);
                 break;
+            case VIEW_UNRESOLVED_REQUEST:
+                RequestController requestController = new RequestController(dm);
+                PendingRequestsPresenter unresolvedRequestPresenter = new PendingRequestsPresenter();
+                view = new PendingRequestsListView(requestController, unresolvedRequestPresenter);
+            case VIEW_RESOLVED_REQUEST:
+                requestController = new RequestController(dm);
+                ResolvedRequestsPresenter resolvedRequestPresenter = new ResolvedRequestsPresenter();
+                view = new ResolvedRequestsListView(requestController, resolvedRequestPresenter);
+            case RESOLVE_REQUEST:
+                requestController = new RequestController(dm);
+                RequestResolutionPresenter requestResolutionPresenter = new RequestResolutionPresenter();
+                view = new RequestResolveView(requestController, requestResolutionPresenter);
 
             // Speaker
             case MESSAGE_TALK_ATTENDEES:
@@ -179,6 +200,11 @@ public class ViewFactory {
                 eventController = new EventController(dm);
                 SignupCancelPresenter signupCancelPresenter = new SignupCancelPresenter();
                 view = new SignupCancelView(eventController, signupCancelPresenter);
+                break;
+            case SEND_REQUEST:
+                requestController = new RequestController(dm);
+                RequestSendPresenter requestSendPresenter = new RequestSendPresenter();
+                view = new RequestSendView(requestController, requestSendPresenter);
                 break;
         }
         return view;

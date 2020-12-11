@@ -3,8 +3,9 @@ import java.util.Scanner;
 import controllers.request.RequestController;
 import presenters.request.RequestSendPresenter;
 import enums.ViewEnum;
+import views.View;
 
-public class RequestSendView {
+public class RequestSendView implements View {
 
     private final RequestController controller;
     private final RequestSendPresenter presenter;

@@ -1,12 +1,11 @@
 package views.request;
 import java.util.Scanner;
 import controllers.request.RequestController;
-import exceptions.not_found.ObjectNotFoundException;
 import presenters.request.PendingRequestsPresenter;
-import presenters.request.RequestResolutionPresenter;
+import views.View;
 import enums.ViewEnum;
 
-public class PendingRequestsListView {
+public class PendingRequestsListView implements View{
 
     private final RequestController controller;
     private final PendingRequestsPresenter presenter;
