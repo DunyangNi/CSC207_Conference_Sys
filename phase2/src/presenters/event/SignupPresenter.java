@@ -7,6 +7,7 @@ import presenters.Presenter;
 public class SignupPresenter implements Presenter, EventErrorPresenter, InputErrorPresenter {
     @Override
     public void startPrompt() {
+        System.out.println();
         System.out.println("[SIGN UP FOR EVENT]");
     }
 

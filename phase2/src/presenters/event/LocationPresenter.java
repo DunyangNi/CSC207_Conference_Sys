@@ -8,7 +8,8 @@ import java.util.ArrayList;
 public class LocationPresenter implements Presenter, InputErrorPresenter {
     @Override
     public void startPrompt() {
-        System.out.println("[LOCATION CREATION]\nWelcome to Location Creation! Follow the prompts to create your location.");
+        System.out.println();
+        System.out.println("[LOCATION CREATION]");
     }
 
     public void namePrompt() {
@@ -48,6 +49,7 @@ public class LocationPresenter implements Presenter, InputErrorPresenter {
     }
 
     public void displayLocations(ArrayList<String> locationStrings) {
+        System.out.println();
         System.out.println("[LOCATION DIRECTORY]");
         System.out.println("============================================================");
         for (String locationString : locationStrings) {

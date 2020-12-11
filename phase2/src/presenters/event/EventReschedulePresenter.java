@@ -8,7 +8,8 @@ import presenters.TimePresenter;
 public class EventReschedulePresenter implements Presenter, InputErrorPresenter, EventErrorPresenter, TimePresenter {
     @Override
     public void startPrompt() {
-        System.out.println("[EVENT RESCHEDULING]\nWelcome to Event Rescheduling! Follow the prompts to reschedule your event.");
+        System.out.println();
+        System.out.println("[RESCHEDULE EVENT]");
     }
 
     @Override
