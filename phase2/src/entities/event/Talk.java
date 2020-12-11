@@ -32,6 +32,9 @@ public class Talk extends Event implements Serializable, EventAcceptor {
         return false;
     }
 
+    /**
+     * @return a string representation of the Talk
+     */
     @Override
     public String toString() {
         return "Event ID: " + getId() + "\n" +

@@ -47,6 +47,9 @@ public class Panel extends Event implements Serializable, EventAcceptor {
         return false;
     }
 
+    /**
+     * @return a string representation of the Panel
+     */
     @Override
     public String toString() {
         return "Event ID: " + getId() + "\n" +

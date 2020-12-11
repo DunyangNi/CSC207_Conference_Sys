@@ -9,6 +9,7 @@ import java.util.Calendar;
     is a type of event without a speaker.
  */
 public class Networking extends Event implements Serializable, EventAcceptor {
+
     public Networking(
             Integer id, String topic, Calendar time, String location,
             String organizer, Integer capacity, int tables, int chairs, boolean hasInternet, boolean hasSoundSystem, boolean hasPresentationScreen, Boolean vipOnly)
@@ -29,6 +30,9 @@ public class Networking extends Event implements Serializable, EventAcceptor {
         else return false;
     }
 
+    /**
+     * @return a string representation of the Networking
+     */
     @Override
     public String toString() {
         return "Event ID: " + getId() + "\n" +
