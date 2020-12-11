@@ -36,16 +36,33 @@ public class RegistrationController extends AccountController {
             case ATTENDEE:
                 am.addNewAttendee(username, password, "", "");
                 break;
+            case VIP_ATTENDEE:
+                am.addNewVipAttendee(username, password, "","");
             case SPEAKER:
                 am.addNewSpeaker(username, password, "", "");
                 break;
             case ORGANIZER:
                 am.addNewOrganizer(username, password, "", "");
                 break;
-            case VIP_ATTENDEE:
-                am.addNewVipAttendee(username, password, "","");
         }
         addNewAccountKeys(username);
+        saveData();
+    }
+
+    public String getRegistrationCode(AccountTypeEnum accountType) {
+        String code = null;
+        switch (accountType) {
+            case VIP_ATTENDEE:
+                code = VIP_CODE;
+                break;
+            case SPEAKER:
+                code = SPEAKER_CODE;
+                break;
+            case ORGANIZER:
+                code = ORGANIZER_CODE;
+                break;
+        }
+        return code;
     }
 
     /**

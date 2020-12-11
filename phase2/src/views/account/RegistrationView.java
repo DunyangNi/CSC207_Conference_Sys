@@ -22,56 +22,39 @@ public class RegistrationView implements View {
     @Override
     public ViewEnum runView() {
         presenter.startPrompt();
-        AccountTypeEnum enumCommand = getAccountType();
+        AccountTypeEnum accountTypeEnum = getAccountType();
 
-        registrationCodeView(enumCommand);
-        accountInfoView(enumCommand);
+        presenter.displayCodePrompt(accountTypeEnum);
+        if (!accountTypeEnum.equals(AccountTypeEnum.ATTENDEE)) {
+            String code = controller.getRegistrationCode(accountTypeEnum);
+            String codeInput = userInput.nextLine();
+            validateCode(codeInput, code);
+        }
 
-        controller.saveData(); // TODO Consider moving this into RegistrationController
+        getAccountInfo(accountTypeEnum);
 
         return ViewEnum.START;
     }
 
     protected AccountTypeEnum getAccountType(){
-        AccountTypeEnum enumCommand = AccountTypeEnum.fromString(userInput.nextLine());
+        AccountTypeEnum accountTypeEnum = AccountTypeEnum.fromString(userInput.nextLine());
 
-        while (enumCommand.equals(AccountTypeEnum.INVALID)) {
+        while (accountTypeEnum.equals(AccountTypeEnum.INVALID)) {
             presenter.invalidCommandNotification();
-            enumCommand = AccountTypeEnum.fromString(userInput.nextLine());
+            accountTypeEnum = AccountTypeEnum.fromString(userInput.nextLine());
         }
 
-        return enumCommand;
+        return accountTypeEnum;
     }
 
-    public void registrationCodeView(AccountTypeEnum accountType) {
-        // TODO: 11/28/20 Add new cases for new account types
-        String code;
-        switch (accountType) {
-            case SPEAKER:
-                presenter.speakerCodePrompt();
-                code = controller.SPEAKER_CODE;
-                break;
-            case ORGANIZER:
-                presenter.organizerCodePrompt();
-                code = controller.ORGANIZER_CODE;
-                break;
-            case VIP_ATTENDEE:
-                presenter.vipCodePrompt();
-                code = controller.VIP_CODE;
-                break;
-            default:
-                return;
-        }
-
-        String codeInput = userInput.nextLine();
-
+    public void validateCode(String codeInput, String code) {
         while (!codeInput.equals(code)) {
             presenter.invalidCodeNotification();
             codeInput = userInput.nextLine();
         }
     }
 
-    public void accountInfoView(AccountTypeEnum accountType) {
+    public void getAccountInfo(AccountTypeEnum accountType) {
         presenter.usernamePrompt();
         String username = userInput.nextLine();
 
