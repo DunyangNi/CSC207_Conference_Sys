@@ -19,7 +19,6 @@ public class AccountView implements View {
 
     @Override
     public ViewEnum runView() {
-        presenter.startPrompt();
         presenter.displayUserMenu();
         presenter.requestCommandPrompt();
 

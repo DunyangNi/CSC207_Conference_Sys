@@ -1,8 +1,9 @@
 package presenters.account;
 
 public class SpeakerPresenter extends AccountPresenter {
+    @Override
     public void displayUserMenu() {
-        // TODO Update numbering
+        System.out.println();
         System.out.println("[SPEAKER MENU]");
         System.out.println("============================================================");
         System.out.println("[ACCOUNT]");

@@ -1,9 +1,9 @@
 package presenters.account;
 
 public class AttendeePresenter extends AccountPresenter {
-
     @Override
     public void displayUserMenu() {
+        System.out.println();
         System.out.println("[ATTENDEE MENU]");
         System.out.println("============================================================");
         System.out.println("[ACCOUNT]");

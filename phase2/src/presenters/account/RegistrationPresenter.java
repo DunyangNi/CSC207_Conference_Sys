@@ -6,6 +6,7 @@ import presenters.Presenter;
 public class RegistrationPresenter implements Presenter {
     @Override
     public void startPrompt() {
+        System.out.println();
         System.out.println("[REGISTRATION MENU]");
         System.out.println("1 = Register an Attendee account:");
         System.out.println("2 = Register an Speaker account:");

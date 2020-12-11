@@ -3,7 +3,9 @@ package presenters.account;
 import presenters.Presenter;
 
 public class LoginPresenter implements Presenter {
+    @Override
     public void startPrompt() {
+        System.out.println();
         System.out.println("[LOGIN MENU]");
     }
 
@@ -23,12 +25,12 @@ public class LoginPresenter implements Presenter {
         System.out.println("{Incorrect password, please try again.}");
     }
 
-    public void failedPrompt() {
+    public void failedLoginPrompt() {
         System.out.println("Try again? (Y/N)");
     }
 
     @Override
     public void exitPrompt() {
-        System.out.print("{Logging in... ");
+        System.out.println("{Logging in... Logged in}");
     }
 }

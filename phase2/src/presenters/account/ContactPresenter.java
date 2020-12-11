@@ -9,7 +9,9 @@ public class ContactPresenter implements Presenter {
     public void startPrompt() {
     }
 
+    //Add
     public void addContactHeader() {
+        System.out.println();
         System.out.println("[ADD A CONTACT]");
     }
 
@@ -37,7 +39,10 @@ public class ContactPresenter implements Presenter {
         System.out.println("{Successfully added " + contact + " to your contacts!}");
     }
 
+
+    //Remove
     public void removeContactHeader() {
+        System.out.println();
         System.out.println("[REMOVE A CONTACT]");
     }
 
@@ -53,13 +58,15 @@ public class ContactPresenter implements Presenter {
         System.out.println("{Successfully removed " + contact + " from your contacts!}");
     }
 
+
+    //List
     public void displayContactList(ArrayList<String> contacts) {
+        System.out.println();
         System.out.println("[MY CONTACTS]");
         System.out.println("============================================================");
         if (contacts.isEmpty()) {
             System.out.println("{No contacts}");
-        }
-        else for (String contact : contacts) {
+        } else for (String contact : contacts) {
             System.out.println(contact);
         }
         System.out.println("============================================================");

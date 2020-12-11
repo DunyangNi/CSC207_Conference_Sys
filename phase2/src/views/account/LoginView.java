@@ -35,11 +35,11 @@ public class LoginView implements View {
         } catch (IncorrectPasswordException e) {
             presenter.incorrectPasswordNotification();
         }
-        presenter.failedPrompt();
+        presenter.failedLoginPrompt();
         String input = userInput.nextLine();
         if (input.equals("Y")) {
             return ViewEnum.LOGIN;
-        } else {
+        } else { //TODO Any input besides Y returns to START
             return ViewEnum.START;
         }
     }
