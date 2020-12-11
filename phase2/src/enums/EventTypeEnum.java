@@ -2,8 +2,8 @@ package enums;
 
 public enum EventTypeEnum {
     GENERAL_EVENT("0"),
-    TALK("2"),
     NETWORKING_EVENT("1"),
+    TALK("2"),
     PANEL_DISCUSSION("3"),
     INVALID(null);
 

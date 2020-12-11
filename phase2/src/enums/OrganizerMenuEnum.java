@@ -14,12 +14,12 @@ public enum OrganizerMenuEnum {
     MESSAGE_ALL_ATTENDEES("8"),
     VIEW_CONVERSATION("9"),
     VIEW_EVENT_SCHEDULE("10"),
-    DOWNLOAD_SCHEDULE("16"),
     VIEW_LOCATIONS("11"),
     ADD_LOCATION("12"),
     CREATE_EVENT("13"),
     CANCEL_EVENT("14"),
     RESCHEDULE_EVENT("15"),
+    DOWNLOAD_SCHEDULE("16"),
     VIEW_MENU("*"),
     INVALID(null);
 
