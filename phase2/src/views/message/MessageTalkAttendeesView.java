@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class MessageTalkAttendeesView implements View {
+public class MessageTalkAttendeesView implements View { // TODO Needs update to work with Panel Events. See TODO below.
     private final MessageController controller;
     private final MessagePresenter presenter;
     private final Scanner userInput = new Scanner(System.in);
@@ -38,7 +38,7 @@ public class MessageTalkAttendeesView implements View {
             presenter.messagePrompt();
             String message = userInput.nextLine();
 
-            controller.messageTalkAttendees(selectedTalks, message);
+            controller.messageTalkAttendees(selectedTalks, message); // TODO Related methods need updates to work with Panel Events.
         }
         catch (AccountNotFoundException e) {
             presenter.accountNotFoundNotification();
