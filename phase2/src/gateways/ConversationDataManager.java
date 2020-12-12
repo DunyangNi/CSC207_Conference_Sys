@@ -1,7 +1,8 @@
 package gateways;
 
 import java.io.*;
-import use_cases.*;
+
+import use_cases.message.ConversationManager;
 
 /**
  * Reads and saves conversation data and creates ConversationManager

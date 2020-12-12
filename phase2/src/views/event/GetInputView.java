@@ -1,6 +1,6 @@
 package views.event;
 
-import presenters.InputErrorPresenter;
+import presenters.interfaces.InputErrorPresenter;
 
 import java.util.Scanner;
 

@@ -4,8 +4,8 @@ import enums.AccountTypeEnum;
 import enums.ViewEnum;
 import gateways.DataManager;
 import use_cases.account.AccountManager;
-import views.View;
-import views.ViewFactory;
+import views.start.View;
+import views.start.ViewFactory;
 
 import java.util.Set;
 

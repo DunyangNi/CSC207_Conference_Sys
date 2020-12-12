@@ -1,7 +1,7 @@
 package views.request;
 import controllers.request.RequestController;
 import presenters.request.PendingRequestsPresenter;
-import views.View;
+import views.start.View;
 import enums.ViewEnum;
 
 public class PendingRequestsListView implements View{

@@ -1,6 +1,6 @@
 package presenters.event;
 
-import presenters.EventErrorPresenter;
+import presenters.interfaces.EventErrorPresenter;
 
 public class EventCancelPresenter implements EventErrorPresenter {
     public void cancelEventHeader() { System.out.println("\n[CANCEL EVENT]"); }

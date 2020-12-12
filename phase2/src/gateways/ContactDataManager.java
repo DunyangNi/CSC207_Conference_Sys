@@ -2,7 +2,7 @@ package gateways;
 
 import java.io.*;
 
-import use_cases.account.ContactManager;
+import use_cases.message.ContactManager;
 
 /**
  * Reads and saves contact data and creates ContactManager

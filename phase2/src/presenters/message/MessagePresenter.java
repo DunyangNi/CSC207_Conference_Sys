@@ -1,7 +1,7 @@
 package presenters.message;
 
-import presenters.EventErrorPresenter;
-import presenters.InputErrorPresenter;
+import presenters.interfaces.EventErrorPresenter;
+import presenters.interfaces.InputErrorPresenter;
 
 public class MessagePresenter implements InputErrorPresenter, EventErrorPresenter {
     public void messageHeader() { System.out.println("\n[MESSAGE]");}

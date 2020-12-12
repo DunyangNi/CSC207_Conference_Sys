@@ -2,7 +2,7 @@ package controllers.request;
 
 import exceptions.not_found.ObjectNotFoundException;
 import gateways.DataManager;
-import use_cases.RequestManager;
+import use_cases.request.RequestManager;
 
 /**
  * Manages request sending, resolving and viewing

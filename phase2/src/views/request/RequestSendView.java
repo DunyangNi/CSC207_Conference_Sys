@@ -3,7 +3,7 @@ import java.util.Scanner;
 import controllers.request.RequestController;
 import presenters.request.RequestSendPresenter;
 import enums.ViewEnum;
-import views.View;
+import views.start.View;
 
 public class RequestSendView implements View {
 

@@ -4,9 +4,8 @@ import controllers.message.MessageController;
 import enums.ViewEnum;
 import exceptions.NoRecipientsException;
 import exceptions.not_found.AccountNotFoundException;
-import exceptions.not_found.RecipientNotFoundException;
 import presenters.message.MessagePresenter;
-import views.View;
+import views.start.View;
 
 import java.util.Scanner;
 

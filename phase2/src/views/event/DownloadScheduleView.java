@@ -4,7 +4,7 @@ import controllers.event.DownloadScheduleController;
 import enums.ViewEnum;
 import exceptions.html.HTMLWriteException;
 import presenters.event.DownloadSchedulePresenter;
-import views.View;
+import views.start.View;
 
 /**
  * Represents a view for Downloading event schedules

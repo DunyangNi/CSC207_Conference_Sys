@@ -1,6 +1,6 @@
 package presenters.account;
 
-import presenters.InputErrorPresenter;
+import presenters.interfaces.InputErrorPresenter;
 
 import java.util.Set;
 

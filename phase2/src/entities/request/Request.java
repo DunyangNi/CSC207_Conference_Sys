@@ -1,4 +1,4 @@
-package entities;
+package entities.request;
 import java.io.Serializable;
 import java.util.*;
 

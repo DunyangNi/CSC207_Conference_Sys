@@ -3,9 +3,9 @@ package controllers.account;
 import enums.AccountTypeEnum;
 import exceptions.already_exists.AccountAlreadyExistsException;
 import gateways.DataManager;
-import use_cases.ConversationManager;
+import use_cases.message.ConversationManager;
 import use_cases.account.AccountManager;
-import use_cases.account.ContactManager;
+import use_cases.message.ContactManager;
 
 /**
  * Manages account registration functionality of the program
