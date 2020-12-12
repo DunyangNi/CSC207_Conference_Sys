@@ -3,7 +3,7 @@ package views.factory;
 import enums.ViewEnum;
 
 /**
- * Allows running to show and receive information
+ * Represents a general View that can be run.
  */
 public interface View {
     ViewEnum runView();

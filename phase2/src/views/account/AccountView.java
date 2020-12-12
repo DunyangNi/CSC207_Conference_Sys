@@ -9,11 +9,7 @@ import java.util.Scanner;
 
 /**
  * View responsible for user menu display and interaction
- * Fields:
- * controller: AccountController
- * presenter: AccountPresenter
  */
-
 public class AccountView implements View {
     private final AccountController controller;
     private final AccountPresenter presenter;
@@ -21,21 +17,21 @@ public class AccountView implements View {
 
     /**
      * Constructs an instance of <code>AccountView</code> based on the following parameters
+     *
      * @param controller The given AccountController
-     * @param presenter The given AccountPresenter
+     * @param presenter  The given AccountPresenter
      */
-
     public AccountView(AccountController controller, AccountPresenter presenter) {
         this.controller = controller;
         this.presenter = presenter;
     }
 
     /**
-     * Run the view.
-     * @return viewEnum whos value depends on account type and menu option selected, which then leads
+     * Runs the view.
+     *
+     * @return viewEnum with a value dependent on account type and menu option selected, which then leads
      * the program into another view
      */
-
     @Override
     public ViewEnum runView() {
         presenter.displayUserMenu();

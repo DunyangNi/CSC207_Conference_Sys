@@ -1,5 +1,6 @@
 package exceptions.not_found;
 
-import exceptions.not_found.AccountNotFoundException;
-
+/**
+ * Thrown when send message to a invalid username.
+ */
 public class RecipientNotFoundException extends AccountNotFoundException { }

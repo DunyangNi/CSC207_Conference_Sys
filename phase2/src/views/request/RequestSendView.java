@@ -15,11 +15,20 @@ public class RequestSendView implements View {
     private final RequestSendPresenter presenter;
     private final Scanner userInput = new Scanner(System.in);
 
+    /**
+     * Constructor of the view
+     * @param controller Given RequestController
+     * @param presenter Given RequestSendPresenter
+     */
     public RequestSendView(RequestController controller, RequestSendPresenter presenter){
         this.controller = controller;
         this.presenter = presenter;
     }
 
+    /**
+     * The view user can send new request.
+     * @return VOID to get back to AccountView
+     */
     public ViewEnum runView(){
         presenter.startPrompt();
 

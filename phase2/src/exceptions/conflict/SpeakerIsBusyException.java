@@ -1,5 +1,6 @@
 package exceptions.conflict;
 
-import exceptions.conflict.ConflictException;
-
+/**
+ * Thrown when speaker has another event at given time.
+ */
 public class SpeakerIsBusyException extends ConflictException { }

@@ -11,13 +11,8 @@ import views.factory.View;
 import java.util.Scanner;
 
 /**
- * View responsible for signup cancellation functionality
- *
- * Fields:
- * presenter: SignupCancelPresenter responsible for displaying relevant prompt
- * controller: EventController responsible for event functionality
+ * View responsible for signup cancellation functionality.
  */
-
 public class SignupCancelView implements View {
     private final SignupCancelPresenter presenter;
     private final EventController controller;
@@ -25,10 +20,10 @@ public class SignupCancelView implements View {
 
     /**
      * Constructs an instance of <code>SignupCancelView</code> based on the following parameters
+     *
      * @param controller The given EventController
-     * @param presenter The given EventPresenter
+     * @param presenter  The given EventPresenter
      */
-
     public SignupCancelView(EventController controller, SignupCancelPresenter presenter) {
         this.controller = controller;
         this.presenter = presenter;
@@ -36,9 +31,9 @@ public class SignupCancelView implements View {
 
     /**
      * Runs the view.
+     *
      * @return ViewEnum.VOID
      */
-
     public ViewEnum runView() {
         presenter.signupCancelHeader();
         presenter.eventIDPrompt();
@@ -47,9 +42,11 @@ public class SignupCancelView implements View {
             controller.cancelSignupForEvent(id);
             presenter.signupCancelSuccessNotification();
             return ViewEnum.VOID;
+        } catch (EventNotFoundException e) {
+            presenter.eventNotFoundNotification();
+        } catch (AttendeeNotFoundException e) {
+            presenter.attendeeNotFoundNotification();
         }
-        catch (EventNotFoundException e){ presenter.eventNotFoundNotification(); }
-        catch (AttendeeNotFoundException e) { presenter.attendeeNotFoundNotification(); }
         presenter.signupCancelFailureNotification();
         return ViewEnum.VOID;
     }

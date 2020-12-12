@@ -7,29 +7,26 @@ import java.util.Calendar;
 import java.util.Scanner;
 
 /**
- * View responsible for getting time
- * Fields:
- * presenter: Timepresenter responsible for displaying relavent error notifications
+ * View responsible for getting time by year, month, day, and hour.
  */
-
 public class GetTimeView {
     private final TimePresenter presenter;
     private final Scanner userInput = new Scanner(System.in);
 
     /**
      * Constructs an instance of <code>GetTimeView</code> based on the following parameters
+     *
      * @param presenter The given TimePresenter
      */
-
     public GetTimeView(TimePresenter presenter) {
         this.presenter = presenter;
     }
 
     /**
      * Attempt to get the time in the input. If it fails then display an error notification.
+     *
      * @return the time in the input if it exists
      */
-
     protected Calendar runTimeView() {
         presenter.timeInputPrompt();
         boolean valid = false;

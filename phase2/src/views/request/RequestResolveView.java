@@ -16,11 +16,20 @@ public class RequestResolveView implements View {
     private final RequestResolvePresenter presenter;
     private final Scanner userInput = new Scanner(System.in);
 
+    /**
+     * Constructor of the view
+     * @param controller RequestController
+     * @param presenter RequestRequestsPresenter
+     */
     public RequestResolveView(RequestController controller, RequestResolvePresenter presenter){
         this.controller = controller;
         this.presenter = presenter;
     }
 
+    /**
+     *The view that user can use to mark request as resolved.
+     * @return VOID to get back to AccountView
+     */
     public ViewEnum runView(){
         presenter.startPrompt();
         int idToResolve = Integer.parseInt(userInput.nextLine());
