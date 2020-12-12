@@ -63,11 +63,23 @@ public class Talk extends Event implements Serializable, EventAcceptor {
         this.speaker = speaker;
     }
 
+    /**
+     * Returns an <code>ArrayList</code> of speaker usernames of this <code>Event</code>.
+     *
+     * @param e given <code>EventVisitor</code>
+     * @return an <code>ArrayList</code> of speaker usernames
+     */
     @Override
     public ArrayList<String> acceptSpeakers(EventVisitor e) {
         return e.visitSpeakers(this);
     }
 
+    /**
+     * Returns the event type of this <code>Event</code> as a String.
+     *
+     * @param e given <code>EventVisitor</code>
+     * @return type of this <code>Event</code> in string form
+     */
     @Override
     public String acceptType(EventVisitor e) {
         return e.visitType(this);

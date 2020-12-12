@@ -6,6 +6,7 @@ package entities.account;
 public class Organizer extends Account {
     /**
      * Constructs an instance of <code>Organizer</code> based on Strings of information
+     *
      * @param username given username
      * @param password given password
      */
