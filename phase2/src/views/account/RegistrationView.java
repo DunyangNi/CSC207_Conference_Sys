@@ -11,6 +11,10 @@ import java.util.Scanner;
 
 /**
  * View responsible for register functionality (The one available at the login menu)
+ * Fields:
+ * Controller: RegistrationController responsible for account registration
+ * Presenter: RegistrationPresenter responsible for displpaying related prompts and messages
+ * userInput: Responsible for receiving the user's input
  */
 
 public class RegistrationView implements View {
@@ -18,11 +22,21 @@ public class RegistrationView implements View {
     protected final RegistrationPresenter presenter;
     protected final Scanner userInput = new Scanner(System.in);
 
+    /**
+     * Constructs an instance of <code>RegistrationView</code> based on the following parameters
+     * @param controller The given RegistrationController
+     * @param presenter The given RegistrationPresenter
+     */
+
     public RegistrationView(RegistrationController controller, RegistrationPresenter presenter) {
         this.controller = controller;
         this.presenter = presenter;
     }
 
+    /**
+     * Run the view.
+     * @return ViewEnum.START so that the program returns to StartView
+     */
     @Override
     public ViewEnum runView() {
         presenter.registrationHeader();
@@ -40,6 +54,9 @@ public class RegistrationView implements View {
         return ViewEnum.START;
     }
 
+    /**
+     * @return the account type enum for the account that we want to register
+     */
     protected AccountTypeEnum getAccountTypeEnum() {
         AccountTypeEnum accountTypeEnum = AccountTypeEnum.fromString(userInput.nextLine());
 
@@ -51,12 +68,24 @@ public class RegistrationView implements View {
         return accountTypeEnum;
     }
 
+    /**
+     * Ask for and validate the registration code when applicable
+     * @param codeInput the inputted registration code
+     * @param code the correct registration code
+     */
+
     public void validateCode(String codeInput, String code) {
         while (!codeInput.equals(code)) {
             presenter.invalidCodeNotification();
             codeInput = userInput.nextLine();
         }
     }
+
+    /**
+     * Ask for for the username, password during registration and check that they are valid,
+     * and register the account if they are
+     * @param accountType the account type enum
+     */
 
     public void getAccountInfo(AccountTypeEnum accountType) {
         presenter.usernamePrompt();

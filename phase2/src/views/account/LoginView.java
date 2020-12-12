@@ -11,6 +11,10 @@ import java.util.Scanner;
 
 /**
  * View responsible for login functionality
+ * Fields:
+ * controller: LoginController responsible for login functionality
+ * presenter: LoginPresenter responsible for displaying relevant prompts and messages
+ * userInput: Responsible for receiving the user's input
  */
 
 public class LoginView implements View {
@@ -18,10 +22,22 @@ public class LoginView implements View {
     private final LoginPresenter presenter;
     private final Scanner userInput = new Scanner(System.in);
 
+    /**
+     * Constructs an instance of <code>LoginView</code> based on the following parameters
+     * @param controller The given LoginController
+     * @param presenter The given LoginPresenter
+     */
+
     public LoginView(LoginController controller, LoginPresenter presenter) {
         this.controller = controller;
         this.presenter = presenter;
     }
+
+    /**
+     * Run the view.
+     * @return ViewEnum.LOGIN or ViewEnum.START or viewEnum based on the login result and the user's choice
+     * of whether to attempt a login again
+     */
 
     public ViewEnum runView() {
         presenter.loginHeader();
