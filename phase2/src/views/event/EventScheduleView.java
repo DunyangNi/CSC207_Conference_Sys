@@ -5,6 +5,10 @@ import enums.ViewEnum;
 import presenters.event.EventPresenter;
 import views.start.View;
 
+/**
+ * View responsible for viewing global event schedule
+ */
+
 public class EventScheduleView implements View {
     private final EventController controller;
     private final EventPresenter presenter;

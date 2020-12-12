@@ -9,6 +9,10 @@ import views.start.View;
 
 import java.util.Scanner;
 
+/**
+ * View responsible for messaging functionality
+ */
+
 public class MessageView implements View {
     private final MessageController controller;
     private final MessagePresenter presenter;

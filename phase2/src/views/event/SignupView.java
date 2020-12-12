@@ -11,6 +11,10 @@ import views.start.View;
 
 import java.util.Scanner;
 
+/**
+ * View responsible for event signup functionality
+ */
+
 public class SignupView implements View {
     private final SignupPresenter presenter;
     private final EventController controller;

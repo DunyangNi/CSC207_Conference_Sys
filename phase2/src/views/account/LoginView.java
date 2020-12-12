@@ -9,6 +9,10 @@ import views.start.View;
 
 import java.util.Scanner;
 
+/**
+ * View responsible for login functionality
+ */
+
 public class LoginView implements View {
     private final LoginController controller;
     private final LoginPresenter presenter;

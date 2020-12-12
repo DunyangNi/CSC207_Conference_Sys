@@ -5,6 +5,10 @@ import presenters.start.StartPresenter;
 
 import java.util.Scanner;
 
+/**
+ * View responsible for the start menu
+ */
+
 public class StartView implements View {
     private final StartPresenter presenter;
     private final Scanner userInput = new Scanner(System.in);

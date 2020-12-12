@@ -8,6 +8,10 @@ import views.start.View;
 
 import java.util.Scanner;
 
+/**
+ * View responsible for vevent cancellation
+ */
+
 public class EventCancelView implements View {
     private final EventController controller;
     private final EventCancelPresenter presenter;

@@ -9,6 +9,10 @@ import views.start.View;
 
 import java.util.Scanner;
 
+/**
+ * View responsible for register functionality (The one available at the login menu)
+ */
+
 public class RegistrationView implements View {
     protected final RegistrationController controller;
     protected final RegistrationPresenter presenter;

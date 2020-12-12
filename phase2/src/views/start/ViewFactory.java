@@ -30,6 +30,10 @@ import views.request.RequestResolveView;
 import views.request.RequestSendView;
 import views.request.ResolvedRequestsListView;
 
+/**
+ * A factory class responsible for instantiating views
+ */
+
 public class ViewFactory {
     private final DataManager dm;
 

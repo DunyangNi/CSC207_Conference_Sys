@@ -6,6 +6,10 @@ import presenters.request.RequestResolvePresenter;
 import enums.ViewEnum;
 import views.start.View;
 
+/**
+ * View responsible for resolving requests
+ */
+
 public class RequestResolveView implements View {
 
     private final RequestController controller;

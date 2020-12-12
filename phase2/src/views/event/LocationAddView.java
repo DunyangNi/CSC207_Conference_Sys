@@ -7,6 +7,10 @@ import views.start.View;
 
 import java.util.Scanner;
 
+/**
+ * View responsible for adding locations
+ */
+
 public class LocationAddView implements View {
     private final LocationPresenter locationPresenter;
     private final LocationController locationController;

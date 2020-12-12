@@ -10,6 +10,10 @@ import views.start.View;
 
 import java.util.Scanner;
 
+/**
+ * View responsible for signup cancellation functionality
+ */
+
 public class SignupCancelView implements View {
     private final SignupCancelPresenter presenter;
     private final EventController controller;

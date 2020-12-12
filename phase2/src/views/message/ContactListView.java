@@ -5,6 +5,10 @@ import enums.ViewEnum;
 import presenters.message.ContactPresenter;
 import views.start.View;
 
+/**
+ * View responsible for seeing the contact list
+ */
+
 public class ContactListView implements View {
     private final ContactController controller;
     private final ContactPresenter presenter;

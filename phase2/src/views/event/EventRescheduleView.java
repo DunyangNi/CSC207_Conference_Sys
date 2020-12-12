@@ -12,6 +12,10 @@ import views.start.View;
 import java.util.Calendar;
 import java.util.Scanner;
 
+/**
+ * View responsible for event reschedulation
+ */
+
 public class EventRescheduleView implements View {
     private final EventController controller;
     private final EventReschedulePresenter presenter;

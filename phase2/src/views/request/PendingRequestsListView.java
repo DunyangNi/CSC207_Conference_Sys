@@ -4,6 +4,10 @@ import presenters.request.PendingRequestsPresenter;
 import views.start.View;
 import enums.ViewEnum;
 
+/**
+ * View responsible for viewing all pending requests
+ */
+
 public class PendingRequestsListView implements View{
 
     private final RequestController controller;

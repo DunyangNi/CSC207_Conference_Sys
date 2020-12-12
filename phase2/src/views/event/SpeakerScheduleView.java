@@ -5,6 +5,10 @@ import enums.ViewEnum;
 import presenters.event.EventPresenter;
 import views.start.View;
 
+/**
+ * View responsible for speaker event schedule functionality
+ */
+
 public class SpeakerScheduleView implements View {
     private final EventController controller;
     private final EventPresenter presenter;
