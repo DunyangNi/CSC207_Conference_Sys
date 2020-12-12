@@ -32,22 +32,29 @@ import views.request.ResolvedRequestsListView;
 import views.start.StartView;
 
 /**
- * A factory class responsible for instantiating views
+ * A factory class responsible for instantiating Views
  */
-
 public class ViewFactory {
     private final DataManager dm;
 
+    /**
+     * Creates an instance of <code>ViewFactory</code> with given <code>DataManager</code>.
+     *
+     * @param dm given <code>DataManager</code>
+     */
     public ViewFactory(DataManager dm) {
         this.dm = dm;
     }
 
+    /**
+     * Returns a View specific to the requested type.
+     *
+     * @param viewEnum given type of View
+     * @return View specific to the requested type.
+     */
     public View getView(ViewEnum viewEnum) {
         View view = null;
-
         switch (viewEnum) {
-            // TODO Reduce amount of code either by extending ViewFactory into sub-classes for each Account type or by creating Controller + Presenter factories.
-            // Start
             case LOGOUT:
             case START:
                 view = new StartView(new StartPresenter());
@@ -72,7 +79,6 @@ public class ViewFactory {
                 break;
 
             // Account
-            // TODO Consider removing these case
             case EXIT:
             case VIEW_ALL_ACCOUNTS:
             case INVALID:

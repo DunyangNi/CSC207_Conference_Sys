@@ -8,78 +8,58 @@ import views.factory.View;
 import java.util.Scanner;
 
 /**
- * View responsible for adding locations
- *
- * Fields:
- * locationPresenter: LocationPresenter responsible for displaying relevant prompts
- * locationController: LocationController responsible for location functionality
- * getInputView: GetInputView responsible for getting input
+ * View responsible for adding locations.
  */
-
 public class LocationAddView implements View {
-    private final LocationPresenter locationPresenter;
-    private final LocationController locationController;
+    private final LocationPresenter presenter;
+    private final LocationController controller;
     private final GetInputView getInputView;
     private final Scanner userInput = new Scanner(System.in);
 
     /**
-     * Constructs an instance of <code>LocationAddView</code> based on the following parameters
-     * @param locationController The given LocationController
-     * @param locationPresenter The given LocationPresenter
+     * Constructs an instance of <code>LocationAddView</code> with its accompanying controller and presenter.
+     *
+     * @param controller given controller
+     * @param presenter  given presenter
      */
-
-    public LocationAddView(LocationController locationController, LocationPresenter locationPresenter) {
-        this.locationController = locationController;
-        this.locationPresenter = locationPresenter;
-        getInputView = new GetInputView(locationPresenter);
+    public LocationAddView(LocationController controller, LocationPresenter presenter) {
+        this.controller = controller;
+        this.presenter = presenter;
+        getInputView = new GetInputView(presenter);
     }
 
     /**
-     * Run the view.
+     * Runs the view.
+     *
      * @return ViewEnum.VOID
      */
-
     public ViewEnum runView() {
-        locationPresenter.locationCreationHeader();
-
+        presenter.locationCreationHeader();
         boolean nameChosen = false;
         String name = "";
-        locationPresenter.namePrompt();
+        presenter.namePrompt();
         while (!nameChosen) {
             name = userInput.nextLine();
-            if (locationController.isNewLocation(name)) nameChosen = true;
-            else locationPresenter.nameTakenNotification();
+            if (controller.isNewLocation(name)) nameChosen = true;
+            else presenter.nameTakenNotification();
         }
-
-
-        locationPresenter.capacityPrompt();
+        presenter.capacityPrompt();
         int capacity = getInputView.getPositiveNumber();
-
-
-        locationPresenter.tablesPrompt();
+        presenter.tablesPrompt();
         int tables = getInputView.getNonNegativeNumber();
-
-
-        locationPresenter.chairsPrompt();
+        presenter.chairsPrompt();
         int chairs = getInputView.getNonNegativeNumber();
-
-
-        locationPresenter.internetPrompt();
+        presenter.internetPrompt();
         boolean hasInternet = getInputView.getBoolean();
-
-
-        locationPresenter.soundSystemPrompt();
+        presenter.soundSystemPrompt();
         boolean hasSoundSystem = getInputView.getBoolean();
-
-
-        locationPresenter.presentationScreenPrompt();
+        presenter.presentationScreenPrompt();
         boolean hasPresentationScreen = getInputView.getBoolean();
-
-        locationPresenter.furtherNotesPrompt();
+        presenter.furtherNotesPrompt();
         String furtherNotes = userInput.nextLine();
-
-        locationController.addNewLocation(name, capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen, furtherNotes);
-        locationPresenter.locationCreationSuccessNotification();
+        controller.addNewLocation(name, capacity, tables, chairs, hasInternet, hasSoundSystem,
+                hasPresentationScreen, furtherNotes);
+        presenter.locationCreationSuccessNotification();
         return ViewEnum.VOID;
     }
 }
