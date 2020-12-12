@@ -16,6 +16,9 @@ import java.util.Set;
 
 /**
  * View responsible for viewing messages
+ * Fields:
+ * presenter: ConversationPresenter responsible for displaying relevant prompts
+ * controller: ConversationController responsible for conversation functionality
  */
 
 public class ConversationView implements View {
@@ -23,10 +26,21 @@ public class ConversationView implements View {
     private final ConversationController controller;
     private final Scanner userInput = new Scanner(System.in);
 
+    /**
+     * Constructs an instance of <code>ConversationView</code> based on the following parameters
+     * @param controller The given ConversationController
+     * @param presenter The given ConversationPresenter
+     */
+
     public ConversationView(ConversationController controller, ConversationPresenter presenter) {
         this.controller = controller;
         this.presenter = presenter;
     }
+
+    /**
+     * Runs the view.
+     * @return ViewEnum.VOID
+     */
 
     @Override
     public ViewEnum runView() {

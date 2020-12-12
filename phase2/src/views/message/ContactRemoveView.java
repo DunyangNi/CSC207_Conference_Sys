@@ -11,6 +11,9 @@ import java.util.Scanner;
 
 /**
  * View responsible for contact removal functionality
+ * Fields:
+ * controller: ContactController responsible for contact functionality
+ * presenter: ContactPresenter responsible for displaying relevant prompts
  */
 
 public class ContactRemoveView implements View {
@@ -18,10 +21,21 @@ public class ContactRemoveView implements View {
     private final ContactPresenter presenter;
     private final Scanner userInput = new Scanner(System.in);
 
+    /**
+     * Constructs an instance of <code>ContactRemoveView</code> based on the following parameters
+     * @param controller The given ContactController
+     * @param presenter The given ContactPresenter
+     */
+
     public ContactRemoveView(ContactController controller, ContactPresenter presenter) {
         this.presenter = presenter;
         this.controller = controller;
     }
+
+    /**
+     * Runs the view.
+     * @return ViewEnum.VOID
+     */
 
     public ViewEnum runView() {
         presenter.removeContactHeader();
