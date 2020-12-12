@@ -9,6 +9,11 @@ import java.util.Scanner;
 
 /**
  * View responsible for adding locations
+ *
+ * Fields:
+ * locationPresenter: LocationPresenter responsible for displaying relevant prompts
+ * locationController: LocationController responsible for location functionality
+ * getInputView:
  */
 
 public class LocationAddView implements View {
