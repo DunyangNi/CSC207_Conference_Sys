@@ -1,21 +1,12 @@
 package presenters.event;
 
 import presenters.EventErrorPresenter;
-import presenters.Presenter;
 
-public class EventCancelPresenter implements Presenter, EventErrorPresenter {
-
-    @Override
-    public void startPrompt() {
-    }
-
-    public void cancelEventHeader() {
-        System.out.println();
-        System.out.println("[CANCEL EVENT]");
-    }
+public class EventCancelPresenter implements EventErrorPresenter {
+    public void cancelEventHeader() { System.out.println("\n[CANCEL EVENT]"); }
 
     public void cancelEventFailureNotification() {
-        System.out.println("{No events were cancelled}");
+        System.out.println("{No events were cancelled.}");
     }
 
     public void cancelEventSuccessNotification() {
@@ -27,10 +18,6 @@ public class EventCancelPresenter implements Presenter, EventErrorPresenter {
     }
 
     public void invalidIDNotification() {
-        System.out.println("{Invalid event ID}");
-    }
-
-    @Override
-    public void exitPrompt() {
+        System.out.println("{Sorry, the ID entered is invalid.}");
     }
 }

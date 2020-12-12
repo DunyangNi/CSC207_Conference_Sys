@@ -1,17 +1,12 @@
 package presenters.event;
 
 import presenters.InputErrorPresenter;
-import presenters.Presenter;
 
 /**
  * Represents a presenter for downloading event schdules
  */
-public class DownloadSchedulePresenter implements Presenter, InputErrorPresenter {
-    @Override
-    public void startPrompt() {
-        System.out.println();
-        System.out.println("[DOWNLOAD EVENT SCHEDULE]");
-    }
+public class DownloadSchedulePresenter implements InputErrorPresenter {
+    public void downloadScheduleHeader() { System.out.println("\n[DOWNLOAD EVENT SCHEDULE]"); }
 
     /**
      * Displays successful downloading
@@ -23,10 +18,6 @@ public class DownloadSchedulePresenter implements Presenter, InputErrorPresenter
     }
 
     public void htmlWriteErrorNotification() {
-        System.out.println("{Something went wrong while downloading the schedule}");
-    }
-
-    @Override
-    public void exitPrompt() {
+        System.out.println("{Something went wrong while downloading the schedule.}");
     }
 }

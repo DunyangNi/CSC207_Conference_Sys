@@ -20,7 +20,7 @@ public class LoginView implements View {
     }
 
     public ViewEnum runView() {
-        presenter.startPrompt();
+        presenter.loginHeader();
         presenter.usernamePrompt();
         String username = userInput.nextLine();
         presenter.passwordPrompt();
@@ -28,7 +28,7 @@ public class LoginView implements View {
 
         try{
             ViewEnum viewEnum = controller.login(username, password);
-            presenter.exitPrompt();
+            presenter.loginFailureNotification();
             return viewEnum;
         } catch (UserNotFoundException e) {
             presenter.usernameNotFoundNotification();

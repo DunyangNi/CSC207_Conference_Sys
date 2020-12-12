@@ -22,12 +22,12 @@ public class SignupView implements View {
     }
 
     public ViewEnum runView() {
-        presenter.startPrompt();
-        presenter.eventIdPrompt();
+        presenter.signupHeader();
+        presenter.eventIDPrompt();
         try {
             int id = Integer.parseInt(userInput.nextLine());
             controller.signupForEvent(id);
-            presenter.exitPrompt();
+            presenter.signupSuccessNotification();
             return ViewEnum.VOID;
         }
         catch (VipRestrictedException e) { presenter.vipRestrictionNotification(); }

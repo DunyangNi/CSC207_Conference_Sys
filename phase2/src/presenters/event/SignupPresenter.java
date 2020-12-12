@@ -2,16 +2,11 @@ package presenters.event;
 
 import presenters.EventErrorPresenter;
 import presenters.InputErrorPresenter;
-import presenters.Presenter;
 
-public class SignupPresenter implements Presenter, EventErrorPresenter, InputErrorPresenter {
-    @Override
-    public void startPrompt() {
-        System.out.println();
-        System.out.println("[SIGN UP FOR EVENT]");
-    }
+public class SignupPresenter implements EventErrorPresenter, InputErrorPresenter {
+    public void signupHeader() { System.out.println("\n[SIGN UP FOR EVENT]"); }
 
-    public void eventIdPrompt() {
+    public void eventIDPrompt() {
         System.out.println("Please enter the ID of an event you wish to sign up for: ");
     }
 
@@ -31,8 +26,7 @@ public class SignupPresenter implements Presenter, EventErrorPresenter, InputErr
         System.out.println("{Sign-up cancelled.}");
     }
 
-    @Override
-    public void exitPrompt() {
+    public void signupSuccessNotification() {
         System.out.println("{Successfully signed up for event!}");
     }
 }

@@ -16,4 +16,8 @@ public interface InputErrorPresenter {
     default void invalidYesNoNotification() {
         System.out.println("{Invalid answer entered. Please answer with Y (Yes) or N (No).}");
     }
+
+    default void invalidCommandNotification() {
+        System.out.println("{Invalid command entered. Ensure the input is a valid option.}");
+    }
 }

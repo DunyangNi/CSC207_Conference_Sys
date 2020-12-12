@@ -1,10 +1,17 @@
 package presenters.account;
 
+/**
+ * Responsible for displaying attendee user menu
+ */
+
 public class AttendeePresenter extends AccountPresenter {
+
+    /**
+     * Display attendee user menu
+     */
     @Override
     public void displayUserMenu() {
-        System.out.println();
-        System.out.println("[ATTENDEE MENU]");
+        System.out.println("\n[ATTENDEE MENU]");
         System.out.println("============================================================");
         System.out.println("[ACCOUNT]");
         System.out.println("00 = Exit");
@@ -31,5 +38,4 @@ public class AttendeePresenter extends AccountPresenter {
         System.out.println("12 = Create a request");
         System.out.println("============================================================");
     }
-
 }

@@ -1,23 +1,26 @@
 package presenters.account;
 
-import presenters.Presenter;
-
 import java.util.ArrayList;
 
-public class ContactPresenter implements Presenter {
-    @Override
-    public void startPrompt() {
-    }
+/**
+ * Responsible for displaying contact related functionality prompts and messages
+ */
+public class ContactPresenter {
 
-    //Add
+    /**
+     * Header of prompt for adding a contact
+     */
     public void addContactHeader() {
-        System.out.println();
-        System.out.println("[ADD A CONTACT]");
+        System.out.println("\n[ADD A CONTACT]");
     }
 
+    /**
+     * Body of prompt for adding a contact
+     */
     public void addContactPrompt() {
         System.out.println("Enter the username of a contact to add: ");
     }
+
 
     public void accountNotFoundNotification() {
         System.out.println("{Sorry, this account could not be found.}");
@@ -40,12 +43,14 @@ public class ContactPresenter implements Presenter {
     }
 
 
-    //Remove
-    public void removeContactHeader() {
-        System.out.println();
-        System.out.println("[REMOVE A CONTACT]");
-    }
+    /**
+     * Header of prompt for removing a contact
+     */
+    public void removeContactHeader() { System.out.println("\n[REMOVE A CONTACT]"); }
 
+    /**
+     * Body of prompt for removing a contact
+     */
     public void removeContactPrompt() {
         System.out.println("Enter the username of a contact to remove: ");
     }
@@ -59,10 +64,12 @@ public class ContactPresenter implements Presenter {
     }
 
 
-    //List
+    /**
+     * Display contact list given the contacts
+     * @param contacts List of usernames of contacts
+     */
     public void displayContactList(ArrayList<String> contacts) {
-        System.out.println();
-        System.out.println("[MY CONTACTS]");
+        System.out.println("\n[MY CONTACTS]");
         System.out.println("============================================================");
         if (contacts.isEmpty()) {
             System.out.println("{No contacts}");
@@ -70,9 +77,5 @@ public class ContactPresenter implements Presenter {
             System.out.println(contact);
         }
         System.out.println("============================================================");
-    }
-
-    @Override
-    public void exitPrompt() {
     }
 }

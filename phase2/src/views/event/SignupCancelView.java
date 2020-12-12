@@ -21,12 +21,12 @@ public class SignupCancelView implements View {
     }
 
     public ViewEnum runView() {
-        presenter.startPrompt();
-        presenter.eventIdPrompt();
+        presenter.signupCancelHeader();
+        presenter.eventIDPrompt();
         try {
             int id = Integer.parseInt(userInput.nextLine());
             controller.cancelSignupForEvent(id);
-            presenter.exitPrompt();
+            presenter.signupCancelSuccessNotification();
             return ViewEnum.VOID;
         }
         catch (EventNotFoundException e){ presenter.eventNotFoundNotification(); }

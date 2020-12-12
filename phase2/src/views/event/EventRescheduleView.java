@@ -25,7 +25,7 @@ public class EventRescheduleView implements View {
     }
 
     public ViewEnum runView() {
-        presenter.startPrompt();
+        presenter.eventRescheduleHeader();
 
         boolean chosenID = false;
         int id = 0;
@@ -41,7 +41,7 @@ public class EventRescheduleView implements View {
 
         try {
             controller.rescheduleEvent(id, newTime);
-            presenter.exitPrompt();
+            presenter.eventRescheduleSuccessNotification();
             return ViewEnum.VOID;
         } catch (LocationInUseException e) {
             presenter.inUseLocationNotification();

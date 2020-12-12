@@ -20,7 +20,7 @@ public class DownloadScheduleView implements View {
     }
 
     public ViewEnum runView() {
-        presenter.startPrompt();
+        presenter.downloadScheduleHeader();
 
         try {
             this.controller.downloadSchedule();
