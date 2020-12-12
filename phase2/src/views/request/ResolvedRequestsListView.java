@@ -13,11 +13,20 @@ public class ResolvedRequestsListView implements View{
     private final RequestController controller;
     private final ResolvedRequestsPresenter presenter;
 
+    /**
+     * Constructor of the view
+     * @param controller Given RequestController
+     * @param presenter Given ResolvedRequestsPresenter
+     */
     public ResolvedRequestsListView(RequestController controller, ResolvedRequestsPresenter presenter){
         this.controller = controller;
         this.presenter = presenter;
     }
 
+    /**
+     * The view display all of resolved requests.
+     * @return VOID to get back to AccountView
+     */
     public ViewEnum runView(){
         String resolvedList = controller.getResolvedRequestsString();
 
