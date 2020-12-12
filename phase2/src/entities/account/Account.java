@@ -3,11 +3,7 @@ package entities.account;
 import java.io.Serializable;
 
 /**
- * Represents an <code> Account </code> in the conference.
- *
- * Fields:
- * username: represents the account's username, which cannot be changed.
- * password: represents the account's password.
+ * Represents an <code>Account</code> in the conference.
  */
 public class Account implements Serializable {
     private final String username;
@@ -15,7 +11,6 @@ public class Account implements Serializable {
 
     /**
      * Creates an instance of <code>Account</code> with given String information.
-     *
      * @param username given username
      * @param password given password
      */
@@ -26,7 +21,6 @@ public class Account implements Serializable {
 
     /**
      * Compares for equality with another object.
-     *
      * @param o an object to compare with
      * @return True if o is an instance of Account and has the same username.
      */
@@ -34,10 +28,6 @@ public class Account implements Serializable {
     public boolean equals(Object o) {
         return (o instanceof Account) && ((Account) o).getUsername().equals(this.getUsername());
     }
-
-    //------------------------------------------------------------
-    // Getters
-    //------------------------------------------------------------
 
     /**
      * @return username
@@ -50,10 +40,6 @@ public class Account implements Serializable {
      * @return password
      */
     public String getPassword() { return password; }
-
-    //------------------------------------------------------------
-    // Setters
-    //------------------------------------------------------------
 
     /**
      * sets password
