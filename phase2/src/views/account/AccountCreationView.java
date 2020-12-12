@@ -10,12 +10,19 @@ import presenters.account.RegistrationPresenter;
 public class AccountCreationView extends RegistrationView{
 
 
+    /**
+     * Constructs an instance of <code>AccountCreationView</code> based on the following parameters
+     * @param controller The given RegistrationController
+     * @param presenter The given RegistrationPresenter
+     */
+
     public AccountCreationView(RegistrationController controller, RegistrationPresenter presenter) {
         super(controller, presenter);
     }
 
     /**
-     * Run the view
+     * Run the view.
+     * @return ViewEnum.VOID
      */
     public ViewEnum runView() {
         presenter.registrationHeader();
