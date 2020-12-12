@@ -3,8 +3,21 @@ package presenters.event;
 import presenters.EventErrorPresenter;
 import presenters.InputErrorPresenter;
 
+/**
+ * Responsible for displaying event signup functionality prompts and notifications
+ */
+
 public class SignupPresenter implements EventErrorPresenter, InputErrorPresenter {
+
+    /**
+     * Header of signup prompt
+     */
+
     public void signupHeader() { System.out.println("\n[SIGN UP FOR EVENT]"); }
+
+    /**
+     * Ask for ID of event to signup to
+     */
 
     public void eventIDPrompt() {
         System.out.println("Please enter the ID of an event you wish to sign up for: ");

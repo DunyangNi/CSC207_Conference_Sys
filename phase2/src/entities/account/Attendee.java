@@ -11,8 +11,7 @@ public class Attendee extends Account implements VipAcceptor {
     private final ArrayList<Integer> eventsAttending = new ArrayList<>();
 
     /**
-     * Constructs an instance of <code>Attendee</code> based on Strings of information
-     *
+     * Constructs an instance of <code>Attendee</code> based on Strings of information.
      * @param username given username
      * @param password given password
      */
@@ -25,6 +24,11 @@ public class Attendee extends Account implements VipAcceptor {
      */
     public ArrayList<Integer> getEventsAttending() { return eventsAttending; }
 
+    /**
+     * Returns true iff this <code>Attendee</code> is a <code>VIP Attendee</code>.
+     * @param v given <code>VIP Visitor</code>
+     * @return this <code>Attendee</code> is a <code>VIP Attendee</code>
+     */
     @Override
     public boolean accept(VipVisitor v) { return v.visit(this); }
 }
