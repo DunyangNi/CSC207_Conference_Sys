@@ -57,6 +57,7 @@ public class RegistrationController extends AccountController {
                 break;
             case VIP_ATTENDEE:
                 am.addNewVipAttendee(username, password);
+                break;
             case SPEAKER:
                 am.addNewSpeaker(username, password);
                 break;
