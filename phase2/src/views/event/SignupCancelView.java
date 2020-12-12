@@ -12,6 +12,10 @@ import java.util.Scanner;
 
 /**
  * View responsible for signup cancellation functionality
+ *
+ * Fields:
+ * presenter: SignupCancelPresenter responsible for displaying relevant prompt
+ * controller: EventController responsible for event functionality
  */
 
 public class SignupCancelView implements View {
@@ -19,10 +23,21 @@ public class SignupCancelView implements View {
     private final EventController controller;
     private final Scanner userInput = new Scanner(System.in);
 
+    /**
+     * Constructs an instance of <code>SignupCancelView</code> based on the following parameters
+     * @param controller The given EventController
+     * @param presenter The given EventPresenter
+     */
+
     public SignupCancelView(EventController controller, SignupCancelPresenter presenter) {
         this.controller = controller;
         this.presenter = presenter;
     }
+
+    /**
+     * Runs the view.
+     * @return ViewEnum.VOID
+     */
 
     public ViewEnum runView() {
         presenter.signupCancelHeader();

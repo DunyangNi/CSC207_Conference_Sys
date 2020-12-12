@@ -13,6 +13,9 @@ import java.util.Scanner;
 
 /**
  * View responsible for event signup functionality
+ * Fields:
+ * presenter: SignupPresenter responsible for displaying relevant prompts
+ * controller: EventController responsible for event functionality
  */
 
 public class SignupView implements View {
@@ -20,10 +23,21 @@ public class SignupView implements View {
     private final EventController controller;
     private final Scanner userInput = new Scanner(System.in);
 
+    /**
+     * Constructs an instance of <code>SignupView</code> based on the following parameters
+     * @param controller The given EventController
+     * @param presenter The given SignupPresenter
+     */
+
     public SignupView(EventController controller, SignupPresenter presenter) {
         this.controller = controller;
         this.presenter = presenter;
     }
+
+    /**
+     * Runs the view.
+     * @return ViewEnum.VOID
+     */
 
     public ViewEnum runView() {
         presenter.signupHeader();
