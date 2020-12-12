@@ -20,7 +20,7 @@ public class LocationAddView implements View {
     }
 
     public ViewEnum runView() {
-        locationPresenter.startPrompt();
+        locationPresenter.locationCreationHeader();
 
         boolean nameChosen = false;
         String name = "";
@@ -59,7 +59,7 @@ public class LocationAddView implements View {
         String furtherNotes = userInput.nextLine();
 
         locationController.addNewLocation(name, capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen, furtherNotes);
-        locationPresenter.exitPrompt();
+        locationPresenter.locationCreationSuccessNotification();
         return ViewEnum.VOID;
     }
 }

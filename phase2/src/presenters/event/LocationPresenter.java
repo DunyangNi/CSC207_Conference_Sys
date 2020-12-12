@@ -1,16 +1,11 @@
 package presenters.event;
 
 import presenters.InputErrorPresenter;
-import presenters.Presenter;
 
 import java.util.ArrayList;
 
-public class LocationPresenter implements Presenter, InputErrorPresenter {
-    @Override
-    public void startPrompt() {
-        System.out.println();
-        System.out.println("[LOCATION CREATION]");
-    }
+public class LocationPresenter implements InputErrorPresenter {
+    public void locationCreationHeader() { System.out.println("\n[LOCATION CREATION]"); }
 
     public void namePrompt() {
         System.out.println("Please enter a name for this location: ");
@@ -49,12 +44,9 @@ public class LocationPresenter implements Presenter, InputErrorPresenter {
     }
 
     public void displayLocations(ArrayList<String> locationStrings) {
-        System.out.println();
-        System.out.println("[LOCATION DIRECTORY]");
+        System.out.println("\n[LOCATION DIRECTORY]");
         System.out.println("============================================================");
-        if (locationStrings.isEmpty()) {
-            System.out.println("{No locations available}");
-        }
+        if (locationStrings.isEmpty()) System.out.println("{No locations available}");
         for (String locationString : locationStrings) {
             System.out.println(locationString);
             System.out.println();
@@ -62,8 +54,7 @@ public class LocationPresenter implements Presenter, InputErrorPresenter {
         System.out.println("============================================================");
     }
 
-    @Override
-    public void exitPrompt() {
+    public void locationCreationSuccessNotification() {
         System.out.println("{Location creation successful!}");
     }
 }
