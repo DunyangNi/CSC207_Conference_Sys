@@ -1,8 +1,6 @@
 package presenters.request;
 
-import presenters.Presenter;
-
-public class RequestSendPresenter implements Presenter {
+public class RequestSendPresenter {
     public void startPrompt() {
         System.out.println();
         System.out.println("[CREATE A REQUEST]");

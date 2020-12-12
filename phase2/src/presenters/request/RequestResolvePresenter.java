@@ -1,8 +1,6 @@
 package presenters.request;
 
-import presenters.Presenter;
-
-public class RequestResolvePresenter implements Presenter {
+public class RequestResolvePresenter {
     public void startPrompt() {
         System.out.println("Enter id of resolved request:");
     }
