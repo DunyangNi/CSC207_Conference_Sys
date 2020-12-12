@@ -7,7 +7,7 @@ import exceptions.not_found.ContactNotFoundException;
 import exceptions.not_found.EventNotFoundException;
 import exceptions.not_found.RecipientNotFoundException;
 import presenters.message.MessagePresenter;
-import views.start.View;
+import views.factory.View;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;

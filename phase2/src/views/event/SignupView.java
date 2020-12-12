@@ -7,7 +7,7 @@ import exceptions.conflict.EventIsFullException;
 import exceptions.conflict.VipRestrictedException;
 import exceptions.not_found.EventNotFoundException;
 import presenters.event.SignupPresenter;
-import views.start.View;
+import views.factory.View;
 
 import java.util.Scanner;
 

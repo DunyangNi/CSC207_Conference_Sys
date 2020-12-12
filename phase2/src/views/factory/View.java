@@ -1,4 +1,4 @@
-package views.start;
+package views.factory;
 
 import enums.ViewEnum;
 

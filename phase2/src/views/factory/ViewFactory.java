@@ -1,4 +1,4 @@
-package views.start;
+package views.factory;
 
 import controllers.account.AccountController;
 import controllers.message.ContactController;
@@ -29,6 +29,7 @@ import views.request.PendingRequestsListView;
 import views.request.RequestResolveView;
 import views.request.RequestSendView;
 import views.request.ResolvedRequestsListView;
+import views.start.StartView;
 
 /**
  * A factory class responsible for instantiating views

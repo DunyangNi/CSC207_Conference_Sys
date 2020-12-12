@@ -11,7 +11,7 @@ import exceptions.conflict.LocationInUseException;
 import exceptions.conflict.SpeakerIsBusyException;
 import exceptions.not_found.SpeakerNotFoundException;
 import presenters.event.EventCreationPresenter;
-import views.start.View;
+import views.factory.View;
 
 import java.util.ArrayList;
 import java.util.Calendar;
