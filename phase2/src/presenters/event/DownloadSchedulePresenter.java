@@ -7,6 +7,9 @@ import presenters.Presenter;
  * Represents a presenter for downloading event schdules
  */
 public class DownloadSchedulePresenter implements Presenter, InputErrorPresenter {
+    /**
+     * Header of download prompt
+     */
     @Override
     public void startPrompt() {
         System.out.println();
