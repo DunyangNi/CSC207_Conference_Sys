@@ -10,12 +10,7 @@ import views.factory.ViewFactory;
 import java.util.Set;
 
 /**
- * A contoller class responsible for getting and dealing with Account types and lists
- *
- * Fields:
- * DataManager: Datamanager class which stores information of accounts and an accountmanager
- * AccountManager: AccountManager class which stores accounts
- * username: username of the user using the program
+ * A controller class responsible for getting and dealing with Account types and lists.
  */
 public class AccountController {
     private final DataManager dm;
@@ -23,7 +18,7 @@ public class AccountController {
     private final String username;
 
     /**
-     * Creates an instance of <code>AccountController</code> with given parameters..
+     * Creates an instance of <code>AccountController</code> with given parameters.
      *
      * @param dm desired Datamanager
      */
@@ -51,8 +46,8 @@ public class AccountController {
     }
 
     /**
-     * @return true iff the AccountManager contains an account with the given username
      * @param username desired username
+     * @return true iff the AccountManager contains an account with the given username
      */
     public boolean usernameExists(String username) {
         return am.containsAccount(username);
@@ -66,8 +61,8 @@ public class AccountController {
     }
 
     /**
-     * @return a view based on the view enum given
      * @param viewEnum the given view enum
+     * @return a view based on the view enum given
      */
     public View getView(ViewEnum viewEnum) { // TODO find more appropriate place. ATM, Controller is interacting with View
         ViewFactory viewFactory = new ViewFactory(dm);

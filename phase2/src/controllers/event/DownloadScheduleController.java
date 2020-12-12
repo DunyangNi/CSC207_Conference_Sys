@@ -15,7 +15,6 @@ public class DownloadScheduleController {
      *
      * @param dm Datamanager containing the needed HTMLManager
      */
-
     public DownloadScheduleController(DataManager dm) {
         this.hm = dm.getHtmlManager();
     }

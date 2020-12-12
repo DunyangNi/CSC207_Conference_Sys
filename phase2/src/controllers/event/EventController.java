@@ -19,13 +19,7 @@ import static enums.EventTypeEnum.PANEL_DISCUSSION;
 import static enums.EventTypeEnum.TALK;
 
 /**
- * Represents a controller responsible for event/signup management
- *
- * Fields:
- * username: The username of the user of the program
- * EventManager: Stores event information
- * AccountManager: Stores account information
- * LocationManager: Stores location information
+ * Represents a controller responsible for event/signup management.
  */
 public class EventController {
     private final String username;
@@ -34,11 +28,11 @@ public class EventController {
     private final LocationManager locationManager;
 
     /**
-     * Creates an instance of <code>EventController </code> with given parameters.
+     * Creates an instance of <code>EventController</code> with given <code>DataManager</code>.
      *
-     * @param dm Datamanager containing all needed managers.
+     * @param dm given <code>DataManager</code> containing an <code>EventManager</code>, <code>AccountManager</code>,
+     *           and <code>LocationManager</code>.
      */
-
     public EventController(DataManager dm) {
         this.username = dm.getUsername();
         this.eventManager = dm.getEventManager();
@@ -47,65 +41,61 @@ public class EventController {
     }
 
     /**
-     * Attempts to create an event.
+     * Attempts to create a <code>Event</code> of a specific type and given information and requirements.
      *
-     * @param type an enum representing the event type desired
-     * @param topic desired topic
-     * @param time desired time
-     * @param location desired location
-     * @param speakers desired speakers
-     * @param capacity desired capacity
-     * @param tables desired table count
-     * @param chairs desired chair count
-     * @param hasInternet desired internet requirement
-     * @param hasSoundSystem desired sound system requirement
-     * @param hasPresentationScreen desired presentation screen requirement
-     * @param vipOnly desired VIP restriction status
-     *
-     * @throws OutOfScheduleException when time is invalid
-     * @throws SpeakerIsBusyException to prevent double booking of speaker
+     * @param type                       an enum representing the event type desired
+     * @param topic                      desired topic
+     * @param time                       desired time
+     * @param location                   desired location
+     * @param speakers                   desired speakers
+     * @param capacity                   desired capacity
+     * @param tables                     desired table count
+     * @param chairs                     desired chair count
+     * @param requiresInternet           desired internet requirement
+     * @param requiresSoundSystem        desired sound system requirement
+     * @param requiresPresentationScreen desired presentation screen requirement
+     * @param vipOnly                    desired VIP restriction status
+     * @throws OutOfScheduleException    when selected time is outside of schedule (9 AM to 4 PM)
+     * @throws SpeakerIsBusyException    to prevent double booking of speaker
      * @throws InvalidEventTypeException when type is not a valid event type
-     * @throws LocationInUseException to prevent double booking of location
+     * @throws LocationInUseException    to prevent double booking of location
      */
-
     public void createEvent(EventTypeEnum type, String topic, Calendar time, String location,
-                            ArrayList<String> speakers, Integer capacity, int tables, int chairs, boolean hasInternet,
-                            boolean hasSoundSystem, boolean hasPresentationScreen, Boolean vipOnly)
+                            ArrayList<String> speakers, Integer capacity, int tables, int chairs,
+                            boolean requiresInternet, boolean requiresSoundSystem,
+                            boolean requiresPresentationScreen, Boolean vipOnly)
             throws OutOfScheduleException, SpeakerIsBusyException, InvalidEventTypeException, LocationInUseException {
         eventManager.addNewEvent(type, topic, time, location, this.username, speakers,
-                capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen, vipOnly);
+                capacity, tables, chairs, requiresInternet, requiresSoundSystem, requiresPresentationScreen, vipOnly);
     }
 
     /**
-     * Attempts to reschedule an event.
+     * Attempts to reschedule a <code>Event</code>.
      *
-     * @param id ID of desired event
+     * @param id      ID of desired event
      * @param newTime desired time
-     *
-     * @throws OutOfScheduleException when time is invalid
+     * @throws OutOfScheduleException when selected time is outside of schedule (9 AM to 4 PM)
      * @throws SpeakerIsBusyException to prevent double booking of speaker
      * @throws LocationInUseException to prevent double booking of location
      */
-
     public void rescheduleEvent(Integer id, Calendar newTime) throws OutOfScheduleException, SpeakerIsBusyException,
             LocationInUseException, EventNotFoundException {
         this.eventManager.changeTime(id, newTime);
     }
 
     /**
-     * Attempts to cancel an event.
+     * Attempts to cancel a <code>Event</code>.
      *
      * @param id ID of desired event
-     *
      * @throws EventNotFoundException when id is invalid
      */
-
-    public void cancelEvent(Integer id) throws EventNotFoundException { this.eventManager.cancelEvent(id); }
+    public void cancelEvent(Integer id) throws EventNotFoundException {
+        this.eventManager.cancelEvent(id);
+    }
 
     /**
      * @return sorted list of all events
      */
-
     public ArrayList<String> getAllEvents() {
         return eventManager.getAllSortedEvents();
     }
@@ -113,7 +103,6 @@ public class EventController {
     /**
      * @return sorted list of events that the current account is attending (when applicable)
      */
-
     public ArrayList<String> getAttendeeEvents() {
         ArrayList<Integer> selectedEventIDs = accountManager.getAttendeeEvents(username);
         return eventManager.getSortedEventsByID(selectedEventIDs);
@@ -122,23 +111,26 @@ public class EventController {
     /**
      * @return sorted list of events that the current account is talking at (when applicable)
      */
-
-    public ArrayList<String> getSpeakerEvents() { return eventManager.getSpeakerSortedEvents(username); }
+    public ArrayList<String> getSpeakerEvents() {
+        return eventManager.getSpeakerSortedEvents(username);
+    }
 
     /**
      * Check if a list of speakers exist and can be used in a type of event
+     *
      * @param eventType an enum representing the event type
-     * @param speakers list of usernames of speakers
+     * @param speakers  list of usernames of speakers
      */
-
     public void checkValidSpeaker(EventTypeEnum eventType, ArrayList<String> speakers) throws SpeakerNotFoundException,
             NotEnoughSpeakersException {
         if (eventType == TALK) {
             if (!accountManager.containsSpeaker(speakers.get(0))) throw new SpeakerNotFoundException();
         } else if (eventType == PANEL_DISCUSSION) {
             if (speakers.size() < 2) throw new NotEnoughSpeakersException();
-            for (String speaker : speakers) { if (!accountManager.containsSpeaker(speaker))
-                throw new SpeakerNotFoundException(); }
+            for (String speaker : speakers) {
+                if (!accountManager.containsSpeaker(speaker))
+                    throw new SpeakerNotFoundException();
+            }
         }
     }
 
@@ -149,7 +141,8 @@ public class EventController {
      */
     public void signupForEvent(Integer id) throws VipRestrictedException, EventNotFoundException,
             EventIsFullException, AlreadySignedUpException {
-        if ((!accountManager.isVipAttendee(username)) && eventManager.getVipRestriction(id)) throw new VipRestrictedException();
+        if ((!accountManager.isVipAttendee(username)) && eventManager.getVipRestriction(id))
+            throw new VipRestrictedException();
         else {
             eventManager.addAttendee(id, username);
             accountManager.addEventToAttend(id, username);
@@ -166,24 +159,64 @@ public class EventController {
         accountManager.removeEventToAttend(id, username);
     }
 
-
-    public boolean locationMeetsRequirements(String name, int capacity, int tables, int chairs, boolean hasInternet,
-                                             boolean hasSoundSystem, boolean hasPresentationScreen) {
-        try { locationManager.checkLocationMeetsRequirements(name, capacity, tables, chairs, hasInternet,
-                hasSoundSystem, hasPresentationScreen); }
-        catch (RequirementMismatchException e) { return false; }
+    /**
+     * Returns true iff a given <code>Location</code> meets the specific requirements (of an <code>Event</code>).
+     *
+     * @param name                       given name of <code>Location</code>
+     * @param capacity                   capacity requirement
+     * @param tables                     tables requirement
+     * @param chairs                     chairs requirement
+     * @param requiresInternet           internet requirement
+     * @param requiresSoundSystem        sound system requirement
+     * @param requiresPresentationScreen presentation screen requirement
+     * @return given <code>Location</code> meets the specific requirements
+     */
+    public boolean locationMeetsRequirements(String name, int capacity, int tables, int chairs,
+                                             boolean requiresInternet, boolean requiresSoundSystem,
+                                             boolean requiresPresentationScreen) {
+        try {
+            locationManager.checkLocationMeetsRequirements(name, capacity, tables, chairs, requiresInternet,
+                    requiresSoundSystem, requiresPresentationScreen);
+        } catch (RequirementMismatchException e) {
+            return false;
+        }
         return true;
     }
 
-    public ArrayList<String> getSuggestedLocations(int capacity, int tables, int chairs, boolean hasInternet, boolean hasSoundSystem, boolean hasPresentationScreen) throws NoSuggestedLocationsException {
-        ArrayList<String> suggestedLocations = locationManager.getSuggestedLocations(capacity, tables, chairs, hasInternet, hasSoundSystem, hasPresentationScreen);
+    /**
+     * Returns an <code>ArrayList</code> of String representations of <code>Locations</code> that meet the requirements
+     * (of an <code>Event</code>).
+     *
+     * @param capacity                   capacity requirement
+     * @param tables                     tables requirement
+     * @param chairs                     chairs requirement
+     * @param requiresInternet           internet requirement
+     * @param requiresSoundSystem        sound system requirement
+     * @param requiresPresentationScreen presentation screen requirement
+     * @return <code>ArrayList</code> of String representations of <code>Locations</code> that meet the requirements
+     * @throws NoSuggestedLocationsException when no locations meet the requirements
+     */
+    public ArrayList<String> getSuggestedLocations(int capacity, int tables, int chairs, boolean requiresInternet,
+                                                   boolean requiresSoundSystem, boolean requiresPresentationScreen)
+            throws NoSuggestedLocationsException {
+        ArrayList<String> suggestedLocations = locationManager.getSuggestedLocations(capacity, tables, chairs,
+                requiresInternet, requiresSoundSystem, requiresPresentationScreen);
         if (suggestedLocations.isEmpty()) throw new NoSuggestedLocationsException();
         return suggestedLocations;
     }
 
+    /**
+     * Returns true iff given name is tied to an existing <code>Location</code>.
+     *
+     * @param name given name of supposed <code>Location</code>
+     * @return given name is tied to an existing <code>Location</code>
+     */
     public boolean isExistingLocation(String name) {
-        try { locationManager.checkExistingLocation(name); }
-        catch (LocationNotFoundException e) { return false; }
+        try {
+            locationManager.checkExistingLocation(name);
+        } catch (LocationNotFoundException e) {
+            return false;
+        }
         return true;
     }
 }

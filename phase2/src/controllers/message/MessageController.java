@@ -15,14 +15,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * Manages generic messaging functionality
- * Fields:
- * username: username of user using the program
- * am: AccountManager storing account information
- * cm: ConversationManager storing conversation information
- * ctm: ContactManager storing contact information
- * em: EventManager storing event information
-*/
+ * Controls generic messaging functionality
+ */
 public class MessageController {
     protected String username;
     protected AccountManager am;
@@ -47,11 +41,10 @@ public class MessageController {
      * Attempts to send a message to the given recipient.
      *
      * @param recipient desired recipient
-     * @param message desired message
+     * @param message   desired message
      * @throws RecipientNotFoundException when recipient does not exist
-     * @throws ContactNotFoundException when a non-existent contact is looked up
+     * @throws ContactNotFoundException   when a non-existent contact is looked up
      */
-
     public void messageAccount(String recipient, String message) throws RecipientNotFoundException, ContactNotFoundException {
         if (am.containsAttendee(username) && am.containsAttendee(recipient)) {
             boolean canSend = ctm.getContactList(username).contains(recipient) ||
@@ -67,12 +60,14 @@ public class MessageController {
      *
      * @param message message to be sent
      * @throws AccountNotFoundException when a non-existent account is looked up
-     * @throws NoRecipientsException when there are no recipients that you can send the message to
+     * @throws NoRecipientsException    when there are no recipients that you can send the message to
      */
     public void messageAllAttendees(String message) throws AccountNotFoundException, NoRecipientsException {
         Iterator<String> attendeeUsernameIterator = this.am.attendeeUsernameIterator();
         if (!attendeeUsernameIterator.hasNext()) throw new NoRecipientsException();
-        while (attendeeUsernameIterator.hasNext()) { messageAccount(attendeeUsernameIterator.next(), message); }
+        while (attendeeUsernameIterator.hasNext()) {
+            messageAccount(attendeeUsernameIterator.next(), message);
+        }
     }
 
     /**
@@ -80,11 +75,11 @@ public class MessageController {
      * at selected talks the current user is giving
      *
      * @param selectedEvents selected talks that the current user is speaking in
-     * @param message              message to be sent to attendees attending these talks
+     * @param message        message to be sent to attendees attending these talks
      * @throws RecipientNotFoundException when a non-existent recipient is referred to
-     * @throws ContactNotFoundException when a non-existent contact is referred to
-     * @throws NoRecipientsException when there are no recipients that you can send the message to
-     * @throws EventNotFoundException when one of the events is non-existent
+     * @throws ContactNotFoundException   when a non-existent contact is referred to
+     * @throws NoRecipientsException      when there are no recipients that you can send the message to
+     * @throws EventNotFoundException     when one of the events is non-existent
      */
     public void messageEventAttendees(ArrayList<Integer> selectedEvents, String message) throws RecipientNotFoundException,
             ContactNotFoundException, NoRecipientsException, EventNotFoundException {
@@ -93,7 +88,9 @@ public class MessageController {
             if (em.isSpeakerOfEvent(id, this.username)) selectedAttendees.addAll(em.fetchEventAttendeeList(id));
         }
         if (selectedAttendees.isEmpty()) throw new NoRecipientsException();
-        else for (String attendee : selectedAttendees) { messageAccount(attendee, message); }
+        else for (String attendee : selectedAttendees) {
+            messageAccount(attendee, message);
+        }
     }
 
     /**
@@ -101,11 +98,13 @@ public class MessageController {
      *
      * @param message message to be sent
      * @throws AccountNotFoundException when a non-existent account is referred to
-     * @throws NoRecipientsException when there are no recipients that you can send the message to
+     * @throws NoRecipientsException    when there are no recipients that you can send the message to
      */
     public void messageAllSpeakers(String message) throws AccountNotFoundException, NoRecipientsException {
         Iterator<String> speakerUsernameIterator = this.am.speakerUsernameIterator();
         if (!speakerUsernameIterator.hasNext()) throw new NoRecipientsException();
-        while (speakerUsernameIterator.hasNext()) { messageAccount(speakerUsernameIterator.next(), message); }
+        while (speakerUsernameIterator.hasNext()) {
+            messageAccount(speakerUsernameIterator.next(), message);
+        }
     }
 }

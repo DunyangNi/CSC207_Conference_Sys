@@ -8,15 +8,7 @@ import use_cases.account.AccountManager;
 import use_cases.message.ContactManager;
 
 /**
- * Manages account registration functionality of the program
- *
- * Fields:
- * ORGANIZER_CODE: Code required to register an organizer
- * SPEAKER_CODE: Code required to register a speaker
- * VIP_CODE: Code required to register a VIP attendee
- * AccountManager: stores account information
- * ContactManager: stores contact information
- * ConversationManager: stores conversation information
+ * Controls account registration functionality of the program
  */
 
 public class RegistrationController extends AccountController {
@@ -43,12 +35,10 @@ public class RegistrationController extends AccountController {
      * Attempts to register an account.
      *
      * @param accountType an enum representing the type of account to be registered
-     * @param username username to register
-     * @param password password to register
-     *
+     * @param username    username to register
+     * @param password    password to register
      * @throws AccountAlreadyExistsException when username is taken
      */
-
     public void register(AccountTypeEnum accountType, String username, String password)
             throws AccountAlreadyExistsException {
         switch (accountType) {
@@ -75,7 +65,6 @@ public class RegistrationController extends AccountController {
      * @param accountType an enum representing the type of account to be registered
      * @return the registration code for the corresponding account type if it exists. otherwise return null
      */
-
     public String getRegistrationCode(AccountTypeEnum accountType) {
         switch (accountType) {
             case VIP_ATTENDEE:

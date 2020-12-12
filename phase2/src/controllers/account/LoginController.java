@@ -7,18 +7,14 @@ import gateways.DataManager;
 import use_cases.account.AccountManager;
 
 /**
- * Manages login functionality for the program
- *
- * Fields:
- * AccountManager: Stores account in program
- * DataManager: Stores all data of program
+ * Controls the login functionality for the program.
  */
 public class LoginController extends AccountController {
     private final AccountManager am;
     private final DataManager dm;
 
     /**
-     * Creates an instance of <code>LoginController</code> with given parameters..
+     * Creates an instance of <code>LoginController</code> with given parameters.
      *
      * @param dm Datamanager containing the desired AccountManager
      */
@@ -28,13 +24,12 @@ public class LoginController extends AccountController {
         this.am = dm.getAccountManager();
     }
 
-
     /**
      * Attempts to log in an account with given username and password
      *
-     * @return an enum representing the account type for the username provided
      * @param username login username
      * @param password login password
+     * @return an enum representing the account type for the username provided
      */
     public ViewEnum login(String username, String password) throws IncorrectPasswordException, UserNotFoundException {
         if (!usernameExists(username)) {
@@ -48,8 +43,9 @@ public class LoginController extends AccountController {
 
     /**
      * Login Helper function.
-     * @return an enum representing the account type for the username provided
+     *
      * @param username desired username
+     * @return an enum representing the account type for the username provided
      */
     public ViewEnum loginHelper(String username) {
         ViewEnum view;
