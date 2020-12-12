@@ -58,7 +58,7 @@ public class AccountView implements View {
                 presenter.displayUserMenu();
                 break;
             case "INVALID":
-                presenter.invalidInputPrompt();
+                presenter.invalidCommandNotification();
                 break;
             default:
                 controller.getView(ViewEnum.valueOf(stringMenuEnum)).runView();

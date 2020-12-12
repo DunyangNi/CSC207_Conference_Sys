@@ -13,7 +13,8 @@ public class AccountCreationView extends RegistrationView{
     }
 
     public ViewEnum runView() {
-        presenter.startPrompt();
+        presenter.registrationHeader();
+        presenter.registrationMenu();
         AccountTypeEnum accountTypeEnum = getAccountTypeEnum();
 
         getAccountInfo(accountTypeEnum);

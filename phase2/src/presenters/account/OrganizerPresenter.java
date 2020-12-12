@@ -4,14 +4,13 @@ package presenters.account;
  * Responsible for displaying organizer user menu
  */
 public class OrganizerPresenter extends AccountPresenter {
+
     /**
      * Display organizer user menu
      */
-
     @Override
     public void displayUserMenu() {
-        System.out.println();
-        System.out.println("[ORGANIZER MENU]");
+        System.out.println("\n[ORGANIZER MENU]");
         System.out.println("============================================================");
         System.out.println("[ACCOUNT]");
         System.out.println("00 = Exit");
