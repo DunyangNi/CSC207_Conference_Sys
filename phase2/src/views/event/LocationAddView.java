@@ -9,6 +9,11 @@ import java.util.Scanner;
 
 /**
  * View responsible for adding locations
+ *
+ * Fields:
+ * locationPresenter: LocationPresenter responsible for displaying relevant prompts
+ * locationController: LocationController responsible for location functionality
+ * getInputView: GetInputView responsible for getting input
  */
 
 public class LocationAddView implements View {
@@ -17,11 +22,22 @@ public class LocationAddView implements View {
     private final GetInputView getInputView;
     private final Scanner userInput = new Scanner(System.in);
 
+    /**
+     * Constructs an instance of <code>LocationAddView</code> based on the following parameters
+     * @param locationController The given LocationController
+     * @param locationPresenter The given LocationPresenter
+     */
+
     public LocationAddView(LocationController locationController, LocationPresenter locationPresenter) {
         this.locationController = locationController;
         this.locationPresenter = locationPresenter;
         getInputView = new GetInputView(locationPresenter);
     }
+
+    /**
+     * Run the view.
+     * @return ViewEnum.VOID
+     */
 
     public ViewEnum runView() {
         locationPresenter.locationCreationHeader();

@@ -14,6 +14,10 @@ import java.util.Scanner;
 
 /**
  * View responsible for event reschedulation
+ * Fields:
+ * controller: EventController responsible for event functionality
+ * presenter: EventReschedulePresenter responsible for displaying relevant prompts
+ * getTimeView: GetTimeView responsible for getting time for event
  */
 
 public class EventRescheduleView implements View {
@@ -22,11 +26,22 @@ public class EventRescheduleView implements View {
     private final GetTimeView getTimeView;
     private final Scanner userInput = new Scanner(System.in);
 
+    /**
+     * Constructs an instance of <code>EventCreationView</code> based on the following parameters
+     * @param controller The given EventController
+     * @param presenter The given EventReschedulePresenter
+     */
+
     public EventRescheduleView(EventController controller, EventReschedulePresenter presenter) {
         this.controller = controller;
         this.presenter = presenter;
         getTimeView =  new GetTimeView(presenter);
     }
+
+    /**
+     * Run the view.
+     * @return ViewEnum.VOID
+     */
 
     public ViewEnum runView() {
         presenter.eventRescheduleHeader();

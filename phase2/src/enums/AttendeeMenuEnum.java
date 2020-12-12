@@ -1,5 +1,8 @@
 package enums;
 
+/**
+ * Represents a Attendee Menu item identifier.
+ */
 public enum AttendeeMenuEnum {
     EXIT("00"),
     LOGOUT("0"),
@@ -20,10 +23,21 @@ public enum AttendeeMenuEnum {
 
     public final String stringValue;
 
+    /**
+     * Creates an <code>AttendeeMenuEnum</code> mapping a given string value.
+     *
+     * @param stringValue given string value
+     */
     AttendeeMenuEnum(String stringValue) {
         this.stringValue = stringValue;
     }
 
+    /**
+     * Returns an <code>AttendeeMenuEnum</code> mapping a given string value.
+     *
+     * @param stringValue given string value
+     * @return <code>AttendeeMenuEnum</code> mapping a given string value
+     */
     public static AttendeeMenuEnum fromString(String stringValue) {
         for (AttendeeMenuEnum attendeeMenuEnum : AttendeeMenuEnum.values()) {
             if (attendeeMenuEnum.stringValue != null && attendeeMenuEnum.stringValue.equals(stringValue)) {

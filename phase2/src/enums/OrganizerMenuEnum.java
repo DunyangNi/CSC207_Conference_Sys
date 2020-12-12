@@ -1,7 +1,9 @@
 package enums;
 
+/**
+ * Represents a Organizer Menu item identifier.
+ */
 public enum OrganizerMenuEnum {
-    // TODO: Update numbering after all extensions are implemented
     EXIT("00"),
     LOGOUT("0"),
     CREATE_ACCOUNT("1"),
@@ -28,10 +30,21 @@ public enum OrganizerMenuEnum {
 
     public final String stringValue;
 
+    /**
+     * Creates an <code>OrganizerMenuEnum</code> mapping a given string value.
+     *
+     * @param stringValue given string value
+     */
     OrganizerMenuEnum(String stringValue) {
         this.stringValue = stringValue;
     }
 
+    /**
+     * Returns an <code>OrganizerMenuEnum</code> mapping a given string value.
+     *
+     * @param stringValue given string value
+     * @return <code>OrganizerMenuEnum</code> mapping a given string value
+     */
     public static OrganizerMenuEnum fromString(String stringValue) {
         for (OrganizerMenuEnum organizerEnum : OrganizerMenuEnum.values()) {
             if (organizerEnum.stringValue != null && organizerEnum.stringValue.equals(stringValue)) {

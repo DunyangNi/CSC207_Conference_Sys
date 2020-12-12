@@ -6,15 +6,27 @@ import java.util.Scanner;
 
 /**
  * View responsible for getting input
+ * Fields:
+ * inputErrorPresenter: InputErrorPresenter responsible for displaying input error notifications and/or prompts
  */
 
 public class GetInputView {
     private final InputErrorPresenter inputErrorPresenter;
     Scanner userInput = new Scanner(System.in);
 
+    /**
+     * Constructs an instance of <code>GetInputView</code> based on the following parameters
+     * @param presenter The given InputErrorPresenter
+     */
+
     public GetInputView(InputErrorPresenter presenter) {
         inputErrorPresenter = presenter;
     }
+
+    /**
+     * Attempt to get the positive number in the input, and displays a error notification if it fails to do so.
+     * @return positive number in userInput, if it exists. Otherwise return 0
+     */
 
     public int getPositiveNumber() {
         boolean Input = false;
@@ -31,6 +43,11 @@ public class GetInputView {
         return number;
     }
 
+    /**
+     * Attempt to get the non-negative number in the input, and displays a error notification if it fails to do so.
+     * @return non-negative number in userInput, if it exists. Otherwise return 0
+     */
+
     public int getNonNegativeNumber() {
         boolean Input = false;
         int number = 0;
@@ -45,6 +62,11 @@ public class GetInputView {
         }
         return number;
     }
+
+    /**
+     * Attempt to get the boolean in the input, and displays a error notification if it fails to do so.
+     * @return boolean in userInput, if it exists. Otherwise return false
+     */
 
     public boolean getBoolean() {
         boolean Input = false;

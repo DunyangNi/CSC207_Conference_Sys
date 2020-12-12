@@ -20,7 +20,12 @@ import java.util.Scanner;
 import static enums.EventTypeEnum.*;
 
 /**
- * View responsible for event creation
+ * View responsible for event creation schedule
+ * Fields:
+ * controller: EventController responsible for event functionality
+ * presenter: EventCreationPresenter responsible for displaying relevant prompts
+ * getInputView: GetInputView responsible for getting input
+ * getTimeView: GetTimeView responsible for getting time for event
  */
 
 public class EventCreationView implements View {
@@ -30,12 +35,23 @@ public class EventCreationView implements View {
     private final GetTimeView getTimeView;
     Scanner userInput = new Scanner(System.in);
 
+    /**
+     * Constructs an instance of <code>EventCreationView</code> based on the following parameters
+     * @param controller The given EventController
+     * @param presenter The given EventCreationPresenter
+     */
+
     public EventCreationView(EventController controller, EventCreationPresenter presenter) {
         this.controller = controller;
         this.presenter = presenter;
         getInputView = new GetInputView(presenter);
         getTimeView = new GetTimeView(presenter);
     }
+
+    /**
+     * Run the view.
+     * @return ViewEnum.VOID
+     */
 
     public ViewEnum runView() {
         presenter.eventCreationHeader();
@@ -133,6 +149,12 @@ public class EventCreationView implements View {
         return ViewEnum.VOID;
     }
 
+    /**
+     * Ask for and validate the speakers in the event creation process, based on the event type given,
+     * and return the speakers for the event
+     * @param eventType the event type enum
+     * @return speakers for the event to be created
+     */
 
     public ArrayList<String> runSpeakerInputInteraction(EventTypeEnum eventType) {
         ArrayList<String> speakers = new ArrayList<>();
