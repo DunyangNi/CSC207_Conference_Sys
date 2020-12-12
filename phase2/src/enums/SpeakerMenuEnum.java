@@ -1,7 +1,9 @@
 package enums;
 
+/**
+ * Represents a Speaker Menu item identifier.
+ */
 public enum SpeakerMenuEnum {
-    // TODO: Update numbering after all extensions are implemented
     EXIT("00"),
     LOGOUT("0"),
     VIEW_ALL_ACCOUNTS("1"),
@@ -19,10 +21,21 @@ public enum SpeakerMenuEnum {
 
     public final String stringValue;
 
+    /**
+     * Creates an <code>SpeakerMenuEnum</code> mapping a given string value.
+     *
+     * @param stringValue given string value
+     */
     SpeakerMenuEnum(String stringValue) {
         this.stringValue = stringValue;
     }
 
+    /**
+     * Returns an <code>SpeakerMenuEnum</code> mapping a given string value.
+     *
+     * @param stringValue given string value
+     * @return <code>SpeakerMenuEnum</code> mapping a given string value
+     */
     public static SpeakerMenuEnum fromString(String stringValue) {
         for (SpeakerMenuEnum speakerMenuEnum : SpeakerMenuEnum.values()) {
             if (speakerMenuEnum.stringValue != null && speakerMenuEnum.stringValue.equals(stringValue)) {

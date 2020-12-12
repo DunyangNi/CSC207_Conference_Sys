@@ -1,5 +1,8 @@
 package enums;
 
+/**
+ * Represents a VIP Attendee Menu item identifier.
+ */
 public enum VipAttendeeMenuEnum {
     EXIT("00"),
     LOGOUT("0"),
@@ -20,10 +23,21 @@ public enum VipAttendeeMenuEnum {
 
     public final String stringValue;
 
+    /**
+     * Creates an <code>VipAttendeeMenuEnum</code> mapping a given string value.
+     *
+     * @param stringValue given string value
+     */
     VipAttendeeMenuEnum(String stringValue) {
         this.stringValue = stringValue;
     }
 
+    /**
+     * Returns an <code>VipAttendeeMenuEnum</code> mapping a given string value.
+     *
+     * @param stringValue given string value
+     * @return <code>VipAttendeeMenuEnum</code> mapping a given string value
+     */
     public static VipAttendeeMenuEnum fromString(String stringValue) {
         for (VipAttendeeMenuEnum vipAttendeeMenuEnum : VipAttendeeMenuEnum.values()) {
             if (vipAttendeeMenuEnum.stringValue != null && vipAttendeeMenuEnum.stringValue.equals(stringValue)) {

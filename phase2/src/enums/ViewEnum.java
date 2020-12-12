@@ -1,5 +1,8 @@
 package enums;
 
+/**
+ * Represents a View identifier for ViewFactory.
+ */
 public enum ViewEnum {
     // Start
     START,
