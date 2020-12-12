@@ -40,7 +40,7 @@ public class AccountView implements View {
         ViewEnum viewEnum = null;
         AccountTypeEnum accountType = controller.getAccountType();
 
-        while (viewEnum != ViewEnum.LOGOUT && viewEnum != ViewEnum.EXIT) {
+        while (viewEnum != ViewEnum.START && viewEnum != ViewEnum.EXIT) {
             switch (accountType) {
                 case ORGANIZER:
                     viewEnum = getViewEnum(OrganizerMenuEnum.fromString(userInput.nextLine()));
@@ -65,7 +65,7 @@ public class AccountView implements View {
             case "EXIT":
                 return ViewEnum.EXIT;
             case "LOGOUT":
-                return ViewEnum.LOGOUT;
+                return ViewEnum.START;
             case "VIEW_ALL_ACCOUNTS":
                 presenter.displayAccountList(controller.getAccountList());
                 break;

@@ -15,8 +15,6 @@ public enum ViewEnum {
 
     // Account
     EXIT,
-    LOGOUT,
-    VIEW_ALL_ACCOUNTS,
     ADD_CONTACT,
     REMOVE_CONTACT,
     VIEW_CONTACTS,
@@ -24,8 +22,6 @@ public enum ViewEnum {
     VIEW_CONVERSATION,
     VIEW_EVENT_SCHEDULE,
     DOWNLOAD_SCHEDULE,
-    VIEW_MENU,
-    INVALID,
     VOID,
 
     // Organizer

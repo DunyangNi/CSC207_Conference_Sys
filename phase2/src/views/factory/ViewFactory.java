@@ -55,7 +55,6 @@ public class ViewFactory {
     public View getView(ViewEnum viewEnum) {
         View view = null;
         switch (viewEnum) {
-            case LOGOUT:
             case START:
                 view = new StartView(new StartPresenter());
                 break;
@@ -79,13 +78,6 @@ public class ViewFactory {
                 break;
 
             // Account
-            case EXIT:
-            case VIEW_ALL_ACCOUNTS:
-            case INVALID:
-            case VIEW_MENU:
-            case VOID:
-                break;
-
             case ADD_CONTACT:
                 view = new ContactAddView(new ContactController(dm), new ContactPresenter());
                 break;
