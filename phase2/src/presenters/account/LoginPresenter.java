@@ -1,28 +1,21 @@
 package presenters.account;
 
-import presenters.Presenter;
-
 /**
  * Responsible for displaying login related functionality prompts and messages
  */
 
-public class LoginPresenter implements Presenter {
+public class LoginPresenter {
 
     /**
-     * Header of login prompt
+     * Header of login action
      */
-    @Override
-    public void startPrompt() {
-        System.out.println();
-        System.out.println("[LOGIN MENU]");
-    }
+    public void loginHeader() { System.out.println("\n[LOGIN MENU]"); }
 
     /**
      * Asks for username
      */
-
     public void usernamePrompt() {
-        System.out.println("Enter your username:");
+        System.out.println("Please enter your username:");
     }
 
     public void usernameNotFoundNotification() {
@@ -33,7 +26,7 @@ public class LoginPresenter implements Presenter {
      * Asks for password
      */
     public void passwordPrompt() {
-        System.out.println("Enter your password:");
+        System.out.println("Please enter your password:");
     }
 
     public void incorrectPasswordNotification() {
@@ -44,8 +37,7 @@ public class LoginPresenter implements Presenter {
         System.out.println("Try again? (Y/N)");
     }
 
-    @Override
-    public void exitPrompt() {
+    public void loginFailureNotification() {
         System.out.println("{Logging in... Logged in}");
     }
 }

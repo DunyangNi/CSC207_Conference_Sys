@@ -1,4 +1,5 @@
 package presenters.account;
+
 /**
  * Responsible for displaying speaker user menu
  */
@@ -8,8 +9,7 @@ public class SpeakerPresenter extends AccountPresenter {
      */
     @Override
     public void displayUserMenu() {
-        System.out.println();
-        System.out.println("[SPEAKER MENU]");
+        System.out.println("\n[SPEAKER MENU]");
         System.out.println("============================================================");
         System.out.println("[ACCOUNT]");
         System.out.println("00 = Exit");

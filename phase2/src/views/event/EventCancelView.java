@@ -25,7 +25,6 @@ public class EventCancelView implements View {
             int id = Integer.parseInt(userInput.nextLine());
             controller.cancelEvent(id);
             presenter.cancelEventSuccessNotification();
-            presenter.exitPrompt();
         } catch (NumberFormatException e) {
             presenter.invalidIDNotification();
             presenter.cancelEventFailureNotification();

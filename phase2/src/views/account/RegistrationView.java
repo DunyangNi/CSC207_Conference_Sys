@@ -21,7 +21,8 @@ public class RegistrationView implements View {
 
     @Override
     public ViewEnum runView() {
-        presenter.startPrompt();
+        presenter.registrationHeader();
+        presenter.registrationMenu();
         AccountTypeEnum accountTypeEnum = getAccountTypeEnum();
         String registrationCode = controller.getRegistrationCode(accountTypeEnum);
 
@@ -67,7 +68,7 @@ public class RegistrationView implements View {
 
         try {
             controller.register(accountType, username, password);
-            presenter.exitPrompt();
+            presenter.registrationSuccessNotification();
         } catch (AccountAlreadyExistsException e) {
             presenter.accountAlreadyExistsNotification();
         }
