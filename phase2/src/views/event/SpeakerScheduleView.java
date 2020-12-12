@@ -7,21 +7,17 @@ import views.factory.View;
 
 /**
  * View responsible for speaker event schedule functionality
- * Frields:
- * controller: EventController responsible for event functionality
- * presenter: EventPresenter responsible for displaying relevant input
  */
-
 public class SpeakerScheduleView implements View {
     private final EventController controller;
     private final EventPresenter presenter;
 
     /**
      * Constructs an instance of <code>SpeakerScheduleView</code> based on the following parameters
+     *
      * @param controller The given EventController
-     * @param presenter The given EventPresenter
+     * @param presenter  The given EventPresenter
      */
-
     public SpeakerScheduleView(EventController controller, EventPresenter presenter) {
         this.controller = controller;
         this.presenter = presenter;
@@ -29,9 +25,9 @@ public class SpeakerScheduleView implements View {
 
     /**
      * Runs the view.
+     *
      * @return ViewEnum.VOID
      */
-
     public ViewEnum runView() {
         presenter.myEventsHeader();
         presenter.displayEventSchedule(controller.getSpeakerEvents());

@@ -6,36 +6,30 @@ import presenters.event.LocationPresenter;
 import views.factory.View;
 
 /**
- * View responsible for viewing the location list
- *
- * Fields:
- * locationPresenter: LocationPresenter responsible for displaying relevant prompts
- * locationController: LocationController responsible for location functionality
+ * View responsible for viewing the location list.
  */
-
 public class LocationListView implements View {
-
-    private final LocationPresenter locationPresenter;
-    private final LocationController locationController;
+    private final LocationPresenter presenter;
+    private final LocationController controller;
 
     /**
      * Constructs an instance of <code>LocationListView</code> based on the following parameters
-     * @param locationController The given LocationController
-     * @param locationPresenter The given LocationPresenter
+     *
+     * @param controller The given LocationController
+     * @param presenter  The given LocationPresenter
      */
-
-    public LocationListView(LocationController locationController, LocationPresenter locationPresenter) {
-        this.locationController = locationController;
-        this.locationPresenter = locationPresenter;
+    public LocationListView(LocationController controller, LocationPresenter presenter) {
+        this.controller = controller;
+        this.presenter = presenter;
     }
 
     /**
-     * Run the view.
+     * Runs the view.
+     *
      * @return ViewEnum.VOID
      */
-
     public ViewEnum runView() {
-        locationPresenter.displayLocations(locationController.getLocationsAsString());
+        presenter.displayLocations(controller.getLocationsAsString());
         return ViewEnum.VOID;
     }
 }

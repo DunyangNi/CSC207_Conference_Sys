@@ -10,13 +10,8 @@ import views.factory.View;
 import java.util.Scanner;
 
 /**
- * View responsible for login functionality
- * Fields:
- * controller: LoginController responsible for login functionality
- * presenter: LoginPresenter responsible for displaying relevant prompts and messages
- * userInput: Responsible for receiving the user's input
+ * View responsible for login functionality.
  */
-
 public class LoginView implements View {
     private final LoginController controller;
     private final LoginPresenter presenter;
@@ -24,29 +19,28 @@ public class LoginView implements View {
 
     /**
      * Constructs an instance of <code>LoginView</code> based on the following parameters
+     *
      * @param controller The given LoginController
-     * @param presenter The given LoginPresenter
+     * @param presenter  The given LoginPresenter
      */
-
     public LoginView(LoginController controller, LoginPresenter presenter) {
         this.controller = controller;
         this.presenter = presenter;
     }
 
     /**
-     * Run the view.
+     * Runs the view.
+     *
      * @return ViewEnum.LOGIN or ViewEnum.START or viewEnum based on the login result and the user's choice
      * of whether to attempt a login again
      */
-
     public ViewEnum runView() {
         presenter.loginHeader();
         presenter.usernamePrompt();
         String username = userInput.nextLine();
         presenter.passwordPrompt();
         String password = userInput.nextLine();
-
-        try{
+        try {
             ViewEnum viewEnum = controller.login(username, password);
             presenter.loginFailureNotification();
             return viewEnum;

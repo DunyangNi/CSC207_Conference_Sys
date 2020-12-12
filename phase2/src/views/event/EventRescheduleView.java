@@ -13,13 +13,8 @@ import java.util.Calendar;
 import java.util.Scanner;
 
 /**
- * View responsible for event reschedulation
- * Fields:
- * controller: EventController responsible for event functionality
- * presenter: EventReschedulePresenter responsible for displaying relevant prompts
- * getTimeView: GetTimeView responsible for getting time for event
+ * View responsible for event rescheduling.
  */
-
 public class EventRescheduleView implements View {
     private final EventController controller;
     private final EventReschedulePresenter presenter;
@@ -28,24 +23,23 @@ public class EventRescheduleView implements View {
 
     /**
      * Constructs an instance of <code>EventCreationView</code> based on the following parameters
+     *
      * @param controller The given EventController
-     * @param presenter The given EventReschedulePresenter
+     * @param presenter  The given EventReschedulePresenter
      */
-
     public EventRescheduleView(EventController controller, EventReschedulePresenter presenter) {
         this.controller = controller;
         this.presenter = presenter;
-        getTimeView =  new GetTimeView(presenter);
+        getTimeView = new GetTimeView(presenter);
     }
 
     /**
-     * Run the view.
+     * Runs the view.
+     *
      * @return ViewEnum.VOID
      */
-
     public ViewEnum runView() {
         presenter.eventRescheduleHeader();
-
         boolean chosenID = false;
         int id = 0;
         while (!chosenID) {
@@ -53,11 +47,11 @@ public class EventRescheduleView implements View {
                 presenter.eventIDPrompt();
                 id = Integer.parseInt(userInput.nextLine());
                 chosenID = true;
-            } catch (NumberFormatException e) { presenter.nonNegativeNumberNotification(); }
+            } catch (NumberFormatException e) {
+                presenter.nonNegativeNumberNotification();
+            }
         }
-
         Calendar newTime = getTimeView.runTimeView();
-
         try {
             controller.rescheduleEvent(id, newTime);
             presenter.eventRescheduleSuccessNotification();
