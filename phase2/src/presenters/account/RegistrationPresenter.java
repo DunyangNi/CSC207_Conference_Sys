@@ -3,7 +3,13 @@ package presenters.account;
 import enums.AccountTypeEnum;
 import presenters.Presenter;
 
+/**
+ * Responsible for displaying registration functionality prompts and messages
+ */
 public class RegistrationPresenter implements Presenter {
+    /**
+     * Header of registration prompt
+     */
     @Override
     public void startPrompt() {
         System.out.println();
@@ -18,6 +24,10 @@ public class RegistrationPresenter implements Presenter {
         System.out.println("{Invalid input, please try again.}");
     }
 
+    /**
+     * Asks for registration code (if applicable) based on account type
+     * @param accountTypeEnum an enum representing an account type
+     */
     public void registrationCodePrompt(AccountTypeEnum accountTypeEnum) {
         switch (accountTypeEnum) {
             case SPEAKER:
@@ -38,6 +48,10 @@ public class RegistrationPresenter implements Presenter {
         System.out.println("{Incorrect code, please try again.}");
     }
 
+    /**
+     * Asks for username
+     */
+
     public void usernamePrompt() {
         System.out.println("Enter a username:");
     }
@@ -45,6 +59,10 @@ public class RegistrationPresenter implements Presenter {
     public void takenUsernameNotification() {
         System.out.println("{This username is taken, please try again.}");
     }
+
+    /**
+     * Asks for password
+     */
 
     public void passwordPrompt() {
         System.out.println("Enter a password:");

@@ -1,6 +1,13 @@
 package presenters.account;
 
+/**
+ * Responsible for displaying organizer user menu
+ */
 public class OrganizerPresenter extends AccountPresenter {
+    /**
+     * Display organizer user menu
+     */
+
     @Override
     public void displayUserMenu() {
         System.out.println();

@@ -2,12 +2,24 @@ package presenters.account;
 
 import presenters.Presenter;
 
+/**
+ * Responsible for displaying login related functionality prompts and messages
+ */
+
 public class LoginPresenter implements Presenter {
+
+    /**
+     * Header of login prompt
+     */
     @Override
     public void startPrompt() {
         System.out.println();
         System.out.println("[LOGIN MENU]");
     }
+
+    /**
+     * Asks for username
+     */
 
     public void usernamePrompt() {
         System.out.println("Enter your username:");
@@ -17,6 +29,9 @@ public class LoginPresenter implements Presenter {
         System.out.println("{This username does not exist, please try again.}");
     }
 
+    /**
+     * Asks for password
+     */
     public void passwordPrompt() {
         System.out.println("Enter your password:");
     }

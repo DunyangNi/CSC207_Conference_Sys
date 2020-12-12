@@ -1,6 +1,11 @@
 package presenters.account;
-
+/**
+ * Responsible for displaying VIP attendee user menu
+ */
 public class VipAttendeePresenter extends AttendeePresenter {
+    /**
+     * Display VIP attendee user menu
+     */
     @Override
     public void displayUserMenu() {
         System.out.println();
