@@ -7,6 +7,10 @@ import views.View;
 
 import java.util.Scanner;
 
+/**
+ * View responsible for user menu display and interaction
+ */
+
 public class AccountView implements View {
     private final AccountController controller;
     private final AccountPresenter presenter;

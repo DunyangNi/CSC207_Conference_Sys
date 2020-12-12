@@ -13,6 +13,10 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * View responsible for messaging all attendees at an event
+ */
+
 public class MessageEventAttendeesView implements View {
     private final MessageController controller;
     private final MessagePresenter presenter;

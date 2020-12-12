@@ -14,6 +14,10 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Set;
 
+/**
+ * View responsible for viewing messages
+ */
+
 public class ConversationView implements View {
     private final ConversationPresenter presenter;
     private final ConversationController controller;

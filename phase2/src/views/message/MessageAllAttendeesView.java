@@ -10,6 +10,10 @@ import views.View;
 
 import java.util.Scanner;
 
+/**
+ * View responsible for messaging all attendees
+ */
+
 public class MessageAllAttendeesView implements View {
     private final MessageController controller;
     private final MessagePresenter presenter;

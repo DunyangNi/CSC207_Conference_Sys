@@ -4,6 +4,10 @@ import views.View;
 import presenters.request.ResolvedRequestsPresenter;
 import enums.ViewEnum;
 
+/**
+ * View responsible for viewing all resolved requests
+ */
+
 public class ResolvedRequestsListView implements View{
 
     private final RequestController controller;

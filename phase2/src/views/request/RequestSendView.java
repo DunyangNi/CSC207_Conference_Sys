@@ -5,6 +5,10 @@ import presenters.request.RequestSendPresenter;
 import enums.ViewEnum;
 import views.View;
 
+/**
+ * View responsible for sending requests
+ */
+
 public class RequestSendView implements View {
 
     private final RequestController controller;

@@ -9,6 +9,10 @@ import views.View;
 
 import java.util.Scanner;
 
+/**
+ * View responsible for contact adding functionality
+ */
+
 public class ContactAddView implements View {
     private final ContactController controller;
     private final ContactPresenter presenter;

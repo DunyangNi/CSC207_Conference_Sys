@@ -4,6 +4,10 @@ import presenters.InputErrorPresenter;
 
 import java.util.Scanner;
 
+/**
+ * View responsible for getting input
+ */
+
 public class GetInputView {
     private final InputErrorPresenter inputErrorPresenter;
     Scanner userInput = new Scanner(System.in);

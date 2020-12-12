@@ -5,6 +5,9 @@ import enums.ViewEnum;
 import presenters.event.LocationPresenter;
 import views.View;
 
+/**
+ * View responsible for viewing the location list
+ */
 
 public class LocationListView implements View {
 

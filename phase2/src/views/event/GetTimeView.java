@@ -6,6 +6,10 @@ import presenters.TimePresenter;
 import java.util.Calendar;
 import java.util.Scanner;
 
+/**
+ * View responsible for getting time
+ */
+
 public class GetTimeView {
     private final TimePresenter presenter;
     private final Scanner userInput = new Scanner(System.in);

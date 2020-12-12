@@ -19,6 +19,10 @@ import java.util.Scanner;
 
 import static enums.EventTypeEnum.*;
 
+/**
+ * View responsible for event creation
+ */
+
 public class EventCreationView implements View {
     private final EventController controller;
     private final EventCreationPresenter presenter;
