@@ -1,16 +1,14 @@
 import enums.ViewEnum;
 import gateways.*;
-import use_cases.message.ConversationManager;
-import use_cases.request.RequestManager;
 import use_cases.account.AccountManager;
-import use_cases.message.ContactManager;
 import use_cases.event.EventManager;
 import use_cases.event.LocationManager;
+import use_cases.message.ContactManager;
+import use_cases.message.ConversationManager;
+import use_cases.request.RequestManager;
 import views.factory.ViewFactory;
 
 public class ConferenceSystem {
-
-
     /**
      * Runs the entire conference program by calling the run method in this class
      *
@@ -22,7 +20,7 @@ public class ConferenceSystem {
     }
 
     /**
-     * Runs the entire conference program starting with the login screen
+     * Runs the entire conference program starting with the Start Menu.
      */
     public void run() {
         DataManager dm = readData();
@@ -35,7 +33,7 @@ public class ConferenceSystem {
     }
 
     /**
-     * Read data from the datamanagers to create use cases which will be used in the program.
+     * Read data from the DataManagers to instantiate Use Case classes which will be used in the program.
      */
     private DataManager readData() {
         AccountDataManager accountDataManager = new AccountDataManager();
