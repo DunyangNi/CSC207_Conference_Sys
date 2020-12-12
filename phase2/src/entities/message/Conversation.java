@@ -59,12 +59,4 @@ public class Conversation implements Serializable {
      * @param messages new <code>ArrayList</code> of given <code>Message</code> IDs
      */
     public void setMessages(ArrayList<Integer> messages) { this.messages = messages; }
-
-    private ArrayList<String> toArrayList() {
-        ArrayList<String> conversation = new ArrayList<>();
-        for(Integer m: messages) {
-            conversation.add(m.toString());
-        }
-        return conversation;
-    }
 }

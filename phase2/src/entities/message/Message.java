@@ -3,7 +3,7 @@ package entities.message;
 import java.io.Serializable;
 
 /**
- * Represents a message which can be exchanged between Accounts in a Conversation.
+ * Represents a message which can be exchanged between Accounts in a <code>Conversation</code>.
  */
 public class Message implements Serializable {
     private final String sender;
@@ -13,9 +13,8 @@ public class Message implements Serializable {
     private final int id;
 
     /**
-     * Creates an instance of <code>Message</code> with an assigned ID,
-     * sender username, recipient username, content, and <code>Message</code> ID
-     * this instance is replying to.
+     * Creates an instance of <code>Message</code> with an assigned ID, Strings of information,
+     * and the ID of a message to reply to.
      *
      * @param id assigned ID
      * @param sender given sender username
@@ -32,10 +31,7 @@ public class Message implements Serializable {
     }
 
     /**
-     * Creates an instance of <code>Message</code> with an assigned ID,
-     * sender username, recipient username, and content. This instance is
-     * meant to be the first message sent in a new <code>Conversation</code>,
-     * thus there is no <code>Message</code> to reply to.
+     * Creates an instance of <code>Message</code> with an assigned ID and Strings of information.
      *
      * @param id assigned ID
      * @param sender given sender username
