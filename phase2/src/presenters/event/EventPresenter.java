@@ -1,23 +1,15 @@
 package presenters.event;
 
-import presenters.Presenter;
-
 import java.util.ArrayList;
 
-public class EventPresenter implements Presenter {
-    @Override
-    public void startPrompt() {
-    }
-
+public class EventPresenter {
     public void myEventsHeader() {
-        System.out.println();
-        System.out.println("[MY EVENTS SCHEDULE]");
+        System.out.println("\n[MY EVENTS SCHEDULE]");
         System.out.println("============================================================");
     }
 
     public void allEventsHeader() {
-        System.out.println();
-        System.out.println("[ALL EVENTS SCHEDULE]");
+        System.out.println("\n[ALL EVENTS SCHEDULE]");
         System.out.println("============================================================");
     }
 
@@ -28,9 +20,5 @@ public class EventPresenter implements Presenter {
             System.out.println();
         }
         System.out.println("============================================================");
-    }
-
-    @Override
-    public void exitPrompt() {
     }
 }

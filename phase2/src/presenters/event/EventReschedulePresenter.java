@@ -2,18 +2,12 @@ package presenters.event;
 
 import presenters.EventErrorPresenter;
 import presenters.InputErrorPresenter;
-import presenters.Presenter;
 import presenters.TimePresenter;
 
-public class EventReschedulePresenter implements Presenter, InputErrorPresenter, EventErrorPresenter, TimePresenter {
-    @Override
-    public void startPrompt() {
-        System.out.println();
-        System.out.println("[RESCHEDULE EVENT]");
-    }
+public class EventReschedulePresenter implements InputErrorPresenter, EventErrorPresenter, TimePresenter {
+    public void eventRescheduleHeader() { System.out.println("\n[RESCHEDULE EVENT]"); }
 
-    @Override
-    public void exitPrompt() {
+    public void eventRescheduleSuccessNotification() {
         System.out.println("{Event Rescheduling successful!}");
     }
 

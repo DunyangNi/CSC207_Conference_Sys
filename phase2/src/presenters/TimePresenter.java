@@ -3,7 +3,7 @@ package presenters;
 import java.util.Calendar;
 
 public interface TimePresenter {
-    default void startPrompt() {
+    default void timeInputPrompt() {
         System.out.println("You will now input a time slot. ");
     }
 
