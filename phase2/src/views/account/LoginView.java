@@ -36,7 +36,7 @@ public class LoginView implements View {
             presenter.incorrectPasswordNotification();
         }
         presenter.failedLoginPrompt();
-        String input = userInput.nextLine(); //TODO Use GetInputView instead?
+        String input = userInput.nextLine();
         if (input.equals("Y")) {
             return ViewEnum.LOGIN;
         } else {
