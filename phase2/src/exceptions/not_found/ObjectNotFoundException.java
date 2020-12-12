@@ -1,5 +1,8 @@
 package exceptions.not_found;
 
+/**
+ * Thrown when object is not found
+ */
 public class ObjectNotFoundException extends Exception{
     /**
      * Conflict arises when an object that is being requested does not exist

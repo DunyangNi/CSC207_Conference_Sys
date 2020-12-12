@@ -1,5 +1,6 @@
 package exceptions.conflict;
 
-import exceptions.conflict.ConflictException;
-
+/**
+ * Thrown when the location is booked at given time.
+ */
 public class LocationInUseException extends ConflictException { }
