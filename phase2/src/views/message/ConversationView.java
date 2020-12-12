@@ -26,6 +26,7 @@ public class ConversationView implements View {
 
     @Override
     public ViewEnum runView() {
+        presenter.conversationHeader();
         try {
             Set<String> recipients = controller.getAllUserConversationRecipients();
             presenter.displayConversations(recipients);
@@ -38,10 +39,10 @@ public class ConversationView implements View {
 
             ArrayList<String> messages = controller.viewMessagesFrom(recipient, numMessages);
             if(!controller.contactable(recipient)){
-                presenter.notInContactNotification();
+                presenter.contactNotFoundNotification();
             }
-            presenter.displayConversationMessages(messages);
-        } catch (InputMismatchException e){
+            presenter.displayConversationMessages(recipient, messages);
+        } catch (InputMismatchException e) {
             presenter.inputMismatchNotification();
         } catch (NonPositiveIntegerException | NumberFormatException e) {
             presenter.positiveNumberNotification();
