@@ -6,7 +6,7 @@ import enums.ViewEnum;
 import exceptions.not_found.AttendeeNotFoundException;
 import exceptions.not_found.EventNotFoundException;
 import presenters.event.SignupCancelPresenter;
-import views.start.View;
+import views.factory.View;
 
 import java.util.Scanner;
 

@@ -1,6 +1,6 @@
 package views.request;
 import controllers.request.RequestController;
-import views.start.View;
+import views.factory.View;
 import presenters.request.ResolvedRequestsPresenter;
 import enums.ViewEnum;
 

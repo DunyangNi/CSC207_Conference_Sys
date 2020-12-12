@@ -2,6 +2,7 @@ package views.start;
 
 import enums.ViewEnum;
 import presenters.start.StartPresenter;
+import views.factory.View;
 
 import java.util.Scanner;
 

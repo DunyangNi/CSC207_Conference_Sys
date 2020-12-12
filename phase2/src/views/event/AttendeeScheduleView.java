@@ -3,7 +3,7 @@ package views.event;
 import controllers.event.EventController;
 import enums.ViewEnum;
 import presenters.event.EventPresenter;
-import views.start.View;
+import views.factory.View;
 
 /**
  * View responsible for viewing an attendee's event schedule

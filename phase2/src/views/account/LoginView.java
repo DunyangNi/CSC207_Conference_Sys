@@ -5,7 +5,7 @@ import enums.ViewEnum;
 import exceptions.conflict.IncorrectPasswordException;
 import exceptions.not_found.UserNotFoundException;
 import presenters.account.LoginPresenter;
-import views.start.View;
+import views.factory.View;
 
 import java.util.Scanner;
 

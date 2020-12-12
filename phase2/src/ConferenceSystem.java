@@ -6,7 +6,7 @@ import use_cases.account.AccountManager;
 import use_cases.message.ContactManager;
 import use_cases.event.EventManager;
 import use_cases.event.LocationManager;
-import views.start.ViewFactory;
+import views.factory.ViewFactory;
 
 public class ConferenceSystem {
 

@@ -3,7 +3,7 @@ package views.message;
 import controllers.message.ContactController;
 import enums.ViewEnum;
 import presenters.message.ContactPresenter;
-import views.start.View;
+import views.factory.View;
 
 /**
  * View responsible for seeing the contact list

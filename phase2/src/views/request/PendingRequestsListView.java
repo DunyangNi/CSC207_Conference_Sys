@@ -1,7 +1,7 @@
 package views.request;
 import controllers.request.RequestController;
 import presenters.request.PendingRequestsPresenter;
-import views.start.View;
+import views.factory.View;
 import enums.ViewEnum;
 
 /**

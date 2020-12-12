@@ -5,7 +5,7 @@ import enums.ViewEnum;
 import exceptions.conflict.AlreadyContactException;
 import exceptions.not_found.AccountNotFoundException;
 import presenters.message.ContactPresenter;
-import views.start.View;
+import views.factory.View;
 
 import java.util.Scanner;
 

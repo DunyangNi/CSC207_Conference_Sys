@@ -4,7 +4,7 @@ import controllers.event.EventController;
 import enums.ViewEnum;
 import presenters.event.EventCancelPresenter;
 import exceptions.not_found.EventNotFoundException;
-import views.start.View;
+import views.factory.View;
 
 import java.util.Scanner;
 
