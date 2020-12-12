@@ -1,10 +1,10 @@
-package controllers.account;
+package controllers.message;
 
 import exceptions.conflict.AlreadyContactException;
 import exceptions.not_found.AccountNotFoundException;
 import exceptions.not_found.ContactNotFoundException;
 import gateways.DataManager;
-import use_cases.account.ContactManager;
+import use_cases.message.ContactManager;
 
 import java.util.ArrayList;
 

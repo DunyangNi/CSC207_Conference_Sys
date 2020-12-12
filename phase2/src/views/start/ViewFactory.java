@@ -1,7 +1,7 @@
-package views;
+package views.start;
 
 import controllers.account.AccountController;
-import controllers.account.ContactController;
+import controllers.message.ContactController;
 import controllers.account.LoginController;
 import controllers.account.RegistrationController;
 import controllers.event.DownloadScheduleController;
@@ -12,9 +12,10 @@ import controllers.message.MessageController;
 import controllers.request.RequestController;
 import enums.ViewEnum;
 import gateways.DataManager;
-import presenters.StartPresenter;
+import presenters.start.StartPresenter;
 import presenters.account.*;
 import presenters.event.*;
+import presenters.message.ContactPresenter;
 import presenters.message.ConversationPresenter;
 import presenters.message.MessagePresenter;
 import presenters.request.PendingRequestsPresenter;

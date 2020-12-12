@@ -1,6 +1,6 @@
 package gateways;
 
-import use_cases.RequestManager;
+import use_cases.request.RequestManager;
 
 import java.io.IOException;
 

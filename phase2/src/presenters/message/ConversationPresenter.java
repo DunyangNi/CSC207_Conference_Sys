@@ -1,6 +1,6 @@
 package presenters.message;
 
-import presenters.InputErrorPresenter;
+import presenters.interfaces.InputErrorPresenter;
 
 import java.util.ArrayList;
 import java.util.Set;

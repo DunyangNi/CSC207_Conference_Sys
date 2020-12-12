@@ -7,7 +7,7 @@ import exceptions.conflict.LocationInUseException;
 import exceptions.conflict.SpeakerIsBusyException;
 import exceptions.not_found.EventNotFoundException;
 import presenters.event.EventReschedulePresenter;
-import views.View;
+import views.start.View;
 
 import java.util.Calendar;
 import java.util.Scanner;

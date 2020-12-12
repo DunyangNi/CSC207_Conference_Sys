@@ -7,7 +7,7 @@ import exceptions.NonPositiveIntegerException;
 import exceptions.not_found.MessageNotFoundException;
 import exceptions.not_found.RecipientNotFoundException;
 import presenters.message.ConversationPresenter;
-import views.View;
+import views.start.View;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;

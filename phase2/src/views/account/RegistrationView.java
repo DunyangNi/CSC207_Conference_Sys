@@ -5,7 +5,7 @@ import enums.AccountTypeEnum;
 import enums.ViewEnum;
 import exceptions.already_exists.AccountAlreadyExistsException;
 import presenters.account.RegistrationPresenter;
-import views.View;
+import views.start.View;
 
 import java.util.Scanner;
 

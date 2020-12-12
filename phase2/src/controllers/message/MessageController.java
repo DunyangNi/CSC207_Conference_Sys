@@ -6,9 +6,9 @@ import exceptions.not_found.ContactNotFoundException;
 import exceptions.not_found.EventNotFoundException;
 import exceptions.not_found.RecipientNotFoundException;
 import gateways.DataManager;
-import use_cases.ConversationManager;
+import use_cases.message.ConversationManager;
 import use_cases.account.AccountManager;
-import use_cases.account.ContactManager;
+import use_cases.message.ContactManager;
 import use_cases.event.EventManager;
 
 import java.util.ArrayList;

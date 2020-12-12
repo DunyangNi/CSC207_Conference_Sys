@@ -3,7 +3,7 @@ package views.event;
 import controllers.event.EventController;
 import enums.ViewEnum;
 import presenters.event.EventPresenter;
-import views.View;
+import views.start.View;
 
 /**
  * View responsible for speaker event schedule functionality

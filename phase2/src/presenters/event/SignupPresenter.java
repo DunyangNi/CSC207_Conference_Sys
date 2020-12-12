@@ -1,7 +1,7 @@
 package presenters.event;
 
-import presenters.EventErrorPresenter;
-import presenters.InputErrorPresenter;
+import presenters.interfaces.EventErrorPresenter;
+import presenters.interfaces.InputErrorPresenter;
 
 /**
  * Responsible for displaying event signup functionality prompts and notifications

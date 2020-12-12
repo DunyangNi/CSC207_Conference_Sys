@@ -1,7 +1,7 @@
 package views.event;
 
 import exceptions.PastTimeException;
-import presenters.TimePresenter;
+import presenters.interfaces.TimePresenter;
 
 import java.util.Calendar;
 import java.util.Scanner;

@@ -1,4 +1,4 @@
-package presenters;
+package presenters.interfaces;
 
 public interface InputErrorPresenter {
     default void invalidNumberNotification() {

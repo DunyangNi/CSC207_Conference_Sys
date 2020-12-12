@@ -3,7 +3,7 @@ package views.event;
 import controllers.event.LocationController;
 import enums.ViewEnum;
 import presenters.event.LocationPresenter;
-import views.View;
+import views.start.View;
 
 /**
  * View responsible for viewing the location list

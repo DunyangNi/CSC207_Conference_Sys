@@ -1,7 +1,7 @@
-package views;
+package views.start;
 
 import enums.ViewEnum;
-import presenters.StartPresenter;
+import presenters.start.StartPresenter;
 
 import java.util.Scanner;
 

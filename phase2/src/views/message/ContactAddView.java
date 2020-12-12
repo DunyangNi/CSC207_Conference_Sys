@@ -1,11 +1,11 @@
-package views.account;
+package views.message;
 
-import controllers.account.ContactController;
+import controllers.message.ContactController;
 import enums.ViewEnum;
 import exceptions.conflict.AlreadyContactException;
 import exceptions.not_found.AccountNotFoundException;
-import presenters.account.ContactPresenter;
-import views.View;
+import presenters.message.ContactPresenter;
+import views.start.View;
 
 import java.util.Scanner;
 

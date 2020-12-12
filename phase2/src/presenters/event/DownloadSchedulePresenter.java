@@ -1,6 +1,6 @@
 package presenters.event;
 
-import presenters.InputErrorPresenter;
+import presenters.interfaces.InputErrorPresenter;
 
 /**
  * Represents a presenter for downloading event schdules

@@ -1,4 +1,4 @@
-package presenters;
+package presenters.interfaces;
 
 public interface EventErrorPresenter {
     default void invalidLocationNotification() { System.out.println("{Sorry, this location could not be found.}"); }

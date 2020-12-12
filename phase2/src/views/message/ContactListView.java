@@ -1,9 +1,9 @@
-package views.account;
+package views.message;
 
-import controllers.account.ContactController;
+import controllers.message.ContactController;
 import enums.ViewEnum;
-import presenters.account.ContactPresenter;
-import views.View;
+import presenters.message.ContactPresenter;
+import views.start.View;
 
 /**
  * View responsible for seeing the contact list

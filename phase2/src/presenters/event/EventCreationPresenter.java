@@ -1,8 +1,8 @@
 package presenters.event;
 
-import presenters.EventErrorPresenter;
-import presenters.InputErrorPresenter;
-import presenters.TimePresenter;
+import presenters.interfaces.EventErrorPresenter;
+import presenters.interfaces.InputErrorPresenter;
+import presenters.interfaces.TimePresenter;
 
 import java.util.ArrayList;
 

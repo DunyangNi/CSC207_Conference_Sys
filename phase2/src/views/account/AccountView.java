@@ -3,7 +3,7 @@ package views.account;
 import controllers.account.AccountController;
 import enums.*;
 import presenters.account.AccountPresenter;
-import views.View;
+import views.start.View;
 
 import java.util.Scanner;
 

@@ -1,6 +1,6 @@
-package use_cases;
+package use_cases.request;
 
-import entities.Request;
+import entities.request.Request;
 import exceptions.not_found.ObjectNotFoundException;
 
 import java.io.Serializable;
