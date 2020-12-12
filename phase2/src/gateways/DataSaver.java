@@ -2,7 +2,16 @@ package gateways;
 
 import java.io.*;
 
+/**
+ * Allows to save data and managers (Account, Event, ...) in files
+ */
 public interface DataSaver {
+
+    /**
+     * Saves data in a file through a path
+     * @param filePath given path
+     * @param ser given Serializable
+     */
     default void saveSerializable(String filePath, Serializable ser) throws IOException {
         OutputStream file = new FileOutputStream(filePath);
         OutputStream buffer = new BufferedOutputStream(file);
@@ -13,6 +22,11 @@ public interface DataSaver {
         file.close();
     }
 
+    /**
+     * Save (insert word) data so that the (insert word) manager information is saved
+     * @param filePath given path
+     * @param manager given manager
+     */
     default void saveManager(String filePath, Serializable manager) {
         try {
             saveSerializable(filePath, manager);
