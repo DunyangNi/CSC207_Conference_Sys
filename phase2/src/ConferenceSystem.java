@@ -34,6 +34,7 @@ public class ConferenceSystem {
 
     /**
      * Read data from the DataManagers to instantiate Use Case classes which will be used in the program.
+     * @return a new Datamanager storing all use case managers which will be used in the program.
      */
     private DataManager readData() {
         AccountDataManager accountDataManager = new AccountDataManager();

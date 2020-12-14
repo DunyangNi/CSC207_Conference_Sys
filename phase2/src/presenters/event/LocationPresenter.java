@@ -89,6 +89,7 @@ public class LocationPresenter implements InputErrorPresenter {
 
     /**
      * Displays all locations
+     * @param locationStrings list of names of all locations
      */
 
     public void displayLocations(ArrayList<String> locationStrings) {

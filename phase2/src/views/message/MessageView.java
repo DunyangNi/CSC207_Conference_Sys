@@ -34,7 +34,7 @@ public class MessageView implements View {
 
     /**
      * Runs the view.
-     * @return @ViewEnum.VOID
+     * @return ViewEnum.VOID
      */
 
     public ViewEnum runView() {

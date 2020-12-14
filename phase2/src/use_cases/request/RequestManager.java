@@ -87,7 +87,6 @@ public class RequestManager implements Serializable {
      * @param request desired Request
      * @return String representation of a request
      */
-    // TODO Fix getRequestInfo implementation. String representation should not exist outside of Presenter.
     public String getRequestInfo(Request request) {
         return "Request ID: " + request.getRequestID() + "\n" +
                 "Time of request: " + request.getTimeOfRequest().getTime().toString() + "\n" +
@@ -97,7 +96,6 @@ public class RequestManager implements Serializable {
                 + "\n";
     }
 
-    // TODO Example fix:
     public HashMap<String, String> getRequestInfoMap(Request request) {
         HashMap<String, String> requestInfoMap = new HashMap<>();
 

@@ -130,6 +130,7 @@ public class EventManager implements Serializable, HTMLWritable {
      * @param chairs desired chair count
      * @param hasInternet desired internet requirement
      * @param hasSoundSystem desired sound system requirement
+     * @param hasPresentationScreen desired presentation screen requirement
      * @param vipOnly desired VIP restriction status
      *
      * @throws InvalidEventTypeException when type is an invalid event type
@@ -183,13 +184,15 @@ public class EventManager implements Serializable, HTMLWritable {
     }
 
     /**
-     * Checks if a hypothetical event given a time and location would be valid (no conflict) with given list
-     * of speakers
+     * Checks if a hypothetical event given a time, location and list of speakers would be valid (no conflict)
      *
      * @param time hypothetical time
      * @param location hypothetical location
+     * @param speakers list of hypothetical speakers
      *
-     * For the throws, check out the method in EventChecker
+     * @throws OutOfScheduleException when the event time is invalid
+     * @throws LocationInUseException when the hypothetical event would cause a double booking of a location
+     * @throws SpeakerIsBusyException when the hypothetical event would cause a double booking of a speaker
      */
 
     public void checkValidEvent(Calendar time, String location, ArrayList<String> speakers) throws OutOfScheduleException,

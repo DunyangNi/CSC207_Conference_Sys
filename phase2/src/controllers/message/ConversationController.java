@@ -51,7 +51,9 @@ public class ConversationController {
     }
 
     /**
-     * @return True iff the recipient is eligible to be contacted by the user.
+     * @param recipient name of user who you want to contact
+     * @return True iff the recipient is eligible to be contacted by the user, which happens when
+     * the user with username username has the user with username recipient as a contact
      */
     public boolean contactable(String recipient) {
         if (am.containsAttendee(username) && am.containsAttendee(recipient)) {
@@ -68,6 +70,7 @@ public class ConversationController {
      *
      * @param sender               Desired sender
      * @param numMessagesRequested Number of messages requested to view
+     * @return list of messages from the sender
      * @throws NonPositiveIntegerException when numMessagesRequested is non-positive
      * @throws NoMessagesException         when there are no messages from sender
      * @throws MessageNotFoundException    when a non-existent message is looked up

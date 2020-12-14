@@ -74,6 +74,7 @@ public class EventController {
      *
      * @param id      ID of desired event
      * @param newTime desired time
+     * @throws EventNotFoundException when the event ID is invalid (No such event)
      * @throws OutOfScheduleException when selected time is outside of schedule (9 AM to 4 PM)
      * @throws SpeakerIsBusyException to prevent double booking of speaker
      * @throws LocationInUseException to prevent double booking of location
@@ -120,6 +121,8 @@ public class EventController {
      *
      * @param eventType an enum representing the event type
      * @param speakers  list of usernames of speakers
+     * @throws SpeakerNotFoundException when one of the given speakers is not registered in the system
+     * @throws NotEnoughSpeakersException when the given list does not have enough speakers for the event type
      */
     public void checkValidSpeaker(EventTypeEnum eventType, ArrayList<String> speakers) throws SpeakerNotFoundException,
             NotEnoughSpeakersException {
@@ -138,6 +141,10 @@ public class EventController {
      * Signs up user for a <code>Event</code> of a given ID.
      *
      * @param id given ID of <code>Event</code>
+     * @throws VipRestrictedException when the event is VIP only and signing up would violate this
+     * @throws EventNotFoundException when the event ID is invalid (No such event)
+     * @throws EventIsFullException when the event is full
+     * @throws AlreadySignedUpException when the user is already signed up to the event
      */
     public void signupForEvent(Integer id) throws VipRestrictedException, EventNotFoundException,
             EventIsFullException, AlreadySignedUpException {
@@ -153,6 +160,8 @@ public class EventController {
      * Cancels signing up user for a <code>Event</code> of a given ID.
      *
      * @param id given ID of <code>Event</code>
+     * @throws EventNotFoundException when the event ID is invalid (No such event)
+     * @throws AttendeeNotFoundException when there isn't an attendee signed up the event with the given username
      */
     public void cancelSignupForEvent(Integer id) throws EventNotFoundException, AttendeeNotFoundException {
         eventManager.removeAttendee(id, username);

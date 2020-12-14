@@ -131,6 +131,7 @@ public class EventCreationPresenter implements InputErrorPresenter, EventErrorPr
 
     /**
      * Gives suggested locations and asks for choice
+     * @param locationStrings list of names of suggested locations
      */
 
     public void displaySuggestedLocations(ArrayList<String> locationStrings) {

@@ -30,6 +30,8 @@ public class LoginController extends AccountController {
      * @param username login username
      * @param password login password
      * @return an enum representing the account type for the username provided
+     * @throws UserNotFoundException when the user does not exist
+     * @throws IncorrectPasswordException when the user exists but password is wrong
      */
     public ViewEnum login(String username, String password) throws IncorrectPasswordException, UserNotFoundException {
         if (!usernameExists(username)) {

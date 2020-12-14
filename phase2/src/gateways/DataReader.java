@@ -10,6 +10,9 @@ public interface DataReader {
     /**
      * Reads data from a path
      * @param path given path
+     * @return data from the path
+     * @throws IOException when an error happens during reading
+     * @throws ClassNotFoundException when an error happens during reading
      */
     default Object readObject(String path) throws IOException, ClassNotFoundException {
         InputStream file = new FileInputStream(path);
@@ -24,6 +27,9 @@ public interface DataReader {
 
     /**
      * Attempt to read data and create a (insert word)Manager.
+     * @return A use case class in the form of "(insert word) Manager", which will depend on the class
+     * implementing this method
+     *
      */
     Object readManager();
 }

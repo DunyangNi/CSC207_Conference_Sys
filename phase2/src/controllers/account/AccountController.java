@@ -64,7 +64,7 @@ public class AccountController {
      * @param viewEnum the given view enum
      * @return a view based on the view enum given
      */
-    public View getView(ViewEnum viewEnum) { // TODO find more appropriate place. ATM, Controller is interacting with View
+    public View getView(ViewEnum viewEnum) {
         ViewFactory viewFactory = new ViewFactory(dm);
         return viewFactory.getView(viewEnum);
     }

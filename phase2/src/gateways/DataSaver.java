@@ -11,6 +11,7 @@ public interface DataSaver {
      * Saves data in a file through a path
      * @param filePath given path
      * @param ser given Serializable
+     * @throws IOException when an error occurs during saving
      */
     default void saveSerializable(String filePath, Serializable ser) throws IOException {
         OutputStream file = new FileOutputStream(filePath);
