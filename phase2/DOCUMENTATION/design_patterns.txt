@@ -1,7 +1,0 @@
-**Factory Design Pattern**
-- ViewFactory: using enums we can generate a view with one controller and presenter.
-- EventFactory: using enums we can generate different Events with no worry about type-specific constructors
-
-**Visitor Design Pattern**
-- VipAttendee, Attendee: distinguish if an Attendee is VIP or not without typecasting.
-- Event (and its subclasses): distinguish events by their types and obtain speakers of specific events without typecasting.
